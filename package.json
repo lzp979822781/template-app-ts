@@ -26,6 +26,7 @@
     "dev:qq": "npm run build:qq -- --watch",
     "dev:quickapp": "npm run build:quickapp -- --watch",
     "build-rn-jsbundle": "node ./scripts/build-rn-jsbundle.js",
+    "clean-rn-jsbundle": "node ./scripts/build-rn-jsbundle.js clean",
     "lint": "eslint --ext .tsx ./src"
   },
   "author": "",
