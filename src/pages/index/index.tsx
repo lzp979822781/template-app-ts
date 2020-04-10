@@ -3,6 +3,8 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
+import { SearchBar } from '@/components';
+
 import './index.scss'
 
 // #region 书写注意
@@ -85,6 +87,11 @@ class Index extends Component {
     render () {
         return (
         <View className='index'>
+            <View className = "nav">
+                <View className = "header">
+                    <SearchBar />
+                </View>
+            </View>
             <Button className='add_btn' onClick={this.onAdd}>+</Button>
             <Button className='dec_btn' onClick={this.onDec}>-</Button>
             <Button className='dec_btn' onClick={this.onMulti}>other</Button>
