@@ -4,8 +4,8 @@ const { exec } = require("child_process");
 const argv = process.argv;
 const isClean = argv.includes("clean");
 
-const buildCommand = "node ./node_modules/react-native/local-cli/cli.js bundle --entry-file ./rn_temp/index.js --bundle-output ./bundle/index.bundle --assets-dest ./bundle --platform ios --dev false --verbose";
-const iosBuild = "node ./node_modules/react-native/local-cli/cli.js bundle --entry-file ./rn_temp/index.js --bundle-output ./bundle/index.bundle --assets-dest ./bundle --platform ios --dev false --verbose";
+const buildCommand = "node ./node_modules/react-native/local-cli/cli.js bundle --entry-file ./rn_temp/index.js --bundle-output ./bundle/index.jsbundle --assets-dest ./bundle --platform ios --dev false --verbose";
+const iosBuild = "node ./node_modules/react-native/local-cli/cli.js bundle --entry-file ./rn_temp/index.js --bundle-output ./bundle/index.jsbundle --assets-dest ./bundle --platform ios --dev false --verbose";
 
 const dirName = 'bundle';
 const assetsDir = 'assets'
@@ -22,7 +22,9 @@ function deleteDir() {
             console.log("delete error", error, stderr);
             return;
         }
-        mkDir();
+        if(!isClean) {
+            mkDir();
+        }
     })
 }
 

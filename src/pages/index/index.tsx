@@ -1,6 +1,6 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Button, Text, Form, Input } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import { SearchBar } from '@/components';
@@ -39,7 +39,7 @@ interface Index {
 }
 
 @connect(({ hello, ...other }) => ({ ...hello, ...other}))
-class Index extends Component {
+class Index extends Component<any, any> {
 
     /**
    * 指定config的类型声明为: Taro.Config
@@ -50,6 +50,13 @@ class Index extends Component {
    */
     config: Config = {
         navigationBarTitleText: '首页'
+    }
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            name: ''
+        }
     }
 
     componentWillReceiveProps (nextProps) {
@@ -74,6 +81,33 @@ class Index extends Component {
         
     }
 
+    onNameInput = e => {
+        const { detail: { value = '' } = {} } = e;
+        console.log("value", value);
+        this.setState({
+            name: value
+        })
+    }
+
+    onSumbmit = e => {
+        console.log("e", e);
+        const { detail: { value = {} } = {} } = e;
+        console.log("submit value", value);
+    }
+
+    renderForm = () => {
+        const { name } = this.state;
+
+        return (
+            <View>
+                <Form onSubmit = {this.onSumbmit}>
+                    <Input name = "name" type = "text" onInput = {this.onNameInput} placeholder = "请输入名称" value = { name }/>
+                    <Button formType = "submit">提交</Button>
+                </Form>
+            </View>
+        )
+    }
+
     callModel = (type: string, data = {}) => {
         return new Promise((resolve) => {
             this.props.dispatch({
@@ -92,9 +126,12 @@ class Index extends Component {
                     <SearchBar />
                 </View>
             </View>
-            <Button className='add_btn' onClick={this.onAdd}>+</Button>
-            <Button className='dec_btn' onClick={this.onDec}>-</Button>
-            <Button className='dec_btn' onClick={this.onMulti}>other</Button>
+            <View>
+                <Button className='add_btn' onClick={this.onAdd}>+</Button>
+                <Button className='dec_btn' onClick={this.onDec}>-</Button>
+                <Button className='dec_btn' onClick={this.onMulti}>other</Button>
+            </View>
+            {this.renderForm()}
 
             <Text><Text>{this.props.count}</Text></Text>
             <View><Text>Hello, World</Text></View>
