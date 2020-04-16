@@ -10,7 +10,7 @@ export interface HelloModelType {
     state: HelloModelState,
     effects: {
         add: Effect
-        minus: Effect
+        minus: Effect,
     },
     reducers: {
         updateState: Reducer<HelloModelState>

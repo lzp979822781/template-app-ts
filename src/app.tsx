@@ -2,7 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import store from './store/createStore';
 import { Provider } from '@tarojs/redux'
 
-import Index from './pages/index'
+import { Index } from './pages'
 
 import './app.scss'
 
@@ -23,7 +23,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/index/index'
+      'pages/Index/index',
     ],
     window: {
       backgroundTextStyle: 'light',
