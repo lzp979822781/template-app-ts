@@ -1,0 +1,19 @@
+.index {
+    flex-direction: column;
+    width: 100%;
+
+}
+
+.nav {
+    height: 430px;
+    background-color: #8EA7E1;
+}
+
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 30px;
+    height: 88px;
+}
