@@ -133,7 +133,7 @@ class Index extends Component<any, any> {
             </View>
             {this.renderForm()}
 
-            <Text><Text>{this.props.count}</Text></Text>
+            <Text>{this.props.count}</Text>
             <View><Text>Hello, World</Text></View>
         </View>
         )
