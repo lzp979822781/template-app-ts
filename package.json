@@ -61,9 +61,14 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "require-context": "^1.1.0",
-    "taro-ui": "^2.2.4"
+    "taro-ui": "^2.2.4",
+    "@jdreact/jdreact-core-lib": "^2.0.11",
+    "@jdreact/jdreact-core-linear-gradient": "^1.0.14",
+    "@jdreact/jdreact-core-packager": "^2.0.9",
+    "@jdreact/jdreact-core-scripts": "^2.0.3"
   },
   "devDependencies": {
+    "@jdreact/jdreact-core-web": "^2.0.2",
     "@tarojs/mini-runner": "2.0.3",
     "@tarojs/webpack-runner": "2.0.3",
     "@types/react": "^16.4.8",
