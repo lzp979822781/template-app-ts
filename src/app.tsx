@@ -1,3 +1,4 @@
+/* eslint-disable react/sort-comp */
 import Taro, { Component, Config } from '@tarojs/taro'
 import store from './store/createStore';
 import { Provider } from '@tarojs/redux'
@@ -24,6 +25,7 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/Index/index',
+      'pages/List/index',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -45,9 +47,9 @@ class App extends Component {
   // 请勿修改此函数
   render () {
     return (
-      <Provider store={store}>
-        <Index />
-      </Provider>
+        <Provider store={store}>
+            <Index />
+        </Provider>
     )
   }
 }

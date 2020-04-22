@@ -34,6 +34,9 @@
   "license": "MIT",
   "dependencies": {
     "@ant-design/react-native": "^3.2.2",
+    "@jdreact/jdreact-core-lib": "^2.0.11",
+    "@jdreact/jdreact-core-linear-gradient": "^1.0.0",
+    "@jdreact/jdreact-core-scripts": "^2.0.3",
     "@tarojs/components": "2.0.3",
     "@tarojs/components-qa": "2.0.3",
     "@tarojs/components-rn": "2.0.3",

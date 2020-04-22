@@ -73,6 +73,11 @@ class Index extends Component<any, any> {
         this.callModel("add");
     }
 
+    routerTo = ()=>{
+        Taro.navigateTo({
+            url: '/pages/List/index?id=2&type=test'
+        });
+    }
     onDec = () => {
         this.callModel('minus');
     }
@@ -130,6 +135,7 @@ class Index extends Component<any, any> {
                 <Button className='add_btn' onClick={this.onAdd}>+</Button>
                 <Button className='dec_btn' onClick={this.onDec}>-</Button>
                 <Button className='dec_btn' onClick={this.onMulti}>other</Button>
+                <Button className='add_btn' onClick={this.routerTo}>测试路由</Button>
             </View>
             {this.renderForm()}
 
