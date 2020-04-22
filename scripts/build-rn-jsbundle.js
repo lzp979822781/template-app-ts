@@ -2,11 +2,13 @@
 const fs = require('fs');
 const { exec } = require("child_process");
 const argv = process.argv;
+
 const isClean = argv.includes("clean");
+const platformArr = getArgs();
 
-const buildCommand = "node ./node_modules/react-native/local-cli/cli.js bundle --entry-file ./rn_temp/index.js --bundle-output ./bundle/index.jsbundle --assets-dest ./bundle --platform ios --dev false --verbose";
+const buildCommand = `node ./node_modules/react-native/local-cli/cli.js bundle --entry-file ./rn_temp/index.js --bundle-output ./bundle/index.${platformArr[1]}.jsbundle --assets-dest ./bundle ${platformArr[0]} ${platformArr[1]} --dev false --verbose`;
 const iosBuild = "node ./node_modules/react-native/local-cli/cli.js bundle --entry-file ./rn_temp/index.js --bundle-output ./bundle/index.jsbundle --assets-dest ./bundle --platform ios --dev false --verbose";
-
+console.log("buildCommand", buildCommand);
 const dirName = 'bundle';
 const assetsDir = 'assets'
 const plat = {
@@ -73,5 +75,9 @@ function clean(exists) {
     if(exists) { 
         deleteDir() 
     }
+}
+
+function getArgs() {
+    if(argv[2]) return argv[2].split('=');
 }
 

@@ -25,7 +25,8 @@
     "dev:rn": "npm run build:rn -- --watch",
     "dev:qq": "npm run build:qq -- --watch",
     "dev:quickapp": "npm run build:quickapp -- --watch",
-    "build-rn-jsbundle": "node ./scripts/build-rn-jsbundle.js",
+    "build-rn-jsbundle:android": "node ./scripts/build-rn-jsbundle.js --platform=android",
+    "build-rn-jsbundle:ios": "node ./scripts/build-rn-jsbundle.js --platform=ios",
     "clean-rn-jsbundle": "node ./scripts/build-rn-jsbundle.js clean",
     "lint": "eslint --ext .tsx ./src"
   },
