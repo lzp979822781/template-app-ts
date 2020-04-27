@@ -71,8 +71,12 @@ class Index extends Component<any, any> {
 
 
     getData = async () => {
-        const res = await Request.get("api_user_userInfo", { content: "hello" })
-        console.log("res", res)
+        try {
+            const res = await Request.get("api_user_userInfo", { content: "hello" })
+            console.log("res", res)
+        } catch (e) {
+            console.log("e", e)
+        }
     }
 
     componentDidHide() { }

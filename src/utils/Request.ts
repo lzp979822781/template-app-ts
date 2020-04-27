@@ -1,6 +1,8 @@
-import hmacSHA512 from "crypto-js/hmac-sha512";
+import hmacSha256 from 'crypto-js/hmac-sha256'
 import Taro from "@tarojs/taro";
 import pick from "lodash/pick";
+
+
 
 // const host = 'https://yaoser.jd.com/';
 // const JDYJCMainURL = 'https://api.m.jd.com/api'
@@ -30,21 +32,18 @@ export default class Request {
     }
 
     static getRequest(url, param) {
-        let contentType = CONTENT_TYPE.FORM_WWW;
-        let getUrl = this.getURL(url, param, contentType);
-        let config = {
-            headers: {
+        const contentType = CONTENT_TYPE.FORM_WWW;
+        const getUrl = this.getURL(url, param, contentType);
+debugger
+        return Taro.request({
+            url: getUrl,
+            method: "GET",
+            header: {
                 Accept: "application/json",
                 "Content-Type": contentType,
                 Cookie: this.cookies
             },
             timeout: requestTimeout
-        };
-
-        return Taro.request({
-            url: getUrl,
-            method: "GET",
-            header: config.headers
         });
     }
 
@@ -61,20 +60,16 @@ export default class Request {
         let bodyString = this.convertDicToKeyValueString(postBody);
         let requestPara = encodeURI(bodyString);
 
-        let config = {
-            headers: {
+        return Taro.request({
+            url: this.getMainURL(),
+            method: "POST",
+            data: requestPara,
+            header: {
                 Accept: "application/json",
                 "Content-Type": CONTENT_TYPE.FORM_WWW,
                 Cookie: this.cookies
             },
             timeout: requestTimeout
-        };
-
-        return Taro.request({
-            url: this.getMainURL(),
-            method: "POST",
-            data: requestPara,
-            header: config.headers
         });
     }
 
@@ -92,8 +87,7 @@ export default class Request {
         const paraAppendString = this.appendSingnParaString(newParams);
         //3、参数签名
         if (currentEnv === "RN") {
-            const hmactring = hmacSHA512(paraAppendString, secretKey);
-
+            const hmactring = hmacSha256(paraAppendString, secretKey);
             return Object.assign({}, newParams, { sign: hmactring });
         } else {
             return Object.assign({}, newParams);
@@ -104,33 +98,33 @@ export default class Request {
      * 根据公参、参数、接口名 返回URl
      */
     static getURL(functionId, para, contentType) {
+
         //0、参数整理为字典类型
-        let objc = this.initParam(functionId, para, contentType);
+        let objc = this.initParam(functionId, para, contentType)
         //1、参数整理（公参、业务参数）
-        let newParams = this.dealWithParam(objc, para);
+        let newParams = this.dealWithParam(objc, para)
         //2、ASCII 顺序拼接签名参数
-        let paraAppendString = this.appendSingnParaString(newParams);
-
+        let paraAppendString = this.appendSingnParaString(newParams)
+        //3、参数签名
+        let hmactring = hmacSha256(paraAppendString, secretKey)
         //4、参数拼接URL链接
-        let paramString = this.convertDicToKeyValueString(newParams);
-
-        let urlString = this.getMainURL() + "?" + paramString;
-
+        let paramString = this.convertDicToKeyValueString(newParams)
+        let urlString = this.getMainURL() + '?' + paramString
+        //5、URL链接进行编码
         if (currentEnv === "RN") {
-            //3、参数签名
-            let hmactring = hmacSHA512(paraAppendString, secretKey);
-
-            //5、URL链接进行编码
-            urlString = encodeURI(urlString + "&sign=" + hmactring);
+            urlString = encodeURI(urlString + '&sign=' + hmactring);
+        }else{
+            urlString = encodeURI(urlString);
         }
-
+        
         return urlString; //返回URL
     }
 
     static genBody = (para, contentType) => {
         const paraNew = {
-            data: para,
-            contentType
+            // data: para,
+            // contentType,
+            ...para
         };
         return Object.keys(para).length
             ? { body: JSON.stringify(paraNew) }
