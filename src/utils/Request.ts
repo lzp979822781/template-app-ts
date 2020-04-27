@@ -1,6 +1,6 @@
 import hmacSHA512 from "crypto-js/hmac-sha512";
 import Taro from "@tarojs/taro";
-import pick from 'lodash/pick';
+import pick from "lodash/pick";
 
 // const host = 'https://yaoser.jd.com/';
 // const JDYJCMainURL = 'https://api.m.jd.com/api'
@@ -22,11 +22,41 @@ export default class Request {
     }
 
     static get(url, param) {
-        return this.getRequest(url, param);
+        if (Taro.ENV_TYPE.RN) {
+            return this.getRequest(url, param);
+        } else if (Taro.ENV_TYPE.WEB || Taro.ENV_TYPE.WEAPP) {
+            return Taro.request({
+                url: this.getMainURL(),
+                method: "GET",
+                data: {
+                    functionId: url,
+                    body: {
+                        ...param // 业务参数
+                    },
+                    appid: "yjc_app",
+                    t: Date.parse(Date()),
+                }
+            });
+        }
     }
 
     static post(url, param) {
-        return this.postRequest(url, param);
+        if(Taro.ENV_TYPE.RN){
+            return this.postRequest(url, param);
+        }else if (Taro.ENV_TYPE.WEB || Taro.ENV_TYPE.WEAPP) {
+            return Taro.request({
+                url: this.getMainURL(),
+                method: "POST",
+                data: {
+                    functionId: url,
+                    body: {
+                        ...param // 业务参数
+                    },
+                    appid: "yjc_app",
+                    t: Date.parse(Date())
+                }
+            });
+        };
     }
 
     static getRequest(url, param) {
@@ -50,6 +80,8 @@ export default class Request {
 
     static postRequest(url, param) {
         let contentType = CONTENT_TYPE.FORM_WWW;
+
+        //获取三级地址，方法为post，请求头特殊处理
         if ("yjc_address_subAddress" === url) {
             contentType = CONTENT_TYPE.FORM_WWW;
         } else {
@@ -72,14 +104,14 @@ export default class Request {
             url: this.getMainURL(),
             method: "POST",
             data: requestPara,
-            header: config.headers,
+            header: config.headers
         });
     }
 
     /**
-     * 
+     *
      * @param {string} sign 签名字段
-     * 
+     *
      */
     static dealPostBody(url, param, contentType) {
         //0、参数整理为字典类型
@@ -120,8 +152,10 @@ export default class Request {
             data: para,
             contentType
         };
-        return Object.keys(para).length ? { body: JSON.stringify(paraNew) } : {};
-    }
+        return Object.keys(para).length
+            ? { body: JSON.stringify(paraNew) }
+            : {};
+    };
 
     static initParam(functionId: string, para, contentType: string) {
         //存放所有的公共参数
@@ -129,9 +163,9 @@ export default class Request {
             functionId,
             t: Date.parse(Date()),
             contentType,
-            appid: "yjc_app",
+            appid: "yjc_app"
         };
-        return Object.assign({}, objc, this.genBody(para, contentType))
+        return Object.assign({}, objc, this.genBody(para, contentType));
     }
 
     /**
@@ -140,7 +174,10 @@ export default class Request {
      */
     static dealWithParam(objc, para) {
         //1、参数整理（公参、业务参数）
-        let newParams = Object.assign({}, pick(objc, ["functionId", "t", "appid", "body"]));
+        let newParams = Object.assign(
+            {},
+            pick(objc, ["functionId", "t", "appid", "body"])
+        );
         // newParams["uuid"] = objc["uuid"];
         // newParams["client"] = objc["clientType"];
         // newParams["clientVersion"] = objc["clientVersion"];
@@ -158,7 +195,9 @@ export default class Request {
      */
     static appendSingnParaString(newParams) {
         let paraKeyArray = this.mapKeySortASC(newParams);
-        return paraKeyArray.reduce((total, key) => `${total}&${newParams[key]}`, '').substring(1);
+        return paraKeyArray
+            .reduce((total, key) => `${total}&${newParams[key]}`, "")
+            .substring(1);
     }
 
     /**
@@ -177,7 +216,12 @@ export default class Request {
      * @return { 返回 字符串 } bodyString
      */
     static convertDicToKeyValueString(postBody) {
-        return Object.keys(postBody).reduce((total: string, key) => `${total}&${key}=${postBody[key]}`, '').substring(1);
+        return Object.keys(postBody)
+            .reduce(
+                (total: string, key) => `${total}&${key}=${postBody[key]}`,
+                ""
+            )
+            .substring(1);
     }
 
     /**
@@ -239,7 +283,13 @@ export default class Request {
     }
 
     //具体上传的代码
-    static futch(url, opts = { method: "get", headers: {}, body: {}}, onProgress, successResponse, failResponse) {
+    static futch(
+        url,
+        opts = { method: "get", headers: {}, body: {} },
+        onProgress,
+        successResponse,
+        failResponse
+    ) {
         return new Promise((res, rej) => {
             let xhr = new XMLHttpRequest();
             xhr.open(opts.method, url);
