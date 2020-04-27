@@ -22,34 +22,11 @@ export default class Request {
     }
 
     static get(url, param) {
-        if (currentEnv === "RN") {
-            return this.getRequest(url, param);
-        } else if (currentEnv === "WEB" || currentEnv === "WEAPP") {
-            return this.taroRequest(url, "GET", param);
-        }
+        return this.getRequest(url, param);
     }
 
     static post(url, param) {
-        if (currentEnv === "RN") {
-            return this.postRequest(url, param);
-        } else if (currentEnv === "WEB" || currentEnv === "WEAPP") {
-            return this.taroRequest(url, "POST", param);
-        }
-    }
-
-    static taroRequest(url, method, param) {
-        return Taro.request({
-            url: this.getMainURL(),
-            method: method,
-            data: {
-                functionId: url,
-                body: {
-                    ...param // 业务参数
-                },
-                appid: "yjc_app",
-                t: Date.parse(Date())
-            }
-        });
+        return this.postRequest(url, param);
     }
 
     static getRequest(url, param) {
@@ -114,9 +91,13 @@ export default class Request {
         //2、ASCII 顺序拼接签名参数
         const paraAppendString = this.appendSingnParaString(newParams);
         //3、参数签名
-        const hmactring = hmacSHA512(paraAppendString, secretKey);
+        if (currentEnv === "RN") {
+            const hmactring = hmacSHA512(paraAppendString, secretKey);
 
-        return Object.assign({}, newParams, { sign: hmactring });
+            return Object.assign({}, newParams, { sign: hmactring });
+        } else {
+            return Object.assign({}, newParams);
+        }
     }
 
     /**
@@ -129,14 +110,20 @@ export default class Request {
         let newParams = this.dealWithParam(objc, para);
         //2、ASCII 顺序拼接签名参数
         let paraAppendString = this.appendSingnParaString(newParams);
-        //3、参数签名
-        let hmactring = hmacSHA512(paraAppendString, secretKey);
 
         //4、参数拼接URL链接
         let paramString = this.convertDicToKeyValueString(newParams);
+
         let urlString = this.getMainURL() + "?" + paramString;
-        //5、URL链接进行编码
-        urlString = encodeURI(urlString + "&sign=" + hmactring);
+
+        if (currentEnv === "RN") {
+            //3、参数签名
+            let hmactring = hmacSHA512(paraAppendString, secretKey);
+
+            //5、URL链接进行编码
+            urlString = encodeURI(urlString + "&sign=" + hmactring);
+        }
+
         return urlString; //返回URL
     }
 
