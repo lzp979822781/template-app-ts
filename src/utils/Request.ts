@@ -7,6 +7,7 @@ import pick from "lodash/pick";
 // const JDYJCMainURL = JDConfig.betaEnv ? 'http://beta-api.m.jd.com/api' : 'https://api.m.jd.com/api';
 const requestTimeout = 15000;
 const secretKey = "02460169765544ce87b4c67fc1d08594"; //签名秘钥
+const currentEnv = Taro.getEnv(); // 获取当前环境平台
 
 let CONTENT_TYPE = {
     FORM_WWW: "application/x-www-form-urlencoded;charset=utf-8",
@@ -16,47 +17,39 @@ let CONTENT_TYPE = {
 export default class Request {
     static cookies = "";
     static params = {};
-
     static getMainURL() {
         return "http://beta-api.m.jd.com/api";
     }
 
     static get(url, param) {
-        if (Taro.ENV_TYPE.RN) {
+        if (currentEnv === "RN") {
             return this.getRequest(url, param);
-        } else if (Taro.ENV_TYPE.WEB || Taro.ENV_TYPE.WEAPP) {
-            return Taro.request({
-                url: this.getMainURL(),
-                method: "GET",
-                data: {
-                    functionId: url,
-                    body: {
-                        ...param // 业务参数
-                    },
-                    appid: "yjc_app",
-                    t: Date.parse(Date()),
-                }
-            });
+        } else if (currentEnv === "WEB" || currentEnv === "WEAPP") {
+            return this.taroRequest(url, "GET", param);
         }
     }
 
     static post(url, param) {
-        if(Taro.ENV_TYPE.RN){
+        if (currentEnv === "RN") {
             return this.postRequest(url, param);
-        }else if (Taro.ENV_TYPE.WEB || Taro.ENV_TYPE.WEAPP) {
-            return Taro.request({
-                url: this.getMainURL(),
-                method: "POST",
-                data: {
-                    functionId: url,
-                    body: {
-                        ...param // 业务参数
-                    },
-                    appid: "yjc_app",
-                    t: Date.parse(Date())
-                }
-            });
-        };
+        } else if (currentEnv === "WEB" || currentEnv === "WEAPP") {
+            return this.taroRequest(url, "POST", param);
+        }
+    }
+
+    static taroRequest(url, method, param) {
+        return Taro.request({
+            url: this.getMainURL(),
+            method: method,
+            data: {
+                functionId: url,
+                body: {
+                    ...param // 业务参数
+                },
+                appid: "yjc_app",
+                t: Date.parse(Date())
+            }
+        });
     }
 
     static getRequest(url, param) {
