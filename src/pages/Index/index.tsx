@@ -4,7 +4,7 @@ import { View, Button, Text, Form, Input } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import { SearchBar } from '@/components';
-
+import Request from '@/utils/Request';
 import './index.scss'
 
 // #region 书写注意
@@ -35,10 +35,10 @@ type PageState = {}
 type IProps = PageDispatchProps & PageOwnProps
 
 interface Index {
-  props: IProps;
+    props: IProps;
 }
 
-@connect(({ hello, ...other }) => ({ ...hello, ...other}))
+@connect(({ hello, ...other }) => ({ ...hello, ...other }))
 class Index extends Component<any, any> {
 
     /**
@@ -59,21 +59,29 @@ class Index extends Component<any, any> {
         }
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps(nextProps) {
         console.log(this.props, nextProps)
     }
 
-    componentWillUnmount () { }
+    componentWillUnmount() { }
 
-    componentDidShow () { }
+    componentDidShow() {
+        this.getData();
+    }
 
-    componentDidHide () { }
+
+    getData = async () => {
+        const res = await Request.get("api_user_userInfo", { content: "hello" })
+        console.log("res", res)
+    }
+
+    componentDidHide() { }
 
     onAdd = () => {
         this.callModel("add");
     }
 
-    routerTo = ()=>{
+    routerTo = () => {
         Taro.navigateTo({
             url: '/pages/List/index?id=2&type=test'
         });
@@ -83,7 +91,7 @@ class Index extends Component<any, any> {
     }
 
     onMulti = () => {
-        
+
     }
 
     onNameInput = e => {
@@ -105,9 +113,9 @@ class Index extends Component<any, any> {
 
         return (
             <View>
-                <Form onSubmit = {this.onSumbmit}>
-                    <Input name = "name" type = "text" onInput = {this.onNameInput} placeholder = "请输入名称" value = { name }/>
-                    <Button formType = "submit">提交</Button>
+                <Form onSubmit={this.onSumbmit}>
+                    <Input name="name" type="text" onInput={this.onNameInput} placeholder="请输入名称" value={name} />
+                    <Button formType="submit">提交</Button>
                 </Form>
             </View>
         )
@@ -123,25 +131,25 @@ class Index extends Component<any, any> {
         })
     }
 
-    render () {
+    render() {
         return (
-        <View className='index'>
-            <View className = "nav">
-                <View className = "header">
-                    <SearchBar />
+            <View className='index'>
+                <View className="nav">
+                    <View className="header">
+                        <SearchBar />
+                    </View>
                 </View>
-            </View>
-            <View>
-                <Button className='add_btn' onClick={this.onAdd}>+</Button>
-                <Button className='dec_btn' onClick={this.onDec}>-</Button>
-                <Button className='dec_btn' onClick={this.onMulti}>other</Button>
-                <Button className='add_btn' onClick={this.routerTo}>测试路由</Button>
-            </View>
-            {this.renderForm()}
+                <View>
+                    <Button className='add_btn' onClick={this.onAdd}>+</Button>
+                    <Button className='dec_btn' onClick={this.onDec}>-</Button>
+                    <Button className='dec_btn' onClick={this.onMulti}>other</Button>
+                    <Button className='add_btn' onClick={this.routerTo}>测试路由</Button>
+                </View>
+                {this.renderForm()}
 
-            <Text>{this.props.count}</Text>
-            <View><Text>Hello, World</Text></View>
-        </View>
+                <Text>{this.props.count}</Text>
+                <View><Text>Hello, World</Text></View>
+            </View>
         )
     }
 }
