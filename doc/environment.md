@@ -12,9 +12,9 @@
 
 ```
 sudo gem install cocoapods -v 1.8.4  // 或者brew install cocoapods -v 1.8.4
-执行pod setup查看是否有master目录，没有的话继续执行下面命令
+// 如果没有
 pod repo add master https://coding.jd.com/jd/CocoapodsSpec.git
-注意：不要更改默认的xcode名称和路径,如果有多xcode版本安装，请指定到默认
+注意：不要更改默认的xcode名称和路径,如果有多xcode版本安装，请指定到默认, 更改方式如下，如果
 使用命令sudo xcode-select --switch /Applications/Xcode.app 后面为自己的xcode地址
 通过xcode修改：打开xcode -> xcode -> preferences -> locations -> Command Line Toolsx下面的灰色字体中修改
 ```
@@ -26,6 +26,16 @@ pod repo add master https://coding.jd.com/jd/CocoapodsSpec.git
 ```
 npm install -g react-native-cli
 ```
+
+## taro cli 安装
+
+如果以前安装过其他版本的taro cli版本，请先卸载！Taro的版本有严格的对应关系。当前工程中使用的是2.0.3版本
+
+```
+npm i @tarojs/cli@2.0.3 -g
+```
+
+
 
 ## RN环境验证
 
