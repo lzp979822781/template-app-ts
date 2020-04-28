@@ -118,8 +118,8 @@ class Index extends Component<any, any> {
         return (
             <View>
                 <Form onSubmit={this.onSumbmit}>
-                    <Input name="name" type="text" onInput={this.onNameInput} placeholder="请输入名称" value={name} />
-                    <Button formType="submit">提交</Button>
+                    <Input name='name' type='text' onInput={this.onNameInput} placeholder='请输入名称' value={name} />
+                    <Button formType='submit'>提交</Button>
                 </Form>
             </View>
         )
@@ -138,8 +138,8 @@ class Index extends Component<any, any> {
     render() {
         return (
             <View className='index'>
-                <View className="nav">
-                    <View className="header">
+                <View className='nav'>
+                    <View className='header'>
                         <SearchBar />
                     </View>
                 </View>
