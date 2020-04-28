@@ -11,9 +11,9 @@ const requestTimeout = 15000;
 const secretKey = "02460169765544ce87b4c67fc1d08594"; //签名秘钥
 const currentEnv = Taro.getEnv(); // 获取当前环境平台
 
-let CONTENT_TYPE = {
-    FORM_WWW: "application/x-www-form-urlencoded;charset=utf-8",
-    JSON_Type: "application/json"
+const CONTENT_TYPE = {
+    wwwForm: "application/x-www-form-urlencoded;charset=utf-8",
+    applicationJson: "application/json"
 };
 
 export default class Request {
@@ -32,9 +32,8 @@ export default class Request {
     }
 
     static getRequest(url, param) {
-        const contentType = CONTENT_TYPE.FORM_WWW;
+        const contentType = CONTENT_TYPE.wwwForm;
         const getUrl = this.getURL(url, param, contentType);
-debugger
         return Taro.request({
             url: getUrl,
             method: "GET",
@@ -48,17 +47,17 @@ debugger
     }
 
     static postRequest(url, param) {
-        let contentType = CONTENT_TYPE.FORM_WWW;
+        let contentType = CONTENT_TYPE.wwwForm;
 
         //获取三级地址，方法为post，请求头特殊处理
         if ("yjc_address_subAddress" === url) {
-            contentType = CONTENT_TYPE.FORM_WWW;
+            contentType = CONTENT_TYPE.wwwForm;
         } else {
-            contentType = CONTENT_TYPE.JSON_Type;
+            contentType = CONTENT_TYPE.applicationJson;
         }
-        let postBody = this.dealPostBody(url, param, contentType);
-        let bodyString = this.convertDicToKeyValueString(postBody);
-        let requestPara = encodeURI(bodyString);
+        const postBody = this.dealPostBody(url, param, contentType);
+        const bodyString = this.convertDicToKeyValueString(postBody);
+        const requestPara = encodeURI(bodyString);
 
         return Taro.request({
             url: this.getMainURL(),
@@ -66,7 +65,7 @@ debugger
             data: requestPara,
             header: {
                 Accept: "application/json",
-                "Content-Type": CONTENT_TYPE.FORM_WWW,
+                "Content-Type": CONTENT_TYPE.wwwForm,
                 Cookie: this.cookies
             },
             timeout: requestTimeout
@@ -100,15 +99,15 @@ debugger
     static getURL(functionId, para, contentType) {
 
         //0、参数整理为字典类型
-        let objc = this.initParam(functionId, para, contentType)
+        const objc = this.initParam(functionId, para, contentType)
         //1、参数整理（公参、业务参数）
-        let newParams = this.dealWithParam(objc, para)
+        const newParams = this.dealWithParam(objc, para)
         //2、ASCII 顺序拼接签名参数
-        let paraAppendString = this.appendSingnParaString(newParams)
+        const paraAppendString = this.appendSingnParaString(newParams)
         //3、参数签名
-        let hmactring = hmacSha256(paraAppendString, secretKey)
+        const hmactring = hmacSha256(paraAppendString, secretKey)
         //4、参数拼接URL链接
-        let paramString = this.convertDicToKeyValueString(newParams)
+        const paramString = this.convertDicToKeyValueString(newParams)
         let urlString = this.getMainURL() + '?' + paramString
         //5、URL链接进行编码
         if (currentEnv === "RN") {
@@ -133,7 +132,7 @@ debugger
 
     static initParam(functionId: string, para, contentType: string) {
         //存放所有的公共参数
-        var objc = {
+        const objc = {
             functionId,
             t: Date.parse(Date()),
             contentType,
@@ -148,18 +147,10 @@ debugger
      */
     static dealWithParam(objc, para) {
         //1、参数整理（公参、业务参数）
-        let newParams = Object.assign(
+        const newParams = Object.assign(
             {},
             pick(objc, ["functionId", "t", "appid", "body"])
         );
-        // newParams["uuid"] = objc["uuid"];
-        // newParams["client"] = objc["clientType"];
-        // newParams["clientVersion"] = objc["clientVersion"];
-        // newParams["build"] = objc["vb"];
-        // newParams["osVersion"] = objc["osVersion"];
-        // newParams["networkType"] = objc["networkType"];
-        // newParams["d_brand"] = objc["b"];
-        // newParams["d_model"] = objc["model"];
         return newParams;
     }
 
@@ -168,7 +159,7 @@ debugger
      * 返回拼接完的字符串
      */
     static appendSingnParaString(newParams) {
-        let paraKeyArray = this.mapKeySortASC(newParams);
+        const paraKeyArray = this.mapKeySortASC(newParams);
         return paraKeyArray
             .reduce((total, key) => `${total}&${newParams[key]}`, "")
             .substring(1);
@@ -180,7 +171,7 @@ debugger
      * @returns {Array} newkeyArray 返回objc字段数组
      */
     static mapKeySortASC(objc) {
-        var newkeyArray = Object.keys(objc).sort();
+        const newkeyArray = Object.keys(objc).sort();
         return newkeyArray; //返回排好序的新数组
     }
 
@@ -207,8 +198,8 @@ debugger
      * @return 返回Promise
      */
     static uploadImage(url, path: any, progressFunction) {
-        let commonParams = this.params;
-        let allCookies = this.cookies;
+        const commonParams = this.params;
+        const allCookies = this.cookies;
         const uploadMediaData = new FormData();
         return new Promise(function(resolve, reject) {
             // file先转换为字符串防止警告
@@ -218,13 +209,13 @@ debugger
                 name: "certUpImg.jpg"
             })
             uploadMediaData.append("file", JSON.parse(file));
-            var host = "http://yaoser.jd.com";
-            var reqUrl = host + url + "?" + commonParams;
+            const host = "http://yaoser.jd.com";
+            const reqUrl = host + url + "?" + commonParams;
             // 上传成功
             const successResponse = xhr => {
                 //这个key 就是你上传文件在oss 的地址了，
                 if (xhr._response) {
-                    let res = new Function("return " + xhr._response)();
+                    const res = new Function("return " + xhr._response)();
                     if (res) {
                         resolve(res);
                     }
@@ -261,15 +252,15 @@ debugger
     //具体上传的代码
     static futch(
         url,
-        opts:{ method: string, headers: any, body: any} = { method: "get", headers: {}, body: {} },
+        opts: { method: string, headers: any, body: any} = { method: "get", headers: {}, body: {} },
         onProgress,
         successResponse,
         failResponse
     ) {
         return new Promise((res, rej) => {
-            let xhr = new XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
             xhr.open(opts.method, url);
-            for (let k in opts.headers) {
+            for (const k in opts.headers) {
                 xhr.setRequestHeader(k, opts.headers[k]);
             }
             xhr.onreadystatechange = e => {
