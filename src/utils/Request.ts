@@ -81,7 +81,7 @@ export default class Request {
         //0、参数整理为字典类型
         const objc = this.initParam(url, param, contentType);
         //1、参数整理（公参、业务参数）
-        const newParams = this.dealWithParam(objc, param);
+        const newParams = this.dealWithParam(objc);
         //2、ASCII 顺序拼接签名参数
         const paraAppendString = this.appendSingnParaString(newParams);
         //3、参数签名
@@ -101,7 +101,7 @@ export default class Request {
         //0、参数整理为字典类型
         const objc = this.initParam(functionId, para, contentType)
         //1、参数整理（公参、业务参数）
-        const newParams = this.dealWithParam(objc, para)
+        const newParams = this.dealWithParam(objc)
         //2、ASCII 顺序拼接签名参数
         const paraAppendString = this.appendSingnParaString(newParams)
         //3、参数签名
@@ -119,7 +119,7 @@ export default class Request {
         return urlString; //返回URL
     }
 
-    static genBody = (para, contentType) => {
+    static genBody = (para) => {
         const paraNew = {
             // data: para,
             // contentType,
@@ -138,14 +138,14 @@ export default class Request {
             contentType,
             appid: "yjc_app"
         };
-        return Object.assign({}, objc, this.genBody(para, contentType));
+        return Object.assign({}, objc, this.genBody(para));
     }
 
     /**
      * 整理参数（公参、业务参）
      * 返回整理好的字典
      */
-    static dealWithParam(objc, para) {
+    static dealWithParam(objc) {
         //1、参数整理（公参、业务参数）
         const newParams = Object.assign(
             {},
@@ -263,7 +263,7 @@ export default class Request {
             for (const k in opts.headers) {
                 xhr.setRequestHeader(k, opts.headers[k]);
             }
-            xhr.onreadystatechange = e => {
+            xhr.onreadystatechange = () => {
                 if (xhr.status === 200) {
                     successResponse(xhr);
                 } else {
