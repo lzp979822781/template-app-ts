@@ -206,16 +206,18 @@ debugger
      * @param {*} progressFunction 进度返回函数
      * @return 返回Promise
      */
-    static uploadImage(url, path = "", progressFunction) {
+    static uploadImage(url, path: any, progressFunction) {
         let commonParams = this.params;
         let allCookies = this.cookies;
         const uploadMediaData = new FormData();
         return new Promise(function(resolve, reject) {
-            uploadMediaData.append("file", {
+            // file先转换为字符串防止警告
+            const file = JSON.stringify({
                 uri: path,
                 type: "multipart/form-data",
                 name: "certUpImg.jpg"
-            });
+            })
+            uploadMediaData.append("file", JSON.parse(file));
             var host = "http://yaoser.jd.com";
             var reqUrl = host + url + "?" + commonParams;
             // 上传成功
@@ -259,7 +261,7 @@ debugger
     //具体上传的代码
     static futch(
         url,
-        opts = { method: "get", headers: {}, body: {} },
+        opts:{ method: string, headers: any, body: any} = { method: "get", headers: {}, body: {} },
         onProgress,
         successResponse,
         failResponse
