@@ -1,7 +1,7 @@
 /* eslint-disable react/sort-comp */
 import Taro, { Component, Config } from '@tarojs/taro'
-import store from './store/createStore';
 import { Provider } from '@tarojs/redux'
+import store from './store/createStore';
 
 import { Index } from './pages'
 
