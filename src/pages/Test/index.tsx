@@ -1,6 +1,6 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, ScrollView, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import './index.scss'
@@ -36,6 +36,10 @@ interface Test {
     props: IProps;
 }
 
+const scrollTop = 0
+const Threshold = 20
+
+
 @connect(({ hello, ...other }) => ({ ...hello, ...other }))
 class Test extends Component<any, any> {
 
@@ -52,8 +56,7 @@ class Test extends Component<any, any> {
 
     constructor(props: any) {
         super(props);
-        this.state = {
-        }
+        this.state = {}
     }
 
     componentWillReceiveProps(nextProps) {
@@ -64,6 +67,18 @@ class Test extends Component<any, any> {
 
     componentDidShow() {
 
+    }
+
+    onScrollToUpper = () => {
+        console.log("滚动到顶部");
+    }
+
+    onScrollLower = () => {
+        console.log("滚动到底部");
+    }
+
+    onScroll(e){
+        console.log(e.detail)
     }
 
     callModel = (type: string, data = {}) => {
@@ -77,9 +92,36 @@ class Test extends Component<any, any> {
     }
 
     render() {
+        
         return (
             <View className='test'>
-                <Text>测试页</Text>
+                <ScrollView
+                  className='scrollview'
+                  scrollY
+                  scrollWithAnimation
+                  scrollTop={scrollTop}
+                  lowerThreshold={Threshold}
+                  upperThreshold={-20}
+                  onScrollToUpper={this.onScrollToUpper} // 使用箭头函数的时候 可以这样写 `onScrollToUpper={this.onScrollToUpper}`
+                  onScrollToLower={this.onScrollLower}
+                  onScroll={this.onScroll}
+                >
+                    <View className='vStyleA'><Text>A</Text></View>
+                    <View className='vStyleB'><Text>B</Text></View>
+                    <View className='vStyleC'><Text>C</Text></View>
+                    <View className='vStyleA'><Text>A</Text></View>
+                    <View className='vStyleB'><Text>B</Text></View>
+                    <View className='vStyleC'><Text>C</Text></View>
+                    <View className='vStyleA'><Text>A</Text></View>
+                    <View className='vStyleB'><Text>B</Text></View>
+                    <View className='vStyleC'><Text>C</Text></View>
+                    <View className='vStyleA'><Text>A</Text></View>
+                    <View className='vStyleB'><Text>B</Text></View>
+                    <View className='vStyleC'><Text>C</Text></View>
+                    <View className='vStyleA'><Text>A</Text></View>
+                    <View className='vStyleB'><Text>B</Text></View>
+                    <View className='vStyleC'><Text>C</Text></View>
+                </ScrollView>
             </View>
         )
     }
