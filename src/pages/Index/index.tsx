@@ -100,7 +100,7 @@ class Index extends Component<any, any> {
 
     onToTest = () => {
         Taro.navigateTo({
-            url: '/pages/Test'
+            url: '/pages/Test/index'
         });
     }
 
