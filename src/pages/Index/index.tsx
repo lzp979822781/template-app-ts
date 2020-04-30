@@ -1,9 +1,11 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text, Form, Input } from '@tarojs/components'
+import { View, Button, Text, Form, Input, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
-import { SearchBar } from '@/components';
+// import { SearchBar } from '@/components';
+import CommonList from '@/components/common-list';
+
 import Request from '@/utils/Request';
 import './index.scss'
 
@@ -54,8 +56,9 @@ class Index extends Component<any, any> {
 
     constructor(props: any) {
         super(props);
+
         this.state = {
-            name: ''
+            name: '',
         }
     }
 
@@ -66,7 +69,7 @@ class Index extends Component<any, any> {
     componentWillUnmount() { }
 
     componentDidShow() {
-        this.getData();
+        // this.getData();
     }
 
 
@@ -89,9 +92,6 @@ class Index extends Component<any, any> {
         Taro.navigateTo({
             url: '/pages/List/index?id=2&type=test'
         });
-    }
-    onDec = () => {
-        this.callModel('minus');
     }
 
     onMulti = () => {
