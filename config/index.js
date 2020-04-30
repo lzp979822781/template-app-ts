@@ -33,7 +33,8 @@ const config = {
                     regenerator: true,
                     moduleName: 'babel-runtime'
                 }
-            ]
+            ],
+            ["import", { libraryName: "@ant-design/react-native" }]
         ]
     },
     defineConstants: {
