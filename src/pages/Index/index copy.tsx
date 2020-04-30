@@ -1,11 +1,19 @@
 import { ComponentClass } from 'react'
+import {
+    ProgressViewIOS,
+    Picker,
+    SegmentedControlIOS,
+    DatePickerIOS,
+    ActivityIndicator,
+    TouchableHighlight,
+    TouchableOpacity,
+    Modal
+} from "react-native";
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text, Form, Input, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
-// import { SearchBar } from '@/components';
-import CommonList from '@/components/common-list';
-
+import { SearchBar } from '@/components';
 import Request from '@/utils/Request';
 import './index.scss'
 
@@ -57,8 +65,12 @@ class Index extends Component<any, any> {
     constructor(props: any) {
         super(props);
 
+        this.setDate = this.setDate.bind(this);
         this.state = {
             name: '',
+            selectedIndex: 1,
+            chosenDate: new Date(),
+            modalVisible: false
         }
     }
 
@@ -69,7 +81,7 @@ class Index extends Component<any, any> {
     componentWillUnmount() { }
 
     componentDidShow() {
-        // this.getData();
+        this.getData();
     }
 
 
@@ -93,15 +105,12 @@ class Index extends Component<any, any> {
             url: '/pages/List/index?id=2&type=test'
         });
     }
+    onDec = () => {
+        this.callModel('minus');
+    }
 
     onMulti = () => {
 
-    }
-
-    onToTest = () => {
-        Taro.navigateTo({
-            url: '/pages/Test/index'
-        });
     }
 
     onNameInput = e => {
@@ -124,8 +133,8 @@ class Index extends Component<any, any> {
         return (
             <View>
                 <Form onSubmit={this.onSumbmit}>
-                    <Input name='name' type='text' onInput={this.onNameInput} placeholder='请输入名称' value={name} />
-                    <Button formType='submit'>提交</Button>
+                    <Input name="name" type="text" onInput={this.onNameInput} placeholder="请输入名称" value={name} />
+                    <Button formType="submit">提交</Button>
                 </Form>
             </View>
         )
@@ -141,11 +150,18 @@ class Index extends Component<any, any> {
         })
     }
 
+    setDate(newDate) {
+        this.setState({ chosenDate: newDate })
+    }
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible });
+    }
+
     render() {
         return (
             <View className='index'>
-                <View className='nav'>
-                    <View className='header'>
+                <View className="nav">
+                    <View className="header">
                         <SearchBar />
                     </View>
                 </View>
@@ -154,12 +170,70 @@ class Index extends Component<any, any> {
                     <Button className='dec_btn' onClick={this.onDec}>-</Button>
                     <Button className='dec_btn' onClick={this.onMulti}>other</Button>
                     <Button className='add_btn' onClick={this.routerTo}>测试路由</Button>
-                    <Button className='add_btn' onClick={this.onToTest}>测试基础组件</Button>
                 </View>
-                {this.renderForm()}
-
+                <TouchableHighlight
+                    onPress={() => {
+                        this.setModalVisible(true);
+                    }}
+                >
+                    <Text>Show Modal</Text>
+                </TouchableHighlight>
+                {/* {this.renderForm()} */}
                 <Text>{this.props.count}</Text>
                 <View><Text>Hello, World</Text></View>
+                <ProgressViewIOS progressTintColor={"#61dafb"} progress={0.3}></ProgressViewIOS>
+                <SegmentedControlIOS
+                    values={['One', 'Two']}
+                    selectedIndex={this.state.selectedIndex}
+                    onChange={(event) => {
+                        this.setState({ selectedIndex: event.nativeEvent.selectedSegmentIndex });
+                    }}
+                />
+                <View
+                    style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-around'
+                    }}
+                >
+                    <ActivityIndicator size="large" color="#0000ff" />
+                    <ActivityIndicator size="small" color="#00ff00" />
+                </View>
+                <Picker
+                    selectedValue={this.state.language}
+                    style={{ height: 50, width: "100%" }}
+                    onValueChange={(itemValue, itemIndex) =>
+                        this.setState({ language: itemValue })
+                    }>
+                    <Picker.Item label="Java" value="java" />
+                    <Picker.Item label="JavaScript" value="js" />
+                </Picker>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                        alert("Modal has been closed.");
+                    }}
+                >
+                    <View style={{ flex: 1, marginTop: 22 }}>
+                        <View style={{ height: 200, backgroundColor: "#fff" }}>
+                            <Text>Hello World!</Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.setModalVisible(!this.state.modalVisible);
+                                }}
+                            >
+                                <Text>Hide Modal</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity activeOpacity={0.9} onPress={() => {
+                            this.setModalVisible(!this.state.modalVisible);
+                        }} style={{ flex: 1, backgroundColor: "rgba(36, 41, 46, 0.8)" }}>
+                            <View></View>
+                        </TouchableOpacity>
+                    </View>
+                </Modal>
             </View>
         )
     }
