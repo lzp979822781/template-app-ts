@@ -1,5 +1,25 @@
 const path = require('path');
 
+const plugins = [
+    'transform-decorators-legacy',
+    'transform-class-properties',
+    'transform-object-rest-spread',
+    ['transform-runtime', {
+            helpers: false,
+            polyfill: false,
+            regenerator: true,
+            moduleName: 'babel-runtime'
+        }
+    ],
+    // 
+];
+
+const rnPlugin = ["import", { libraryName: "@ant-design/react-native" }];
+
+if(process.env.TARO_ENV === 'rn') {
+    plugins.push(...rnPlugin);
+}
+
 const config = {
     projectName: 'template-app-ts',
     date: '2020-3-13',
@@ -23,19 +43,7 @@ const config = {
                 modules: false
             }]
         ],
-        plugins: [
-            'transform-decorators-legacy',
-            'transform-class-properties',
-            'transform-object-rest-spread',
-            ['transform-runtime', {
-                    helpers: false,
-                    polyfill: false,
-                    regenerator: true,
-                    moduleName: 'babel-runtime'
-                }
-            ],
-            ["import", { libraryName: "@ant-design/react-native" }]
-        ]
+        plugins
     },
     defineConstants: {
     },
