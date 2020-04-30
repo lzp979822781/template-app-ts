@@ -1,6 +1,8 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, ScrollView, Text } from '@tarojs/components'
+import { View, ScrollView, Text, Button } from '@tarojs/components';
+import { Modal } from '@/components/index';
+
 import { connect } from '@tarojs/redux'
 
 import './index.scss'
@@ -39,7 +41,6 @@ interface Test {
 const scrollTop = 0
 const Threshold = 20
 
-
 @connect(({ hello, ...other }) => ({ ...hello, ...other }))
 class Test extends Component<any, any> {
 
@@ -56,7 +57,9 @@ class Test extends Component<any, any> {
 
     constructor(props: any) {
         super(props);
-        this.state = {}
+        this.state = {
+            visible: false
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -81,6 +84,14 @@ class Test extends Component<any, any> {
         console.log(e.detail)
     }
 
+    onOpenMNodal = () => {
+        this.setState({ visible: true })
+    }
+
+    onClose = () => {
+        this.setState({ visible: false })
+    }
+
     callModel = (type: string, data = {}) => {
         return new Promise((resolve) => {
             this.props.dispatch({
@@ -92,9 +103,13 @@ class Test extends Component<any, any> {
     }
 
     render() {
-        
+        const { visible } = this.state;
         return (
             <View className='test'>
+                <Button type='primary' onClick={this.onOpenMNodal}>弹框测试</Button>
+                <Modal visible={visible} title='弹框' onClose={this.onClose}>
+                    content
+                </Modal>
                 <ScrollView
                   className='scrollview'
                   scrollY
@@ -106,18 +121,6 @@ class Test extends Component<any, any> {
                   onScrollToLower={this.onScrollLower}
                   onScroll={this.onScroll}
                 >
-                    <View className='vStyleA'><Text>A</Text></View>
-                    <View className='vStyleB'><Text>B</Text></View>
-                    <View className='vStyleC'><Text>C</Text></View>
-                    <View className='vStyleA'><Text>A</Text></View>
-                    <View className='vStyleB'><Text>B</Text></View>
-                    <View className='vStyleC'><Text>C</Text></View>
-                    <View className='vStyleA'><Text>A</Text></View>
-                    <View className='vStyleB'><Text>B</Text></View>
-                    <View className='vStyleC'><Text>C</Text></View>
-                    <View className='vStyleA'><Text>A</Text></View>
-                    <View className='vStyleB'><Text>B</Text></View>
-                    <View className='vStyleC'><Text>C</Text></View>
                     <View className='vStyleA'><Text>A</Text></View>
                     <View className='vStyleB'><Text>B</Text></View>
                     <View className='vStyleC'><Text>C</Text></View>

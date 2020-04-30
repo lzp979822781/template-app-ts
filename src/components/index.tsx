@@ -1,3 +1,4 @@
 import SearchBar from './SearchBar';
+import Modal from './Modal';
 
-export { SearchBar };
+export { SearchBar, Modal };

@@ -3,7 +3,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text, Form, Input, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
-// import { SearchBar } from '@/components';
+import { SearchBar } from '@/components';
 import CommonList from '@/components/common-list';
 
 import Request from '@/utils/Request';
@@ -87,6 +87,11 @@ class Index extends Component<any, any> {
     onAdd = () => {
         this.callModel("add");
     }
+
+    onDec = () => {
+        this.callModel('minus');
+    }
+
 
     routerTo = () => {
         Taro.navigateTo({
