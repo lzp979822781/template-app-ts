@@ -1,8 +1,9 @@
 import { ComponentClass } from 'react';
 import Taro, { Component } from '@tarojs/taro';
-import { Button } from '@tarojs/components';
+import { Button, View } from '@tarojs/components';
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
 
+import { UUID } from '@/utils/utils';
 import './index.scss'
 
 // #region 书写注意
@@ -15,15 +16,23 @@ import './index.scss'
 //
 // #endregion
 
-
-
 type PageOwnProps = {
     visible: boolean,
     title?: string,
-    content?: string
+    content?: string,
+    className: any,
+    footer?: any,
+    renderFooter?: any,
+    renderContent?: any,
+    onConfirm?: () => void,
+    onCancel?: () => void,
+    cancelText?: string,
+    confirmText?: string,
+    customFooter?: boolean  // 是否使用自定义footer
 }
 
 type PageState = {}
+
 
 class Modal extends Component<any, any> {
 
@@ -47,18 +56,60 @@ class Modal extends Component<any, any> {
 
     }
 
-    render() {
-        const { title, visible, maskClosable = true  } = this.props;
+    getFooterBtn = () => {
+        const { footer } = this.props;
+        if(!Array.isArray(footer) || (Array.isArray(footer) && !footer.length)) {
+            return [];
+        }
+        return footer.map((item, index) => {
+            const { text, onCallFn } = item;
+            return (
+                <Button type='primary' onClick={onCallFn} key={index}>{text}</Button>
+            );
+        });
+    }
+
+    renderFooter = () => {
+        const data = [{ text: '取消'}];
+        return data.map((item) => {
+            const { text } = item;
+            return <Button key={UUID()}>{text}</Button>
+        })
+    }
+
+    renderDefaultFooter = () => {
+        const { confirmText, cancelText, onConfirm, onCancel } = this.props;
         return (
-            <AtModal isOpened={visible} closeOnClickOverlay={maskClosable}>
+            <AtModalAction>
+                { cancelText ? <Button onClick={onCancel}>{cancelText}</Button> : null}
+                { confirmText ? <Button onClick={onConfirm}>{confirmText}</Button> : null}
+            </AtModalAction>
+        )
+    }
+
+    /**
+     * 这里不使用this.props.renderFooter判断是否自定义，是因为taro中编译不通过
+     * @memberof Modal
+     */
+    renderInnerFooter = () => {
+        const { customFooter } = this.props;
+        return customFooter ? <View className='footer-container'>{this.props.renderFooter}</View> : this.renderDefaultFooter();
+    }
+
+    render() {
+        const { title, visible, maskClosable = true } = this.props;
+        return (
+            <AtModal isOpened={visible} closeOnClickOverlay={maskClosable} className='modal-container'>
                 <AtModalHeader>{title}</AtModalHeader>
                 <AtModalContent>
-                    {this.props.children}
+                    {this.props.renderContent}
                 </AtModalContent>
-                <AtModalAction>
-                    <Button type='primary'>取消</Button>
-                    <Button type='primary'>确定</Button> 
-                </AtModalAction>
+                {/* <AtModalAction> */}
+                {/* <View>
+                    { this.props.renderFooter }
+                </View> */}
+                { this.renderInnerFooter()}
+                {/* </AtModalAction> */}
             </AtModal>
         )
     }

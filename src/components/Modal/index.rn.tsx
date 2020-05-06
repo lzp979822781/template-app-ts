@@ -1,8 +1,6 @@
 import { ComponentClass } from 'react'
 import Taro, { Component } from '@tarojs/taro'
-import { Text } from '@tarojs/components';
 import { Modal } from '@ant-design/react-native';
-
 
 import './index.scss'
 
@@ -16,20 +14,23 @@ import './index.scss'
 //
 // #endregion
 
-
+interface FooterBtn {
+    text: string,
+    onClick?: () => void
+}
 
 type PageOwnProps = {
     visible: boolean,
     title: string,
-
+    className: any,
+    cancelText?: string,
+    confirmText?: string,
+    footer?: Array<FooterBtn>,
+    onConfirm?: () => void,
+    onCancel?: () => void
 }
 
 type PageState = {}
-
-const footerButtons: any[] = [
-    { text: 'Cancel', onPress: () => console.log('cancel') },
-    { text: 'Ok', onPress: () => console.log('ok') },
-];
 
 /* const defaultProps = {
     maskClosable: true,
@@ -57,13 +58,17 @@ class TaroModal extends Component<any, any> {
 
     }
 
-
-    onOpenMNodal = () => {
-
+    getFooterBtn = () => {
+        const { footer } = this.props;
+        if(!Array.isArray(footer) || (Array.isArray(footer) && !footer.length)) {
+            return [];
+        }
+        return footer.map(({ text, onClick }) => ({ text, onPress: onClick }));
     }
 
+
     render() {
-        const { visible, title, transparent, maskClosable = true, closable } = this.props;
+        const { visible, title, transparent = true, maskClosable = true, closable = false } = this.props;
 
         return (
             <Modal
@@ -72,12 +77,9 @@ class TaroModal extends Component<any, any> {
               maskClosable={maskClosable}
               visible={visible}
               closable={closable}
-              footer={footerButtons}
+              footer={this.getFooterBtn()}
             >
-                <Text>
-                    {this.props.children}
-                </Text>
-                
+                {this.props.children}
             </Modal>
         )
     }

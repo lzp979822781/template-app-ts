@@ -15,3 +15,22 @@
     height: 1200px;
     margin-top: 20px;
 }
+
+.test-footer {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.test-com-btn {
+    flex: 1;
+    border: none;
+}
+
+.test-com-btn::after {
+    content: none
+}
+
+.test-modal {
+    display: flex;
+}

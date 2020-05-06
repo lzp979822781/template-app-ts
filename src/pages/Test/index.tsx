@@ -55,11 +55,16 @@ class Test extends Component<any, any> {
         navigationBarTitleText: '测试页'
     }
 
+    static options = {
+        addGlobalClass: true
+    }
+
     constructor(props: any) {
         super(props);
         this.state = {
             visible: false
         }
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -84,13 +89,32 @@ class Test extends Component<any, any> {
         console.log(e.detail)
     }
 
-    onOpenMNodal = () => {
+    onOpenModal = () => {
         this.setState({ visible: true })
     }
 
     onClose = () => {
         this.setState({ visible: false })
     }
+
+    onConfirm = () => {
+        this.onClose();
+    }
+
+    renderFooter = () => {
+        // const data = [{ text: '取消', onCallFn: this.onClose}, { text: '确定', onCallFn: this.onConfirm }]
+        return (
+            <View className='test-footer'>
+                <Button onClick={this.onClose} className='test-com-btn'>取消</Button>
+                <Button onClick={this.onConfirm} className='test-com-btn'>确定</Button>
+            </View>
+        );
+        /* return data.map((item) => {
+            const { text, onCallFn } = item;
+            return <Button onClick={onCallFn} key={UUID()} className='test-com-btn'>{text}</Button>
+        }) */
+    }
+    
 
     callModel = (type: string, data = {}) => {
         return new Promise((resolve) => {
@@ -104,12 +128,25 @@ class Test extends Component<any, any> {
 
     render() {
         const { visible } = this.state;
+
         return (
             <View className='test'>
-                <Button type='primary' onClick={this.onOpenMNodal}>弹框测试</Button>
-                <Modal visible={visible} title='弹框' onClose={this.onClose}>
-                    content
-                </Modal>
+                <Button type='primary' onClick={this.onOpenModal}>弹框测试</Button>
+                <Modal 
+                  visible={visible} 
+                  title='弹框'
+                  className='test-modal' 
+                  // eslint-disable-next-line taro/render-props
+                  renderFooter={this.renderFooter()}
+                //   footer={footer}
+                  onCancel={this.onClose}
+                  onConfirm={this.onConfirm}
+                  renderContent={<View><Text>content</Text></View>}
+                  confirmText='确定'
+                  cancelText='取消'
+                  customFooter
+                />
+                    
                 <ScrollView
                   className='scrollview'
                   scrollY
