@@ -1,5 +1,6 @@
 import { ComponentClass } from 'react'
-import Taro, { Component } from '@tarojs/taro'
+import Taro, { Component } from '@tarojs/taro';
+import { View, Text } from '@tarojs/components';
 import { Modal } from '@ant-design/react-native';
 
 import './index.scss'
@@ -27,7 +28,14 @@ type PageOwnProps = {
     confirmText?: string,
     footer?: Array<FooterBtn>,
     onConfirm?: () => void,
-    onCancel?: () => void
+    onCancel?: () => void,
+    customFooter?: boolean,  // 是否使用自定义footer
+    renderHeader?: any,
+    renderFooter?: any, // footer元素
+    renderContent?: any, // 内容区元素
+    customStyle?: object,
+    maskClosable?: boolean,
+    closable?: boolean
 }
 
 type PageState = {}
@@ -41,7 +49,16 @@ type PageState = {}
     footer: []
 } */
 
+const BORDER_COLOR = '#E5E5E5';
+
+const footerContainer = {
+    borderTopWidth: 0.5,
+    borderTopColor: BORDER_COLOR
+}
+
 class TaroModal extends Component<any, any> {
+
+    static externalClasses = ['custom-class']
 
     constructor(props: any) {
         super(props);
@@ -55,31 +72,68 @@ class TaroModal extends Component<any, any> {
     componentWillUnmount() { }
 
     componentDidShow() {
-
     }
 
     getFooterBtn = () => {
-        const { footer } = this.props;
+        /* const { footer } = this.props;
         if(!Array.isArray(footer) || (Array.isArray(footer) && !footer.length)) {
             return [];
         }
-        return footer.map(({ text, onClick }) => ({ text, onPress: onClick }));
+        return footer.map(({ text, onClick }) => ({ text, onPress: onClick })); */
+        const { confirmText, cancelText, onConfirm, onCancel } = this.props;
+        return [
+            { text: cancelText, onPress: onCancel },
+            { text: confirmText, onPress: onConfirm}
+        ];
+    }
+
+    renderDefaultHeader = () => {
+        const { title } = this.props;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        const defaultHeader = (
+            <Text className='modal-default-header-text'>{title}</Text>
+        )
+        return defaultHeader;
+    }
+
+    getHeader = () => {
+        const { renderHeader, title } = this.props;
+        if(!renderHeader && !title) {
+            return null;
+        }
+        // return renderHeader ? <View className='modal-default-header'>{this.props.renderHeader}</View>: this.renderDefaultHeader();
+        return (
+            <View className='modal-default-header'>
+                {renderHeader ? this.props.renderHeader: this.renderDefaultHeader()}
+            </View>
+        )
+    }
+
+    getClasses = () => {
+        const classes = TaroModal.externalClasses.reduce((total, item) => {
+            total += `${item} `;
+            return total;
+        }, '');
+        return classes;
     }
 
 
     render() {
-        const { visible, title, transparent = true, maskClosable = true, closable = false } = this.props;
-
+        const { visible, transparent = true, maskClosable = true, closable = false, customStyle } = this.props;
         return (
             <Modal
-              title={title}
               transparent={transparent}
               maskClosable={maskClosable}
               visible={visible}
               closable={closable}
-              footer={this.getFooterBtn()}
+              footer={[]}
+              style={[{ marginVertical: 0, paddingVertical: 0, paddingTop: 0}, customStyle]}
+              bodyStyle={{ marginHorizontal: 0, marginVertical: 0, paddingHorizontal: 0, paddingVertical: 0, paddingBottom: 0, minHeight: 210, display: 'flex' }}
             >
-                {this.props.children}
+                { this.getHeader()}
+                <View style={{ flex: 1}}>
+                    {this.props.renderContent}
+                </View>
+                <View style={footerContainer}>{ this.props.renderFooter}</View>
             </Modal>
         )
     }

@@ -19,17 +19,19 @@
 .test-footer {
     display: flex;
     flex-direction: row;
-    flex: 1;
 }
 
 .test-com-btn {
     flex: 1;
-    border: none;
 }
+
+/*  #ifdef weapp  */
 
 .test-com-btn::after {
     content: none
 }
+
+/*  #endif  */
 
 .test-modal {
     display: flex;

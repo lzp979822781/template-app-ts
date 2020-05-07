@@ -1,6 +1,6 @@
 import { ComponentClass } from 'react';
 import Taro, { Component } from '@tarojs/taro';
-import { Button, View } from '@tarojs/components';
+import { Button, View, Text } from '@tarojs/components';
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
 
 import { UUID } from '@/utils/utils';
@@ -19,16 +19,19 @@ import './index.scss'
 type PageOwnProps = {
     visible: boolean,
     title?: string,
-    content?: string,
     className: any,
     footer?: any,
+    renderHeader?: any,
     renderFooter?: any,
     renderContent?: any,
     onConfirm?: () => void,
     onCancel?: () => void,
     cancelText?: string,
     confirmText?: string,
-    customFooter?: boolean  // 是否使用自定义footer
+    customHeader?: boolean, // 是否显示定制头 直接用renderHeader判断的话, 获取不到正确结果
+    customFooter?: boolean,  // 是否使用自定义footer
+    customStyle?: object,
+    closable?: boolean
 }
 
 type PageState = {}
@@ -77,6 +80,31 @@ class Modal extends Component<any, any> {
         })
     }
 
+    renderDefaultHeader = () => {
+        const { title } = this.props;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        const defaultHeader = (
+            <AtModalHeader>{title}</AtModalHeader>
+        )
+        return defaultHeader;
+    }
+
+    /**
+     * @param {boolean} customHeader 是否使用自定义头
+     * @returns
+     */
+    renderInnerHeader = () => {
+        const { customHeader, title } = this.props;
+        if(!customHeader && !title) {
+            return null;
+        }
+
+        return customHeader ? (
+            <View className='modal-default-header'>
+                {this.props.renderHeader}
+            </View>
+        ): this.renderDefaultHeader();
+    }
+
     renderDefaultFooter = () => {
         const { confirmText, cancelText, onConfirm, onCancel } = this.props;
         return (
@@ -97,10 +125,11 @@ class Modal extends Component<any, any> {
     }
 
     render() {
-        const { title, visible, maskClosable = true } = this.props;
+        const { visible, maskClosable = true } = this.props;
         return (
             <AtModal isOpened={visible} closeOnClickOverlay={maskClosable} className='modal-container'>
-                <AtModalHeader>{title}</AtModalHeader>
+                {/* <AtModalHeader>{title}</AtModalHeader> */}
+                { this.renderInnerHeader()}
                 <AtModalContent>
                     {this.props.renderContent}
                 </AtModalContent>

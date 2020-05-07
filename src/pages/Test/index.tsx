@@ -102,17 +102,12 @@ class Test extends Component<any, any> {
     }
 
     renderFooter = () => {
-        // const data = [{ text: '取消', onCallFn: this.onClose}, { text: '确定', onCallFn: this.onConfirm }]
         return (
             <View className='test-footer'>
                 <Button onClick={this.onClose} className='test-com-btn'>取消</Button>
                 <Button onClick={this.onConfirm} className='test-com-btn'>确定</Button>
             </View>
         );
-        /* return data.map((item) => {
-            const { text, onCallFn } = item;
-            return <Button onClick={onCallFn} key={UUID()} className='test-com-btn'>{text}</Button>
-        }) */
     }
     
 
@@ -138,6 +133,7 @@ class Test extends Component<any, any> {
                   className='test-modal' 
                   // eslint-disable-next-line taro/render-props
                   renderFooter={this.renderFooter()}
+                  renderHeader={<View><Text>标题</Text></View>}
                 //   footer={footer}
                   onCancel={this.onClose}
                   onConfirm={this.onConfirm}
@@ -145,6 +141,7 @@ class Test extends Component<any, any> {
                   confirmText='确定'
                   cancelText='取消'
                   customFooter
+                  customHeader
                 />
                     
                 <ScrollView
