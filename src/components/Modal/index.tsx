@@ -1,6 +1,6 @@
 import { ComponentClass } from 'react';
 import Taro, { Component } from '@tarojs/taro';
-import { Button, View, Text } from '@tarojs/components';
+import { Button, View } from '@tarojs/components';
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
 
 import { UUID } from '@/utils/utils';
@@ -130,9 +130,9 @@ class Modal extends Component<any, any> {
             <AtModal isOpened={visible} closeOnClickOverlay={maskClosable} className='modal-container'>
                 {/* <AtModalHeader>{title}</AtModalHeader> */}
                 { this.renderInnerHeader()}
-                <AtModalContent>
+                <View className='modal-content'>
                     {this.props.renderContent}
-                </AtModalContent>
+                </View>
                 {/* <AtModalAction> */}
                 {/* <View>
                     { this.props.renderFooter }

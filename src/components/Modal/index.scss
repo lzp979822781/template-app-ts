@@ -15,23 +15,11 @@ $BORDER_COLOR: #E5E5E5;
 
 /*  #ifndef  rn  */
 .footer-container {
-    
     border-top: .5px solid $BORDER_COLOR;
 }
 
-.footer-container::after {
-    content: ' ';
-    position: absolute;
-    transform-origin: center;
-    box-sizing: border-box;
-    pointer-events: none;
-    top: auto;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    transform: scaleY(0.5);
-    border-bottom: 1PX solid $BORDER_COLOR;
-
+.modal-content {
+    min-height: 210px;
 }
 
 /*  #endif  */
