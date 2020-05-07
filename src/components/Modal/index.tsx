@@ -1,7 +1,7 @@
 import { ComponentClass } from 'react';
 import Taro, { Component } from '@tarojs/taro';
 import { Button, View } from '@tarojs/components';
-import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
+import { AtModal, AtModalHeader, AtModalAction } from "taro-ui";
 
 import { UUID } from '@/utils/utils';
 import './index.scss'
