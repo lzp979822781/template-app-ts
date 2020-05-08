@@ -5,6 +5,7 @@
     "no-unused-vars": ["error", { "varsIgnorePattern": "Taro" }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
     "react/jsx-indent": [2, 4, { "checkAttributes": true }], // 配置缩进规则，当前为4个空格或者一个Tab键
+    "react/jsx-indent-props": [2, 4],
     "@typescript-eslint/no-unused-vars": ["error", { "varsIgnorePattern": "Taro" }],
     "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/member-delimiter-style": {

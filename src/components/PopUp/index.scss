@@ -1,0 +1,74 @@
+
+/*  #ifndef  rn */
+
+@mixin full($positon) {
+    position: $positon;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.pop-up {
+    @include full(fixed);
+    visibility: hidden;
+    z-index: 810;
+    transition: all 300ms cubic-bezier(0.36, 0.66, 0.04, 1);
+    &.active {
+        visibility: visible;
+        .pop-up-overlay {
+            opacity: 1;
+        }
+        .pop-up-container {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    &-header {
+        position: relative;
+        padding: 30px 0;
+        text-align: center;
+        .close-img {
+            position: absolute;
+            right: 28px;
+            top: 36px;
+            width: 36px;
+            height: 36px;
+        }
+    }
+
+    &-body {
+        font-size: 28px;
+        padding: 20px;
+        height: 602px;
+        overflow: auto;
+    }
+
+
+}
+
+.pop-up-overlay {
+    @include full(absolute);
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 150ms ease-in;
+}
+
+.pop-up-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    min-height: 600px;
+    max-height: 950px;
+    background-color: #fff;
+    border-radius: 32px 32px 0px 0px;
+    transform: translate3d(0, 100%, 0);
+    transition: -webkit-transform 300ms cubic-bezier(0.36, 0.66, 0.04, 1);
+    transition: transform 300ms cubic-bezier(0.36, 0.66, 0.04, 1);
+    transition: transform 300ms cubic-bezier(0.36, 0.66, 0.04, 1),
+        -webkit-transform 300ms cubic-bezier(0.36, 0.66, 0.04, 1);
+}
+
+/*  #endif  */
+
+

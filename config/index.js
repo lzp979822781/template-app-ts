@@ -35,6 +35,7 @@ const config = {
         '@/components': path.resolve(__dirname, '..', 'src/components'),
         '@/utils': path.resolve(__dirname, '..', 'src/utils'),
         '@/styles': path.resolve(__dirname, '..', 'src/styles'),
+        '@': path.resolve(__dirname, '../', 'src')
     },
     babel: {
         sourceMap: true,

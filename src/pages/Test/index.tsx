@@ -1,7 +1,7 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, ScrollView, Text, Button } from '@tarojs/components';
-import { Modal } from '@/components/index';
+import { View, ScrollView, Text, Button, Checkbox, Label } from '@tarojs/components';
+import { Modal, PopUp } from '@/components/index';
 
 import { connect } from '@tarojs/redux'
 
@@ -62,7 +62,40 @@ class Test extends Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            visible: false
+            visible: false,
+            show: false,
+            list: [
+                {
+                  value: '美国',
+                  text: '美国',
+                  checked: false
+                },
+                {
+                  value: '中国',
+                  text: '中国',
+                  checked: true
+                },
+                {
+                  value: '巴西',
+                  text: '巴西',
+                  checked: false
+                },
+                {
+                  value: '日本',
+                  text: '日本',
+                  checked: false
+                },
+                {
+                  value: '英国',
+                  text: '英国',
+                  checked: false
+                },
+                {
+                  value: '法国',
+                  text: '法国',
+                  checked: false
+                }
+            ]
         }
 
     }
@@ -94,7 +127,7 @@ class Test extends Component<any, any> {
     }
 
     onClose = () => {
-        this.setState({ visible: false })
+        this.setState({ visible: false, show: false })
     }
 
     onConfirm = () => {
@@ -109,7 +142,10 @@ class Test extends Component<any, any> {
             </View>
         );
     }
-    
+
+    onOpenActionSheet = () => {
+        this.setState({ show: true })
+    }
 
     callModel = (type: string, data = {}) => {
         return new Promise((resolve) => {
@@ -122,43 +158,74 @@ class Test extends Component<any, any> {
     }
 
     render() {
-        const { visible } = this.state;
+        const { visible, show } = this.state;
 
         return (
             <View className='test'>
                 <Button type='primary' onClick={this.onOpenModal}>弹框测试</Button>
+                <Button type='primary' onClick={this.onOpenActionSheet} className='test-actionsheet'>popup 弹框测试</Button>
                 <Modal 
-                  visible={visible} 
-                  title='弹框'
-                  className='test-modal' 
+                    visible={visible} 
+                    title='弹框'
+                    className='test-modal' 
                   // eslint-disable-next-line taro/render-props
-                  renderFooter={this.renderFooter()}
-                  renderHeader={<View><Text>标题</Text></View>}
+                    renderFooter={this.renderFooter()}
+                    renderHeader={<View><Text>标题</Text></View>}
                 //   footer={footer}
-                  onCancel={this.onClose}
-                  onConfirm={this.onConfirm}
-                  renderContent={<View><Text>content</Text></View>}
-                  confirmText='确定'
-                  cancelText='取消'
-                  customFooter
-                  customHeader
+                    onCancel={this.onClose}
+                    onConfirm={this.onConfirm}
+                    renderContent={<View><Text>content</Text></View>}
+                    confirmText='确定'
+                    cancelText='取消'
+                    customFooter
+                    customHeader
                 />
                     
                 <ScrollView
-                  className='scrollview'
-                  scrollY
-                  scrollWithAnimation
-                  scrollTop={scrollTop}
-                  lowerThreshold={Threshold}
-                  upperThreshold={-20}
-                  onScrollToUpper={this.onScrollToUpper} // 使用箭头函数的时候 可以这样写 `onScrollToUpper={this.onScrollToUpper}`
-                  onScrollToLower={this.onScrollLower}
-                  onScroll={this.onScroll}
+                    className='scrollview'
+                    scrollY
+                    scrollWithAnimation
+                    scrollTop={scrollTop}
+                    lowerThreshold={Threshold}
+                    upperThreshold={-20}
+                    onScrollToUpper={this.onScrollToUpper} // 使用箭头函数的时候 可以这样写 `onScrollToUpper={this.onScrollToUpper}`
+                    onScrollToLower={this.onScrollLower}
+                    onScroll={this.onScroll}
                 >
                     <View className='vStyleA'><Text>A</Text></View>
                     <View className='vStyleB'><Text>B</Text></View>
                     <View className='vStyleC'><Text>C</Text></View>
                 </ScrollView>
+                <PopUp 
+                    visible={show}
+                    onClose={this.onClose}
+                >
+                    <View className='page-section'>
+                        <Text>默认样式</Text>
+                        <Checkbox value='选中' checked>选中</Checkbox>
+                        <Checkbox style='margin-left: 20rpx' value='未选中'>未选中</Checkbox>
+                    </View>
+                    <View className='page-section'>
+                        <Text>推荐展示样式</Text>
+                        {this.state.list.map((item, i) => {
+                            return (
+                                <Label className='checkbox-list__label' for={i} key={i}>
+                                    <Checkbox className='checkbox-list__checkbox' value={item.value} checked={item.checked}>{item.text}</Checkbox>
+                                </Label>
+                            )
+                        })}
+                        <View className='vStyleA'><Text>A</Text></View>
+                        <View className='vStyleB'><Text>B</Text></View>
+                        <View className='vStyleC'><Text>C</Text></View>
+                        <View className='vStyleA'><Text>A</Text></View>
+                        <View className='vStyleB'><Text>B</Text></View>
+                        <View className='vStyleC'><Text>C</Text></View>
+                        <View className='vStyleA'><Text>A</Text></View>
+                        <View className='vStyleB'><Text>B</Text></View>
+                        <View className='vStyleC'><Text>C</Text></View>
+                    </View>
+                    
+                </PopUp>
             </View>
         )
     }
