@@ -1,5 +1,4 @@
 import Taro, { Component } from '@tarojs/taro';
-import { View } from '@tarojs/components';
 import { Modal } from '@ant-design/react-native';
 
 import './index.scss'
@@ -10,7 +9,8 @@ type PageDispatchProps = {
 
 type PageOwnProps = {
     visible: boolean,
-    title?: string
+    title?: string,
+    onClose?: () => void,
 }
 
 type PageState = {}
@@ -34,16 +34,19 @@ class PopUp extends Component<IProps, PageState> {
     }
 
     render() {
-
+        const { visible, onClose } = this.props;
         return (
-            <View>
-                <Modal
-                    popup
-                    
-                >
-                    { this.props.children }
-                </Modal>
-            </View>
+            <Modal
+                popup
+                visible={visible}
+                onClose={onClose}
+                transparent={false}
+                animationType='slide-up'
+                style={{ borderRadius: 32 }}
+                bodyStyle={{ paddingTop: 32, paddingHorizontal: 10 }}
+            >
+                { this.props.children }
+            </Modal>
         )
     }
 }
