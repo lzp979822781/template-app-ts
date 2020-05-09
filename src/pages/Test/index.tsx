@@ -206,6 +206,7 @@ class Test extends Component<any, any> {
                     visible={show}
                     onClose={this.onClose}
                     pop-class='pop-up-rn'
+                    style={{ borderRadius: '16px'}}
                 >
                     <View>
                         <View>
