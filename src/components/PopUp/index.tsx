@@ -21,7 +21,13 @@ type PageOwnProps = {
     onAfterClose?: () => void,
     style?: object,
     headerStyle?: object, // 外部传入头部样式
-    bodyStyle?: object 
+    bodyStyle?: object,
+
+    // rn的样式在这里完全没有作用，这里是为了防止警告
+    rnStyle?: object,
+    rnContainerStyle?: object,
+    rnBodyStyle?: object,
+    rnHeaderStyle?: object
 }
 
 type PageState = {}
@@ -37,7 +43,7 @@ const defaultProps = {
 class PopUp extends Component<IProps, PageState> {
 
     static defaultProps = defaultProps
-    static externalClasses = ['container-class', 'header-cls', 'body-cls']
+    static externalClasses = ['container-cls', 'header-cls', 'body-cls']
 
     constructor(props: any) {
         super(props);

@@ -1,5 +1,4 @@
 import Taro, { Component } from '@tarojs/taro';
-// import classnames from 'classnames';
 import { View, Image } from '@tarojs/components';
 import { Modal } from '@ant-design/react-native';
 
@@ -15,8 +14,11 @@ type PageOwnProps = {
     visible: boolean,
     title?: string,
     onClose?: () => void,
-    style?: () => void,
-    maskClosable?: boolean
+    maskClosable?: boolean,
+    rnStyle?: object,
+    rnContainerStyle?: object,
+    rnBodyStyle?: object,
+    rnHeaderStyle?: object
 }
 
 type PageState = {}
@@ -24,13 +26,14 @@ type PageState = {}
 type IProps = PageDispatchProps & PageOwnProps
 
 const defaultProps = {
-    maskClosable: true
+    maskClosable: true,
+    rnStyle: {},
+    rnContainerStyle: {}
 }
 
 class PopUp extends Component<IProps, PageState> {
 
     static defaultProps = defaultProps
-    static externalClasses = ['container-class', 'header-cls', 'body-cls']
 
     constructor(props: any) {
         super(props);
@@ -53,7 +56,7 @@ class PopUp extends Component<IProps, PageState> {
      */
     renderHeader = () => {
 
-        const { onClose, title } = this.props;
+        const { onClose, title, rnHeaderStyle } = this.props;
         /* return (
             <View className='pop-rn-header'>
                 <Image src={closeImg} className='close-img' onClick={this.onClose} />
@@ -63,7 +66,7 @@ class PopUp extends Component<IProps, PageState> {
             return null;
         }
         return (
-            <View className='pop-new-header'>
+            <View className='pop-new-header' style={rnHeaderStyle} >
                 <View className='pop-new-header-title'>{title}</View>
                 <View className='pop-new-header-image' onClick={onClose}>
                     <Image src={closeImg} className='pop-new-header-image' />
@@ -73,7 +76,7 @@ class PopUp extends Component<IProps, PageState> {
     }
 
     render() {
-        const { visible, onClose, maskClosable } = this.props;
+        const { visible, onClose, maskClosable, rnStyle, rnContainerStyle, rnBodyStyle } = this.props;
 
         return (
             <Modal
@@ -82,12 +85,12 @@ class PopUp extends Component<IProps, PageState> {
                 onClose={onClose}
                 transparent={false}
                 animationType='slide-up'
-                style={{ borderRadius: 16}}
-                bodyStyle={{ paddingHorizontal: 10, minHeight: 300, maxHeight: 475 }}
+                style={{ borderRadius: 16, ...rnStyle}}
+                bodyStyle={{ paddingHorizontal: 10, minHeight: 300, maxHeight: 475, ...rnContainerStyle }}
                 maskClosable={maskClosable}
             >
                 { this.renderHeader()}
-                <View style={{ paddingTop: 10, paddingBottom: 10 }}>
+                <View style={{ paddingTop: 10, paddingBottom: 10, ...rnBodyStyle }}>
                     { this.props.children }
                 </View>
             </Modal>
