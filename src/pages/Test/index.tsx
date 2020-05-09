@@ -159,7 +159,6 @@ class Test extends Component<any, any> {
 
     render() {
         const { visible, show } = this.state;
-        console.log("Taro.getEnv", Taro.getEnv());
         return (
             <View className='test'>
                 <Button type='primary' onClick={this.onOpenModal}>弹框测试</Button>
@@ -180,6 +179,12 @@ class Test extends Component<any, any> {
                     customFooter
                     customHeader
                 />
+
+                <View className='page-section-1'>
+                    <Text>默认样式</Text>
+                    <Checkbox value='选中' checked>选中</Checkbox>
+                    <Checkbox style='margin-left: 20rpx' value='未选中'>未选中</Checkbox>
+                </View>
                     
                 <ScrollView
                     className='scrollview'
@@ -196,31 +201,30 @@ class Test extends Component<any, any> {
                     <View className='vStyleB'><Text>B</Text></View>
                     <View className='vStyleC'><Text>C</Text></View>
                 </ScrollView>
+
                 <PopUp 
                     visible={show}
                     onClose={this.onClose}
                     pop-class='pop-up-rn'
                 >
                     <View>
-                        { Taro.getEnv() !== 'RN' ? (
-                            <View>
-                                <View className='page-section-1'>
-                                    <Text>默认样式</Text>
-                                    <Checkbox value='选中' checked>选中</Checkbox>
-                                    <Checkbox style='margin-left: 20rpx' value='未选中'>未选中</Checkbox>
-                                </View>
-                                <View className='page-section-2'>
-                                    <Text>推荐展示样式</Text>
-                                    {this.state.list.map((item, i) => {
+                        <View>
+                            <View className='page-section-1'>
+                                <Text>默认样式</Text>
+                                <Checkbox value='选中' checked>选中</Checkbox>
+                                <Checkbox style='margin-left: 20rpx' value='未选中'>未选中</Checkbox>
+                            </View>
+                            <View className='page-section-2'>
+                                <Text>推荐展示样式</Text>
+                                {this.state.list.map((item, i) => {
                                     return (
                                         <Label className='checkbox-list__label' for={i} key={i}>
                                             <Checkbox className='checkbox-list__checkbox' value={item.value} checked={item.checked}>{item.text}</Checkbox>
                                         </Label>
                                     )
                                 })}
-                                </View>
                             </View>
-                    ): null}
+                        </View>
                         
                         
                         <View className='vStyleA'><Text>A</Text></View>

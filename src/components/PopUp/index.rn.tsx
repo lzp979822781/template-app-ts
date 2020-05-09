@@ -1,5 +1,8 @@
 import Taro, { Component } from '@tarojs/taro';
+import { View, Image } from '@tarojs/components';
 import { Modal } from '@ant-design/react-native';
+
+import closeImg from '@/assets/images/icon_close.png';
 
 import './index.scss'
 
@@ -33,6 +36,29 @@ class PopUp extends Component<IProps, PageState> {
 
     }
 
+    /**
+     * 这里不直接在图片上定义事件的原因是，这种情况下点击实际不起作用，要使用事件必要在View上定义事件
+     * 这是限制很大可能是有rn端限制引起的
+     * @returns
+     */
+    renderHeader = () => {
+
+        const { onClose, title } = this.props;
+        /* return (
+            <View className='pop-rn-header'>
+                <Image src={closeImg} className='close-img' onClick={this.onClose} />
+            </View>
+        ) */
+        return (
+            <View className='pop-new-header'>
+                <View className='pop-new-header-title'>{title}</View>
+                <View className='pop-new-header-image' onClick={onClose}>
+                    <Image src={closeImg} className='pop-new-header-image' />
+                </View>
+            </View>
+        )
+    }
+
     render() {
         const { visible, onClose } = this.props;
         return (
@@ -42,20 +68,16 @@ class PopUp extends Component<IProps, PageState> {
                 onClose={onClose}
                 transparent={false}
                 animationType='slide-up'
-                style={{ borderRadius: 32 }}
-                bodyStyle={{ paddingTop: 32, paddingHorizontal: 10 }}
+                style={{ borderRadius: 16 }}
+                bodyStyle={{ paddingHorizontal: 10, minHeight: 300, maxHeight: 475 }}
             >
-                { this.props.children }
+                { this.renderHeader()}
+                <View style={{ paddingTop: 10, paddingBottom: 10 }}>
+                    { this.props.children }
+                </View>
             </Modal>
         )
     }
 }
-
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
 
 export default PopUp;

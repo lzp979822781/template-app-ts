@@ -45,8 +45,14 @@
 
 
 .test {
-    background-color: rgb(39,130,215);
     &-actionsheet {
         margin-top: 10px;
+    }
+}
+
+.page-section {
+    &-1, &-2 {
+        display: flex;
+        flex-direction: row;
     }
 }
