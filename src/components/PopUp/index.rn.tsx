@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro';
-import { View, Image } from '@tarojs/components';
+import { View, Image, Text } from '@tarojs/components';
 import { Modal } from '@ant-design/react-native';
 
 import closeImg from '@/assets/images/icon_close.png';
@@ -67,7 +67,7 @@ class PopUp extends Component<IProps, PageState> {
         }
         return (
             <View className='pop-new-header' style={rnHeaderStyle} >
-                <View className='pop-new-header-title'>{title}</View>
+                <View className='pop-new-header-title'><Text style={{ fontSize: 16, marginLeft: 16}}>{title}</Text></View>
                 <View className='pop-new-header-image' onClick={onClose}>
                     <Image src={closeImg} className='pop-new-header-image' />
                 </View>

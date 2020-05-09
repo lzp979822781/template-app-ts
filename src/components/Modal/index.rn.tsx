@@ -40,14 +40,14 @@ type PageOwnProps = {
 
 type PageState = {}
 
-/* const defaultProps = {
+// antd mobile modal参数transparent 配置为false时在taro中会显示异常
+const defaultProps = {
     maskClosable: true,
     closable: false,
-    transparent: false,
     popup: false,
     animationType: 'fade',
     footer: []
-} */
+}
 
 const BORDER_COLOR = '#E5E5E5';
 
@@ -56,9 +56,6 @@ const footerContainer = {
     borderTopColor: BORDER_COLOR
 }
 
-const defaultProps = {
-    maskClosable: true
-}
 
 class TaroModal extends Component<any, any> {
 
@@ -121,9 +118,16 @@ class TaroModal extends Component<any, any> {
         return classes;
     }
 
+    onClickMask = () => {
+        const { maskClosable, onCancel } = this.props;
+        if(maskClosable && onCancel) {
+            onCancel();
+        }
+    }
 
     render() {
-        const { visible, transparent = true, maskClosable, closable = false, } = this.props;
+        const { visible, transparent = true, maskClosable = true, closable = false, } = this.props;
+        console.log("maskClosable", maskClosable);
         return (
             <Modal
                 transparent={transparent}
@@ -133,6 +137,7 @@ class TaroModal extends Component<any, any> {
                 footer={[]}
                 style={[{ marginVertical: 0, paddingVertical: 0, paddingTop: 0}]}
                 bodyStyle={{ marginHorizontal: 0, marginVertical: 0, paddingHorizontal: 0, paddingVertical: 0, paddingBottom: 0, minHeight: 210, display: 'flex' }}
+                onClose={this.onClickMask}
             >
                 { this.getHeader()}
                 <View style={{ flex: 1}}>

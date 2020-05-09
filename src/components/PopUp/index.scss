@@ -96,7 +96,9 @@
 .pop-new-header-title {
     flex: 1;
     text-align: center;
-    background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .pop-new-header-image {
