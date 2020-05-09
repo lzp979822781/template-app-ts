@@ -56,8 +56,13 @@ const footerContainer = {
     borderTopColor: BORDER_COLOR
 }
 
+const defaultProps = {
+    maskClosable: true
+}
+
 class TaroModal extends Component<any, any> {
 
+    static defaultProps = defaultProps
     static externalClasses = ['custom-class']
 
     constructor(props: any) {
@@ -118,7 +123,7 @@ class TaroModal extends Component<any, any> {
 
 
     render() {
-        const { visible, transparent = true, maskClosable = true, closable = false, customStyle } = this.props;
+        const { visible, transparent = true, maskClosable, closable = false, } = this.props;
         return (
             <Modal
                 transparent={transparent}
@@ -126,7 +131,7 @@ class TaroModal extends Component<any, any> {
                 visible={visible}
                 closable={closable}
                 footer={[]}
-                style={[{ marginVertical: 0, paddingVertical: 0, paddingTop: 0}, customStyle]}
+                style={[{ marginVertical: 0, paddingVertical: 0, paddingTop: 0}]}
                 bodyStyle={{ marginHorizontal: 0, marginVertical: 0, paddingHorizontal: 0, paddingVertical: 0, paddingBottom: 0, minHeight: 210, display: 'flex' }}
             >
                 { this.getHeader()}

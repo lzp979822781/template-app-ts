@@ -37,7 +37,7 @@ const defaultProps = {
 class PopUp extends Component<IProps, PageState> {
 
     static defaultProps = defaultProps
-    static externalClasses = ['container-class']
+    static externalClasses = ['container-class', 'header-cls', 'body-cls']
 
     constructor(props: any) {
         super(props);
@@ -51,9 +51,10 @@ class PopUp extends Component<IProps, PageState> {
     }
 
     renderHeader = () => {
-        const { title, onClose } = this.props;
+        const { title, onClose, headerStyle } = this.props;
+        if(!title) return null;
         return (
-            <View className='pop-up-header'>
+            <View className={classnames('pop-up-header', 'header-cls')} style={headerStyle}>
                 {title}
                 <Image src={closeImg} className='close-img' onClick={onClose} />
             </View>
@@ -61,18 +62,19 @@ class PopUp extends Component<IProps, PageState> {
     }
 
     render() {
-        const { visible, title, onClose, style, headerStyle, bodyStyle /* scrollY, scrollX, onAfterClose  */ } = this.props;
+        const { visible, onClose, style, bodyStyle /* scrollY, scrollX, onAfterClose  */ } = this.props;
         const classes = classnames('pop-up', { active: visible });
 
         return (
             <View className={classes}>
                 <View className='pop-up-overlay' onClick={onClose}></View>
-                <View className='pop-up-container container-class' style={style}>
-                    <View className='pop-up-header' style={headerStyle}>
+                <View className={classnames('pop-up-container', 'container-cls')} style={style}>
+                    {/* <View className={classnames('pop-up-header', 'header-cls')} style={headerStyle}>
                         {title}
                         <Image src={closeImg} className='close-img' onClick={onClose} />
-                    </View>
-                    <View className='pop-up-body' style={bodyStyle}>
+                    </View> */}
+                    {this.renderHeader()}
+                    <View className={classnames('pop-up-body', 'body-cls')} style={bodyStyle}>
                         {this.props.children}
                     </View>
                 </View>
