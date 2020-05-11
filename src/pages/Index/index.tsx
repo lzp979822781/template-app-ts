@@ -4,7 +4,6 @@ import { View, Button, Text, Form, Input, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import { SearchBar } from '@/components';
-import CommonList from '@/components/common-list';
 
 import Request from '@/utils/Request';
 import './index.scss'
@@ -158,7 +157,7 @@ class Index extends Component<any, any> {
                     <Button className='add_btn' onClick={this.onAdd}>+</Button>
                     <Button className='dec_btn' onClick={this.onDec}>-</Button>
                     <Button className='dec_btn' onClick={this.onMulti}>other</Button>
-                    <Button className='add_btn' onClick={this.routerTo}>测试路由</Button>
+                    <Button className='add_btn' onClick={this.routerTo}>通用列表实现</Button>
                     <Button className='add_btn' onClick={this.onToTest}>测试基础组件</Button>
                 </View>
                 {this.renderForm()}
