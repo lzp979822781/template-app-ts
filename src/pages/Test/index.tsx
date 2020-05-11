@@ -1,9 +1,9 @@
 import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, ScrollView, Text, Button, Checkbox, Label } from '@tarojs/components';
+import Taro, { Component, Config } from '@tarojs/taro';
+import { connect } from '@tarojs/redux';
+import { View, ScrollView, Text, Button, Checkbox, Label, Swiper, SwiperItem, Image, CheckboxGroup } from '@tarojs/components';
 import { Modal, PopUp } from '@/components/index';
-
-import { connect } from '@tarojs/redux'
+import { UUID } from '@/utils/utils';
 
 import './index.scss'
 
@@ -52,7 +52,7 @@ class Test extends Component<any, any> {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
     config: Config = {
-        navigationBarTitleText: '测试页'
+        navigationBarTitleText: '测试页',
     }
 
     static options = {
@@ -95,19 +95,13 @@ class Test extends Component<any, any> {
                   text: '法国',
                   checked: false
                 }
-            ]
+            ],
+            checkedVal: []
         }
 
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(this.props, nextProps)
-    }
-
-    componentWillUnmount() { }
-
-    componentDidShow() {
-
+    componentDidMount() {
     }
 
     onScrollToUpper = () => {
@@ -146,7 +140,13 @@ class Test extends Component<any, any> {
     onOpenActionSheet = () => {
         this.setState({ show: true })
     }
-
+    
+    /**
+     * 复选框onChange事件
+     */
+    onCheckboxChange = ({detail: { value }}) => {
+        this.setState({ checkedVal: value})
+    }
     callModel = (type: string, data = {}) => {
         return new Promise((resolve) => {
             this.props.dispatch({
@@ -158,7 +158,7 @@ class Test extends Component<any, any> {
     }
 
     render() {
-        const { visible, show } = this.state;
+        const { visible, show, checkedVal=[] } = this.state;
         return (
             <View className='test'>
                 <Button type='primary' onClick={this.onOpenModal}>弹框测试</Button>
@@ -179,13 +179,54 @@ class Test extends Component<any, any> {
                     customFooter
                     customHeader
                 />
-
+                <Swiper
+                    className='swipper-container'
+                    indicatorColor='#999'
+                    indicatorActiveColor='#333'
+                    circular
+                    indicatorDots
+                    interval={2000}
+                    autoplay
+                    // onChange={(event) => { console.log('Swiper: onChange', event.detail.current) }}
+                >
+                    <SwiperItem className='swipper-item' style={{ backgroundColor: 'red'}}>
+                        <Image src='https://imgcps.jd.com/ling4/4635736/5Lqs6YCJ5aW96LSn/5L2g5YC85b6X5oul5pyJ/p-5c17126882acdd181dd53ce0/95c21515/cr_1125x549_0_72/s1125x690/q70.jpg' hei />
+                    </SwiperItem>
+                    <SwiperItem className='swipper-item' style={{ backgroundColor: 'green'}}>
+                        <Image src='https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/30451/34/12138/108202/5cb7720aE6ebf11ec/9945f5b3b9f9547f.jpg!cr_1125x549_0_72!q70.jpg.dpg' />
+                    </SwiperItem>
+                    <SwiperItem className='swipper-item' style={{ backgroundColor: 'blue'}}>
+                        <Image src='https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/54392/1/2538/95587/5d064ea3E74ca0763/dc1d10fbd105d8a0.jpg!cr_1125x549_0_72!q70.jpg.dpg' />
+                    </SwiperItem>
+                </Swiper>
+                    
                 <View className='page-section-1'>
                     <Text>默认样式</Text>
-                    <Checkbox value='选中' checked>选中</Checkbox>
-                    <Checkbox style='margin-left: 20rpx' value='未选中'>未选中</Checkbox>
-                </View>
+                    {/* 官网给出的示例不正确 */}
+                    <CheckboxGroup
+                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                        onChange={this.onCheckboxChange}
+                    >
+                        <Label style={{ flexDirection: 'row', alignItems: 'center'  }}>
+                            <Checkbox value='1' checked={checkedVal.includes(1)} /><Text>选中</Text>
+                        </Label>
+                        <Label style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Checkbox  value='2' checked={checkedVal.includes(2)} /><Text>未选中</Text>
+                        </Label>
+                    </CheckboxGroup>
                     
+                    {/* <CheckboxGroup
+                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                    >
+                        <Label style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Checkbox value={1} /><Text>选中</Text>
+                        </Label>
+                        <Label style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Checkbox value={2} /><Text>未选中</Text>
+                        </Label>
+                    </CheckboxGroup> */}
+                </View>
+
                 <ScrollView
                     className='scrollview'
                     scrollY
@@ -215,15 +256,23 @@ class Test extends Component<any, any> {
                         <View>
                             <View className='page-section-1'>
                                 <Text>默认样式</Text>
-                                <Checkbox value='选中' checked>选中</Checkbox>
-                                <Checkbox style='margin-left: 20rpx' value='未选中'>未选中</Checkbox>
+                                <Label style={{ flexDirection: 'row', alignItems: 'center'  }}>
+                                    <Checkbox value='选中' checked /><Text>选中</Text>
+                                </Label>
+                                <Label style={{ flexDirection: 'row', alignItems: 'center'  }}>
+                                    {/* 如果残留空格, 会当成Text rn中会一直报错 */}
+                                    <Checkbox style='margin-left: 20px' value='未选中' /><Text>未选中</Text>
+                                </Label>
                             </View>
                             <View className='page-section-2'>
                                 <Text>推荐展示样式</Text>
                                 {this.state.list.map((item, i) => {
                                     return (
-                                        <Label className='checkbox-list__label' for={i} key={i}>
-                                            <Checkbox className='checkbox-list__checkbox' value={item.value} checked={item.checked}>{item.text}</Checkbox>
+                                        <Label className='checkbox-list__label' for={i} key={UUID()} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'  }}>
+                                            <Checkbox className='checkbox-list__checkbox' value={item.value} checked={item.checked} />
+                                            <View className='check-item-text'>
+                                                <Text>{item.text}</Text>
+                                            </View>
                                         </Label>
                                     )
                                 })}

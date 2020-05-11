@@ -58,7 +58,22 @@
     &-1, &-2 {
         display: flex;
         flex-direction: row;
+        align-items: center;
     }
 }
 
+.swipper-container {
+    height: 300px;
+}
 
+.swipper-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+
+.check-item-text {
+    min-width: 40px;
+}
