@@ -20,9 +20,9 @@ export default class PagePicker extends Component {
     }
 
     componentDidShow() {
-        this.setState({
-            refreshing: true,
-        })
+        // this.setState({
+        //     refreshing: true,
+        // })
         this.loadList();
     }
 
