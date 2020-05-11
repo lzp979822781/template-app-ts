@@ -1,10 +1,18 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Block, Button, Text, Image, Form, Input, ScrollView, Swiper, SwiperItem } from '@tarojs/components'
 import DataList from '@/components/DataList/index';
+import SwipeAction from '@/components/SwipeAction/index';
 import './index.scss';
 
-export default class PagePicker extends Component {
 
+interface option {
+    text: string;
+    style?: object;
+    code: number;
+}
+
+
+export default class PagePicker extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -77,14 +85,40 @@ export default class PagePicker extends Component {
         });
     }
 
+    onClickSwipeAction = (item) => {
+        Taro.showToast({
+            title: item.text + "" + item.code,
+            icon: "none",
+            duration: 500
+        })
+            .then(res => console.log(res))
+    }
+
+
+
     render() {
+        const options: option[] = [{
+            code: 1,
+            text: "编辑",
+            style: { backgroundColor: 'orange', color: 'white' }
+        }, {
+            code: 2,
+            text: "删除",
+            style: { backgroundColor: 'red', color: 'white' }
+        }]
+
         return (
             <View className='list'>
+                <SwipeAction options={options} onClick={this.onClickSwipeAction}>
+                    <View className="swipe-action"><Text>SwipeAction 侧滑操作事例</Text></View>
+                </SwipeAction>
+
                 <DataList
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                     onEndReached={this.onEndReached}
                 >
+                    {/* 空标签用Block */}
                     <Block>
                         {
                             this.renderItems()
