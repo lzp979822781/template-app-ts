@@ -13,9 +13,25 @@ class DataList extends Component {
         onScroll: function (): void {
         },
     }
-    
+
     constructor(props) {
         super(props);
+        this.state = {
+            res: {
+                windowHeight: 1200
+            }
+        }
+    }
+
+    componentWillMount() {
+        Taro.getSystemInfo({
+            success: res => {
+                this.setState({
+                    res
+                })
+            }
+        })
+            .then(res => console.log(res))
     }
 
     onListRefresh() {
@@ -32,13 +48,16 @@ class DataList extends Component {
     }
 
     render() {
-
         const scrollTop = 0
         const Threshold = 20
 
         return (
             <ScrollView
                 className='scrollview'
+                style={{
+                    // 获取设备信息，小程序 h5,需要一个固定高度去支持滚动，注：设置height：100%无效，必须是固定高度
+                    height: `${this.state.res.windowHeight}px`
+                }}
                 refresherEnabled={true}
                 refresherThreshold={45}
                 refresherTriggered={this.props.refreshing}

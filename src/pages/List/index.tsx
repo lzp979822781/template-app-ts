@@ -4,6 +4,7 @@ import DataList from '@/components/DataList/index';
 import SwipeAction from '@/components/SwipeAction/index';
 import './index.scss';
 
+const currentEnv = Taro.getEnv(); // 获取当前环境平台
 
 interface option {
     text: string;
@@ -24,7 +25,7 @@ export default class PagePicker extends Component {
 
     config: Config = {
         navigationBarTitleText: '列表',
-        disableScroll: true   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
+        disableScroll:  true, //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     }
 
     componentDidShow() {
@@ -60,7 +61,7 @@ export default class PagePicker extends Component {
     }
 
     renderItems() {
-        const dataSource = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        const dataSource = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
         const options: option[] = [{
             code: 1,
