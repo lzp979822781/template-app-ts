@@ -7,13 +7,10 @@ class DataList extends Component {
     static defaultProps = {
         refreshing: false,
         onListEndReached: function (): void {
-            return;
         },
         onScrollToLower: function (): void {
-            return;
         },
         onScroll: function (): void {
-            return;
         },
     }
     

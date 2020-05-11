@@ -1,4 +1,4 @@
-import Taro, { Component, ComponentClass } from '@tarojs/taro';
+import Taro, { Component } from '@tarojs/taro';
 import {
     ScrollView,
     RefreshControl
@@ -9,13 +9,10 @@ class DataList extends Component<any, any> {
     static defaultProps = {
         refreshing: false,
         onEndReached: function (): void {
-            return;
         },
         onRefresh: function (): void {
-            return;
         },
         onScroll: function (): void {
-            return;
         }
     };
 
