@@ -1,96 +1,97 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text, Form, Input, ScrollView, Swiper, SwiperItem } from '@tarojs/components'
-// const SwiperItem = Swiper.item;
+import { View, Block, Button, Text, Image, Form, Input, ScrollView, Swiper, SwiperItem } from '@tarojs/components'
+import DataList from '@/components/DataList/index';
+import './index.scss';
 
 export default class PagePicker extends Component {
-    constructor() {
-        super(...arguments)
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            refreshing: false
+        }
+        this.onRefresh = this.onRefresh.bind(this)
+        this.onEndReached = this.onEndReached.bind(this)
     }
 
     config: Config = {
-        navigationBarTitleText: '列表'
+        navigationBarTitleText: '列表',
+        disableScroll: true   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     }
 
-    onScrollToUpper() { }
-
-    // or 使用箭头函数
-    // onScrollToUpper = () => {}
-
-    onScroll(e) {
-        console.log(e.detail)
+    componentDidShow() {
+        this.setState({
+            refreshing: true,
+        })
+        this.loadList();
     }
 
-    onScrollToLower(e){
-       alert("111");
+    loadList() {
+        setTimeout(() => {
+            this.setState({
+                refreshing: false,
+            })
+        }, 3000)
+    }
+
+
+    onRefresh() {
+        this.setState({
+            refreshing: true,
+        })
+        this.loadList();
+    }
+
+    onEndReached() {
+        Taro.showToast({
+            title: '底部',
+            icon: "none",
+            duration: 500
+        })
+            .then(res => console.log(res))
+    }
+
+    renderItems() {
+        const dataSource = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        return dataSource.map((item, index) => {
+            return <View key={index} className="list-item" >
+                <View>
+                    <Image
+                        className="item-image"
+                        src='http://img20.360buyimg.com/ling/jfs/t1/20876/36/12835/3043/5c9c2929Ed18cfb11/15b1c03ec830ab8e.png'
+                    />
+                </View>
+                <View>
+                    <View className="item-title-box">
+                        <Text className="item-title">
+                            测试商品日用百货-{item}
+                        </Text>
+                    </View>
+                    <View>
+                        <Text className="item-dec">
+                            有效期：2019-09-24
+                        </Text>
+                    </View>
+                </View>
+            </View>
+        });
     }
 
     render() {
-        const scrollStyle = {
-            height: 150
-        }
-        const scrollTop = 0
-        const Threshold = 20
-        const vStyleA = {
-            height: 150,
-            'background-color': 'rgb(26, 173, 25)'
-        }
-        const vStyleB = {
-            height: 150,
-            'background-color': 'rgb(39,130,215)'
-        }
-        const vStyleC = {
-            height: 150,
-            'background-color': 'rgb(241,241,241)',
-            color: '#333'
-        }
-
         return (
-            <ScrollView
-                className='scrollview'
-                scrollY
-                scrollWithAnimation
-                onRefresherPulling={<Text>111</Text>}
-                scrollTop={scrollTop}
-                style={scrollStyle}
-                lowerThreshold={Threshold}
-                upperThreshold={Threshold}
-                onScrollToUpper={this.onScrollToUpper.bind(this)} // 使用箭头函数的时候 可以这样写 `onScrollToUpper={this.onScrollToUpper}`
-                onScroll={this.onScroll}
-                onScrollToLower={this.onScrollToLower}
-                refresherBackground={"#eee"}
-            >
-                <Swiper
-                    style={{
-                        height: 200,
-                        backgroundColor: "#eeeeee"
-                    }}
-                    indicatorColor='#999'
-                    indicatorActiveColor='#333'
-                    // vertical
-                    circular
-                    indicatorDots
-                    autoplay>
-                    <SwiperItem>
-                        <View className='demo-text-1'><Text>1</Text></View>
-                    </SwiperItem>
-                    <SwiperItem>
-                        <View className='demo-text-2'><Text>2</Text></View>
-                    </SwiperItem>
-                    <SwiperItem>
-                        <View className='demo-text-3'><Text>3</Text></View>
-                    </SwiperItem>
-                </Swiper>
-
-                <View style={vStyleA}><Text>A</Text></View>
-                <View style={vStyleB}><Text>B</Text></View>
-                <View style={vStyleC}><Text>C</Text></View>
-                <View style={vStyleA}><Text>1</Text></View>
-                <View style={vStyleB}><Text>2</Text></View>
-                <View style={vStyleC}><Text>3</Text></View>
-            </ScrollView>
-
+            <View className='list'>
+                <DataList
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.onRefresh.bind(this)}
+                    onEndReached={this.onEndReached.bind(this)}
+                >
+                    <Block>
+                        {
+                            this.renderItems()
+                        }
+                    </Block>
+                </DataList>
+            </View>
         )
     }
 }

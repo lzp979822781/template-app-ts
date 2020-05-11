@@ -7,6 +7,14 @@ import { Index } from './pages'
 
 import './app.scss'
 
+console.ignoredYellowBox = [
+  "Warning: BackAndroid is deprecated. Please use BackHandler instead.",
+  "source.uri should not be an empty string",
+  "Invalid props.style key"
+];
+
+console.disableYellowBox = true; // 关闭全部黄色警告
+
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
