@@ -16,7 +16,7 @@ sudo gem install cocoapods -v 1.8.4  // 或者brew install cocoapods -v 1.8.4
 pod repo add master https://coding.jd.com/jd/CocoapodsSpec.git
 注意：不要更改默认的xcode名称和路径,如果有多xcode版本安装，请指定到默认, 更改方式如下，如果
 使用命令sudo xcode-select --switch /Applications/Xcode.app 后面为自己的xcode地址
-通过xcode修改：打开xcode -> xcode -> preferences -> locations -> Command Line Toolsx下面的灰色字体中修改
+通过xcode修改：打开xcode -> xcode -> preferences -> locations -> Command Line Toolsx下修改路径，当前命令行工具路径见下面的灰色字体
 ```
 
 

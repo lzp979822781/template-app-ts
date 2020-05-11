@@ -190,7 +190,7 @@ class Test extends Component<any, any> {
                     // onChange={(event) => { console.log('Swiper: onChange', event.detail.current) }}
                 >
                     <SwiperItem className='swipper-item' style={{ backgroundColor: 'red'}}>
-                        <Image src='https://imgcps.jd.com/ling4/4635736/5Lqs6YCJ5aW96LSn/5L2g5YC85b6X5oul5pyJ/p-5c17126882acdd181dd53ce0/95c21515/cr_1125x549_0_72/s1125x690/q70.jpg' hei />
+                        <Image src='https://imgcps.jd.com/ling4/4635736/5Lqs6YCJ5aW96LSn/5L2g5YC85b6X5oul5pyJ/p-5c17126882acdd181dd53ce0/95c21515/cr_1125x549_0_72/s1125x690/q70.jpg' />
                     </SwiperItem>
                     <SwiperItem className='swipper-item' style={{ backgroundColor: 'green'}}>
                         <Image src='https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/30451/34/12138/108202/5cb7720aE6ebf11ec/9945f5b3b9f9547f.jpg!cr_1125x549_0_72!q70.jpg.dpg' />
