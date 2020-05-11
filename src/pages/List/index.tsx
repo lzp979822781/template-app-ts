@@ -61,42 +61,7 @@ export default class PagePicker extends Component {
 
     renderItems() {
         const dataSource = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        return dataSource.map((item, index) => {
-            return <View key={index} className="list-item" >
-                <View>
-                    <Image
-                        className="item-image"
-                        src='http://img20.360buyimg.com/ling/jfs/t1/20876/36/12835/3043/5c9c2929Ed18cfb11/15b1c03ec830ab8e.png'
-                    />
-                </View>
-                <View>
-                    <View className="item-title-box">
-                        <Text className="item-title">
-                            测试商品日用百货-{item}
-                        </Text>
-                    </View>
-                    <View>
-                        <Text className="item-dec">
-                            有效期：2019-09-24
-                        </Text>
-                    </View>
-                </View>
-            </View>
-        });
-    }
 
-    onClickSwipeAction = (item) => {
-        Taro.showToast({
-            title: item.text + "" + item.code,
-            icon: "none",
-            duration: 500
-        })
-            .then(res => console.log(res))
-    }
-
-
-
-    render() {
         const options: option[] = [{
             code: 1,
             text: "编辑",
@@ -107,12 +72,49 @@ export default class PagePicker extends Component {
             style: { backgroundColor: 'red', color: 'white' }
         }]
 
+        return dataSource.map((item, index) => {
+            return <View key={item}  className="list-item-box" >
+                <SwipeAction options={options} onClick={this.onClickSwipeAction.bind(this, index)}>
+                    <View className="list-item" >
+                        <View>
+                            <Image
+                                className="item-image"
+                                src='http://img20.360buyimg.com/ling/jfs/t1/20876/36/12835/3043/5c9c2929Ed18cfb11/15b1c03ec830ab8e.png'
+                            />
+                        </View>
+                        <View>
+                            <View className="item-title-box">
+                                <Text className="item-title">
+                                    测试商品日用百货-{item}
+                                </Text>
+                            </View>
+                            <View>
+                                <Text className="item-dec">
+                                    有效期：2019-09-24
+                            </Text>
+                            </View>
+                        </View>
+                    </View>
+                </SwipeAction>
+            </View>
+        });
+    }
+
+    onClickSwipeAction = (index, item) => {
+        Taro.showToast({
+            title:`第 ${index} 条 | 点击: ${item.text}` ,
+            icon: "none",
+            duration: 2000
+        })
+            .then(res => console.log(res))
+    }
+
+
+
+    render() {
+
         return (
             <View className='list'>
-                <SwipeAction options={options} onClick={this.onClickSwipeAction}>
-                    <View className="swipe-action"><Text>SwipeAction 侧滑操作事例</Text></View>
-                </SwipeAction>
-
                 <DataList
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
@@ -125,7 +127,7 @@ export default class PagePicker extends Component {
                         }
                     </Block>
                 </DataList>
-            </View>
+            </View >
         )
     }
 }

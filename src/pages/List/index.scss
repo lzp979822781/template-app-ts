@@ -11,11 +11,13 @@
     background-color: #F8F8F8;
 }
 
+.list-item-box {
+    margin-bottom: 30px;
+}
+
 .list-item {
     background-color: #FFFFFF;
     padding: 30px;
-    margin: 30px;
-    margin-bottom: 0px;
     display: flex;
     flex-direction: row;
     height: 300px;
