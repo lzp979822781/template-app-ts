@@ -25,7 +25,7 @@ export default class PagePicker extends Component {
 
     config: Config = {
         navigationBarTitleText: '列表',
-        disableScroll:  true, //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
+        disableScroll: true, //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     }
 
     componentDidShow() {
@@ -74,7 +74,8 @@ export default class PagePicker extends Component {
         }]
 
         return dataSource.map((item, index) => {
-            return <View key={item}  className="list-item-box" >
+            let className = index === 0 ? "list-item-box top-gap" : "list-item-box";
+            return <View key={item} className={className} >
                 <SwipeAction options={options} onClick={this.onClickSwipeAction.bind(this, index)}>
                     <View className="list-item" >
                         <View>
@@ -103,7 +104,7 @@ export default class PagePicker extends Component {
 
     onClickSwipeAction = (index, item) => {
         Taro.showToast({
-            title:`第 ${index} 条 | 点击: ${item.text}` ,
+            title: `第 ${index} 条 | 点击: ${item.text}`,
             icon: "none",
             duration: 2000
         })
