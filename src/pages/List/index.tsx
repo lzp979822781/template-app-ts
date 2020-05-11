@@ -82,8 +82,8 @@ export default class PagePicker extends Component {
             <View className='list'>
                 <DataList
                     refreshing={this.state.refreshing}
-                    onRefresh={this.onRefresh.bind(this)}
-                    onEndReached={this.onEndReached.bind(this)}
+                    onRefresh={this.onRefresh}
+                    onEndReached={this.onEndReached}
                 >
                     <Block>
                         {
