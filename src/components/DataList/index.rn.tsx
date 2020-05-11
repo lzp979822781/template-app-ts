@@ -26,7 +26,7 @@ class DataList extends Component<any, any> {
         const offsetY = e.nativeEvent.contentOffset.y; //滑动距离
         const contentSizeHeight = e.nativeEvent.contentSize.height; //scrollView contentSize高度
         const oriageScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
-        if (offsetY + oriageScrollHeight >= contentSizeHeight) {
+        if (offsetY + oriageScrollHeight + 10 >= contentSizeHeight) {
             this.props.onEndReached(e);
         }
     }
