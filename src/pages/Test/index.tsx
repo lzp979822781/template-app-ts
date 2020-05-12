@@ -117,6 +117,7 @@ class Test extends Component<any, any> {
     }
 
     onOpenModal = () => {
+        console.log("点击modal");
         this.setState({ visible: true })
     }
 
@@ -138,6 +139,7 @@ class Test extends Component<any, any> {
     }
 
     onOpenActionSheet = () => {
+        console.log("打开actionsheet");
         this.setState({ show: true })
     }
     
@@ -145,6 +147,7 @@ class Test extends Component<any, any> {
      * 复选框onChange事件
      */
     onCheckboxChange = ({detail: { value }}) => {
+        console.log("checkbox value", value);
         this.setState({ checkedVal: value})
     }
     callModel = (type: string, data = {}) => {
@@ -202,29 +205,18 @@ class Test extends Component<any, any> {
                     
                 <View className='page-section-1'>
                     <Text>默认样式</Text>
-                    {/* 官网给出的示例不正确 */}
                     <CheckboxGroup
                         style={{ flexDirection: 'row', alignItems: 'center' }}
                         onChange={this.onCheckboxChange}
                     >
                         <Label style={{ flexDirection: 'row', alignItems: 'center'  }}>
-                            <Checkbox value='1' checked={checkedVal.includes(1)} /><Text>选中</Text>
+                            <Checkbox value='1' checked={checkedVal.includes("1")} /><Text>选中</Text>
                         </Label>
                         <Label style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Checkbox  value='2' checked={checkedVal.includes(2)} /><Text>未选中</Text>
+                            <Checkbox  value='2' checked={checkedVal.includes("2")} /><Text>未选中</Text>
                         </Label>
                     </CheckboxGroup>
                     
-                    {/* <CheckboxGroup
-                        style={{ flexDirection: 'row', alignItems: 'center' }}
-                    >
-                        <Label style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Checkbox value={1} /><Text>选中</Text>
-                        </Label>
-                        <Label style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Checkbox value={2} /><Text>未选中</Text>
-                        </Label>
-                    </CheckboxGroup> */}
                 </View>
 
                 <ScrollView
@@ -260,7 +252,6 @@ class Test extends Component<any, any> {
                                     <Checkbox value='选中' checked /><Text>选中</Text>
                                 </Label>
                                 <Label style={{ flexDirection: 'row', alignItems: 'center'  }}>
-                                    {/* 如果残留空格, 会当成Text rn中会一直报错 */}
                                     <Checkbox style='margin-left: 20px' value='未选中' /><Text>未选中</Text>
                                 </Label>
                             </View>
