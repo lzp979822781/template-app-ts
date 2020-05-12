@@ -67,26 +67,9 @@ class TaroModal extends Component<any, any> {
         this.state = {}
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(this.props, nextProps)
-    }
-
     componentWillUnmount() { }
 
     componentDidShow() {
-    }
-
-    getFooterBtn = () => {
-        /* const { footer } = this.props;
-        if(!Array.isArray(footer) || (Array.isArray(footer) && !footer.length)) {
-            return [];
-        }
-        return footer.map(({ text, onClick }) => ({ text, onPress: onClick })); */
-        const { confirmText, cancelText, onConfirm, onCancel } = this.props;
-        return [
-            { text: cancelText, onPress: onCancel },
-            { text: confirmText, onPress: onConfirm}
-        ];
     }
 
     renderDefaultHeader = () => {
@@ -108,14 +91,6 @@ class TaroModal extends Component<any, any> {
                 {renderHeader ? this.props.renderHeader: this.renderDefaultHeader()}
             </View>
         )
-    }
-
-    getClasses = () => {
-        const classes = TaroModal.externalClasses.reduce((total, item) => {
-            total += `${item} `;
-            return total;
-        }, '');
-        return classes;
     }
 
     onClickMask = () => {

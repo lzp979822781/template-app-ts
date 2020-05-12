@@ -117,12 +117,15 @@ class Test extends Component<any, any> {
     }
 
     onOpenModal = () => {
-        console.log("点击modal");
         this.setState({ visible: true })
     }
 
+    onPopupClose = () => {
+        this.setState({ show: false})
+    }
+
     onClose = () => {
-        this.setState({ visible: false, show: false })
+        this.setState({ visible: false })
     }
 
     onConfirm = () => {
@@ -139,7 +142,6 @@ class Test extends Component<any, any> {
     }
 
     onOpenActionSheet = () => {
-        console.log("打开actionsheet");
         this.setState({ show: true })
     }
     
@@ -173,7 +175,7 @@ class Test extends Component<any, any> {
                   // eslint-disable-next-line taro/render-props
                     renderFooter={this.renderFooter()}
                     renderHeader={<View><Text>标题</Text></View>}
-                //   footer={footer}
+                    // footer={footer}
                     onCancel={this.onClose}
                     onConfirm={this.onConfirm}
                     renderContent={<View><Text>content</Text></View>}
@@ -237,7 +239,7 @@ class Test extends Component<any, any> {
 
                 <PopUp 
                     visible={show}
-                    onClose={this.onClose}
+                    onClose={this.onPopupClose}
                     pop-class='pop-up-rn'
                     // style={{ borderRadius: '4px'}}
                     // container-cls='container-cls'

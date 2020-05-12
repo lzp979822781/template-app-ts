@@ -41,10 +41,6 @@ class PopUp extends Component<IProps, PageState> {
         this.state = {}
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(this.props, nextProps)
-    }
-
     handleClose = () => {
 
     }
