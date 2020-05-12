@@ -5,6 +5,8 @@ import { View, ScrollView, Text, Button, Checkbox, Label, Swiper, SwiperItem, Im
 import { Modal, PopUp } from '@/components/index';
 import { UUID } from '@/utils/utils';
 
+// import SwipperExample from '../SwipperExample';
+
 import './index.scss'
 
 // #region 书写注意
@@ -152,6 +154,39 @@ class Test extends Component<any, any> {
         console.log("checkbox value", value);
         this.setState({ checkedVal: value})
     }
+
+    renderSwipperItem = () => {
+        const data = [ 
+            { backgroundColor: 'red', url: 'https://imgcps.jd.com/ling4/4635736/5Lqs6YCJ5aW96LSn/5L2g5YC85b6X5oul5pyJ/p-5c17126882acdd181dd53ce0/95c21515/cr_1125x549_0_72/s1125x690/q70.jpg' },
+            { backgroundColor: 'green', url: 'https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/30451/34/12138/108202/5cb7720aE6ebf11ec/9945f5b3b9f9547f.jpg!cr_1125x549_0_72!q70.jpg.dpg' }, 
+            { backgroundColor: 'blue', url: 'https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/54392/1/2538/95587/5d064ea3E74ca0763/dc1d10fbd105d8a0.jpg!cr_1125x549_0_72!q70.jpg.dpg'}
+        ];
+        return data.map((item) => {
+            const { backgroundColor, url } = item;
+            return (
+                <SwiperItem className='swipper-item' style={{ backgroundColor }} key={UUID()}>
+                    <Image src={url} />
+                </SwiperItem>
+            )
+        })
+    }
+
+    renderRnSwipperItem = () => {
+        const data = [ 
+            { backgroundColor: 'red', url: 'https://imgcps.jd.com/ling4/4635736/5Lqs6YCJ5aW96LSn/5L2g5YC85b6X5oul5pyJ/p-5c17126882acdd181dd53ce0/95c21515/cr_1125x549_0_72/s1125x690/q70.jpg' },
+            { backgroundColor: 'green', url: 'https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/30451/34/12138/108202/5cb7720aE6ebf11ec/9945f5b3b9f9547f.jpg!cr_1125x549_0_72!q70.jpg.dpg' }, 
+            { backgroundColor: 'blue', url: 'https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/54392/1/2538/95587/5d064ea3E74ca0763/dc1d10fbd105d8a0.jpg!cr_1125x549_0_72!q70.jpg.dpg'}
+        ];
+        return data.map((item) => {
+            const { backgroundColor, url } = item;
+            return (
+                <View className='swipper-item' style={{ backgroundColor }} key={UUID()}>
+                    <Image src={url} />
+                </View>
+            )
+        })
+    }
+
     callModel = (type: string, data = {}) => {
         return new Promise((resolve) => {
             this.props.dispatch({
@@ -164,6 +199,7 @@ class Test extends Component<any, any> {
 
     render() {
         const { visible, show, checkedVal=[] } = this.state;
+
         return (
             <View className='test'>
                 <Button type='primary' onClick={this.onOpenModal}>弹框测试</Button>
@@ -194,16 +230,11 @@ class Test extends Component<any, any> {
                     autoplay
                     // onChange={(event) => { console.log('Swiper: onChange', event.detail.current) }}
                 >
-                    <SwiperItem className='swipper-item' style={{ backgroundColor: 'red'}}>
-                        <Image src='https://imgcps.jd.com/ling4/4635736/5Lqs6YCJ5aW96LSn/5L2g5YC85b6X5oul5pyJ/p-5c17126882acdd181dd53ce0/95c21515/cr_1125x549_0_72/s1125x690/q70.jpg' />
-                    </SwiperItem>
-                    <SwiperItem className='swipper-item' style={{ backgroundColor: 'green'}}>
-                        <Image src='https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/30451/34/12138/108202/5cb7720aE6ebf11ec/9945f5b3b9f9547f.jpg!cr_1125x549_0_72!q70.jpg.dpg' />
-                    </SwiperItem>
-                    <SwiperItem className='swipper-item' style={{ backgroundColor: 'blue'}}>
-                        <Image src='https://m.360buyimg.com/mobilecms/s750x366_jfs/t1/54392/1/2538/95587/5d064ea3E74ca0763/dc1d10fbd105d8a0.jpg!cr_1125x549_0_72!q70.jpg.dpg' />
-                    </SwiperItem>
+                    { this.renderSwipperItem()}
                 </Swiper>
+                {/* <SwipperExample>
+                    { Taro.getEnv() === 'RN' ? this.renderRnSwipperItem() : this.renderSwipperItem()}
+                </SwipperExample> */}
                     
                 <View className='page-section-1'>
                     <Text>默认样式</Text>
