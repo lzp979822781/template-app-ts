@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro';
-import { AtBadge } from 'taro-ui'
+import { View, Text } from '@tarojs/components';
 
 import './index.scss'
 
@@ -35,19 +35,35 @@ class TaroBadge extends Component<PageOwnProps, PageState> {
     componentDidMount() {
     }
 
+    renderBadge = () => {
+        const { dot } = this.props;
+        return dot ? <View className='badge-dot'><Text> </Text></View> : (
+            <View className='badge-text'><Text style={{ color: '#fff'}}>{ this.getValue()}</Text></View>
+        )
+    }
+
+    getValue = () => {
+        const { value, maxValue } = this.props;
+        if (value === '' || value === null || value === undefined) return '';
+        if(Number.isNaN(+value)) {
+            return value;
+        }
+
+        if(typeof maxValue === 'number' ) {
+            return value > maxValue ? `${maxValue}+` : value;
+        }
+
+    }
+
     render() {
 
-        const { value, dot, maxValue } = this.props;
-
         return (
-            <AtBadge 
-                className='badge-cls'
-                value={value}
-                maxValue={maxValue}
-                dot={dot}
-            >
-                {this.props.children}
-            </AtBadge>
+            <View className='badge badge-cls'>
+                <View>
+                    {this.props.children}
+                    { this.renderBadge()}
+                </View>
+            </View>
         )
     }
 }

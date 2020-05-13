@@ -1,0 +1,87 @@
+
+$hd: 2; // 基本单位
+$at-badge-dot-size: 20px;
+$color-white: #FFF;
+$color-error: #FF4949;
+$font-size-xs: 14px * $hd;
+$at-badge-font-size: $font-size-xs;
+$at-badge-bg: linear-gradient(90deg, #E93B3D 0%, #FF9574 100%);
+$at-badge-bg-color: $color-error;
+$at-badge-border-radius: $at-badge-font-size * 0.7;
+$at-badge-box-shadow: 0 4px 8px 0 rgba($color: $at-badge-bg-color, $alpha: 0.2);
+
+$at-badge-color: $color-white !default;
+
+// 水平间距
+$spacing-h-sm: 5px * $hd;
+
+/*  #ifndef rn */
+.badge {
+    position: relative;
+    display: inline-block;
+    font-size: 0;
+    vertical-align: middle;
+    &-text {
+        position: absolute;
+        padding: 0 $spacing-h-sm;
+        top: -$at-badge-border-radius;
+        right: -2PX;
+        color: $at-badge-color;
+        font-size: $at-badge-font-size;
+        line-height: 1.4;
+        border-radius: $at-badge-border-radius;
+        // background: $at-badge-bg;
+        background: $at-badge-bg-color;
+        box-shadow: $at-badge-box-shadow;
+        transform: translate(50%, 0);
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    &-dot {
+        position: absolute;
+        right: -6px;
+        top: -6px;
+        width: $at-badge-dot-size;
+        height: $at-badge-dot-size;
+        border-radius: 50%;
+        overflow: hidden;
+        background: $at-badge-bg;
+        box-shadow: $at-badge-box-shadow;
+    }
+}
+
+/*  #endif  */
+
+/*  #ifdef rn */
+.badge {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    &-text {
+        position: absolute;
+        padding: 0 $spacing-h-sm;
+        top: -$at-badge-border-radius;
+        background: $at-badge-bg-color;
+        border-radius: $at-badge-border-radius;
+        color: $at-badge-color;
+        right: -30px;
+        overflow: hidden;
+        z-index: 1;
+    }
+    
+    
+}
+
+.badge-dot {
+    position: absolute;
+    right: -6px;
+    top: -6px;
+    width: $at-badge-dot-size;
+    height: $at-badge-dot-size;
+    border-radius: $at-badge-dot-size / 2 ;
+    overflow: hidden;
+    background: $at-badge-bg-color;
+}
+
+/*  #endif  */
