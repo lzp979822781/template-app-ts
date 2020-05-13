@@ -2,7 +2,7 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro';
 import { connect } from '@tarojs/redux';
 import { View, ScrollView, Text, Button, Checkbox, Label, Swiper, SwiperItem, Image, CheckboxGroup } from '@tarojs/components';
-import { Modal, PopUp } from '@/components/index';
+import { Modal, PopUp, Badge } from '@/components/index';
 import { UUID } from '@/utils/utils';
 
 // import SwipperExample from '../SwipperExample';
@@ -187,6 +187,19 @@ class Test extends Component<any, any> {
         })
     }
 
+    /**
+     * rnStyle为设置rn端组件样式，rn端样式是已标准屏为标准, Taro本身是以2倍屏为标准
+     * 所以在class中设置为
+     * @returns
+     */
+    renderBadge = () => {
+        return (
+            <Badge value={30} badge-cls='badge-cls' rnStyle={{ marginTop: 5 }}>
+                <Button type='primary'>角标按钮</Button>
+            </Badge>
+        )
+    }
+
     callModel = (type: string, data = {}) => {
         return new Promise((resolve) => {
             this.props.dispatch({
@@ -204,6 +217,7 @@ class Test extends Component<any, any> {
             <View className='test'>
                 <Button type='primary' onClick={this.onOpenModal}>弹框测试</Button>
                 <Button type='primary' onClick={this.onOpenActionSheet} className='test-actionsheet'>popup 弹框测试</Button>
+                { this.renderBadge()}
                 <Modal 
                     visible={visible} 
                     title='弹框'
