@@ -1,6 +1,6 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text, Form, Input, Image } from '@tarojs/components'
+import { View, Button, Text, Form, Input } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import { SearchBar } from '@/components';
@@ -91,6 +91,21 @@ class Index extends Component<any, any> {
         this.callModel('minus');
     }
 
+    /**
+     * 搜索框扫描
+     */
+    onScan = () => {
+        console.log("扫描事件");
+        const type = Taro.getEnv();
+        if(type !== 'RN') {
+            Taro.scanCode({ scanType: ['barCode', 'qrCode']}).then(res => {
+                console.log("res", res);
+            }).catch(e=> {
+                console.log("扫描错误", e);
+            })
+        }
+    }
+
 
     routerTo = () => {
         Taro.navigateTo({
@@ -150,7 +165,9 @@ class Index extends Component<any, any> {
             <View className='index'>
                 <View className='nav'>
                     <View className='header'>
-                        <SearchBar />
+                        <SearchBar 
+                            onRightClick={this.onScan}
+                        />
                     </View>
                 </View>
                 <View>
