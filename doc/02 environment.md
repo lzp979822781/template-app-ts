@@ -72,6 +72,24 @@ npm run dev:rn
  react-native run-ios
 ```
 
+## 微信小程序
+
+### 下载微信开发者工具
+
+下载链接：https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html
+
+### 小程序账号注册
+
+注册链接：https://mp.weixin.qq.com/wxopen/waregister?action=step1
+
+### 启动taro 微信小程序
+
+进入template-app-ts目录，执行npm run dev:weapp，此时在dist目录下生产成本weapp工程
+
+### 微信开发者工具工程导入
+
+将dist/weapp工程导入到微信开发者工具
+
 ## 其余端验证
 
 按照官网启动命令进行启动，无需特别注意
