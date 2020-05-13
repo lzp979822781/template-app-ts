@@ -1,11 +1,16 @@
 import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text, Form, Input } from '@tarojs/components'
+import { View, Button, Text, Form, Input, Swiper, Image, SwiperItem } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
+import img1 from '@/assets/images/01.png';
+import img2 from '@/assets/images/02.png';
+import img3 from '@/assets/images/03.png';
+import img4 from '@/assets/images/04.png';
 
 import { SearchBar } from '@/components';
 
 import Request from '@/utils/Request';
+import { UUID } from '@/utils/utils';
 import './index.scss'
 
 // #region 书写注意
@@ -150,6 +155,23 @@ class Index extends Component<any, any> {
         )
     }
 
+    renderSwipperItem = () => {
+        const data = [ 
+            { url: img1 },
+            { url: img2 }, 
+            { url: img3 },
+            { url: img4 }
+        ];
+        return data.map((item) => {
+            const {  url } = item;
+            return (
+                <SwiperItem className='swipper-item' key={UUID()} style={{ backgroundColor: '#8EA7E1'}}>
+                    <Image src={url} />
+                </SwiperItem>
+            )
+        })
+    }
+
     callModel = (type: string, data = {}) => {
         return new Promise((resolve) => {
             this.props.dispatch({
@@ -170,6 +192,18 @@ class Index extends Component<any, any> {
                         />
                     </View>
                 </View>
+                <Swiper
+                    className='swipper-container'
+                    indicatorColor='#999'
+                    indicatorActiveColor='#333'
+                    circular
+                    indicatorDots
+                    interval={2000}
+                    autoplay
+                >
+                    { this.renderSwipperItem()}
+                </Swiper>
+                    
                 <View>
                     <Button className='add_btn' onClick={this.onAdd}>+</Button>
                     <Button className='dec_btn' onClick={this.onDec}>-</Button>
