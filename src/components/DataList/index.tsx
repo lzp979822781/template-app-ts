@@ -5,6 +5,7 @@ import "./index.scss";
 
 class DataList extends Component {
     static defaultProps = {
+        minusHeight: 0,
         refreshing: false,
         onListEndReached: function (): void {
         },
@@ -51,16 +52,20 @@ class DataList extends Component {
         const scrollTop = 0
         const Threshold = 20
 
+        const {
+            res: { windowHeight }
+        } = this.state;
+        const { minusHeight, refreshing } = this.props;
         return (
             <ScrollView
                 className='scrollview'
                 style={{
                     // 获取设备信息，小程序 h5,需要一个固定高度去支持滚动，注：设置height：100%无效，必须是固定高度
-                    height: `${this.state.res.windowHeight}px`
+                    height: `${windowHeight - minusHeight}px`
                 }}
                 refresherEnabled={true}
                 refresherThreshold={45}
-                refresherTriggered={this.props.refreshing}
+                refresherTriggered={refreshing}
                 scrollY
                 scrollWithAnimation
                 scrollTop={scrollTop}

@@ -34,13 +34,14 @@ class DataList extends Component<any, any> {
 
     render() {
         return <ScrollView
-          onMomentumScrollEnd={this._contentViewScroll}
-          onScroll={this.props.onScroll}
-          refreshControl={
-              <RefreshControl
-                refreshing={this.props.refreshing}
-                onRefresh={this.props.onRefresh}
-              />
+            style={{ flex: 1 }}
+            onMomentumScrollEnd={this._contentViewScroll}
+            onScroll={this.props.onScroll}
+            refreshControl={
+                <RefreshControl
+                    refreshing={this.props.refreshing}
+                    onRefresh={this.props.onRefresh}
+                />
             }
         >
             {this.props.children}

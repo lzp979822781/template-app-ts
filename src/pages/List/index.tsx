@@ -2,6 +2,8 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Block, Button, Text, Image, Form, Input, ScrollView, Swiper, SwiperItem } from '@tarojs/components'
 import DataList from '@/components/DataList/index';
 import SwipeAction from '@/components/SwipeAction/index';
+import Tabs from './Tabs/index';
+
 import './index.scss';
 
 const currentEnv = Taro.getEnv(); // 获取当前环境平台
@@ -17,10 +19,12 @@ export default class PagePicker extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            refreshing: false
+            refreshing: false,
+            current: 0
         }
         this.onRefresh = this.onRefresh.bind(this)
         this.onEndReached = this.onEndReached.bind(this)
+        this.onChangeTabs = this.onChangeTabs.bind(this)
     }
 
     config: Config = {
@@ -73,9 +77,17 @@ export default class PagePicker extends Component {
             style: { backgroundColor: 'red', color: 'white' }
         }]
 
+        const Shadow = {
+            shadowColor: "#242424",
+            shadowOffset: { w: 10, h: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 10,
+            elevation: 2
+        }
+
         return dataSource.map((item, index) => {
             let className = index === 0 ? "list-item-box top-gap" : "list-item-box";
-            return <View key={item} className={className} >
+            return <View key={item} style={currentEnv === "RN" ? Shadow : {}} className={className} >
                 <SwipeAction options={options} onClick={this.onClickSwipeAction.bind(this, index)}>
                     <View className="list-item" >
                         <View>
@@ -111,18 +123,33 @@ export default class PagePicker extends Component {
             .then(res => console.log(res))
     }
 
-
+    onChangeTabs(value) {
+        console.log(value);
+        this.setState({
+            current: value.index
+        })
+    }
 
     render() {
+        const tabList = [
+            { title: '第一项', index: 0 },
+            { title: '第二项', index: 1 },
+            { title: '第三项', index: 2 }
+        ]
 
         return (
             <View className='list'>
+                <Tabs
+                    height={150}
+                    tabList={tabList}
+                    onChange={this.onChangeTabs}
+                />
                 <DataList
+                    minusHeight={190}
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                     onEndReached={this.onEndReached}
                 >
-                    {/* 空标签用Block */}
                     <Block>
                         {
                             this.renderItems()
