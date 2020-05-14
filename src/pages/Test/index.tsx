@@ -4,6 +4,7 @@ import { connect } from '@tarojs/redux';
 import { View, ScrollView, Text, Button, Checkbox, Label, Swiper, SwiperItem, Image, CheckboxGroup } from '@tarojs/components';
 import { Modal, PopUp, Badge } from '@/components/index';
 import { UUID } from '@/utils/utils';
+import badgeImg from '@/assets/images/badge.png';
 
 // import SwipperExample from '../SwipperExample';
 
@@ -188,13 +189,25 @@ class Test extends Component<any, any> {
     }
 
     /**
-     * rnStyle为设置rn端组件样式，rn端样式是已标准屏为标准, Taro本身是以2倍屏为标准
-     * 所以在class中设置为
+     * rnStyle为设置rn端组件样式，rn端样式是以标准屏为标准, Taro本身是以2倍屏为标准
+     * 所以在class中设置为10px rnStyle中设置为5
      * @returns
      */
     renderBadge = () => {
+        const customBadge = (
+            <View >
+                <Image src={badgeImg} className='custom-badge' />
+            </View>
+        )
         return (
-            <Badge value={30} badge-cls='badge-cls' rnStyle={{ marginTop: 5 }}>
+            <Badge 
+                value={1000} 
+                badge-cls='badge-cls' 
+                rnStyle={{ marginTop: 5 }} 
+                // eslint-disable-next-line taro/render-props
+                renderBadge={customBadge}
+                custom
+            >
                 <Button type='primary'>角标按钮</Button>
             </Badge>
         )

@@ -8,13 +8,16 @@ type PageOwnProps = {
     value: string|number,
     dot?: boolean,
     maxValue?: number,
-    rnStyle?: object
+    rnStyle?: object,
+    custom?: boolean,
+    renderBadge?: any
 }
 
 type PageState = {}
 
 const defaultProps = {
-    maxValue: 99
+    maxValue: 99,
+    custom: false
 }
 
 class TaroBadge extends Component<PageOwnProps, PageState> {
@@ -35,11 +38,27 @@ class TaroBadge extends Component<PageOwnProps, PageState> {
     componentDidMount() {
     }
 
-    renderBadge = () => {
-        const { dot } = this.props;
-        return dot ? <View className='badge-dot'><Text> </Text></View> : (
-            <View className='badge-text'><Text style={{ color: '#fff'}}>{ this.getValue()}</Text></View>
+    renderDefault = () => {
+        return (
+            <View className='badge-text'>
+                <Text style={{ color: '#fff'}}>{ this.getValue()}</Text>
+            </View>
         )
+    }
+
+    renderCustomBadge = () => {
+        return (
+            <View className='badge-custom-text'>
+                {this.props.renderBadge}
+            </View>
+        )
+    }
+
+    renderBadge = () => {
+        const { dot, custom } = this.props;
+        const badgeText = custom ? this.renderCustomBadge() : this.renderDefault();
+
+        return dot ? <View className='badge-dot'><Text> </Text></View> : badgeText;
     }
 
     getValue = () => {
@@ -55,10 +74,15 @@ class TaroBadge extends Component<PageOwnProps, PageState> {
 
     }
 
+    getRnStyle = () => {
+        const { rnStyle } = this.props;
+        return rnStyle && (Taro.getEnv() === 'RN') ? rnStyle : {};
+    }
+
     render() {
 
         return (
-            <View className='badge badge-cls'>
+            <View className='badge badge-cls' style={this.getRnStyle()}>
                 <View>
                     {this.props.children}
                     { this.renderBadge()}
