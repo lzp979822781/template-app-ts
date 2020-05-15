@@ -128,6 +128,12 @@ class Index extends Component<any, any> {
         });
     }
 
+    onToHome = () => {
+        Taro.navigateTo({
+            url: '/pages/home/Home/index'
+        });
+    }
+
     onNameInput = e => {
         const { detail: { value = '' } = {} } = e;
         console.log("value", value);
@@ -210,6 +216,7 @@ class Index extends Component<any, any> {
                     <Button className='dec_btn' onClick={this.onMulti}>other</Button>
                     <Button className='add_btn' onClick={this.routerTo}>通用列表实现</Button>
                     <Button className='add_btn' onClick={this.onToTest}>测试基础组件</Button>
+                    <Button className='add_btn' onClick={this.onToHome}>首页</Button>
                 </View>
                 {this.renderForm()}
 
