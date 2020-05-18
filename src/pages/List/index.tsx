@@ -15,7 +15,7 @@ interface option {
 }
 
 
-export default class PagePicker extends Component {
+export default class PagePicker extends Component<any, any> {
     constructor(props) {
         super(props)
         this.state = {

@@ -1,27 +1,38 @@
-import Taro, { Component } from '@tarojs/taro';
-import { ScrollView } from '@tarojs/components';
+import Taro, { Component } from "@tarojs/taro";
+import { ScrollView } from "@tarojs/components";
 import "./index.scss";
 
+interface ListOption {
+    refreshing: boolean;
+    minusHeight: number;
+    onEndReached: () => void;
+    onRefresh: () => void;
+    onScroll: () => void;
+    style?: object | string;
+}
 
-class DataList extends Component {
+class DataList extends Component<ListOption, any> {
     static defaultProps = {
         minusHeight: 0,
         refreshing: false,
-        onListEndReached: function (): void {
+        onEndReached: function(): void {
+            console.log("");
         },
-        onScrollToLower: function (): void {
+        onRefresh: function(): void {
+            console.log("");
         },
-        onScroll: function (): void {
-        },
-    }
+        onScroll: function(): void {
+            console.log("");
+        }
+    };
 
-    constructor(props) {
+    constructor(props: ListOption) {
         super(props);
         this.state = {
             res: {
                 windowHeight: 1200
             }
-        }
+        };
     }
 
     componentWillMount() {
@@ -29,14 +40,15 @@ class DataList extends Component {
             success: res => {
                 this.setState({
                     res
-                })
+                });
             }
-        })
-            .then(res => console.log(res))
+        }).then(res => console.log(res));
     }
 
     onListRefresh() {
-        this.props.onRefresh();
+        if (this.props.onRefresh) {
+            this.props.onRefresh();
+        }
     }
 
     onScrollToLower(e) {
@@ -44,26 +56,24 @@ class DataList extends Component {
     }
 
     onScroll(e) {
-        // console.log("e.detail")
         this.props.onScroll(e);
     }
 
     render() {
-        const scrollTop = 0
-        const Threshold = 20
+        const scrollTop = 0;
+        const Threshold = 20;
 
         const {
             res: { windowHeight }
         } = this.state;
         const { minusHeight, refreshing } = this.props;
+        // 获取设备信息，小程序 h5,需要一个固定高度去支持滚动，注：设置height：100%无效，必须是固定高度
+        const styleH = { height: `${windowHeight - minusHeight}px` };
         return (
             <ScrollView
                 className='scrollview'
-                style={{
-                    // 获取设备信息，小程序 h5,需要一个固定高度去支持滚动，注：设置height：100%无效，必须是固定高度
-                    height: `${windowHeight - minusHeight}px`
-                }}
-                refresherEnabled={true}
+                style={styleH}
+                refresherEnabled
                 refresherThreshold={45}
                 refresherTriggered={refreshing}
                 scrollY
@@ -77,7 +87,7 @@ class DataList extends Component {
             >
                 {this.props.children}
             </ScrollView>
-        )
+        );
     }
 }
 
