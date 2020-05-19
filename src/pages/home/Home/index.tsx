@@ -175,6 +175,7 @@ class Home extends Component<IProps, PageState> {
                         return (<DrugItem 
                             itemData={item}
                             onItemClick={this.onListItemClick}
+                            key={UUID()}
                         />)
                     })}
                 </ScrollView>
