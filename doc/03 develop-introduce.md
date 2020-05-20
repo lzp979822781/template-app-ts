@@ -78,10 +78,6 @@ class Test extends Component<any, any> {
         this.state = {}
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(this.props, nextProps)
-    }
-
     componentWillUnmount() { }
 
     componentDidShow() {
@@ -288,4 +284,6 @@ react-native run-ios
 ## css
 
 参考官网 -> 快速开始 -> 各端开发前注意 
+
+* Taro默认以2倍屏为标准，react native默认以1倍屏为屏幕大小，如元素1倍屏下宽度为20px, 那么Taro非RN端设置宽度像素为40px, 如果react端的样式通过style的方法去设置的话，则设置为20px, rn端会自动适配大小
 
