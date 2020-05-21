@@ -1,17 +1,26 @@
-import { ComponentClass } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text, Form, Input, Swiper, Image, SwiperItem } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-import img1 from '@/assets/images/01.png';
-import img2 from '@/assets/images/02.png';
-import img3 from '@/assets/images/03.png';
-import img4 from '@/assets/images/04.png';
+import { ComponentClass } from "react";
+import Taro, { Component, Config } from "@tarojs/taro";
+import {
+    View,
+    Button,
+    Text,
+    Form,
+    Input,
+    Swiper,
+    Image,
+    SwiperItem
+} from "@tarojs/components";
+import { connect } from "@tarojs/redux";
+import img1 from "@/assets/images/01.png";
+import img2 from "@/assets/images/02.png";
+import img3 from "@/assets/images/03.png";
+import img4 from "@/assets/images/04.png";
 
-import { SearchBar } from '@/components';
+import { SearchBar } from "@/components";
 
-import Request from '@/utils/Request';
-import { UUID } from '@/utils/utils';
-import './index.scss'
+import Request from "@/utils/Request";
+import { UUID } from "@/utils/utils";
+import "./index.scss";
 
 // #region 书写注意
 //
@@ -24,21 +33,21 @@ import './index.scss'
 // #endregion
 
 type dispatchProps = {
-    type: string,
-    payload: any,
-    resolve: any
-}
+    type: string;
+    payload: any;
+    resolve: any;
+};
 
 type PageDispatchProps = {
-    count: number
-    dispatch: (param: dispatchProps) => void
-}
+    count: number;
+    dispatch: (param: dispatchProps) => void;
+};
 
-type PageOwnProps = {}
+type PageOwnProps = {};
 
-type PageState = {}
+type PageState = {};
 
-type IProps = PageDispatchProps & PageOwnProps
+type IProps = PageDispatchProps & PageOwnProps;
 
 interface Index {
     props: IProps;
@@ -46,55 +55,55 @@ interface Index {
 
 @connect(({ hello, ...other }) => ({ ...hello, ...other }))
 class Index extends Component<any, any> {
-
     /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
+     * 指定config的类型声明为: Taro.Config
+     *
+     * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
+     * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
+     * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
+     */
     config: Config = {
-        navigationBarTitleText: '首页'
-    }
+        navigationBarTitleText: "首页"
+    };
 
     constructor(props: any) {
         super(props);
 
         this.state = {
-            name: '',
-        }
+            name: ""
+        };
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(this.props, nextProps)
+        console.log(this.props, nextProps);
     }
 
-    componentWillUnmount() { }
+    componentWillUnmount() {}
 
     componentDidShow() {
         // this.getData();
     }
 
-
     getData = async () => {
         try {
-            const res = await Request.get("api_user_userInfo", { content: "hello" })
-            console.log("res", res)
+            const res = await Request.get("api_user_userInfo", {
+                content: "hello"
+            });
+            console.log("res", res);
         } catch (e) {
-            console.log("e", e)
+            console.log("e", e);
         }
-    }
+    };
 
-    componentDidHide() { }
+    componentDidHide() {}
 
     onAdd = () => {
         this.callModel("add");
-    }
+    };
 
     onDec = () => {
-        this.callModel('minus');
-    }
+        this.callModel("minus");
+    };
 
     /**
      * 搜索框扫描
@@ -102,51 +111,50 @@ class Index extends Component<any, any> {
     onScan = () => {
         console.log("扫描事件");
         const type = Taro.getEnv();
-        if(type !== 'RN') {
-            Taro.scanCode({ scanType: ['barCode', 'qrCode']}).then(res => {
-                console.log("res", res);
-            }).catch(e=> {
-                console.log("扫描错误", e);
-            })
+        if (type !== "RN") {
+            Taro.scanCode({ scanType: ["barCode", "qrCode"] })
+                .then(res => {
+                    console.log("res", res);
+                })
+                .catch(e => {
+                    console.log("扫描错误", e);
+                });
         }
-    }
+    };
 
-
-    routerTo = () => {
+    routerTo = url => {
         Taro.navigateTo({
-            url: '/pages/List/index?id=2&type=test'
+            url: url
         });
-    }
+    };
 
-    onMulti = () => {
-
-    }
+    onMulti = () => {};
 
     onToTest = () => {
         Taro.navigateTo({
-            url: '/pages/Test/index'
+            url: "/pages/Test/index"
         });
-    }
+    };
 
     onToHome = () => {
         Taro.navigateTo({
-            url: '/pages/home/Home/index'
+            url: "/pages/home/Home/index"
         });
-    }
+    };
 
     onNameInput = e => {
-        const { detail: { value = '' } = {} } = e;
+        const { detail: { value = "" } = {} } = e;
         console.log("value", value);
         this.setState({
             name: value
-        })
-    }
+        });
+    };
 
     onSumbmit = e => {
         console.log("e", e);
         const { detail: { value = {} } = {} } = e;
         console.log("submit value", value);
-    }
+    };
 
     renderForm = () => {
         const { name } = this.state;
@@ -154,76 +162,111 @@ class Index extends Component<any, any> {
         return (
             <View>
                 <Form onSubmit={this.onSumbmit}>
-                    <Input name='name' type='text' onInput={this.onNameInput} placeholder='请输入名称' value={name} />
-                    <Button formType='submit'>提交</Button>
+                    <Input
+                        name="name"
+                        type="text"
+                        onInput={this.onNameInput}
+                        placeholder="请输入名称"
+                        value={name}
+                    />
+                    <Button formType="submit">提交</Button>
                 </Form>
             </View>
-        )
-    }
+        );
+    };
 
     renderSwipperItem = () => {
-        const data = [ 
+        const data = [
             { url: img1 },
-            { url: img2 }, 
+            { url: img2 },
             { url: img3 },
             { url: img4 }
         ];
-        return data.map((item) => {
-            const {  url } = item;
+        return data.map(item => {
+            const { url } = item;
             return (
-                <SwiperItem className='swipper-item' key={UUID()} style={{ backgroundColor: '#8EA7E1'}}>
+                <SwiperItem
+                    className="swipper-item"
+                    key={UUID()}
+                    style={{ backgroundColor: "#8EA7E1" }}
+                >
                     <Image src={url} />
                 </SwiperItem>
-            )
-        })
-    }
+            );
+        });
+    };
 
     callModel = (type: string, data = {}) => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             this.props.dispatch({
                 type: `hello/${type}`,
                 payload: data,
                 resolve
-            })
-        })
-    }
+            });
+        });
+    };
 
     render() {
         return (
-            <View className='index'>
-                <View className='nav'>
-                    <View className='header'>
-                        <SearchBar 
-                            onRightClick={this.onScan}
-                        />
+            <View className="index">
+                <View className="nav">
+                    <View className="header">
+                        <SearchBar onRightClick={this.onScan} />
                     </View>
                 </View>
                 <Swiper
-                    className='swipper-container'
-                    indicatorColor='#999'
-                    indicatorActiveColor='#333'
+                    className="swipper-container"
+                    indicatorColor="#999"
+                    indicatorActiveColor="#333"
                     circular
                     indicatorDots
                     interval={2000}
                     autoplay
                 >
-                    { this.renderSwipperItem()}
+                    {this.renderSwipperItem()}
                 </Swiper>
-                    
+
                 <View>
-                    <Button className='add_btn' onClick={this.onAdd}>+</Button>
-                    <Button className='dec_btn' onClick={this.onDec}>-</Button>
-                    <Button className='dec_btn' onClick={this.onMulti}>other</Button>
-                    <Button className='add_btn' onClick={this.routerTo}>通用列表实现</Button>
-                    <Button className='add_btn' onClick={this.onToTest}>测试基础组件</Button>
-                    <Button className='add_btn' onClick={this.onToHome}>首页</Button>
+                    <Button className="add_btn" onClick={this.onAdd}>
+                        +
+                    </Button>
+                    <Button className="dec_btn" onClick={this.onDec}>
+                        -
+                    </Button>
+                    <Button className="dec_btn" onClick={this.onMulti}>
+                        other
+                    </Button>
+                    <Button
+                        className="add_btn"
+                        onClick={() => {
+                            this.routerTo("/pages/List/index?id=2");
+                        }}
+                    >
+                        通用列表实现
+                    </Button>
+                    <Button
+                        className="add_btn"
+                        onClick={() => {
+                            this.routerTo("/pages/Form/index?type=test");
+                        }}
+                    >
+                        通用表单
+                    </Button>
+                    <Button className="add_btn" onClick={this.onToTest}>
+                        测试基础组件
+                    </Button>
+                    <Button className="add_btn" onClick={this.onToHome}>
+                        首页
+                    </Button>
                 </View>
                 {this.renderForm()}
 
                 <Text>{this.props.count}</Text>
-                <View><Text>Hello, World</Text></View>
+                <View>
+                    <Text>Hello, World</Text>
+                </View>
             </View>
-        )
+        );
     }
 }
 
@@ -234,4 +277,4 @@ class Index extends Component<any, any> {
 //
 // #endregion
 
-export default Index as ComponentClass<PageOwnProps, PageState>
+export default Index as ComponentClass<PageOwnProps, PageState>;

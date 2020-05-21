@@ -34,6 +34,7 @@ class App extends Component {
     pages: [
         'pages/Index/index',
         'pages/List/index',
+        'pages/Form/index',
         'pages/Test/index',
         'pages/home/Home/index'
     ],

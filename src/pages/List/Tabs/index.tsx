@@ -41,9 +41,9 @@ class Tabs extends Component {
 
     renderAtTabsPane = () => {
         const { tabList } = this.props;
-
+        const { current } = this.state;
         return tabList.map((item, index) => {
-            return <AtTabsPane current={this.state.current} index={index} key={index.index} >
+            return <AtTabsPane current={current} index={index} key={index.index} >
                 <ScrollView style={{
                     // 获取设备信息，小程序 h5,需要一个固定高度去支持滚动，注：设置height：100%无效，必须是固定高度
                     height: `150px`
@@ -59,9 +59,10 @@ class Tabs extends Component {
 
     render() {
         const { tabList } = this.props;
+        const { current } = this.state;
 
         return (
-            <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleClick}>
+            <AtTabs current={current} tabList={tabList} onClick={this.handleClick}>
                 {this.renderAtTabsPane()}
             </AtTabs>
         )
