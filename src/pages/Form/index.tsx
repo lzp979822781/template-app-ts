@@ -1,5 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Picker } from "@tarojs/components";
+import { View, Text, Picker } from "@tarojs/components";
+import { LinearGradient } from "expo-linear-gradient";
 
 import InputText from "@/components/InputText/index";
 import TextareaItem from "@/components/Textarea/index";
@@ -44,6 +45,26 @@ export default class PagePicker extends Component<any, any> {
                     ]}
                 />
                 <DatePicker />
+                <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    colors={["#F2140C", "#F2270C", "#F24D0C"]}
+                    style={{
+                        padding: 15,
+                        alignItems: "center",
+                        borderRadius: 5
+                    }}
+                >
+                    <Text
+                        style={{
+                            backgroundColor: "transparent",
+                            fontSize: 15,
+                            color: "#fff"
+                        }}
+                    >
+                        Sign in
+                    </Text>
+                </LinearGradient>
             </View>
         );
     }
