@@ -38,7 +38,7 @@ class InputText extends Component<ListOption, any> {
     render() {
         return (
             <AtInput
-                error = {this.props.error}
+                error={this.props.error}
                 name='value'
                 title={this.props.title}
                 type={this.props.type}
