@@ -12,7 +12,7 @@ interface ListOption {
 
 class InputText extends Component<ListOption, any> {
     static defaultProps = {
-        title: "标题",
+        title: "单行文本",
         type: "text",
         placeholder: "请输入",
         // eslint-disable-next-line @typescript-eslint/no-empty-function

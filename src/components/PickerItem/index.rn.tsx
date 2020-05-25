@@ -37,7 +37,7 @@ class PickerItem extends Component<ListOption, any> {
                 value={this.state.value}
                 onChange={this.onChange}
             >
-                <List.Item onPress={this.onPress}>省市选择</List.Item>
+                <List.Item onPress={this.onPress}>{this.props.title}</List.Item>
             </Picker>
         );
     }

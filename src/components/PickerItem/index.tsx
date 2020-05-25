@@ -14,7 +14,7 @@ class PickerItem extends Component<ListOption, any> {
     static defaultProps = {
         title: "标题",
         placeholder: "请输入",
-        dataSource: [],
+        dataSource: [{ label: "美国", value: "0" }],
         onChange: () => {}
     };
 
@@ -35,17 +35,18 @@ class PickerItem extends Component<ListOption, any> {
 
     render() {
         const { value } = this.state;
+        const Key = Number(value);
         return (
             <Picker
+                value={Key}
                 mode='selector'
-                value={Number(value)}
                 range={this.props.dataSource}
                 rangeKey='label'
                 onChange={this.onChange}
             >
                 <AtListItem
-                    title='国家地区'
-                    extraText={this.props.dataSource[Number(value)].label}
+                    title={this.props.title}
+                    extraText={this.props.dataSource[Key].label}
                 />
             </Picker>
         );

@@ -4,6 +4,7 @@ import { View, Picker } from "@tarojs/components";
 import InputText from "@/components/InputText/index";
 import TextareaItem from "@/components/Textarea/index";
 import PickerItem from "@/components/PickerItem/index";
+import DatePicker from "@/components/DatePicker/index";
 
 import "./index.scss";
 
@@ -42,6 +43,7 @@ export default class PagePicker extends Component<any, any> {
                         { label: "日本", value: "3" }
                     ]}
                 />
+                <DatePicker />
             </View>
         );
     }
