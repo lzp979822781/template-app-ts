@@ -163,13 +163,13 @@ class Index extends Component<any, any> {
             <View>
                 <Form onSubmit={this.onSumbmit}>
                     <Input
-                        name="name"
-                        type="text"
+                        name='name'
+                        type='text'
                         onInput={this.onNameInput}
-                        placeholder="请输入名称"
+                        placeholder='请输入名称'
                         value={name}
                     />
-                    <Button formType="submit">提交</Button>
+                    <Button formType='submit'>提交</Button>
                 </Form>
             </View>
         );
@@ -186,7 +186,7 @@ class Index extends Component<any, any> {
             const { url } = item;
             return (
                 <SwiperItem
-                    className="swipper-item"
+                    className='swipper-item'
                     key={UUID()}
                     style={{ backgroundColor: "#8EA7E1" }}
                 >
@@ -208,16 +208,16 @@ class Index extends Component<any, any> {
 
     render() {
         return (
-            <View className="index">
-                <View className="nav">
-                    <View className="header">
+            <View className='index'>
+                <View className='nav'>
+                    <View className='header'>
                         <SearchBar onRightClick={this.onScan} />
                     </View>
                 </View>
                 <Swiper
-                    className="swipper-container"
-                    indicatorColor="#999"
-                    indicatorActiveColor="#333"
+                    className='swipper-container'
+                    indicatorColor='#999'
+                    indicatorActiveColor='#333'
                     circular
                     indicatorDots
                     interval={2000}
@@ -227,17 +227,17 @@ class Index extends Component<any, any> {
                 </Swiper>
 
                 <View>
-                    <Button className="add_btn" onClick={this.onAdd}>
+                    <Button className='add_btn' onClick={this.onAdd}>
                         +
                     </Button>
-                    <Button className="dec_btn" onClick={this.onDec}>
+                    <Button className='dec_btn' onClick={this.onDec}>
                         -
                     </Button>
-                    <Button className="dec_btn" onClick={this.onMulti}>
+                    <Button className='dec_btn' onClick={this.onMulti}>
                         other
                     </Button>
                     <Button
-                        className="add_btn"
+                        className='add_btn'
                         onClick={() => {
                             this.routerTo("/pages/List/index?id=2");
                         }}
@@ -245,17 +245,17 @@ class Index extends Component<any, any> {
                         通用列表实现
                     </Button>
                     <Button
-                        className="add_btn"
+                        className='add_btn'
                         onClick={() => {
                             this.routerTo("/pages/Form/index?type=test");
                         }}
                     >
                         通用表单
                     </Button>
-                    <Button className="add_btn" onClick={this.onToTest}>
+                    <Button className='add_btn' onClick={this.onToTest}>
                         测试基础组件
                     </Button>
-                    <Button className="add_btn" onClick={this.onToHome}>
+                    <Button className='add_btn' onClick={this.onToHome}>
                         首页
                     </Button>
                 </View>
