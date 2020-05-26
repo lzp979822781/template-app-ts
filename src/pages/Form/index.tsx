@@ -5,14 +5,14 @@ import InputText from "@/components/InputText/index";
 import TextareaItem from "@/components/Textarea/index";
 import PickerItem from "@/components/PickerItem/index";
 import DatePicker from "@/components/DatePicker/index";
+import LinearGradient from "@/components/LinearGradient/index";
 
 import "./index.scss";
 
 export default class PagePicker extends Component<any, any> {
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
     }
 
     config: Config = {
@@ -20,13 +20,13 @@ export default class PagePicker extends Component<any, any> {
     };
 
     componentDidShow() {
-        console.log("")
+        console.log("");
     }
 
     render() {
         return (
-            <View className='list'>
-                <InputText type='number' />
+            <View className="list">
+                <InputText type="number" />
                 <TextareaItem />
                 <PickerItem
                     dataSource={[
@@ -37,6 +37,16 @@ export default class PagePicker extends Component<any, any> {
                     ]}
                 />
                 <DatePicker />
+                <LinearGradient
+                    className="demo-view"
+                    style={{
+                        padding: 15,
+                        alignItems: "center",
+                        borderRadius: 5
+                    }}
+                >
+                    <Text>按钮</Text>
+                </LinearGradient>
             </View>
         );
     }
