@@ -18,7 +18,7 @@ class PickerItem extends Component<ListOption, any> {
     static defaultProps = {
         title: "标题",
         placeholder: "请输入",
-        dataSource: [],
+        dataSource: [{ label: "美国", value: 0 }],
         onChange: () => {
             console.log("");
         }
