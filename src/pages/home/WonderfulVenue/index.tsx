@@ -15,7 +15,7 @@ type PageState = {
 
 }
 
-class ExplosiveActivities extends Component<PageProps, PageState> {
+class WonderfulVenue extends Component<PageProps, PageState> {
     
     onMoreClick = () => {
         console.log("点击更多按钮");
@@ -65,4 +65,4 @@ class ExplosiveActivities extends Component<PageProps, PageState> {
     }
 }
 
-export default ExplosiveActivities;
+export default WonderfulVenue;

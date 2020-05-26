@@ -21,6 +21,9 @@
         height: 260px;
         border-radius: 16px;
         background-color: #A0C8F0;
+        /*  #ifndef rn  */
+        line-height: normal;
+        /*  #endif  */
 
         &-title {
             @include font(32px, #fff, 'PingFangSC-Semibold')
@@ -50,6 +53,5 @@
     &-subcard {
         margin-top: 16px;
         @include flex(row, space-between, flex-start);
-        
     }
 }
