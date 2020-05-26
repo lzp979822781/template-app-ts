@@ -96,11 +96,13 @@ class DrugItem extends Component<PageOwnProps, PageOwnState> {
                         text={isReduce ? '满减': ''} 
                         custom-cls='drug-content-price-tag'
                         rnStyle={{ marginLeft: 4 }}
+                        className='drug-content-price-tag'
                     />
                     <DrugTag 
                         text={secKill ? '秒杀': ''} 
                         custom-cls='drug-content-price-tag'
-                        rnStyle={{ marginLeft: 4 }} 
+                        rnStyle={{ marginLeft: 4 }}
+                        className='drug-content-price-tag'
                     />
                 </View>
                 <View className='drug-content-shop' onClick={this.onClick}>

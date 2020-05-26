@@ -50,7 +50,8 @@ class BaseCard extends Component< PageProps, PageState> {
                             </View>
                         ): null}
                     </View>
-                    <Image src={src} className='basecard-footer-container-img' />
+                    {src ? <Image src={src} className='basecard-footer-container-img' /> : null}
+                    
                 </View>
             </View>
         )

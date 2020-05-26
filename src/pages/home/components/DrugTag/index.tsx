@@ -5,7 +5,8 @@ import './index.scss';
 
 type PageOwnProps = {
     text: string,
-    rnStyle?: object
+    rnStyle?: object,
+    className?: string
 }
 
 class DrugTag extends Component<PageOwnProps> {
@@ -13,12 +14,12 @@ class DrugTag extends Component<PageOwnProps> {
     static externalClasses = ['custom-cls']
     
     render() {
-        const { text, rnStyle } = this.props;
+        const { text, rnStyle, className } = this.props;
         if(!text) return null;
         const style = Taro.getEnv() === 'RN' ? rnStyle : {};
 
         return (
-            <View className='tag custom-cls' style={style}>
+            <View className={`tag custom-cls ${className}`} style={style}>
                 <Text className='tag-txt'>{text}</Text>
             </View>
         )
