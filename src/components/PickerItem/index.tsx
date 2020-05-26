@@ -44,6 +44,7 @@ class PickerItem extends Component<ListOption, any> {
 
     render() {
         const { value } = this.state;
+        const Key = Number(value);
         return (
             <Picker
                 value={value}
