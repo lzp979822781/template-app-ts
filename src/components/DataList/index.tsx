@@ -16,13 +16,10 @@ class DataList extends Component<ListOption, any> {
         minusHeight: 0,
         refreshing: false,
         onEndReached: function(): void {
-            console.log("");
         },
         onRefresh: function(): void {
-            console.log("");
         },
         onScroll: function(): void {
-            console.log("");
         }
     };
 

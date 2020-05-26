@@ -1,11 +1,16 @@
-import Taro, { Component } from "@tarojs/taro";
-import { View, Text } from "@tarojs/components";
+import Taro, { Component, ComponentClass } from "@tarojs/taro";
 import { Picker, List } from "@ant-design/react-native";
 import "./index.scss";
+
+interface LabelValue {
+    label: string;
+    value: any;
+}
 
 interface ListOption {
     title?: string;
     placeholder?: string;
+    dataSource: LabelValue[];
     onChange?: () => void;
 }
 
@@ -14,9 +19,12 @@ class PickerItem extends Component<ListOption, any> {
         title: "标题",
         placeholder: "请输入",
         dataSource: [],
-        onChange: (value) => {}
+        onChange: () => {
+            console.log("");
+        }
     };
 
+   
     constructor(props: any) {
         super(props);
         this.state = {
@@ -24,9 +32,13 @@ class PickerItem extends Component<ListOption, any> {
         };
     }
 
+    onPress: () => void;
+
     onChange = value => {
         this.setState({ value });
-        this.props.onChange(value[0]);
+        if (this.props.onChange) {
+            this.props.onChange(value[0]);
+        }
     };
 
     render() {

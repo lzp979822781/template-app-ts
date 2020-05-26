@@ -14,7 +14,9 @@ class DatePicker extends Component<ListOption, any> {
     static defaultProps = {
         title: "日期",
         placeholder: "请输入",
-        onChange: () => {}
+        onChange: () => {
+            console.log("");
+        }
     };
 
     constructor(props: ListOption) {
@@ -24,7 +26,7 @@ class DatePicker extends Component<ListOption, any> {
         };
     }
 
-    onDateChange = e => {
+    onChange = e => {
         this.setState({
             dateSel: e.detail.value
         });
@@ -33,7 +35,7 @@ class DatePicker extends Component<ListOption, any> {
     render() {
         const { value } = this.state;
         return (
-            <Picker mode="date" onChange={this.onDateChange}>
+            <Picker mode='date' value={value} onChange={this.onChange}>
                 <AtList>
                     <AtListItem
                         title={this.props.title}

@@ -1,4 +1,4 @@
-import Taro, { Component } from "@tarojs/taro";
+import Taro, { Component, ComponentClass } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { DatePicker, List } from "@ant-design/react-native";
 import "./index.scss";
@@ -13,7 +13,9 @@ class YaoDatePicker extends Component<ListOption, any> {
     static defaultProps = {
         title: "日期",
         placeholder: "请输入",
-        onChange: value => {}
+        onChange: () => {
+            console.log("")
+        }
     };
 
     constructor(props: any) {
@@ -25,19 +27,21 @@ class YaoDatePicker extends Component<ListOption, any> {
 
     onChange = value => {
         this.setState({ value });
-        this.props.onChange(value);
+        if(this.props.onChange){
+            this.props.onChange(value);
+        }
     };
 
     render() {
         return (
             <DatePicker
                 value={this.state.value}
-                mode="date"
+                mode='date'
                 defaultDate={new Date()}
                 minDate={new Date(2015, 7, 6)}
                 maxDate={new Date(2026, 11, 3)}
                 onChange={this.onChange}
-                format="YYYY-MM-DD"
+                format='YYYY-MM-DD'
             >
                 <List.Item>{this.props.title}</List.Item>
             </DatePicker>

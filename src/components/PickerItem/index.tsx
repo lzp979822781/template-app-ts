@@ -1,12 +1,17 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Text, Picker } from "@tarojs/components";
+import { Picker } from "@tarojs/components";
 import { AtList, AtListItem } from "taro-ui";
 import "./index.scss";
+
+interface LabelValue {
+    label: string;
+    value: any;
+}
 
 interface ListOption {
     title?: string;
     placeholder?: string;
-    error?: boolean;
+    dataSource: LabelValue[];
     onChange?: () => void;
 }
 
@@ -14,8 +19,10 @@ class PickerItem extends Component<ListOption, any> {
     static defaultProps = {
         title: "标题",
         placeholder: "请输入",
-        dataSource: [{ label: "美国", value: "0" }],
-        onChange: () => {}
+        dataSource: [],
+        onChange: () => {
+            console.log("");
+        }
     };
 
     constructor(props: ListOption) {
@@ -29,16 +36,17 @@ class PickerItem extends Component<ListOption, any> {
         this.setState({
             value: e.detail.value
         });
-
-        this.props.onChange(e.detail.value);
+        
+        if (this.props.onChange) {
+            this.props.onChange(e.detail.value);
+        }
     };
 
     render() {
         const { value } = this.state;
-        const Key = Number(value);
         return (
             <Picker
-                value={Key}
+                value={value}
                 mode='selector'
                 range={this.props.dataSource}
                 rangeKey='label'
