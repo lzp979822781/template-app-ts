@@ -104,7 +104,9 @@ class Home extends Component<IProps, PageState> {
             const {  url } = item;
             return (
                 <SwiperItem className='swipper-item' key={UUID()} style={{ backgroundColor: '#8EA7E1'}}>
-                    <Image src={url} />
+                    <View>
+                        <Image src={url} />
+                    </View>
                 </SwiperItem>
             )
         })

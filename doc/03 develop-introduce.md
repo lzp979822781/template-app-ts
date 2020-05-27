@@ -287,3 +287,10 @@ react-native run-ios
 
 * Taro默认以2倍屏为标准，react native默认以1倍屏为屏幕大小，如元素1倍屏下宽度为20px, 那么Taro非RN端设置宽度像素为40px, 如果react端的样式通过style的方法去设置的话，则设置为20px, rn端会自动适配大小
 
+  ### 三端外部样式的引用
+
+  (1)微信端外部样式引入通过externalClass
+
+  (2)h5通过className属性传入，不采用style的方式是因为，style中会指定样式单位这样无法做到自适应
+
+  (3)RN端样式通过rnStyle传入，这是由RN端本身限制
