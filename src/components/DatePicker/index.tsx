@@ -30,12 +30,15 @@ class DatePicker extends Component<ListOption, any> {
         this.setState({
             dateSel: e.detail.value
         });
+        if (this.props.onChange) {
+            this.props.onChange(e.detail.value);
+        };
     };
 
     render() {
         const { value } = this.state;
         return (
-            <Picker mode='date' value={value} onChange={this.onChange}>
+            <Picker mode="date" value={value} onChange={this.onChange}>
                 <AtList>
                     <AtListItem
                         title={this.props.title}

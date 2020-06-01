@@ -3,11 +3,19 @@ import { View, Text } from "@tarojs/components";
 import { LinearGradient } from "expo-linear-gradient";
 
 interface ListOption {
+    direction: "row" | "column";
     children: any;
 }
 
 class YLinearGradient extends Component<ListOption, any> {
     static defaultProps = {
+        colors: ["#F2140C", "#ffffff"],
+        height: 40,
+        rnStyle:{
+            justifyContent: "center",
+            alignItems: "center"
+        },
+        direction: "column",
         children: (
             <View
                 style={{
@@ -29,12 +37,26 @@ class YLinearGradient extends Component<ListOption, any> {
     }
 
     render() {
+        const { direction, colors, height } = this.props;
+        let startX, startY, endX, endY;
+        if(direction==="row"){
+            startX = 0; 
+            startY = 0;
+            endX = 1;
+            endY = 1;
+        }else{
+            startX = 0; 
+            startY = 0;
+            endX = 0;
+            endY = 1;
+        }
+        
         return (
             <LinearGradient
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                colors={["#F2140C", "#ffffff", "#F2140C"]}
-                style={this.props.style}
+                start={{ x: startX, y: startY }}
+                end={{ x: endX, y: endY }}
+                colors={colors}
+                style={{...this.props.rnStyle, height: height}}
             >
                 {this.props.children}
             </LinearGradient>

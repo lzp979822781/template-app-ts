@@ -4,12 +4,19 @@ import { View, Text } from "@tarojs/components";
 import "./index.scss";
 
 interface ListOption {
+    direction: "row" | "column";
     children: any;
+    style: object;
 }
 
 class LinearGradient extends Component<ListOption, any> {
     static defaultProps = {
-        className: "demo-view"
+        colors: ["#F2140C", "#ffffff"],
+        direction: "column",
+        height: 40,
+        style: {
+            "text-align": "center",
+        }
     };
 
     constructor(props: ListOption) {
@@ -17,8 +24,22 @@ class LinearGradient extends Component<ListOption, any> {
     }
 
     render() {
+        const { height, direction, colors } = this.props;
+        let colorStr = '';
+        colors.forEach(item => {
+            colorStr += `, ${item}`
+        });
         return (
-            <View className={this.props.className}>
+            <View
+                style={{
+                    ...this.props.style,
+                    height: `${height}px`,
+                    "line-height": `${height}px`,
+                    background: `linear-gradient(to ${
+                        direction === "row" ? "right" : "bottom"
+                    } ${colorStr})`
+                }}
+            >
                 {this.props.children}
             </View>
         );

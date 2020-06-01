@@ -13,6 +13,7 @@ export default class PagePicker extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {};
+        this.alertEvent = this.alertEvent.bind(this)
     }
 
     config: Config = {
@@ -21,6 +22,15 @@ export default class PagePicker extends Component<any, any> {
 
     componentDidShow() {
         console.log("");
+    }
+
+    alertEvent() {
+        Taro.showToast({
+            title: '点击',
+            icon: "none",
+            duration: 500
+        })
+            .then(res => console.log(res))
     }
 
     render() {
@@ -38,14 +48,11 @@ export default class PagePicker extends Component<any, any> {
                 />
                 <DatePicker />
                 <LinearGradient
-                    className="demo-view"
-                    style={{
-                        padding: 15,
-                        alignItems: "center",
-                        borderRadius: 5
-                    }}
+                    direction="row"
+                    colors={["#4c669f", "#ffffff", "#4c669f"]}
+                    height={40}
                 >
-                    <Text>按钮</Text>
+                    <View className='btn' onClick={this.alertEvent} ><Text style={{ color: "#666666" }}>按钮</Text></View>
                 </LinearGradient>
             </View>
         );
