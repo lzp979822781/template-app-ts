@@ -33,6 +33,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@ant-design/icons-react-native": "^2.2.1",
     "@ant-design/react-native": "^3.2.2",
     "@tarojs/components": "2.0.3",
     "@tarojs/components-qa": "2.0.3",

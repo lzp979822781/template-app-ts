@@ -139,11 +139,6 @@ export default class PagePicker extends Component<any, any> {
 
         return (
             <View className='list'>
-                <Tabs
-                    height={150}
-                    tabList={tabList}
-                    onChange={this.onChangeTabs}
-                />
                 <DataList
                     minusHeight={190}
                     refreshing={this.state.refreshing}

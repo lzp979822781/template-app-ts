@@ -36,7 +36,7 @@ export default class PagePicker extends Component<any, any> {
     render() {
         return (
             <View className="list">
-                <InputText type="number" />
+                <InputText />
                 <TextareaItem />
                 <PickerItem
                     dataSource={[

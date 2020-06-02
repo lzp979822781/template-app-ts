@@ -17,7 +17,7 @@ interface ListOption {
 
 class Textarea extends Component<ListOption, any> {
     static defaultProps = {
-        title: "标题",
+        title: "多行文本",
         placeholder: "请输入",
         onChange: () => {}
     };
@@ -32,7 +32,7 @@ class Textarea extends Component<ListOption, any> {
     render() {
         return (
             <View>
-                <View  style={{ height:40, justifyContent: "center"; }}><Text style={{ fontSize:16, marginLeft:15 }}>多行文本</Text></View>
+                <View  style={{ height:40, justifyContent: "center"; }}><Text style={{ fontSize:17, marginLeft:15, color:"#333333" }}>{this.props.title}</Text></View>
                 <View style={{ marginHorizontal: 15, borderWidth:1, borderColor: "#eeeeee" }}>
                     <TextareaItem rows={4} count={200} placeholder="请输入..." />
                 </View>
