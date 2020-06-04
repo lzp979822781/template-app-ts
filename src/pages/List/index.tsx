@@ -140,7 +140,7 @@ export default class PagePicker extends Component<any, any> {
         return (
             <View className='list'>
                 <DataList
-                    minusHeight={190}
+                    minusHeight={0}
                     refreshing={this.state.refreshing}
                     onRefresh={this.onRefresh}
                     onEndReached={this.onEndReached}
