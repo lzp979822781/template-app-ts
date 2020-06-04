@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Picker } from "@tarojs/components";
-
+import { Animated } from 'react-native';
 import InputText from "@/components/InputText/index";
 import TextareaItem from "@/components/Textarea/index";
 import PickerItem from "@/components/PickerItem/index";
@@ -13,7 +13,7 @@ export default class PagePicker extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {};
-        this.alertEvent = this.alertEvent.bind(this)
+        this.alertEvent = this.alertEvent.bind(this);
     }
 
     config: Config = {
@@ -26,11 +26,10 @@ export default class PagePicker extends Component<any, any> {
 
     alertEvent() {
         Taro.showToast({
-            title: '点击',
+            title: "点击",
             icon: "none",
             duration: 500
-        })
-            .then(res => console.log(res))
+        }).then(res => console.log(res));
     }
 
     render() {
@@ -52,7 +51,9 @@ export default class PagePicker extends Component<any, any> {
                     colors={["#4c669f", "#ffffff", "#4c669f"]}
                     height={40}
                 >
-                    <View className='btn' onClick={this.alertEvent} ><Text style={{ color: "#666666" }}>按钮</Text></View>
+                    <View className="btn" onClick={this.alertEvent}>
+                        <Text style={{ color: "#666666" }}>按钮</Text>
+                    </View>
                 </LinearGradient>
             </View>
         );
