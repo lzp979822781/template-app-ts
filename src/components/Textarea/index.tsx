@@ -24,12 +24,25 @@ class Textarea extends Component<ListOption, any> {
         };
     }
 
-    handleChange(value) {
-        this.setState({
-            value
-        });
-        // 在小程序中，如果想改变 value 的值，需要 `return value` 从而改变输入框的当前值
+    static getDerivedStateFromProps(props, state) {
+        return {
+            value: props.value || ""
+        };
     }
+
+    timer = null;
+    
+    onChange=(value)=> {
+        this.setState({ value }, ()=>{
+            if(this.props.onChange){
+                clearTimeout(this.timer)
+                this.timer = setTimeout(()=>{
+                    this.props.onChange(value);
+                }, 300);
+            }
+        });
+    }
+
 
     render() {
         const { value } = this.state;
@@ -41,7 +54,7 @@ class Textarea extends Component<ListOption, any> {
                 <View style="margin:0 15px">
                     <AtTextarea
                         value={value}
-                        onChange={this.handleChange.bind(this)}
+                        onChange={this.onChange}
                         maxLength={200}
                         placeholder="请输入..."
                     />

@@ -57,6 +57,15 @@ export default class PagePicker extends Component<any, any> {
         }).then(res => console.log(res));
     }
 
+    alertFn() {
+        Taro.showToast({
+            title: "按钮",
+            icon: "none",
+            duration: 500
+        }).then(res => console.log(res));
+    }
+
+
     renderItems() {
         const dataSource = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -144,12 +153,12 @@ export default class PagePicker extends Component<any, any> {
                                         </Text>
                                     </View>
                                     <View className="item-dec-bottom-rignt">
-                                        <View className="btn-1">
+                                        <View className="btn-1" onClick={this.alertFn}>
                                             <Text className="btn-1-text">
                                                 复制PC链接
                                             </Text>
                                         </View>
-                                        <View className="btn-2">
+                                        <View className="btn-2" onClick={this.alertFn}>
                                             <Text className="btn-2-text">
                                                 复制标题
                                             </Text>

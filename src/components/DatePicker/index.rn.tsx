@@ -20,22 +20,35 @@ class YaoDatePicker extends Component<ListOption, any> {
 
     constructor(props: any) {
         super(props);
+        this.timer = null;
         this.state = {
             value: undefined
         };
     }
 
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            value: props.value || undefined
+        };
+    }
+
+    
+
     onChange = value => {
         this.setState({ value });
         if(this.props.onChange){
-            this.props.onChange(value);
+            clearTimeout(this.timer)
+            this.timer =  setTimeout(()=>{
+                this.props.onChange(value);
+            },300);
         }
     };
 
     render() {
         return (
             <DatePicker
-                value={this.state.value}
+                value={new Date(this.state.value)}
                 mode='date'
                 defaultDate={new Date()}
                 minDate={new Date(2015, 7, 6)}

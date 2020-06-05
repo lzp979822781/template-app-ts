@@ -5,13 +5,21 @@ import "./index.scss";
 
 interface ListOption {
     title?: string;
-    type?: "number" | "text" | "password" | "phone" | "idcard" | "digit" | undefined;
+    type?:
+        | "number"
+        | "text"
+        | "password"
+        | "phone"
+        | "idcard"
+        | "digit"
+        | undefined;
     placeholder?: string;
     onChange?: () => void;
 }
 
 class InputText extends Component<ListOption, any> {
     static defaultProps = {
+        value: "",
         title: "单行文本",
         type: "text",
         placeholder: "请输入",
@@ -25,16 +33,32 @@ class InputText extends Component<ListOption, any> {
         };
     }
 
+    static getDerivedStateFromProps(props, state) {
+        return {
+            value: props.value || ""
+        };
+    }
+
+    timer = null;
+
+    onChange = value => {
+        this.setState({ value }, ()=>{
+            if(this.props.onChange){
+                clearTimeout(this.timer)
+                this.timer = setTimeout(()=>{
+                    this.props.onChange(value);
+                }, 300);
+            }
+        });
+    };
+
     render() {
+        const {value} = this.state;
         return (
             <InputItem
                 type={this.props.type}
-                value={this.state.value}
-                onChange={value => {
-                    this.setState({
-                        value: value
-                    });
-                }}
+                defaultValue={value}
+                onChange={this.onChange}
                 placeholder={this.props.placeholder}
             >
                 {this.props.title}

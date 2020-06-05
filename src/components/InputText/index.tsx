@@ -26,14 +26,26 @@ class InputText extends Component<ListOption, any> {
         };
     }
 
-    handleChange(value) {
-        this.setState({
-            value
-        });
-        // 在小程序中，如果想改变 value 的值，需要 `return value` 从而改变输入框的当前值
-        this.props.onChange(value)
-        return value;
+    static getDerivedStateFromProps(props, state) {
+        return {
+            value: props.value || ""
+        };
     }
+
+    timer = null;
+    
+    onChange = value => {
+        this.setState({ value }, ()=>{
+            if(this.props.onChange){
+                clearTimeout(this.timer)
+                this.timer = setTimeout(()=>{
+                    this.props.onChange(value);
+                }, 300);
+            }
+        });
+
+        return value;
+    };
 
     render() {
         return (
@@ -44,7 +56,7 @@ class InputText extends Component<ListOption, any> {
                 type={this.props.type}
                 placeholder={this.props.placeholder}
                 value={this.state.value}
-                onChange={this.handleChange.bind(this)}
+                onChange={this.onChange}
             />
         );
     }

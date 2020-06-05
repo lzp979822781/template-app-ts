@@ -36,7 +36,8 @@ class App extends Component {
         'pages/List/index',
         'pages/Form/index',
         'pages/Test/index',
-        'pages/home/Home/index'
+        'pages/home/Home/index',
+        'pages/ReferPage/index'
     ],
     window: {
       backgroundTextStyle: 'light',

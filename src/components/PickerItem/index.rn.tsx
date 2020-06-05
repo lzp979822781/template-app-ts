@@ -34,6 +34,12 @@ class PickerItem extends Component<ListOption, any> {
 
     onPress: () => void;
 
+    static getDerivedStateFromProps(props, state) {
+        return {
+            value: [props.value] || [0]
+        };
+    }
+
     onChange = value => {
         this.setState({ value });
         if (this.props.onChange) {

@@ -1,10 +1,11 @@
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Text, Picker } from "@tarojs/components";
-import { Animated } from 'react-native';
+import { View, Text } from "@tarojs/components";
 import InputText from "@/components/InputText/index";
 import TextareaItem from "@/components/Textarea/index";
 import PickerItem from "@/components/PickerItem/index";
 import DatePicker from "@/components/DatePicker/index";
+import Referto from "@/components/Referto/index";
+
 import LinearGradient from "@/components/LinearGradient/index";
 
 import "./index.scss";
@@ -12,7 +13,15 @@ import "./index.scss";
 export default class PagePicker extends Component<any, any> {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            data: {
+                input: "123",
+                textarea: "456",
+                picker: 1,
+                date: "2019-05-09",
+                refer: "参照-0"
+            }
+        };
         this.alertEvent = this.alertEvent.bind(this);
     }
 
@@ -20,8 +29,17 @@ export default class PagePicker extends Component<any, any> {
         navigationBarTitleText: "表单"
     };
 
-    componentDidShow() {
-        console.log("");
+    componentDidShow() {}
+
+    componentDidMount() {
+        // 监听一个事件，接受参数
+        Taro.eventCenter.on("changeRefer", val => {
+            this.onChange("refer", val);
+        });
+    }
+
+    componentWillUnmount() {
+        Taro.eventCenter.off("changeRefer");
     }
 
     alertEvent() {
@@ -32,12 +50,37 @@ export default class PagePicker extends Component<any, any> {
         }).then(res => console.log(res));
     }
 
+    onChange(key, value) {
+        let { data } = this.state;
+        let newDate = { ...data };
+        newDate[key] = value;
+
+        this.setState({
+            data: newDate
+        });
+    }
+
     render() {
+        const { data } = this.state;
         return (
             <View className="list">
-                <InputText />
-                <TextareaItem />
+                <InputText
+                    value={data.input}
+                    onChange={value => {
+                        this.onChange("input", value);
+                    }}
+                />
+                <TextareaItem
+                    value={data.textarea}
+                    onChange={value => {
+                        this.onChange("textarea", value);
+                    }}
+                />
                 <PickerItem
+                    value={data.picker}
+                    onChange={value => {
+                        this.onChange("picker", value);
+                    }}
                     dataSource={[
                         { label: "美国", value: 0 },
                         { label: "中国", value: 1 },
@@ -45,7 +88,20 @@ export default class PagePicker extends Component<any, any> {
                         { label: "日本", value: 3 }
                     ]}
                 />
-                <DatePicker />
+                <DatePicker
+                    value={data.date}
+                    onChange={value => {
+                        this.onChange("date", value);
+                    }}
+                />
+                <Referto
+                    value={data.refer}
+                    onClick={() => {
+                        Taro.navigateTo({
+                            url: "/pages/ReferPage/index?id=2"
+                        });
+                    }}
+                />
                 <LinearGradient
                     direction="row"
                     colors={["#4c669f", "#ffffff", "#4c669f"]}
@@ -55,6 +111,9 @@ export default class PagePicker extends Component<any, any> {
                         <Text style={{ color: "#666666" }}>按钮</Text>
                     </View>
                 </LinearGradient>
+                <View>
+                    <Text>{JSON.stringify(data, null, 2)}</Text>
+                </View>
             </View>
         );
     }

@@ -22,13 +22,19 @@ class DatePicker extends Component<ListOption, any> {
     constructor(props: ListOption) {
         super(props);
         this.state = {
-            dateSel: "2018-04-22"
+            value: "2018-04-22"
         };
     }
 
+    static getDerivedStateFromProps(props, state) {
+        return {
+            value: props.value || undefined
+        };
+    }
+    
     onChange = e => {
         this.setState({
-            dateSel: e.detail.value
+            value: e.detail.value
         });
         if (this.props.onChange) {
             this.props.onChange(e.detail.value);
@@ -42,7 +48,7 @@ class DatePicker extends Component<ListOption, any> {
                 <AtList>
                     <AtListItem
                         title={this.props.title}
-                        extraText={this.state.dateSel}
+                        extraText={this.state.value}
                     />
                 </AtList>
             </Picker>

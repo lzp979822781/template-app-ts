@@ -29,12 +29,32 @@ class Textarea extends Component<ListOption, any> {
         };
     }
 
+    static getDerivedStateFromProps(props, state) {
+        return {
+            value: props.value || ""
+        };
+    }
+
+    timer = null;
+
+    onChange = value => {
+        this.setState({ value }, ()=>{
+            if(this.props.onChange){
+                clearTimeout(this.timer)
+                this.timer = setTimeout(()=>{
+                    this.props.onChange(value);
+                }, 300);
+            }
+        });
+    };
+
     render() {
+        const {value} = this.state;
         return (
             <View>
-                <View  style={{ height:40, justifyContent: "center"; }}><Text style={{ fontSize:17, marginLeft:15, color:"#333333" }}>{this.props.title}</Text></View>
+                <View style={{ height:40, justifyContent: "center"; }}><Text style={{ fontSize:17, marginLeft:15, color:"#333333" }}>{this.props.title}</Text></View>
                 <View style={{ marginHorizontal: 15, borderWidth:1, borderColor: "#eeeeee" }}>
-                    <TextareaItem rows={4} count={200} placeholder="请输入..." />
+                    <TextareaItem rows={4} count={200} defaultValue={value} placeholder="请输入..."  onChange={this.onChange} />
                 </View>
             </View>
         );
