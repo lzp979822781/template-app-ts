@@ -15,6 +15,7 @@ interface ListOption {
         | undefined;
     placeholder?: string;
     onChange?: () => void;
+    error?: boolean
 }
 
 class InputText extends Component<ListOption, any> {
@@ -42,10 +43,10 @@ class InputText extends Component<ListOption, any> {
     timer = null;
 
     onChange = value => {
-        this.setState({ value }, ()=>{
-            if(this.props.onChange){
-                clearTimeout(this.timer)
-                this.timer = setTimeout(()=>{
+        this.setState({ value }, () => {
+            if (this.props.onChange) {
+                clearTimeout(this.timer);
+                this.timer = setTimeout(() => {
                     this.props.onChange(value);
                 }, 300);
             }
@@ -53,7 +54,7 @@ class InputText extends Component<ListOption, any> {
     };
 
     render() {
-        const {value} = this.state;
+        const { value } = this.state;
         return (
             <InputItem
                 type={this.props.type}

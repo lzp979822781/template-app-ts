@@ -7,7 +7,8 @@ export default class PagePicker extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
-            refreshing: false
+            refreshing: false,
+            value: ""
         };
         this.onRefresh = this.onRefresh.bind(this);
         this.onEndReached = this.onEndReached.bind(this);
@@ -22,12 +23,16 @@ export default class PagePicker extends Component<any, any> {
         this.loadList();
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        this.setState({
+            value: this.$router.params.id
+        });
+    }
 
     loadList() {
         setTimeout(() => {
             this.setState({
-                refreshing: false
+                refreshing: false,
             });
         }, 3000);
     }
@@ -57,8 +62,10 @@ export default class PagePicker extends Component<any, any> {
 
     renderItems() {
         const dataSource = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
+        const {value}  = this.state;
         return dataSource.map((item, index) => {
+            const boolen = value === "参照-"+item
+            const className = boolen ? "item-title-select" : "item-title";
             return (
                 <View
                     hoverClass="list-item-hover"
@@ -71,7 +78,7 @@ export default class PagePicker extends Component<any, any> {
                         this.onOK(val);
                     }}
                 >
-                    <Text className="item-title">参照-{item}</Text>
+                    <Text className={className}>参照-{item}</Text>
                 </View>
             );
         });

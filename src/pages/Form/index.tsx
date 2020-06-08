@@ -65,6 +65,7 @@ export default class PagePicker extends Component<any, any> {
         return (
             <View className="list">
                 <InputText
+                    error = {true}
                     value={data.input}
                     onChange={value => {
                         this.onChange("input", value);
@@ -98,17 +99,17 @@ export default class PagePicker extends Component<any, any> {
                     value={data.refer}
                     onClick={() => {
                         Taro.navigateTo({
-                            url: "/pages/ReferPage/index?id=2"
+                            url: `/pages/ReferPage/index?id=${data.refer}`
                         });
                     }}
                 />
                 <LinearGradient
                     direction="row"
-                    colors={["#4c669f", "#ffffff", "#4c669f"]}
+                    colors={["#F2140C", "#F2270C", "#F24D0C"]}
                     height={40}
                 >
                     <View className="btn" onClick={this.alertEvent}>
-                        <Text style={{ color: "#666666" }}>按钮</Text>
+                        <Text style={{ color: "#ffffff" }}>按钮</Text>
                     </View>
                 </LinearGradient>
                 <View>
