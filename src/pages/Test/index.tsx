@@ -3,8 +3,9 @@ import Taro, { Component, Config } from '@tarojs/taro';
 import { connect } from '@tarojs/redux';
 import { View, ScrollView, Text, Button, Checkbox, Label, Swiper, SwiperItem, Image, CheckboxGroup } from '@tarojs/components';
 import { Modal, PopUp, Badge } from '@/components/index';
-import { UUID } from '@/utils/utils';
+import { UUID, upload } from '@/utils/utils';
 import badgeImg from '@/assets/images/badge.png';
+import uploadImg from '@/assets/images/upload.png';
 
 // import SwipperExample from '../SwipperExample';
 
@@ -99,7 +100,8 @@ class Test extends Component<any, any> {
                   checked: false
                 }
             ],
-            checkedVal: []
+            checkedVal: [],
+            fileList: []
         }
 
     }
@@ -213,6 +215,91 @@ class Test extends Component<any, any> {
         )
     }
 
+    onChooseImg = () => {
+        Taro.chooseImage({
+            count: 2, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有，在H5浏览器端支持使用 `user` 和 `environment`分别指定为前后摄像头
+            success:  (res) => {
+                // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+                const tempFilePaths = res.tempFilePaths;
+                console.log("res", res);
+                if(Array.isArray(tempFilePaths) && tempFilePaths.length) {
+                    tempFilePaths.forEach(async item => {
+                        console.log("item", item);
+                        const file = {
+                            uid: '-1',
+                            status: 'done',
+                            url: item
+                        }
+                        // const { success, data } = await this.uploadFile(file);
+                        const uploadRes = await upload({ url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76', file})
+                        /* const { fileList } = this.state;
+                        if(success) {
+                            this.setState({ fileList: fileList.concat})
+                        } */
+                        console.log("uploadRes", uploadRes);
+                    })
+                }
+            }
+        })
+        
+    }
+
+    uploadFile = file => {
+        return new Promise(async (resolve) => {
+            const isWeapp = Taro.getEnv() === 'WEAPP';
+            const res = isWeapp ? await this.excludeRnUpload(file) : await this.rnUpload(file);
+            resolve(res)
+        })
+        
+    }
+
+    excludeRnUpload = file => {
+        return new Promise((resolve) => {
+            Taro.uploadFile({
+                url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+                filePath: file.url,
+                name: 'file',
+                formData: {},
+                success: res => {
+                    resolve({ data:res, success: true })
+                },
+                fail: res => {
+                    resolve({ error:res, success: false })
+                }
+            })
+        })
+    }
+
+    rnUpload = file => {
+        const formData = new FormData();
+        formData.append("file", file);
+        return new Promise((resolve) => {
+            fetch('https://www.mocky.io/v2/5cc8019d300000980a055e76', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data;charset=utf-8',
+                },
+                body: formData
+            }).then(response => response.json())
+            .then(res => {
+                resolve({ data:res, success: true })
+            }).catch(res => {
+                resolve({ error:res, success: false })
+            })
+        })
+        
+    }
+
+    renderUpload = () => {
+        return (
+            <View className='test-upload-container' onClick={this.onChooseImg}>
+                <Image src={uploadImg} className='test-upload-img' />
+            </View>
+        )
+    }
+
     callModel = (type: string, data = {}) => {
         return new Promise((resolve) => {
             this.props.dispatch({
@@ -231,6 +318,7 @@ class Test extends Component<any, any> {
                 <Button type='primary' onClick={this.onOpenModal}>弹框测试</Button>
                 <Button type='primary' onClick={this.onOpenActionSheet} className='test-actionsheet'>popup 弹框测试</Button>
                 { this.renderBadge()}
+                { this.renderUpload()}
                 <Modal 
                     visible={visible} 
                     title='弹框'

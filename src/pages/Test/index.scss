@@ -52,6 +52,18 @@
     &-actionsheet {
         margin-top: 10px;
     }
+
+    &-upload {
+
+        &-container {
+            padding: 20px;
+        }
+
+        &-img {
+            width: 150px;
+            height: 150px;
+        }
+    }
 }
 
 .page-section {
