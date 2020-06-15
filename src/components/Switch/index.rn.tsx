@@ -11,7 +11,7 @@ interface ListOption {
 
 class JDSwitch extends Component<ListOption, any> {
     static defaultProps = {
-        title: "参照",
+        title: "开关",
         onClick: ()=>{}
     };
 
@@ -28,15 +28,22 @@ class JDSwitch extends Component<ListOption, any> {
         };
     }
 
-    onClick=()=>{
-        this.props.onClick();
-    }
+    onChange = obj => {
+        this.setState(
+            {
+                value: obj.detail.value
+            },
+            () => {
+                this.props.onChange(obj.detail.value);
+            }
+        );
+    };
 
     render() {
         const { value } = this.state;
-        const comp = <Switch color="#F2140C" />
+        const comp = <Switch checked={value} onChange={this.onChange} color="#F2140C" />
         return (
-            <Item extra={comp} onPress={this.onClick}>
+            <Item extra={comp}>
                 {this.props.title}
             </Item>
         );

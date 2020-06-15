@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Switch } from "@tarojs/components";
-import { AtListItem }  from 'taro-ui'
+import { View } from "@tarojs/components";
+import { AtListItem } from "taro-ui";
 import "./index.scss";
 
 interface ListOption {
@@ -9,14 +9,14 @@ interface ListOption {
 
 class JDSwitch extends Component<ListOption, any> {
     static defaultProps = {
-        title: "参照",
-        onClick: ()=>{}
+        title: "开关",
+        onClick: () => {}
     };
 
     constructor(props: ListOption) {
         super(props);
         this.state = {
-            value: ""
+            value: false
         };
     }
 
@@ -25,16 +25,28 @@ class JDSwitch extends Component<ListOption, any> {
             value: props.value || ""
         };
     }
-    
-    onClick=()=>{
-        this.props.onClick();
-    }
+
+    onChange = obj => {
+        this.setState(
+            {
+                value: obj.detail.value
+            },
+            () => {
+                this.props.onChange(obj.detail.value);
+            }
+        );
+    }; 
 
     render() {
         const { value } = this.state;
-        const comp = <Switch color="#F2140C" />
         return (
-            <AtListItem title={this.props.title} extraText={comp} onClick={this.onClick} />
+            <AtListItem
+                isSwitch
+                title={this.props.title}
+                switchIsCheck={value}
+                switchColor="#F2140C"
+                onSwitchChange={this.onChange}
+            />
         );
     }
 }
@@ -46,5 +58,4 @@ class JDSwitch extends Component<ListOption, any> {
 //
 // #endregion
 
-export default JDSwitch
-;
+export default JDSwitch;

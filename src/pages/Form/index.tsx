@@ -20,7 +20,8 @@ export default class PagePicker extends Component<any, any> {
                 textarea: "456",
                 picker: 1,
                 date: "2019-05-09",
-                refer: "参照-0"
+                refer: "参照-0",
+                switch: false
             }
         };
         this.alertEvent = this.alertEvent.bind(this);
@@ -66,7 +67,7 @@ export default class PagePicker extends Component<any, any> {
         return (
             <View className="list">
                 <InputText
-                    error = {true}
+                    error={true}
                     value={data.input}
                     onChange={value => {
                         this.onChange("input", value);
@@ -104,7 +105,12 @@ export default class PagePicker extends Component<any, any> {
                         });
                     }}
                 />
-                <JDSwitch />
+                <JDSwitch
+                    value={data.switch}
+                    onChange={value => {
+                        this.onChange("switch", value);
+                    }}
+                />
                 <LinearGradient
                     direction="row"
                     colors={["#F2140C", "#F2270C", "#F24D0C"]}
