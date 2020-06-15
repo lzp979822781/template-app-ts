@@ -5,6 +5,7 @@ import TextareaItem from "@/components/Textarea/index";
 import PickerItem from "@/components/PickerItem/index";
 import DatePicker from "@/components/DatePicker/index";
 import Referto from "@/components/Referto/index";
+import JDSwitch from "@/components/Switch/index";
 
 import LinearGradient from "@/components/LinearGradient/index";
 
@@ -103,6 +104,7 @@ export default class PagePicker extends Component<any, any> {
                         });
                     }}
                 />
+                <JDSwitch />
                 <LinearGradient
                     direction="row"
                     colors={["#F2140C", "#F2270C", "#F24D0C"]}
