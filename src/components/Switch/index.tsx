@@ -22,7 +22,7 @@ class JDSwitch extends Component<ListOption, any> {
 
     static getDerivedStateFromProps(props, state) {
         return {
-            value: props.value || ""
+            value: props.value || false
         };
     }
 

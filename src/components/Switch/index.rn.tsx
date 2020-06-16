@@ -18,13 +18,13 @@ class JDSwitch extends Component<ListOption, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            value: ""
+            value: false
         };
     }
 
     static getDerivedStateFromProps(props, state) {
         return {
-            value: props.value || ""
+            value: props.value || false
         };
     }
 
