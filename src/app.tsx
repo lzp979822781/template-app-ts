@@ -32,20 +32,52 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+        'pages/home/Home/index',
         'pages/Index/index',
         'pages/List/index',
         'pages/Form/index',
         'pages/Test/index',
-        'pages/home/Home/index',
-        'pages/ReferPage/index'
+        'pages/ReferPage/index',
+        'pages/user/User/index',
+        'pages/cart/Cart/index'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+        color: '#989CA5',
+        selectedColor: '#4381E5',
+        list: [
+            {
+                pagePath: "pages/home/Home/index",
+                iconPath: "./assets/tab-bar/home.png",
+                selectedIconPath: "./assets/tab-bar/home-active.png",
+                text: "首页"
+            }, 
+            {
+                pagePath: "pages/Index/index",
+                iconPath: "./assets/tab-bar/cate.png",
+                selectedIconPath: "./assets/tab-bar/cate-active.png",
+                text: "合作厂商"
+            }, 
+            {
+                pagePath: "pages/cart/Cart/index",
+                iconPath: "./assets/tab-bar/cart.png",
+                selectedIconPath: "./assets/tab-bar/cart-active.png",
+                text: "购物车"
+            }, 
+            {
+                pagePath: "pages/user/User/index",
+                iconPath: "./assets/tab-bar/user.png",
+                selectedIconPath: "./assets/tab-bar/user-active.png",
+                text: "个人"
+            }
+        ]
     }
-  }
+}
 
   componentDidMount () {}
 

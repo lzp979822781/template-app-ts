@@ -99,11 +99,11 @@ class Home extends Component<IProps, PageState> {
             { url: img2 }, 
             { url: img3 },
             { url: img4 }
-        ];
-        return data.map((item) => {
+        ].map( item => ({...item, key: UUID()}));
+        return data.map((item, key) => {
             const {  url } = item;
             return (
-                <SwiperItem className='swipper-item' key={UUID()} style={{ backgroundColor: '#8EA7E1'}}>
+                <SwiperItem className='swipper-item' key={key} style={{ backgroundColor: '#8EA7E1'}}>
                     <View>
                         <Image src={url} />
                     </View>
