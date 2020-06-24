@@ -33,6 +33,7 @@ class App extends Component {
   config: Config = {
     pages: [
         'pages/home/Home/index',
+        'pages/BusinessList/index',
         'pages/Index/index',
         'pages/List/index',
         'pages/Form/index',
@@ -58,7 +59,7 @@ class App extends Component {
                 text: "首页"
             }, 
             {
-                pagePath: "pages/Index/index",
+                pagePath: "pages/BusinessList/index",
                 iconPath: "./assets/tab-bar/cate.png",
                 selectedIconPath: "./assets/tab-bar/cate-active.png",
                 text: "合作厂商"
