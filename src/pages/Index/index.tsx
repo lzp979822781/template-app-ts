@@ -182,8 +182,8 @@ class Index extends Component<any, any> {
             { url: img3 },
             { url: img4 }
         ].map( item => ({...item, key: UUID()}));
-        return data.map((item, key) => {
-            const { url } = item;
+        return data.map((item) => {
+            const { url, key } = item;
             return (
                 <SwiperItem
                     className='swipper-item'
