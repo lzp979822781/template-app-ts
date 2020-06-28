@@ -1,0 +1,170 @@
+$avatarWidth: 140px;
+$avatarHeight: 140px;
+$baseInfoHeight: 220px;
+
+@mixin flex($direction: row, $rowAlign: flex-start, $colAlign: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $rowAlign;
+    align-items: $colAlign;
+}
+
+@mixin font($fontSize: 24px, $color: #000, $fontFamily: 'PingFangSC-Light') {
+    font-size: $fontSize;
+    color: $color;
+    font-family: $fontFamily;
+    // line-height: $fontSize;
+}
+
+.my {
+    min-height: 2000px;
+    background: #ECECEE;
+    &-info {
+        position: relative;
+        height: $baseInfoHeight;
+
+        &-container {
+            z-index: 10;
+            position: absolute;
+            top: 50px;
+            margin-left: 30px;
+            @include flex(row, flex-start, flex-start);
+        }
+
+        &-user {
+            padding-left: 20px;
+
+
+            &-name {
+                @include flex(row, flex-start, center);
+                margin-top: 20px;
+                &-text {
+                    @include font(30px, #fff, 'PingFangSC-Semibold');
+                }
+            }
+
+            &-department {
+                width: 150px;
+                height: 36px;
+                margin-top: 20px;
+                border-radius: 18px;
+                border: 1px solid #fff;
+                @include flex(row, center, center);
+                &-text {
+                    @include font(22px, #fff, 'PingFangSC-Regular');
+                }
+            }
+        }
+        &-avatar {
+            width: $avatarWidth;
+            height: $avatarWidth;
+            border-radius: $avatarWidth / 2;
+        }
+
+        &-img {
+            width: $avatarWidth;
+            height: $avatarWidth;
+        }
+
+        &-bg {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            min-height: $avatarHeight;
+        }
+
+        &-setting {
+            &-wrapper {
+                position: absolute;
+                width: 52px;
+                height: 52px;
+                top: 22px;
+                right: 120px;
+                z-index: 10;
+            }
+
+            &-img {
+                width: 52px;
+                height: 52px;
+            }
+        }
+
+        &-message {
+            &-wrapper {
+                position: absolute;
+                width: 52px;
+                height: 52px;
+                top: 22px;
+                right: 20px;
+                z-index: 10;
+            }
+
+            &-img {
+                width: 44px;
+                height: 44px;
+            }
+        }
+        
+    }
+
+    &-order {
+
+        height: 90px;
+        padding: 0 20px;
+        background: #fff;
+        @include flex(row, flex-start, center);
+        &-title {
+            &-wrapper {
+                @include flex(row, flex-start, center);
+            }
+
+            &-text {
+                @include font(30px, #333333, 'PingFangSC-Regular')
+            }
+        }
+
+        &-desc {
+            &-wrapper {
+               @include flex(row, flex-start, center); 
+            }
+
+            &-text {
+                @include font(28px, #666666, 'PingFangSC-Regular');
+            }
+
+            &-icon {
+                width: 13px;
+                height: 23px;
+                margin-left: 8px;
+            }
+        }
+        
+        &-empty {
+            flex: 1
+        }
+
+        &-state {
+            // border: 1px solid #ECECEE;
+            margin-top: 1px;
+            padding: 30px 0 22px 0;
+            background: #fff;
+            @include flex(row, space-around, center);
+        }
+    }
+
+    &-grid {
+        margin-top: 20px;
+    }
+}
+
+.my-grid {
+    margin-top: 20px;
+}
+
+.my-info-img {
+    width: $avatarWidth;
+    height: $avatarWidth;
+}

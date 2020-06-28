@@ -1,0 +1,41 @@
+@mixin flex($direction: row, $rowAlign: flex-start, $colAlign: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $rowAlign;
+    align-items: $colAlign;
+}
+
+@mixin font($fontSize: 24px, $color: #000, $fontFamily: 'PingFangSC-Light') {
+    font-size: $fontSize;
+    color: $color;
+    font-family: $fontFamily;
+    line-height: $fontSize;
+}
+
+.grid-item {
+    width: 250px;
+    height: 160px;
+
+    &-icon {
+        &-wrapper {
+            margin-top: 20px;
+            @include flex(row, center, center);
+        }
+
+        &-img {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+    &-content {
+        margin-top: 10px;
+        @include flex(row, center, center);
+        &-text {
+            @include font(24px, #666666, 'PingFangSC-Regular');
+            /*  #ifdef  rn  */
+            line-height: 30px;
+            /*  #endif  */
+        }
+    }
+}

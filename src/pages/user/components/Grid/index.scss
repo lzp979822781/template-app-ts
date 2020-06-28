@@ -1,0 +1,23 @@
+@mixin flex($direction: row, $rowAlign: flex-start, $colAlign: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $rowAlign;
+    align-items: $colAlign;
+}
+
+@mixin font($fontSize: 24px, $color: #000, $fontFamily: 'PingFangSC-Light') {
+    font-size: $fontSize;
+    color: $color;
+    font-family: $fontFamily;
+    line-height: $fontSize;
+}
+
+.bg {
+    background: #fff;
+}
+
+.grid {
+    @extend .bg;
+    @include flex(row, flex-start, flex-start);
+    flex-wrap: wrap;
+}

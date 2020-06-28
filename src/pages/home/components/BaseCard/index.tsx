@@ -23,7 +23,7 @@ type PageState = {
 const defaultProps = {
     showGo: true,
     onClick: () => {},
-    mainTitleStyle: { color: '333840'},
+    mainTitleStyle: { color: '#333840'},
     subTitleStyle: { color: '#989CA5' },
     appendConStyle: { backgroundColor: '#4381E5'},
     appendTxtStyle: { color: '#fff'},
