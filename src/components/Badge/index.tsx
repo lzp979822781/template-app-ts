@@ -5,7 +5,7 @@ import './index.scss'
 
 
 type PageOwnProps = {
-    value: string|number,
+    value: string|number|undefined,
     dot?: boolean,
     maxValue?: number,
     rnStyle?: object,

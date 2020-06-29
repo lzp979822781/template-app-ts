@@ -116,6 +116,7 @@ class User extends Component{
                     img={unpay}
                     text='待付款'
                     onClick={this.onUnPay}
+                    badgeValue={12}
                 />
                 <OrderState 
                     img={unsend}

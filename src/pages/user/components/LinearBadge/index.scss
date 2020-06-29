@@ -1,0 +1,24 @@
+$badgeDiam: 32px;
+
+@mixin flex($direction: row, $rowAlign: flex-start, $colAlign: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $rowAlign;
+    align-items: $colAlign;
+}
+
+@mixin font($fontSize: 24px, $color: #000, $fontFamily: 'PingFangSC-Light') {
+    font-size: $fontSize;
+    color: $color;
+    font-family: $fontFamily;
+    line-height: $fontSize;
+}
+
+.gradient-badge {
+    &-text {
+        @include font(20px, #fff, ' PingFangSC-Medium');
+        /*  #ifdef  rn  */
+        line-height: 26px;
+        /*  #endif  */
+    }
+}

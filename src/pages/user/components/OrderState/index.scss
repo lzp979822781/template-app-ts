@@ -1,3 +1,5 @@
+$badgeDiam: 32px;
+
 @mixin flex($direction: row, $rowAlign: flex-start, $colAlign: center) {
     display: flex;
     flex-direction: $direction;
@@ -28,6 +30,38 @@
             @include font(24px, #666666, 'PingFangSC-Regular');
             /*  #ifdef  rn  */
             line-height: 30px;
+            /*  #endif  */
+        }
+    }
+
+    &-badge {
+        width: $badgeDiam;
+        height: $badgeDiam;
+        border-radius: $badgeDiam / 2;
+        @include flex(row, center, center);
+        /*  #ifndef  rn */
+        background-image: linear-gradient(270deg, #F96E70 0%, #ED5458 100%);
+        /*  #endif  */
+        &-text {
+            @include font(20px, #fff, 'PingFangSC-Medium');
+            /*  #ifdef  rn  */
+            line-height: 26px;
+            /*  #endif  */
+        }
+    }
+
+    &-gradient {
+        width: $badgeDiam;
+        height: $badgeDiam;
+        border-radius: $badgeDiam / 2;
+        @include flex(row, center, center);
+        /*  #ifndef  rn  */
+        background-image: linear-gradient(270deg, #F96E70 0%, #ED5458 100%);
+        /*  #endif  */
+        &-text {
+            @include font(20px, #fff, 'PingFangSC-Medium');
+            /*  #ifdef  rn  */
+            line-height: 26px;
             /*  #endif  */
         }
     }
