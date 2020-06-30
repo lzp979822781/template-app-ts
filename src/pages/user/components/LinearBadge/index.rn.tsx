@@ -14,8 +14,6 @@ class LinearBadge extends Component<PageOwnprops> {
         this.state = {  };
     }
 
-    static externalClasses = ['my-class']
-
     render() {
         const { colors, style } = this.props;
         return (

@@ -10,7 +10,10 @@ type PageOwnProps = {
     maxValue?: number,
     rnStyle?: object,
     custom?: boolean,
-    renderBadge?: any
+    renderBadge?: any,
+    textClass?: string,
+    style?: object,
+    className?: string
 }
 
 type PageState = {}
@@ -23,7 +26,7 @@ const defaultProps = {
 class TaroBadge extends Component<PageOwnProps, PageState> {
 
     static defaultProps = defaultProps
-    static externalClasses = ['badge-cls']
+    static externalClasses = ['badge-cls', 'text-class']
     static options = {
         addGlobalClass: true
     }
@@ -47,8 +50,9 @@ class TaroBadge extends Component<PageOwnProps, PageState> {
     }
 
     renderCustomBadge = () => {
+        const { style = {} } = this.props;
         return (
-            <View className='badge-custom-text'>
+            <View className='text-class badge-custom-text'  style={style}>
                 {this.props.renderBadge}
             </View>
         )

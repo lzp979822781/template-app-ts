@@ -49,7 +49,6 @@ class OrderState extends Component<PageOwnProps> {
         return (
             <Badge 
                 value={badgeValue} 
-                badge-cls='badge-cls' 
                 rnStyle={{ marginTop: 5 }} 
                 // eslint-disable-next-line taro/render-props
                 renderBadge={customBadge}

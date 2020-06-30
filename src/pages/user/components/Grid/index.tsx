@@ -35,7 +35,7 @@ class Grid extends Component<PageOwnProps> {
                 <GridItem src={signImg} text='我的月结' onClick={this.onItemClick('monthyPay')} />
                 <GridItem src={signImg} text='我的优惠券' onClick={this.onItemClick('coupon')} />
                 <GridItem src={signImg} text='我的关注' onClick={this.onItemClick('attention')} />
-                <GridItem src={signImg} text='代扣签约' onClick={this.onItemClick('withhold')} />
+                <GridItem src={signImg} text='代扣签约' onClick={this.onItemClick('withhold')} badgeValue='已签约' />
             </View>
         );
     }
