@@ -104,9 +104,22 @@ class User extends Component{
         );
     }
 
+    getStyle = () => {
+        const isRn = Taro.getEnv().toLowerCase() === 'rn';
+        const rnStyle = {
+            elevation: -10,  //  设置阴影角度，通过这个设置有无阴影（这个是最重要的，决定有没有阴影）    
+            shadowColor: 'black',  //  阴影颜色
+            shadowOffset: { width: 0, height: 0 },  // 阴影偏移
+            shadowOpacity: .5,  // 阴影不透明度
+            shadowRadius: 1,  //  圆角
+        };
+        return isRn ? rnStyle : {};
+
+    }
+
     renderOrderState = () => {
         return (
-            <View className='my-order-state'>
+            <View className='my-order-state' style={this.getStyle()}>
                 <OrderState 
                     img={pendingAudit}
                     text='待审核'

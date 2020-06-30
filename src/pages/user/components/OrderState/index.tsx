@@ -59,9 +59,9 @@ class OrderState extends Component<PageOwnProps> {
         );
     }
 
-
     render() {
         const { text, onClick } = this.props;
+        
         return (
             <View className='order-state' onClick={onClick}>
                 {/* <Image src={img} className='order-state-image' /> */}
