@@ -1,14 +1,15 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
 import DataList from "@/components/DataList/index";
-
+import Request from "@/utils/Request";
 import "./index.scss";
 
-export default class PagePicker extends Component<any, any> {
+export default class ListPage extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
             refreshing: false,
+            data: []
         };
         this.onRefresh = this.onRefresh.bind(this);
         this.onEndReached = this.onEndReached.bind(this);
@@ -23,85 +24,127 @@ export default class PagePicker extends Component<any, any> {
         this.loadList();
     }
 
-    loadList() {
-        setTimeout(() => {
-            this.setState({
-                refreshing: false
+    loadList = async () => {
+        const currentPage = this.state.currentPage;
+        try {
+            const res = await Request.get("api_partnerVender_list", {
+                currentPage: currentPage,
+                pageSize: 10,
+                venderType: null
             });
-        }, 2000);
-    }
+            
+            let listData = this.state.data;
+            let data = [];
+            if(res.data.data){
+                data = res.data.data.result;
+            }
+            
+            if (currentPage === 1) {
+                listData = data;
+            } else {
+                listData = listData.concat(data);
+            }
+
+            // console.log("res", res);
+            this.setState(
+                {
+                    data: listData,
+                    refreshing: false,
+                    ...res.data.data.page
+                    //   statusCode: response.code,
+                },
+                () => {
+                    if (data.length < this.state.pageSize) {
+                        this.canAction = false;
+                    } else {
+                        setTimeout(() => {
+                            this.canAction = true;
+                        }, 50);
+                    }
+                }
+            );
+        } catch (e) {
+            console.log("e", e);
+        }
+        Taro.hideLoading();
+    };
 
     onRefresh() {
-        this.setState({
-            refreshing: true
-        });
-        this.loadList();
+        this.setState(
+            {
+                refreshing: true,
+                currentPage: 1
+            },
+            () => {
+                this.loadList();
+            }
+        );
     }
 
+    canAction = false;
     onEndReached() {
-        Taro.showToast({
-            title: "底部",
-            icon: "none",
-            duration: 500
-        }).then(res => console.log(res));
-    }
+        if (this.canAction) {
+            Taro.showLoading({
+                title: '加载中',
+              })
+            this.canAction = false;
+            const currentPage = this.state.currentPage + 1;
 
-    alertFn() {
-        Taro.showToast({
-            title: "按钮",
-            icon: "none",
-            duration: 500
-        }).then(res => console.log(res));
+            this.setState(
+                {
+                    currentPage
+                },
+                () => {
+                    this.loadList();
+                }
+            );
+        }
     }
 
     renderItems() {
-        const dataSource = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        const { data } = this.state;
 
-        return dataSource.map(function(item){
+        return data.map(function(item) {
             return (
-                <View
-                    key={item}
-                    className='list-item-box'
-                >
+                <View key={item.venderId} className='list-item-box'>
                     <View className='list-item'>
                         <View className='list-image-box'>
                             <Image
                                 className='item-image'
-                                src='https://taro-ui.jd.com/img/logo-taro.png'
+                                src={
+                                    `http:${item.shopLogo}` ||
+                                "https://taro-ui.jd.com/img/logo-taro.png"
+                                }
                             />
                         </View>
                         <View className='content-box'>
                             <View>
                                 <Text className='item-title'>
-                                    北京市德云社制药集团大铁棍子分社-{item}
+                                    {item.companyName}
                                 </Text>
                             </View>
                             <View className='item-dec'>
-                                <Text className='item-dec-1'>
-                                    上架
-                                </Text>
+                                <Text className='item-dec-1'>上架</Text>
                                 <Text className='item-dec-3'>
-                                    10000
+                                    {item.upShelfSkuCount}
                                 </Text>
-                                <Text className='item-dec-1'>
-                                    品种
-                                </Text>
+                                <Text className='item-dec-1'>品种</Text>
                                 <View className='item-dec-vertical-division'></View>
                                 <Text className='item-dec-1'>
-                                    起送金额1000元
+                                    起送金额{item.deliveryMoney}元
                                 </Text>
                             </View>
                             <View className='item-dec'>
                                 <Text className='item-dec-2'>
-                                    配送区域：北京，上海，深圳
+                                    配送区域：{item.operatingArea}
                                 </Text>
                             </View>
                         </View>
                     </View>
                     <View className='item-dec-division'></View>
                 </View>
-            )
-        })
+            );
+        });
     }
 
     render() {

@@ -13,7 +13,7 @@ interface option {
     code: number;
 }
 
-export default class PagePicker extends Component<any, any> {
+export default class ListPage extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
