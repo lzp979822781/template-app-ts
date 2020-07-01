@@ -5,6 +5,28 @@
     border-radius: 34px;
     background-color: rgba(255, 255, 255, 0.2);
 } */
+@mixin flex($direction: row, $rowAlign: flex-start, $colAlign: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $rowAlign;
+    align-items: $colAlign;
+}
+
+@mixin font($fontSize: 24px, $color: #000, $fontFamily: 'PingFangSC-Light') {
+    font-size: $fontSize;
+    color: $color;
+    font-family: $fontFamily;
+    line-height: $fontSize;
+}
+
+@mixin container($width, $height, $borderRadius: 0) {
+    width: $width;
+    height: $height;
+    border-radius: $borderRadius;
+}
+
+$speechWidth: 24px;
+$speechHeight: 35px;
 
 .flex-row-center {
     display: flex;
@@ -14,38 +36,52 @@
 
 .search {
     &-header {
-        width: 602px;
-        height: 68px;
-        border-radius: 34px;
-        background-color: rgba(255, 255, 255, 0.2);
+        width: 540px;
+        height: 64px;
+        border-radius: 32px;
+        background-color: #F4F6FB;
+
         @extend .flex-row-center;
     }
 
     &-input {
         height: 100%;
         flex: 1;
-        font-size: 26px;
-        color: #fff;
-        font-family: PingFangSC-Regular;
+        @include font(26px, #333840, 'PingFangSC-Regular');
+        &-placeholder {
+            @include font(26px,  #989CA5, 'PingFangSC-Regular');
+        }
     }
 
     &-icon {
         @extend .flex-row-center;
         justify-content: flex-end;
-        padding-left: 42px;
+        padding-left: 20px;
         &-image {
-            width: 22px;
-            height: 22px;
-            margin-right: 14px;
+            width: 25px;
+            height: 25px;
+            margin-right: 11px;
         }
     }
 
     &-scan {
         @extend .flex-row-center;
-        width: 64px;
+        @include container(64px, 100%);
+        z-index: 1;
+        padding-left: 8px;
         &-image {
             width: 30px;
             height: 30px;
         }
+    }
+
+    &-speech {
+        @extend .flex-row-center;
+        width: 64px;
+        &-image {
+            width: $speechWidth;
+            height: $speechHeight;
+        }
+        
     }
 }

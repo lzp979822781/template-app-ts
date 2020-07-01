@@ -6,10 +6,9 @@ import img2 from '@/assets/images/02.png';
 import img3 from '@/assets/images/03.png';
 import img4 from '@/assets/images/04.png';
 
-import { SearchBar } from '@/components';
 import { UUID } from '@/utils/utils';
 
-import { Title } from '../components';
+import { Title, HomeSearch } from '../components';
 
 import WonderfulVenue from '../WonderfulVenue';
 import ExplosiveActivities from '../ExplosiveActivities';
@@ -80,6 +79,10 @@ class Home extends Component<IProps, PageState> {
                 console.log("扫描错误", e);
             })
         }
+    }
+
+    onSearchClick = () => {
+        Taro.navigateTo({ url: '/pages/home/search/Search/index'})
     }
 
     /**
@@ -200,8 +203,8 @@ class Home extends Component<IProps, PageState> {
             <View className='home'>
                 <View className='nav'>
                     <View className='header'>
-                        <SearchBar 
-                            onRightClick={this.onScan}
+                        <HomeSearch 
+                            onClick={this.onSearchClick}
                         />
                     </View>
                 </View>

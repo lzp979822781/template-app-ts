@@ -40,7 +40,8 @@ class App extends Component {
         'pages/Test/index',
         'pages/ReferPage/index',
         'pages/user/User/index',
-        'pages/cart/Cart/index'
+        'pages/cart/Cart/index',
+        'pages/home/search/Search/index',
     ],
     window: {
       backgroundTextStyle: 'light',
