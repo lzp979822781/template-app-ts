@@ -55,6 +55,24 @@ class Search extends Component<any, any> {
     }
 
     /**
+     * 点击热门中的标签触发
+     */
+    onHotClick = (data) => {
+        Taro.showToast({ 
+            title: JSON.stringify(data)
+        })
+    }
+
+    /**
+     *  点击搜索历史触发
+     */
+    onHistoryClick = data => {
+        Taro.showToast({ 
+            title: JSON.stringify(data)
+        })
+    }
+
+    /**
      * 删除搜索历史
      */
     onDelete = () => {
@@ -108,6 +126,8 @@ class Search extends Component<any, any> {
                             <SearchItem 
                                 text={text}
                                 key={id}
+                                data={item}
+                                onClick={this.onHistoryClick}
                             />
                         )
                     })
@@ -134,7 +154,10 @@ class Search extends Component<any, any> {
                 { this.renderHstHeader()}
                 { this.renderHistory()}
                 { this.renderHisTail()}
-                <Hot data={historyArr} />
+                <Hot 
+                    data={historyArr}
+                    onClick={this.onHotClick}
+                />
             </View>
         )
     }

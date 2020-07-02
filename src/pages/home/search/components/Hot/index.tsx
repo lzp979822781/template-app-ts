@@ -10,7 +10,8 @@ import './index.scss';
 
 
 type PageOwnProps = {
-    data: Array<object>
+    data: Array<object>,
+    onClick?: (data) => void
 };
 
 class Hot extends Component<PageOwnProps> {
@@ -34,7 +35,7 @@ class Hot extends Component<PageOwnProps> {
     }
 
     renderContent = () => {
-        const { data } = this.props;
+        const { data, onClick } = this.props;
         const renderData = addId(data);
         return (
             <View className='hot-content'>
@@ -46,6 +47,8 @@ class Hot extends Component<PageOwnProps> {
                                 text={text}
                                 icon={hot}
                                 key={id}
+                                data={item}
+                                onClick={onClick}
                             />
                         )
                     })

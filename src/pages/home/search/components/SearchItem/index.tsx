@@ -8,7 +8,9 @@ import './index.scss';
 type PageOwnProps = {
     text: string,
     showIcon?: boolean,
-    icon?: string|undefined
+    icon?: string|undefined,
+    data?: object,
+    onClick?: (data) => void
 }
 
 class SearchItem extends Component<PageOwnProps> {
@@ -20,6 +22,13 @@ class SearchItem extends Component<PageOwnProps> {
     constructor(props) {
         super(props);
         this.state = {  };
+    }
+
+    onClick = () => {
+        const { data, onClick } = this.props;
+        if(onClick) {
+            onClick(data);
+        }
     }
 
     renderIcon = () => {
@@ -39,7 +48,7 @@ class SearchItem extends Component<PageOwnProps> {
     render() {
         const { text } = this.props;
         return (
-            <View className='search-item'>
+            <View className='search-item' onClick={this.onClick}>
                 <Text className='search-item-text'>{text}</Text>
                 { this.renderIcon() }
             </View>
