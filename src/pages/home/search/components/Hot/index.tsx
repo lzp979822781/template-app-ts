@@ -34,8 +34,13 @@ class Hot extends Component<PageOwnProps> {
         );
     }
 
+    onClick = () => {
+        const { onClick } = this.props;
+        return onClick;
+    }
+
     renderContent = () => {
-        const { data, onClick } = this.props;
+        const { data } = this.props;
         const renderData = addId(data);
         return (
             <View className='hot-content'>
@@ -48,7 +53,7 @@ class Hot extends Component<PageOwnProps> {
                                 icon={hot}
                                 key={id}
                                 data={item}
-                                onClick={onClick}
+                                onClick={this.onClick()}
                             />
                         )
                     })
