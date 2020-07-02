@@ -1,11 +1,13 @@
 import Taro, { Component } from '@tarojs/taro';
-import { LinearGradient } from "expo-linear-gradient";
+import { View } from '@tarojs/components';
 import './index.scss';
 
 type PageOwnprops = {
     children?: any,
-    colors: Array<string>,
-    style?: object
+    badgeValue?: number|string|undefined,
+    colors?: Array<string>,
+    className?: string,
+    onClick?: (param) => void
 }
 
 class LinearBadge extends Component<PageOwnprops> {
@@ -14,15 +16,14 @@ class LinearBadge extends Component<PageOwnprops> {
         this.state = {  };
     }
 
+    static externalClasses = ['my-class']
+
     render() {
-        const { colors, style } = this.props;
+        const { onClick } = this.props;
         return (
-            <LinearGradient 
-                style={style}
-                colors={colors}
-            >
+            <View className='my-class gradient-badge' onClick={onClick}>
                 {this.props.children}
-            </LinearGradient>
+            </View>
         );
     }
 }

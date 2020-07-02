@@ -27,7 +27,7 @@ class Grid extends Component<PageOwnProps> {
 
     render() {
         const { style } = this.props;
-        console.log("this.props", this.props);
+        
         return (
             <View className='my-class grid' style={style}>
                 <GridItem src={signImg} text='采购关系' onClick={this.onItemClick('purchase')} />

@@ -18,24 +18,59 @@
     border-radius: $borderRadius;
 }
 
-.search-list {
-    &-header {
-        @include flex(row, flex-start, center);
-        height: 88px;
+.search {
 
-        &-back {
+    &-list {
+        &-header {
             @include flex(row, flex-start, center);
-            padding: 0 48px 0 30px;
-            &-icon {
-                @include container(17px, 34px)
+            height: 88px;
+    
+            &-back {
+                @include flex(row, flex-start, center);
+                padding: 0 48px 0 30px;
+                &-icon {
+                    @include container(17px, 34px)
+                }
+            }
+    
+            &-btn {
+                @include flex(row, center, center);
+                padding-left: 30px;
+                &-text {
+                    @include font(28px, #5F5F6B, 'PingFangSC-Regular');
+                }
+            }
+        }
+    }
+    
+    &-history {
+        @include flex(row, flex-start , center);
+        flex-wrap: wrap;
+        padding-left: 30px;
+
+        &-header {
+            @include flex(row, flex-start, center);
+            padding: 10px 30px;
+            margin-top: 41px;
+            &-text {
+                @include font(32px, #333840, 'PingFangSC-Semibold');
+                flex: 1;
+            }
+            &-img {
+                width: 32px;                
+                height: 32px;
             }
         }
 
-        &-btn {
+        &-tail {
             @include flex(row, center, center);
-            padding-left: 30px;
+            padding: 30px 0 0 0;
             &-text {
-                @include font(28px, #5F5F6B, 'PingFangSC-Regular');
+                @include font(24px, #5F5F6B, 'PingFangSC-Semibold');
+                margin-right: 10px;
+            }
+            &-img {
+                @include container(14px, 8px );
             }
         }
     }

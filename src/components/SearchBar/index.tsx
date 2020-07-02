@@ -53,7 +53,7 @@ class SearchBar extends Component<PageOwnProps, PageOwnState> {
     renderIcon = () => {
         const { onSpeechClick, onClear, value } = this.props;
         const isEmpty = typeof value === "undefined" || value === '';
-        console.log("this.props", this.props);
+        
         if(isEmpty) {
             return (
                 <View className='search-speech' onClick={onSpeechClick}>
@@ -70,7 +70,7 @@ class SearchBar extends Component<PageOwnProps, PageOwnState> {
 
     render() {
         const { onInput, value } = this.props;
-        console.log("this.props", this.props);
+
         return (
             <View className='search-header search-cls'>
                 {this.renderSearchIcon()}

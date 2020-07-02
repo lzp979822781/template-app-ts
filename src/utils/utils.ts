@@ -20,7 +20,14 @@ function UUID() {
     return uuid;
 }
 
-export { UUID };
+function addId(arr) {
+    if(Array.isArray(arr)) {
+        return arr.map(item => ({ ...item, id: UUID()}))
+    }
+    return arr;
+}
+
+export { UUID, addId };
 
 
 interface UploadParam {
