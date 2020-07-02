@@ -9,7 +9,7 @@
     font-size: $fontSize;
     color: $color;
     font-family: $fontFamily;
-    line-height: $fontSize;
+    // line-height: $fontSize;
 }
 
 @mixin container($width, $height, $borderRadius: 0) {

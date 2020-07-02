@@ -32,7 +32,7 @@ class Search extends Component<any, any> {
      * @memberof Search
      */
     onSpeechClick = () => {
-        
+        Taro.showToast({ title: 'speech'})
     }
 
     onInput = (e) => {

@@ -16,7 +16,7 @@
     font-size: $fontSize;
     color: $color;
     font-family: $fontFamily;
-    line-height: $fontSize;
+    // line-height: $fontSize;
 }
 
 @mixin container($width, $height, $borderRadius: 0) {
@@ -45,9 +45,10 @@ $speechHeight: 35px;
     }
 
     &-input {
-        height: 100%;
+        height: 64px;
         flex: 1;
         @include font(26px, #333840, 'PingFangSC-Regular');
+        
         &-placeholder {
             @include font(26px,  #989CA5, 'PingFangSC-Regular');
         }
