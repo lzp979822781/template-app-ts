@@ -6,8 +6,7 @@ import PickerItem from "@/components/PickerItem/index";
 import DatePicker from "@/components/DatePicker/index";
 import Referto from "@/components/Referto/index";
 import JDSwitch from "@/components/Switch/index";
-
-import LinearGradient from "@/components/LinearGradient/index";
+import { Gradient } from '@/components'
 
 import "./index.scss";
 
@@ -111,15 +110,14 @@ export default class PagePicker extends Component<any, any> {
                         this.onChange("switch", value);
                     }}
                 />
-                <LinearGradient
-                    direction="row"
+                <Gradient
+                    style={{height:40}}
                     colors={["#F2140C", "#F2270C", "#F24D0C"]}
-                    height={40}
                 >
                     <View className="btn" onClick={this.alertEvent}>
                         <Text style={{ color: "#ffffff" }}>按钮</Text>
                     </View>
-                </LinearGradient>
+                </Gradient>
                 <View>
                     <Text>{JSON.stringify(data, null, 2)}</Text>
                 </View>
