@@ -9,11 +9,18 @@ import upImg from '@/assets/search/up.png';
 import downImg from '@/assets/search/down.png';
 
 import { addId } from '@/utils/utils'
-import { SearchItem, Hot } from '../components';
+import { SearchItem, Hot, SearchListItem, ShopItem } from '../components';
 
 import './index.scss';
 
 const historyArr = [{ text: '感冒清热', hot: false }, { text: '维生素E乳', hot: false}, { text: '葡萄籽', hot: false}, { text: '精华'}, { text: '化学药制剂'}, { text: '美林布洛芬悬浮液', hot: true}];
+const listData = [
+    { text: '感冒维生素E乳' },
+    { text: '感冒清热' },
+    { text: '浮液感冒清热' },
+    { text: '感冒化学药制剂' },
+    { text: '感冒清热' }
+];
 
 @connect(({ hello, ...other }) => ({ ...hello, ...other }))
 class Search extends Component<any, any> {
@@ -21,8 +28,9 @@ class Search extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
-            searchVal: '',
-            isOpen: false
+            searchVal: '感冒',
+            isOpen: false,
+            searchList: listData
         }
     }
 
@@ -77,6 +85,14 @@ class Search extends Component<any, any> {
      */
     onDelete = () => {
         Taro.showToast({ title: '删除搜索历史'})
+    }
+
+    onSearchShop = () => {
+        Taro.showToast({ title: '店铺搜索'});
+    }
+
+    onDropClick = data => {
+        Taro.showToast({ title: JSON.stringify(data)});
     }
 
     showMore = () => {
@@ -146,11 +162,9 @@ class Search extends Component<any, any> {
         )
     }
 
-    render() {
-
+    renderEmptySearch = () => {
         return (
-            <View className='search-list'>
-                {this.renderSearch()}
+            <View>
                 { this.renderHstHeader()}
                 { this.renderHistory()}
                 { this.renderHisTail()}
@@ -159,15 +173,53 @@ class Search extends Component<any, any> {
                     onClick={this.onHotClick}
                 />
             </View>
+        );
+    }
+
+    renderSearchList = () => {
+        const { searchList, searchVal } = this.state;
+        const idArr = addId(searchList);
+        return (
+            <View className='search-list-body'>
+                <ShopItem searchVal={searchVal} onClick={this.onSearchShop} />
+                {
+                    idArr.map(item => {
+                        const { id } = item;
+                        return (
+                            <SearchListItem 
+                                key={id}
+                                data={item}
+                                searchVal={searchVal}
+                                onClick={this.onDropClick}
+                            />
+                        )
+                    })
+                }
+            </View>
+        );
+    }
+
+    renderContent = () => {
+        const { searchVal } = this.state;
+        if(searchVal) {
+            // 先获取到jsx元素再返回,如果直接返回会报错
+            const SearchList = this.renderSearchList();
+            return SearchList;
+        }
+        const EmptySearch = this.renderEmptySearch();
+        return EmptySearch;
+    }
+    
+
+    render() {
+        
+        return (
+            <View className='search-list'>
+                {this.renderSearch()}
+                { this.renderContent()}
+            </View>
         )
     }
 }
-
-// #region 导出注意
-//
-// 经过上面的声明后需要将导出的 Taro.Component 子类修改为子类本身的 props 属性
-// 这样在使用这个子类时 Ts 才不会提示缺少 JSX 类型参数错误
-//
-// #endregion
 
 export default Search;

@@ -276,10 +276,10 @@ react-native run-ios
 
 * 千万不要在rn端 componentWillReceiveProps中打印 this.props和nextProps，否则会造成页面卡死
 * View中嵌套Text的时候，View和Text之间不能有空格，否则RN端编译会报字符应该使用Text标签
-
 * 组件传递函数组件名为on开头
 * 组件中传递JSX元素的时候以render开头
 * 小程序内部不可以使用通过render传入的jsx元素判断是否进行不同条件的渲染，需要定义独立的变量
+* 如果使用条件判断返回JSX元素, 尤其是通过render方法返回不同的JSX元素, 需要先将元素存储到变量中然后再返回变量才可以
 
 ## css
 
