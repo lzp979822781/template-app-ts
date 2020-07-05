@@ -162,12 +162,13 @@ class Search extends Component<any, any> {
         )
     }
 
-    renderEmptySearch = () => {
+    hasSearchVal = () => {
         const { searchVal } = this.state;
-        console.log("searchVal", searchVal);
-        console.log("have value", searchVal !== undefined && searchVal !== '');
-        if(searchVal !== undefined && searchVal !== '') return null;
-        console.log("依然执行");
+        return searchVal !== undefined && searchVal !== '';
+    }
+
+    renderEmptySearch = () => {
+        
         return (
             <View>
                 { this.renderHstHeader()}
@@ -218,11 +219,12 @@ class Search extends Component<any, any> {
     
 
     render() {
+        const { searchVal } = this.state;
         return (
             <View className='search-list'>
                 {this.renderSearch()}
                 {/* { this.renderContent()} */}
-                { this.renderEmptySearch()}
+                { !searchVal && this.renderEmptySearch()}
                 { this.renderSearchList()}
             </View>
         )
