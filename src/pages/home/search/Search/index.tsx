@@ -28,7 +28,7 @@ class Search extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
-            searchVal: '感冒',
+            searchVal: '',
             isOpen: false,
             searchList: listData
         }
@@ -163,6 +163,11 @@ class Search extends Component<any, any> {
     }
 
     renderEmptySearch = () => {
+        const { searchVal } = this.state;
+        console.log("searchVal", searchVal);
+        console.log("have value", searchVal !== undefined && searchVal !== '');
+        if(searchVal !== undefined && searchVal !== '') return null;
+        console.log("依然执行");
         return (
             <View>
                 { this.renderHstHeader()}
@@ -179,6 +184,7 @@ class Search extends Component<any, any> {
     renderSearchList = () => {
         const { searchList, searchVal } = this.state;
         const idArr = addId(searchList);
+        if(!searchVal) return null;
         return (
             <View className='search-list-body'>
                 <ShopItem searchVal={searchVal} onClick={this.onSearchShop} />
@@ -199,24 +205,25 @@ class Search extends Component<any, any> {
         );
     }
 
-    renderContent = () => {
+    /**
+     * 先获取到jsx元素再返回,如果直接返回会报错
+     * @returns
+     */
+    /* renderContent = () => {
         const { searchVal } = this.state;
-        if(searchVal) {
-            // 先获取到jsx元素再返回,如果直接返回会报错
-            const SearchList = this.renderSearchList();
-            return SearchList;
-        }
+        const SearchList = this.renderSearchList();
         const EmptySearch = this.renderEmptySearch();
-        return EmptySearch;
-    }
+        return searchVal && SearchList || EmptySearch;
+    } */
     
 
     render() {
-        
         return (
             <View className='search-list'>
                 {this.renderSearch()}
-                { this.renderContent()}
+                {/* { this.renderContent()} */}
+                { this.renderEmptySearch()}
+                { this.renderSearchList()}
             </View>
         )
     }

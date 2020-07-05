@@ -67,25 +67,10 @@ class SearchListItem extends Component<PageOwnProps> {
         );
     }
 
-    renderContent = () => {
-        const { data: { first }} = this.props;
-        if(first) {
-            const First = this.renderFirst();
-            return First;
-        }
-        const Normal = this.renderNormal();
-        return Normal;
-    }
-        
     render() {
         
-        // const { prefix, highlight, suffix } = this.splitText();
         return (
             <View>
-                {/* {this.renderContent()} */}
-                {/* <Text className='search-list-item-text'>{prefix}</Text>
-                <Text className='search-list-item-text search-list-item-highlight'>{highlight}</Text>
-                <Text className='search-list-item-text'>{suffix}</Text> */}
                 { this.renderNormal()}
             </View>
         );
