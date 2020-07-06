@@ -30,7 +30,7 @@ class Search extends Component<any, any> {
         this.state = {
             searchVal: '',
             isOpen: false,
-            searchList: listData
+            searchList: listData,
         }
     }
 
@@ -71,12 +71,21 @@ class Search extends Component<any, any> {
         })
     }
 
+    jointParam = (param) => {
+        const keys = Object.keys(param);
+        return keys.reduce((total, key) => `${total}&${key}=${param[key]}`, '');
+    }
+
     /**
      *  点击搜索历史触发
      */
     onHistoryClick = data => {
-        Taro.showToast({ 
+        /* Taro.showToast({ 
             title: JSON.stringify(data)
+        }); */
+        const url = this.jointParam(data);
+        Taro.navigateTo({
+            url: `/pages/home/search/components/SearchGoodsList/index?${url}`
         })
     }
 
