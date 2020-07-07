@@ -102,7 +102,6 @@ class TaroModal extends Component<any, any> {
 
     render() {
         const { visible, transparent = true, maskClosable = true, closable = false, } = this.props;
-        console.log("maskClosable", maskClosable);
         return (
             <Modal
                 transparent={transparent}

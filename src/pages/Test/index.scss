@@ -64,6 +64,12 @@
             height: 150px;
         }
     }
+
+    &-drawer {
+        min-height: 2000px;
+        background-color: #fff;
+        border-radius: 24px;
+    }
 }
 
 .page-section {

@@ -2,7 +2,7 @@ import { ComponentClass } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro';
 import { connect } from '@tarojs/redux';
 import { View, ScrollView, Text, Button, Checkbox, Label, Swiper, SwiperItem, Image, CheckboxGroup } from '@tarojs/components';
-import { Modal, PopUp, Badge } from '@/components/index';
+import { Modal, PopUp, Badge, Drawer } from '@/components/index';
 import { UUID, upload } from '@/utils/utils';
 import badgeImg from '@/assets/images/badge.png';
 import uploadImg from '@/assets/images/upload.png';
@@ -101,7 +101,8 @@ class Test extends Component<any, any> {
                 }
             ],
             checkedVal: [],
-            fileList: []
+            // fileList: [],
+            drawerShow: false, // 抽屉是否展示
         }
 
     }
@@ -154,8 +155,35 @@ class Test extends Component<any, any> {
      * 复选框onChange事件
      */
     onCheckboxChange = ({detail: { value }}) => {
-        console.log("checkbox value", value);
         this.setState({ checkedVal: value})
+    }
+
+    onDrawerClick = () => {
+        this.setState({ drawerShow: true })
+    }
+
+    renderDrawer = () => {
+        const { drawerShow } = this.state;
+        return (
+            <Drawer 
+                show={drawerShow}
+                renderSidebar={this.renderSideBar()}
+            >
+                <Button type='primary' onClick={this.onDrawerClick}>抽屉测试</Button>
+            </Drawer>
+        );
+    }
+
+    onCloseDrawer = () => {
+        this.setState({ drawerShow: false})
+    }
+
+    renderSideBar = () => {
+        return (
+            <View className='test-drawer'>
+                <Button type='primary' onClick={this.onCloseDrawer}>关闭抽屉组件</Button>
+            </View>
+        );
     }
 
     renderSwipperItem = () => {
@@ -205,7 +233,7 @@ class Test extends Component<any, any> {
             <Badge 
                 value={1000} 
                 badge-cls='badge-cls' 
-                rnStyle={{ marginTop: 5 }} 
+                rnStyle={{ marginTop: 30 }} 
                 // eslint-disable-next-line taro/render-props
                 renderBadge={customBadge}
                 custom
@@ -223,10 +251,8 @@ class Test extends Component<any, any> {
             success:  (res) => {
                 // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
                 const tempFilePaths = res.tempFilePaths;
-                console.log("res", res);
                 if(Array.isArray(tempFilePaths) && tempFilePaths.length) {
                     tempFilePaths.forEach(async item => {
-                        console.log("item", item);
                         const file = {
                             uid: '-1',
                             status: 'done',
@@ -312,11 +338,14 @@ class Test extends Component<any, any> {
 
     render() {
         const { visible, show, checkedVal=[] } = this.state;
+        const isRn = Taro.getEnv().toLowerCase() === 'rn';
 
         return (
             <View className='test'>
                 <Button type='primary' onClick={this.onOpenModal}>弹框测试</Button>
                 <Button type='primary' onClick={this.onOpenActionSheet} className='test-actionsheet'>popup 弹框测试</Button>
+                { !isRn && <Button type='primary' onClick={this.onDrawerClick}>抽屉测试</Button>}
+                { this.renderDrawer()}
                 { this.renderBadge()}
                 { this.renderUpload()}
                 <Modal 

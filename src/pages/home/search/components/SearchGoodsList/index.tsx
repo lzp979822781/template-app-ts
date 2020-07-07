@@ -3,7 +3,7 @@ import { View, Image } from '@tarojs/components';
 
 import backImg from '@//assets/images/arrow-left.png';
 
-import SearchInput from '../SearchInput';
+import { SearchInput, SearchSelect } from '../index';
 
 import './index.scss';
 
@@ -30,6 +30,10 @@ class SearchGoodsList extends Component<PageOwnProps> {
         Taro.navigateBack();
     }
 
+    onFilter = () => {
+        Taro.showToast({ title: '打开筛选弹窗'})
+    }
+
     renderHeader = () => {
         const { text: searchVal } = this.$router.params || {};
         return (
@@ -45,10 +49,30 @@ class SearchGoodsList extends Component<PageOwnProps> {
         );
     }
 
+    renderItemSelect = () => {
+        return (
+            <View>
+                <SearchSelect 
+                    onFilter={this.onFilter}
+                />
+            </View>
+        );
+    }
+
+    renderTable = () => {
+        return (
+            <View>
+                列表渲染
+            </View>
+        );
+    }
+
     render() {
         return (
             <View className='goods-list'>
                 {this.renderHeader()}
+                {this.renderItemSelect()}
+                {this.renderTable()}
             </View>
         );
     }
