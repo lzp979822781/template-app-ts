@@ -30,6 +30,8 @@ class TaroDrawer extends Component<PageOwnProps> {
                 mask={!!mask}
                 onClose={onClose}
                 right={!!right}
+                width='305px'
+                className='drawer-weapp'
             >
                 { this.props.renderSidebar }
             </AtDrawer>

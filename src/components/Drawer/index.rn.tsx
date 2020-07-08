@@ -1,4 +1,5 @@
 import Taro, { Component } from '@tarojs/taro';
+// import { View } from '@tarojs/components';
 import { Drawer } from "@ant-design/react-native";
 
 import './index.scss';
@@ -29,10 +30,13 @@ class TaroDrawer extends Component<PageOwnProps> {
                 position={right ? 'right' : 'left'}
                 open={!!show}
                     // onOpenChange={this.onOpenChange}
-                // drawerBackgroundColor='#ccc'
+                    // rgba(51,56,64,0.70)'
+                drawerBackgroundColor='rgba(51,56,64,0.70)'
                 drawerWidth={305}
+                overlayStyle={{ backgroundColor: 'red'}}
             >
                 { this.props.children}
+                
             </Drawer>
         );
     }

@@ -1,5 +1,7 @@
 import Taro, { Component } from '@tarojs/taro';
-import { View, Image } from '@tarojs/components';
+import { View, Image, Text, Button } from '@tarojs/components';
+
+import { Drawer } from '@/components';
 
 import backImg from '@//assets/images/arrow-left.png';
 
@@ -11,11 +13,15 @@ type PageOwnProps = {
     searchVal?: string|undefined
 };
 
-class SearchGoodsList extends Component<PageOwnProps> {
+type PageOwnState = {
+    drawerShow?: boolean
+}
+
+class SearchGoodsList extends Component<PageOwnProps, PageOwnState> {
     constructor(props) {
         super(props);
         this.state = {  
-
+            drawerShow: true
         };
     }
 
@@ -31,7 +37,12 @@ class SearchGoodsList extends Component<PageOwnProps> {
     }
 
     onFilter = () => {
-        Taro.showToast({ title: '打开筛选弹窗'})
+        Taro.showToast({ title: '打开筛选弹窗'});
+        this.setState({ drawerShow: true });
+    }
+
+    onCloseSideBar = () => {
+        this.setState({ drawerShow: false })
     }
 
     renderHeader = () => {
@@ -51,7 +62,7 @@ class SearchGoodsList extends Component<PageOwnProps> {
 
     renderItemSelect = () => {
         return (
-            <View>
+            <View className='goods-list-select'>
                 <SearchSelect 
                     onFilter={this.onFilter}
                 />
@@ -62,17 +73,42 @@ class SearchGoodsList extends Component<PageOwnProps> {
     renderTable = () => {
         return (
             <View>
-                列表渲染
+                <Text>列表</Text>
+            </View>
+        );
+    }
+
+    renderSideBar = () => {
+        return (
+            <View className='goods-list-sidebar'>
+                <Button type='primary' onClick={this.onCloseSideBar}>关闭侧边栏</Button>
+                {/* <View><Text>侧边栏</Text></View> */}
             </View>
         );
     }
 
     render() {
+        const { drawerShow } = this.state;
+        const isRn = Taro.getEnv().toLowerCase() === 'rn';
+
         return (
             <View className='goods-list'>
-                {this.renderHeader()}
-                {this.renderItemSelect()}
-                {this.renderTable()}
+                { !isRn && this.renderHeader()}
+                { !isRn && this.renderItemSelect()}
+                { !isRn && this.renderTable() }
+                <Drawer 
+                    show={drawerShow}
+                    // eslint-disable-next-line taro/render-props
+                    renderSidebar={this.renderSideBar()}
+                >
+                    {this.renderHeader()}
+                    {this.renderItemSelect()}
+                    {this.renderTable()}
+                    <View style={{ flex: 1}}>
+
+                    </View>
+                </Drawer>
+                
             </View>
         );
     }

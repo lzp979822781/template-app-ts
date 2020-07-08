@@ -19,8 +19,9 @@
 }
 
 .goods-list {
-    padding: 0 30px;
+    height: 100%;
     &-header {
+        padding: 0 30px;
         @include flex(row, flex-start, center);
         height: 64px;
         &-back {
@@ -31,4 +32,16 @@
             }
         }
     }
+
+    &-select {
+        padding: 0 30px;
+    }
+
+    &-sidebar {
+        background-color: #fff;
+        height: 100%;
+        border-top-left-radius: 24px;
+        border-bottom-left-radius: 24px;
+    }
+
 }
