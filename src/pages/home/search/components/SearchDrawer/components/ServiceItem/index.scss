@@ -1,0 +1,42 @@
+@mixin flex($direction: row, $rowAlign: flex-start, $colAlign: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $rowAlign;
+    align-items: $colAlign;
+}
+
+@mixin font($fontSize: 24px, $color: #000, $fontFamily: 'PingFangSC-Light') {
+    font-size: $fontSize;
+    color: $color;
+    font-family: $fontFamily;
+    // line-height: $fontSize;
+}
+
+@mixin container($width, $height, $borderRadius: 0) {
+    width: $width;
+    height: $height;
+    border-radius: $borderRadius;
+}
+
+$height: 63px;
+$width: 163px;
+
+.service-item {
+    border: 1px solid #DCE3F0;
+    border-radius: 32px;
+    height: $height;
+    width: $width;
+    
+    @include flex(row, center, center);
+
+    &-text {
+        @include font(26px, #5F5F6B, 'PingFangSC-Regular');
+        &-active {
+            @include font(26px, #4381E5, 'PingFangSC-Medium');
+        }
+    }
+
+    &-active {
+        border-color: #4381E5;
+    }
+}

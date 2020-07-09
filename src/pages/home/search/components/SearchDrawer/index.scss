@@ -1,0 +1,87 @@
+@mixin flex($direction: row, $rowAlign: flex-start, $colAlign: center) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $rowAlign;
+    align-items: $colAlign;
+}
+
+@mixin font($fontSize: 24px, $color: #000, $fontFamily: 'PingFangSC-Light') {
+    font-size: $fontSize;
+    color: $color;
+    font-family: $fontFamily;
+    // line-height: $fontSize;
+}
+
+@mixin container($width, $height, $borderRadius: 0) {
+    width: $width;
+    height: $height;
+    border-radius: $borderRadius;
+}
+
+@mixin mt($gap) {
+    margin-top: $gap
+}
+
+.search-drawer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    &-service {
+        padding: 50px 40px;
+        &-text {
+            @include font(32px, #333840, 'PingFangSC-Semibold');
+        }
+
+        &-content {
+            margin-top: 30px;
+            @include flex(row, space-between, flex-start);
+            flex-wrap: wrap;
+        }
+
+        &-price {
+            margin-top: 50px;
+            &-content {
+                margin-top: 30px;
+                @include flex(row, flex-start, center);
+            }
+
+            &-delimiter {
+                width: 20px;
+                height: 2px;
+                margin: 0 10px;
+                background: #5F5F6B;
+            }
+        }
+
+    }
+
+    &-btns {
+        flex: 1;
+        @include flex(row, flex-start, flex-end);
+        &-btn {
+            height: 84px;
+            flex: 1;
+            width: 305px;
+            @include flex(row, center, center);
+        }
+
+        &-gradient {
+            background-image: linear-gradient(90deg, #689FF6, #4381E5);
+        }
+
+        &-reset {
+            border-bottom-left-radius: 24px;
+            @include font(32px, #4381E5, 'PingFangSC-Semibold');
+        }
+
+        &-sure {
+            &-text {
+                @include font(32px, #fff, 'PingFangSC-Semibold');
+            }
+        }
+    }
+}
+
+.mt20 {
+    @include mt(20px);
+}

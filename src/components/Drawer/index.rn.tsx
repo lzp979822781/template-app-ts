@@ -33,7 +33,6 @@ class TaroDrawer extends Component<PageOwnProps> {
                     // rgba(51,56,64,0.70)'
                 drawerBackgroundColor='rgba(51,56,64,0.70)'
                 drawerWidth={305}
-                overlayStyle={{ backgroundColor: 'red'}}
             >
                 { this.props.children}
                 

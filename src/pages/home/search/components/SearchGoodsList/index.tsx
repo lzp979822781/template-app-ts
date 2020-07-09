@@ -1,11 +1,11 @@
 import Taro, { Component } from '@tarojs/taro';
-import { View, Image, Text, Button } from '@tarojs/components';
+import { View, Image, Text } from '@tarojs/components';
 
 import { Drawer } from '@/components';
 
 import backImg from '@//assets/images/arrow-left.png';
 
-import { SearchInput, SearchSelect } from '../index';
+import { SearchInput, SearchSelect, SearchDrawer } from '../index';
 
 import './index.scss';
 
@@ -14,14 +14,16 @@ type PageOwnProps = {
 };
 
 type PageOwnState = {
-    drawerShow?: boolean
+    drawerShow?: boolean,
+    serviceData?: Array<object>
 }
 
 class SearchGoodsList extends Component<PageOwnProps, PageOwnState> {
     constructor(props) {
         super(props);
         this.state = {  
-            drawerShow: true
+            drawerShow: true,
+            serviceData: []
         };
     }
 
@@ -44,6 +46,10 @@ class SearchGoodsList extends Component<PageOwnProps, PageOwnState> {
     onCloseSideBar = () => {
         this.setState({ drawerShow: false })
     }
+
+    onServiceClick = (data) => {
+        this.setState({ serviceData: data })
+    } 
 
     renderHeader = () => {
         const { text: searchVal } = this.$router.params || {};
@@ -81,8 +87,10 @@ class SearchGoodsList extends Component<PageOwnProps, PageOwnState> {
     renderSideBar = () => {
         return (
             <View className='goods-list-sidebar'>
-                <Button type='primary' onClick={this.onCloseSideBar}>关闭侧边栏</Button>
-                {/* <View><Text>侧边栏</Text></View> */}
+                {/* <Button type='primary' onClick={this.onCloseSideBar}>关闭侧边栏</Button> */}
+                <SearchDrawer 
+                    onClick={this.onServiceClick}
+                />
             </View>
         );
     }

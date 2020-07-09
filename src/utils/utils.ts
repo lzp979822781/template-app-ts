@@ -130,3 +130,7 @@ function upload(uploadParam: UploadParam){
 }
 
 export { upload };
+
+const isRn = Taro.getEnv().toLowerCase() === 'rn';
+
+export { isRn };
