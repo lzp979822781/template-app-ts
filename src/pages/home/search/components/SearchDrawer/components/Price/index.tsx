@@ -28,7 +28,7 @@ class Price extends Component<PageOwnProps> {
                 disabled={disabled}
                 className='price'
                 onInput={onInput}
-                type='number'
+                type='digit'
             />
         );
     }

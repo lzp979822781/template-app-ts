@@ -111,10 +111,19 @@ class SearchDrawer extends Component<PageOwnProps, PageOwnState> {
         )
     }
 
+    renderCondition = () => {
+        return (
+            <View className={`${clsPre}-condition`}>
+                
+            </View>
+        );
+    }
+
     render() {
         return (
             <View className={clsPre}>
                 { this.renderService()}
+                { this.renderCondition()}
                 { this.renderBtns()}
             </View>
         );

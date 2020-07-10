@@ -18,20 +18,22 @@
     border-radius: $borderRadius;
 }
 
-.price {
-    width: 245px;
-    height: 64px;
-    border-radius: 32px;
-    background-color: #F4F6FB;
-    text-align: center;
-    padding: 0 32px;
-    /*  #ifndef  rn */
-    box-sizing: border-box;
-    /*  #endif  */
+.condition-pre {
+    &-header {
+        @include flex(row, flex-start, center);
+        &-text {
+            flex: 1;
+            @include font(32px, #333840, 'PingFangSC-Semibold');
+        }
 
-    @include font(26px, #333840, 'PingFangSC-Semibold');
-    &-placeholder {
-        @include font(26px, #989CA5, 'PingFangSC-Regular');
-        text-align: center;
+        &-icon {
+            width: 40px;
+            height: 100%;
+            @include flex(row, flex-end, center);
+            &-img {
+                width: 18px;
+                height: 8px;
+            }
+        }
     }
 }
