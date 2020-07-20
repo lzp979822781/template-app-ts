@@ -42,6 +42,7 @@ class App extends Component {
         'pages/user/User/index',
         'pages/cart/Cart/index',
         'pages/home/search/Search/index',
+        'pages/home/search/components/SearchGoodsList/index',
     ],
     window: {
       backgroundTextStyle: 'light',
