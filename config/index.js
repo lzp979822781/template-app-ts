@@ -11,7 +11,6 @@ const plugins = [
             moduleName: 'babel-runtime'
         }
     ],
-    // 
 ];
 
 const rnPlugin = ["import", { libraryName: "@ant-design/react-native" }];
