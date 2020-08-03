@@ -1,5 +1,7 @@
 const path = require('path');
 
+const copyRnToJdreact = path.resolve(__dirname, '..', 'plugins/copy-rn-jdreact');
+
 const plugins = [
     'transform-decorators-legacy',
     'transform-class-properties',
@@ -10,13 +12,13 @@ const plugins = [
             regenerator: true,
             moduleName: 'babel-runtime'
         }
-    ],
+    ]
 ];
 
 const rnPlugin = ["import", { libraryName: "@ant-design/react-native" }];
 
 if(process.env.TARO_ENV === 'rn') {
-    plugins.push(...rnPlugin);
+    plugins.push(rnPlugin);
 }
 
 const config = {
@@ -45,6 +47,13 @@ const config = {
         ],
         plugins
     },
+    plugins: [
+        '@tarojs/plugin-sass',
+        '@tarojs/plugin-terser',
+        [copyRnToJdreact, {
+            dest: path.resolve(__dirname, '../../', 'jdreact-jsbundle-JDReactMasterOfLoader')
+        }]
+    ],
     defineConstants: {
     },
     mini: {

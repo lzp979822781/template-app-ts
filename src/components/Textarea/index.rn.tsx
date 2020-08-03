@@ -52,9 +52,9 @@ class Textarea extends Component<ListOption, any> {
         const {value} = this.state;
         return (
             <View>
-                <View style={{ height:40, justifyContent: "center"; }}><Text style={{ fontSize:17, marginLeft:15, color:"#333333" }}>{this.props.title}</Text></View>
+                <View style={{ height:40, justifyContent: "center" }}><Text style={{ fontSize:17, marginLeft:15, color:"#333333" }}>{this.props.title}</Text></View>
                 <View style={{ marginHorizontal: 15, borderWidth:1, borderColor: "#eeeeee" }}>
-                    <TextareaItem rows={4} count={200} defaultValue={value} placeholder="请输入..."  onChange={this.onChange} />
+                    <TextareaItem rows={4} count={200} defaultValue={value} placeholder='请输入...'  onChange={this.onChange} />
                 </View>
             </View>
         );

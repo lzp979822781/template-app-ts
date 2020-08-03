@@ -94,6 +94,7 @@ class Home extends Component<IProps, PageState> {
 
     onListItemClick = (itemData) => {
         console.log('itemData', itemData);
+
     }
 
     renderSwipperItem = () => {

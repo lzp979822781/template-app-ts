@@ -68,13 +68,13 @@ export default class PagePicker extends Component<any, any> {
             const className = boolen ? "item-title-select" : "item-title";
             return (
                 <View
-                    hoverClass="list-item-hover"
+                    hoverClass='list-item-hover'
                     hoverStyle={{
                         backgroundColor: "#eeeeee"
                     }}
-                    className="list-item"
+                    className='list-item'
                     onClick={() => {
-                        let val = "参照-" + item;
+                        const val = "参照-" + item;
                         this.onOK(val);
                     }}
                 >
@@ -86,7 +86,7 @@ export default class PagePicker extends Component<any, any> {
 
     render() {
         return (
-            <View className="list">
+            <View className='list'>
                 <DataList
                     minusHeight={0}
                     refreshing={this.state.refreshing}
