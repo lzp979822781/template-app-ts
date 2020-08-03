@@ -7,4 +7,5 @@ node_modules/
 *.lock
 bundle/
 package-lock.json
-
+jdreact-android-taro/
+rn_temp
