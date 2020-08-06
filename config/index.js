@@ -16,9 +16,20 @@ const plugins = [
 ];
 
 const rnPlugin = ["import", { libraryName: "@ant-design/react-native" }];
+const isRn = process.env.TARO_ENV === 'rn';
 
-if(process.env.TARO_ENV === 'rn') {
+if(isRn) {
     plugins.push(rnPlugin);
+}
+
+// Taro plugin 
+const extraPlugins = [];
+const copyRnPlugin = [copyRnToJdreact, {
+    dest: path.resolve(__dirname, '../../', 'jdreact-jsbundle-JDReactMasterOfLoader')
+}];
+
+if(isRn) {
+    extraPlugins.push(copyRnPlugin);
 }
 
 const config = {
@@ -50,9 +61,7 @@ const config = {
     plugins: [
         '@tarojs/plugin-sass',
         '@tarojs/plugin-terser',
-        [copyRnToJdreact, {
-            dest: path.resolve(__dirname, '../../', 'jdreact-jsbundle-JDReactMasterOfLoader')
-        }]
+        ...extraPlugins
     ],
     defineConstants: {
     },
