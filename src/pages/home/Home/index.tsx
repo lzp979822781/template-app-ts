@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Swiper, Image, SwiperItem, ScrollView } from '@tarojs/components'
+import { View, Swiper, Image, SwiperItem, ScrollView, Button } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import img1 from '@/assets/images/01.png';
 import img2 from '@/assets/images/02.png';
@@ -7,6 +7,7 @@ import img3 from '@/assets/images/03.png';
 import img4 from '@/assets/images/04.png';
 
 import { UUID } from '@/utils/utils';
+import { callLogin } from '@/utils/login';
 
 import { Title, HomeSearch } from '../components';
 
@@ -199,6 +200,13 @@ class Home extends Component<IProps, PageState> {
         })
     }
 
+    onLogin = async () => {
+        const res = await callLogin();
+        Taro.showToast({
+            title: JSON.stringify(res)
+        })
+    }
+
     render() {
         return (
             <View className='home'>
@@ -209,6 +217,7 @@ class Home extends Component<IProps, PageState> {
                         />
                     </View>
                 </View>
+                <Button type='primary' onClick={this.onLogin}>唤起登录页</Button>
                 <Swiper
                     className='swipper-container'
                     indicatorColor='#999'
