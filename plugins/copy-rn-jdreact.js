@@ -32,7 +32,6 @@ function copy(src, dest) {
 }
 
 async function main(options) {
-    console.log("options", options);
     const { dest } = options;
     const destDir = `${dest}/rn_temp`;
 
