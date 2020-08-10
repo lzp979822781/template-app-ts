@@ -4,10 +4,10 @@
 	"description": "template-app-ts",
 	"appid": "wx9110daef657d4066",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
-		"minified": false
+        "minified": false
 	},
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",
