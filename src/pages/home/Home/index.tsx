@@ -7,7 +7,6 @@ import img3 from '@/assets/images/03.png';
 import img4 from '@/assets/images/04.png';
 
 import { UUID } from '@/utils/utils';
-import { callLogin } from '@/utils/login';
 
 import { Title, HomeSearch } from '../components';
 
@@ -200,11 +199,14 @@ class Home extends Component<IProps, PageState> {
         })
     }
 
-    onLogin = async () => {
-        const res = await callLogin();
-        Taro.showToast({
-            title: JSON.stringify(res)
-        })
+    toLogin = () => {
+        const isRn = Taro.getEnv().toLowerCase() === 'rn';
+        if(!isRn) {
+            const returnPage = '/pages/home/Home/index';
+            Taro.navigateTo({
+                url: `/pages/login/index/index?returnPage=${returnPage}`
+            })
+        }
     }
 
     render() {
@@ -217,7 +219,7 @@ class Home extends Component<IProps, PageState> {
                         />
                     </View>
                 </View>
-                <Button type='primary' onClick={this.onLogin}>唤起登录页</Button>
+                <Button type='primary' onClick={this.toLogin}>微信登录</Button>
                 <Swiper
                     className='swipper-container'
                     indicatorColor='#999'

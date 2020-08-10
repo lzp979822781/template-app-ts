@@ -96,6 +96,11 @@ const config = {
                     generateScopedName: '[name]__[local]___[hash:base64:5]'
                 }
             }
+        },
+        compile: {
+            exclude: [
+                path.resolve(__dirname, '..', 'src/pages/login')
+            ]
         }
     },
     h5: {

@@ -43,13 +43,16 @@ class App extends Component {
         'pages/cart/Cart/index',
         'pages/home/search/Search/index',
         'pages/home/search/components/SearchGoodsList/index',
+        'pages/login/index/index',
+        "pages/login/web-view/web-view",
+        "pages/login/wv-common/wv-common"
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTextStyle: 'black',
     },
-    tabBar: {
+    /* tabBar: {
         color: '#989CA5',
         selectedColor: '#4381E5',
         list: [
@@ -78,6 +81,12 @@ class App extends Component {
                 text: "个人"
             }
         ]
+    }, */
+    plugins: {
+        loginPlugin: {
+            "version": "1.2.0",
+            "provider": "wxefe655223916819e"
+        }
     }
 }
 

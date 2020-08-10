@@ -2,7 +2,7 @@
 	"miniprogramRoot": "dist/",
 	"projectname": "template-app-ts",
 	"description": "template-app-ts",
-	"appid": "touristappid",
+	"appid": "wx9110daef657d4066",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,
