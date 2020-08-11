@@ -135,6 +135,14 @@ const config = {
                 },
             }
         }
+    },
+    rn: {
+        compile: {
+            exclude: [
+                path.resolve(__dirname, '..', 'src/pages/demo'),
+                path.resolve(__dirname, '..', 'src/pages/login'),
+            ]
+        }
     }
 }
 

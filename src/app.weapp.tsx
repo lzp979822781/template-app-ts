@@ -5,16 +5,8 @@ import store from './store/createStore';
 
 import { Index } from './pages'
 
+
 import './app.scss'
-
-
-console.ignoredYellowBox = [
-  "Warning: BackAndroid is deprecated. Please use BackHandler instead.",
-  "source.uri should not be an empty string",
-  "Invalid props.style key"
-];
-
-console.disableYellowBox = true; // 关闭全部黄色警告
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -33,6 +25,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+        'pages/demo/demo',
         'pages/home/Home/index',
         'pages/BusinessList/index',
         'pages/Index/index',
@@ -44,6 +37,9 @@ class App extends Component {
         'pages/cart/Cart/index',
         'pages/home/search/Search/index',
         'pages/home/search/components/SearchGoodsList/index',
+        'pages/login/index/index',
+        "pages/login/web-view/web-view",
+        "pages/login/wv-common/wv-common"
     ],
     window: {
       backgroundTextStyle: 'light',

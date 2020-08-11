@@ -207,6 +207,7 @@ class Home extends Component<IProps, PageState> {
                 url: `/pages/login/index/index?returnPage=${returnPage}`
             })
         }
+        Taro.showToast({ title: 'rn端调用'})
     }
 
     render() {

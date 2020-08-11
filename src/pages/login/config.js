@@ -11,7 +11,7 @@ const config = {
     navigationBarColor: undefined,
     navigationBarTitle: undefined,
     tabNum: 2,
-    requestHost:'https://wxapplogin.m.jd.com',
+    // requestHost:'https://wxapplogin.m.jd.com',
     selfTips: [{
         tip: '《京东用户注册协议》',
         url: 'https://wxapplogin.m.jd.com/static/registration.html'

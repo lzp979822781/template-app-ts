@@ -38,7 +38,6 @@ const utils = {
       return o
     }
     const storageConfig = plugin.getLoginParams();
-    console.log("storageConfig", storageConfig);
     const config = handleUndefinedType(utils.getDefaultConfig());
     let loginParams = { ...storageConfig, ...config };
     if (plugin.isObject(obj)) {
