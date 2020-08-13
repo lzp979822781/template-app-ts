@@ -1,9 +1,11 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
-import arrowRight from '@/assets/images/arrowright.png'; 
 import { DrugTag} from '../components';
 
 import './index.scss';
+
+const arrowRight = 'https://img10.360buyimg.com/imagetools/jfs/t1/150044/30/5372/430/5f34ef8fE160c5191/d8d488805d680d91.png';
+
 
 interface ItemData {
     imgSrc: string,

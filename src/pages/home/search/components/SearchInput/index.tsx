@@ -1,8 +1,9 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
-import searchPng from '@/assets/images/search.png';
 
 import './index.scss';
+
+const searchPng = 'https://img10.360buyimg.com/imagetools/jfs/t1/127337/35/9610/1615/5f34ef8fEf5dc34e9/69cd6b38e4f579cb.png';
 
 type PageOwnProps = {
     leftSrc?: any,

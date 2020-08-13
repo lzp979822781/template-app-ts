@@ -4,13 +4,13 @@ import { connect } from '@tarojs/redux';
 import { View, ScrollView, Text, Button, Checkbox, Label, Swiper, SwiperItem, Image, CheckboxGroup } from '@tarojs/components';
 import { Modal, PopUp, Badge, Drawer } from '@/components/index';
 import { UUID, upload } from '@/utils/utils';
-import badgeImg from '@/assets/images/badge.png';
-import uploadImg from '@/assets/images/upload.png';
 
 // import SwipperExample from '../SwipperExample';
 
 import './index.scss'
 
+const badgeImg = 'https://img10.360buyimg.com/imagetools/jfs/t1/148103/10/5311/6014/5f34ef8fEdf8161fa/62ffeeafea1095df.png';
+const uploadImg = 'https://img10.360buyimg.com/imagetools/jfs/t1/127054/40/9573/2534/5f34ef8fEbdcc0963/e73c5e7590284553.png';
 // #region 书写注意
 //
 // 目前 typescript 版本还无法在装饰器模式下将 Props 注入到 Taro.Component 中的 props 属性

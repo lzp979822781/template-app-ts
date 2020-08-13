@@ -2,10 +2,9 @@ import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 import { Modal } from '@ant-design/react-native';
 
-import closeImg from '@/assets/images/icon_close.png';
-
 import './index.scss'
 
+const closeImg = 'https://img11.360buyimg.com/imagetools/jfs/t1/115594/10/14831/968/5f34ef8fE575606fc/0468590cd7d66e91.png';
 
 type PageDispatchProps = {
 }

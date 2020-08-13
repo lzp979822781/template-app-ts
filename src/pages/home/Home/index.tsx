@@ -1,12 +1,10 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Swiper, Image, SwiperItem, ScrollView, Button } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import img1 from '@/assets/images/01.png';
-import img2 from '@/assets/images/02.png';
-import img3 from '@/assets/images/03.png';
-import img4 from '@/assets/images/04.png';
 
 import { UUID } from '@/utils/utils';
+import Request from '@/utils/Request';
+import { get, post } from "@/utils/multi-request";
 
 import { Title, HomeSearch } from '../components';
 
@@ -99,10 +97,10 @@ class Home extends Component<IProps, PageState> {
 
     renderSwipperItem = () => {
         const data = [ 
-            { url: img1 },
-            { url: img2 }, 
-            { url: img3 },
-            { url: img4 }
+            { url: 'https://img10.360buyimg.com/imagetools/jfs/t1/113013/34/14655/437725/5f34ef8eEa7a405ab/30d0945a08fc4c22.png' },
+            { url: 'https://img11.360buyimg.com/imagetools/jfs/t1/112751/6/14929/213590/5f34ef8eE42adfb6c/259ce8a3ebff49fe.png' },
+            { url: 'https://img14.360buyimg.com/imagetools/jfs/t1/150235/13/5346/468881/5f34ef8fE104f2b45/f46728fd2c561d64.png' },
+            { url: 'https://img14.360buyimg.com/imagetools/jfs/t1/150235/13/5346/468881/5f34ef8fE104f2b45/f46728fd2c561d64.png' }
         ].map( item => ({...item, key: UUID()}));
         return data.map((item) => {
             const {  url, key } = item;
@@ -131,7 +129,7 @@ class Home extends Component<IProps, PageState> {
 
         const data = [
             {
-                imgSrc: img1,
+                imgSrc: 'https://img10.360buyimg.com/imagetools/jfs/t1/113013/34/14655/437725/5f34ef8eEa7a405ab/30d0945a08fc4c22.png',
                 selfSku: true,
                 title: '澳佳宝原味深海原鱼油',
                 subTitle: '广西玉林制药集团有限公司',
@@ -143,7 +141,7 @@ class Home extends Component<IProps, PageState> {
                 saleShopNum: 22
             },
             {
-                imgSrc: img2,
+                imgSrc: 'https://img11.360buyimg.com/imagetools/jfs/t1/112751/6/14929/213590/5f34ef8eE42adfb6c/259ce8a3ebff49fe.png',
                 selfSku: true,
                 title: 'HECH赫熙天然鱼子酱鱼子酱',
                 subTitle: '广西玉林制药集团有限公司',
@@ -155,7 +153,7 @@ class Home extends Component<IProps, PageState> {
                 saleShopNum: 22
             },
             {
-                imgSrc: img3,
+                imgSrc: 'https://img14.360buyimg.com/imagetools/jfs/t1/150235/13/5346/468881/5f34ef8fE104f2b45/f46728fd2c561d64.png',
                 selfSku: false,
                 title: '润肺定喘去痰止咳',
                 subTitle: '广西玉林制药集团有限公司',
@@ -210,6 +208,56 @@ class Home extends Component<IProps, PageState> {
         Taro.showToast({ title: 'rn端调用'})
     }
 
+    sendReq = async () => {
+        /* const res = await Taro.request({
+            url: 'https://yao.jd.com/api/user/userInfo',
+            method: "GET",
+            header: {
+                'content-type': 'application/json' // 默认值
+            },
+            credentials: "include",
+            mode: "cors",
+
+        }); */
+        const res = await get({
+            url: `https://api.m.jd.com/api`,
+            urlParam: { functionId: 'queryNameList', appid: 'jdhunion', loginType: 2},
+        });
+        console.log("res", res);
+        /* try {
+            const res = await Request.get("api_user_userInfo", {
+                content: "hello",
+            });
+            console.log("res", res);
+        } catch (e) {
+            console.log("e", e);
+        } */
+        /* const res = await Taro.request({
+            url: 'https://wxappbeta.m.jd.com/kwxp/norder/selectProvince.action?fromType=wxapp',
+            method: 'POST',
+            header: {
+                'content-type': 'application/json' // 默认值
+            },
+            data: {},
+            credentials: "include",
+            mode: "cors",
+        });
+        console.log("res", res); */
+
+        /* const res = await post({
+            url: 'https://wxappbeta.m.jd.com/kwxp/norder/selectProvince.action',
+            urlParam: { fromType: 'wxapp' },
+        });
+        console.log("res", res); */
+    }
+
+    sendRnReq = async () => {
+        const res = await Request.get("api_user_userInfo", {
+            content: "hello"
+        });
+        console.log("rn", res);
+    }
+
     render() {
         return (
             <View className='home'>
@@ -221,6 +269,8 @@ class Home extends Component<IProps, PageState> {
                     </View>
                 </View>
                 <Button type='primary' onClick={this.toLogin}>微信登录</Button>
+                <Button type='primary' onClick={this.sendReq}>发送请求</Button>
+                <Button type='primary' onClick={this.sendRnReq}>rn请求</Button>
                 <Swiper
                     className='swipper-container'
                     indicatorColor='#999'

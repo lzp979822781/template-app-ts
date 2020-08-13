@@ -1,7 +1,5 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Image } from '@tarojs/components';
-import searchPng from '@/assets/images/search.png'
-import scanImg from '@/assets/images/scan.png'
 import './index.scss';
 
 type PageOwnProps = {
@@ -15,6 +13,9 @@ type PageOwnProps = {
 type PageOwnState = {
 
 }
+
+const searchPng = 'https://img10.360buyimg.com/imagetools/jfs/t1/127337/35/9610/1615/5f34ef8fEf5dc34e9/69cd6b38e4f579cb.png';
+const scanImg = 'https://img11.360buyimg.com/imagetools/jfs/t1/139901/4/5335/1762/5f34ef8fE02133f5d/106ec8613b39f16d.png';
 
 const defaultProps = {
     leftSrc: searchPng,

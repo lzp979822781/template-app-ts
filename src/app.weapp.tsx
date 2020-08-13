@@ -81,6 +81,10 @@ class App extends Component {
             "version": "1.1.8",
             "provider": "wxefe655223916819e"
         }
+    },
+    usingComponents: {
+        "index":"plugin://loginPlugin/index", 
+        "instruction":"plugin://loginPlugin/instruction"
     }
 }
 

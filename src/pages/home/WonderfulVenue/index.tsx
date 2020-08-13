@@ -1,7 +1,5 @@
 import Taro, {Component} from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
-import img1 from '@/assets/images/01.png';
-import img2 from '@/assets/images/02.png';
 import { Title, BaseCard } from '../components';
 
 
@@ -39,12 +37,12 @@ class WonderfulVenue extends Component<PageProps, PageState> {
                 <BaseCard 
                     title='品牌活动。'
                     description='全场品牌满减90'
-                    src={img1}
+                    src='https://img10.360buyimg.com/imagetools/jfs/t1/113013/34/14655/437725/5f34ef8eEa7a405ab/30d0945a08fc4c22.png'
                 />
                 <BaseCard 
                     title='新品季末出清'
                     description='爆款直降 好货抢先'
-                    src={img2}
+                    src='https://img11.360buyimg.com/imagetools/jfs/t1/112751/6/14929/213590/5f34ef8eE42adfb6c/259ce8a3ebff49fe.png'
                 />
             </View>
         )

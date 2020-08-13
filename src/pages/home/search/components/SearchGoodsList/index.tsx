@@ -3,11 +3,11 @@ import { View, Image, Text } from '@tarojs/components';
 
 import { Drawer } from '@/components';
 
-import backImg from '@//assets/images/arrow-left.png';
-
 import { SearchInput, SearchSelect, SearchDrawer } from '../index';
 
 import './index.scss';
+
+const  backImg = 'https://img12.360buyimg.com/imagetools/jfs/t1/143521/13/5348/1377/5f34ef8fE7387ca64/4ee10e0866ccefef.png';
 
 type PageOwnProps = {
     searchVal?: string|undefined

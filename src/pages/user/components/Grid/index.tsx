@@ -1,11 +1,11 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 
-import signImg from '@/assets/my/grid/sign.png';
-
 import GridItem from '../GridItem';
 
 import './index.scss';
+
+const signImg = 'https://img13.360buyimg.com/imagetools/jfs/t1/121471/26/9507/8136/5f34efb3E09d338c1/5c7372536a25b252.png';
 
 type PageOwnProps = {
     style?: any,

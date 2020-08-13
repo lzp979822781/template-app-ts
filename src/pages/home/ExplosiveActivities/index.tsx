@@ -1,7 +1,5 @@
 import Taro, {Component} from '@tarojs/taro';
 import { View } from '@tarojs/components';
-import img3 from '@/assets/images/03.png';
-import img4 from '@/assets/images/04.png';
 import { Title, BaseCard, SubCard } from '../components';
 
 import './index.scss';
@@ -48,22 +46,22 @@ class WonderfulVenue extends Component<PageProps, PageState> {
                     <SubCard 
                         title='活动标题'
                         description='满1000减90'
-                        src={img3}
+                        src='https://img14.360buyimg.com/imagetools/jfs/t1/150235/13/5346/468881/5f34ef8fE104f2b45/f46728fd2c561d64.png'
                     />
                     <SubCard 
                         title='活动标题'
                         description='满1000减90'
-                        src={img4}
+                        src='https://img14.360buyimg.com/imagetools/jfs/t1/128214/20/9716/410294/5f34ef8fEff34ec67/979a2fbce2411de7.png'
                     />
                     <SubCard 
                         title='活动标题'
                         description='满1000减90'
-                        src={img3}
+                        src='https://img14.360buyimg.com/imagetools/jfs/t1/150235/13/5346/468881/5f34ef8fE104f2b45/f46728fd2c561d64.png'
                     />
                     <SubCard 
                         title='活动标题'
                         description='满1000减90'
-                        src={img4}
+                        src='https://img14.360buyimg.com/imagetools/jfs/t1/128214/20/9716/410294/5f34ef8fEff34ec67/979a2fbce2411de7.png'
                     />
                 </View>
             </View>

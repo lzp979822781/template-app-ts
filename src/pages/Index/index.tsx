@@ -11,11 +11,6 @@ import {
     SwiperItem
 } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
-import img1 from "@/assets/images/01.png";
-import img2 from "@/assets/images/02.png";
-import img3 from "@/assets/images/03.png";
-import img4 from "@/assets/images/04.png";
-
 import { SearchBar } from "@/components";
 
 import Request from "@/utils/Request";
@@ -177,10 +172,10 @@ class Index extends Component<any, any> {
 
     renderSwipperItem = () => {
         const data = [
-            { url: img1 },
-            { url: img2 },
-            { url: img3 },
-            { url: img4 }
+            { url: 'https://img10.360buyimg.com/imagetools/jfs/t1/113013/34/14655/437725/5f34ef8eEa7a405ab/30d0945a08fc4c22.png' },
+            { url: 'https://img11.360buyimg.com/imagetools/jfs/t1/112751/6/14929/213590/5f34ef8eE42adfb6c/259ce8a3ebff49fe.png' },
+            { url: 'https://img14.360buyimg.com/imagetools/jfs/t1/150235/13/5346/468881/5f34ef8fE104f2b45/f46728fd2c561d64.png' },
+            { url: 'https://img14.360buyimg.com/imagetools/jfs/t1/150235/13/5346/468881/5f34ef8fE104f2b45/f46728fd2c561d64.png' }
         ].map( item => ({...item, key: UUID()}));
         return data.map((item) => {
             const { url, key } = item;

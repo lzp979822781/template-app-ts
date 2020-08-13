@@ -3,7 +3,6 @@ import { connect } from '@tarojs/redux';
 import { View, Image, Text } from '@tarojs/components';
 import { SearchBar } from '@/components';
 
-import backImg from '@//assets/images/arrow-left.png';
 import deleteImg from '@/assets/search/delete.png';
 import upImg from '@/assets/search/up.png';
 import downImg from '@/assets/search/down.png';
@@ -12,6 +11,8 @@ import { addId } from '@/utils/utils'
 import { SearchItem, Hot, SearchListItem, ShopItem } from '../components';
 
 import './index.scss';
+
+const backImg = 'https://img12.360buyimg.com/imagetools/jfs/t1/143521/13/5348/1377/5f34ef8fE7387ca64/4ee10e0866ccefef.png';
 
 const historyArr = [{ text: '感冒清热', hot: false }, { text: '维生素E乳', hot: false}, { text: '葡萄籽', hot: false}, { text: '精华'}, { text: '化学药制剂'}, { text: '美林布洛芬悬浮液', hot: true}];
 const listData = [

@@ -5,7 +5,6 @@ import defaultAvatar from '@/assets/my/defaultAvatar.png';
 import baseInfoUrl from '@/assets/my/name.png';
 import settingImg from '@/assets/my/setting.png';
 import messageImg from '@/assets/my/message.png';
-import arrowRight from '@/assets/images/arrowright.png';
 
 import pendingAudit from '@/assets/my/pendingaudit.png';
 import unpay from '@/assets/my/unpay.png';
@@ -16,6 +15,8 @@ import { OrderState, Grid } from '../components';
 
 
 import './index.scss';
+
+const arrowRight = 'https://img10.360buyimg.com/imagetools/jfs/t1/150044/30/5372/430/5f34ef8fE160c5191/d8d488805d680d91.png';
 
 class User extends Component{
 
