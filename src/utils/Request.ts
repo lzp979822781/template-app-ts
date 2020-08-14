@@ -85,7 +85,7 @@ export default class Request {
         //2、ASCII 顺序拼接签名参数
         const paraAppendString = this.appendSingnParaString(newParams);
         //3、参数签名
-        if (currentEnv === "RN") {
+        if (currentEnv != "WEB") {
             const hmactring = hmacSha256(paraAppendString, secretKey);
             return Object.assign({}, newParams, { sign: hmactring });
         } else {
@@ -110,7 +110,7 @@ export default class Request {
         const paramString = this.convertDicToKeyValueString(newParams)
         let urlString = this.getMainURL() + '?' + paramString
         //5、URL链接进行编码
-        if (currentEnv === "RN") {
+        if (currentEnv != "WEB") {
             urlString = encodeURI(urlString + '&sign=' + hmactring);
         }else{
             urlString = encodeURI(urlString);
