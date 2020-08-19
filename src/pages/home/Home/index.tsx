@@ -5,6 +5,7 @@ import { connect } from '@tarojs/redux'
 import { UUID } from '@/utils/utils';
 import Request from '@/utils/Request';
 import { get, post } from "@/utils/multi-request";
+import util from '../../login/util.js'
 
 import { Title, HomeSearch } from '../components';
 
@@ -209,21 +210,36 @@ class Home extends Component<IProps, PageState> {
     }
 
     sendReq = async () => {
-        /* const res = await Taro.request({
-            url: 'https://yao.jd.com/api/user/userInfo',
-            method: "GET",
-            header: {
-                'content-type': 'application/json' // 默认值
-            },
-            credentials: "include",
-            mode: "cors",
-
-        }); */
         const res = await get({
+            url: 'https://api.m.jd.com/api',
+            // header: ,
+            data: {
+                functionId: 'api_user_userInfo',
+                appid: 'yjc_pc',
+                loginType: 2
+            }
+        });
+        /* util.requestWithLoginStatus({
+            url: 'https://api.m.jd.com/api',
+            method:'GET',
+            header: {"contentType":"application/x-www-form-urlencoded"},
+            data: {
+                wxappid: 'wx9110daef657d4066',
+                pappid: 'wx9110daef657d4066',
+                appid: 'yjc_pc',
+                functionId: 'api_user_userInfo'
+            },
+            complete: res => {
+                console.log("res", res);
+            }
+          }) */
+          console.log("res", res);
+        
+        /* const res = await get({
             url: `https://api.m.jd.com/api`,
             urlParam: { functionId: 'queryNameList', appid: 'jdhunion', loginType: 2},
         });
-        console.log("res", res);
+        console.log("res", res); */
         /* try {
             const res = await Request.get("api_user_userInfo", {
                 content: "hello",

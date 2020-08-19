@@ -1,11 +1,12 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Input, Image } from '@tarojs/components';
-import clear from '@/assets/search/clear.png';
 import speech from '@/assets/search/speech.png';
 import './index.scss';
 
 const scanImg = 'https://img11.360buyimg.com/imagetools/jfs/t1/139901/4/5335/1762/5f34ef8fE02133f5d/106ec8613b39f16d.png';
 const searchPng = 'https://img10.360buyimg.com/imagetools/jfs/t1/127337/35/9610/1615/5f34ef8fEf5dc34e9/69cd6b38e4f579cb.png';
+const clear = 'https://img11.360buyimg.com/imagetools/jfs/t1/141650/15/5381/2631/5f34efc4E584bd1d0/1fd45749749d7395.png';
+
 
 type PageOwnProps = {
     leftSrc?: any,

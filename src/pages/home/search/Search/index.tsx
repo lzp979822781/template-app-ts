@@ -3,16 +3,16 @@ import { connect } from '@tarojs/redux';
 import { View, Image, Text } from '@tarojs/components';
 import { SearchBar } from '@/components';
 
-import deleteImg from '@/assets/search/delete.png';
-import upImg from '@/assets/search/up.png';
-import downImg from '@/assets/search/down.png';
-
 import { addId } from '@/utils/utils'
 import { SearchItem, Hot, SearchListItem, ShopItem } from '../components';
 
 import './index.scss';
 
 const backImg = 'https://img12.360buyimg.com/imagetools/jfs/t1/143521/13/5348/1377/5f34ef8fE7387ca64/4ee10e0866ccefef.png';
+const deleteImg = 'https://img12.360buyimg.com/imagetools/jfs/t1/142694/24/5402/2228/5f34efc4E33c5b306/ef7fe1eaf4be7cb7.png';
+const downImg = 'https://img10.360buyimg.com/imagetools/jfs/t1/142086/15/5234/837/5f34efc4Ebb6c3557/31a4f399c3c39348.png';
+const upImg = 'https://img11.360buyimg.com/imagetools/jfs/t1/120334/25/9632/1151/5f34efc5E477e00a1/afddc861578b4ea7.png';
+
 
 const historyArr = [{ text: '感冒清热', hot: false }, { text: '维生素E乳', hot: false}, { text: '葡萄籽', hot: false}, { text: '精华'}, { text: '化学药制剂'}, { text: '美林布洛芬悬浮液', hot: true}];
 const listData = [
