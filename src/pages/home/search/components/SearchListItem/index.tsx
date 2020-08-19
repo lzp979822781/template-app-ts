@@ -1,9 +1,9 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 
-import homeImg from '@/assets/search/home.png'
-
 import './index.scss';
+
+const homeImg = "https://img13.360buyimg.com/imagetools/jfs/t1/135587/24/6938/1857/5f34efd3E554a02e0/96676a809c3443b3.png";
 
 type PageOwnProps = {
     data: any,

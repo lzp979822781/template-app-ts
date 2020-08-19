@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro';
+import Taro, { requirePlugin } from '@tarojs/taro';
 import pick from 'lodash/pick';
 import omit from 'lodash/omit';
 
@@ -29,13 +29,16 @@ const DEFAULT_PARAM = {
 const DEFAULT_GET = { ...DEFAULT_PARAM, method: 'GET'};
 const DEFAULT_POST = { ...DEFAULT_PARAM, method: 'POST'};
 
+function handleNoLogin(response = {}) {
+}
+
 /**
  * 按照color网关 h5接口的参数生成cookie
  * @pt_key
- *
+ * @pt_pin 对PIN进行encode编码
  */
 function getCookie(cookie) {
-    return ' pt_pin=%E6%B5%8B%E8%AF%95jijinye;pt_key=AAJfO5xpADA6zaKsdVVqtHO-DCCChqE-Ze7D7Rg3ZwTGU0uMS_-Y4vjNjZ2sh-3ApsDOqRFZchA';
+    // return ' pt_pin=%E6%B5%8B%E8%AF%95jijinye;pt_key=AAJfO5xpADA6zaKsdVVqtHO-DCCChqE-Ze7D7Rg3ZwTGU0uMS_-Y4vjNjZ2sh-3ApsDOqRFZchA';
     if(!plugin) return cookie;
     const [GUID = '', KEY = '', TOKEN = '', PIN = ''] = plugin.getJdListStorage(['guid', 'pt_key', 'pt_token', 'pt_pin']);
     const _cookie = `guid=${GUID};pt_pin=${encodeURIComponent(PIN)};pt_key=${KEY};pt_token=${TOKEN}`
@@ -45,7 +48,10 @@ function getCookie(cookie) {
 
 function getUrl(param: UrlParam) {
     const { url, urlParam = {} } = param;
-    const allUrlParam = { ...urlParam, t: new Date().getTime(), clientType: 'm' }
+    const comParam = {
+        client: 'm'
+    }
+    const allUrlParam = { ...urlParam, t: new Date().getTime(), ...comParam }
     return Object.keys(allUrlParam).reduce((total, key, index) => `${total}${index ? '&' : ''}${key}=${allUrlParam[key]}`, `${BASEURL}${url}?`);
 }
 
@@ -61,13 +67,19 @@ function tranformParam(param: MainParam, type) {
         
     };
 
-    const body = {
-        body: '{ clientType: "m"}'
-    }
-    return Object.assign({}, type ==='get' ? DEFAULT_GET : DEFAULT_POST, { url }, otherParam, newHeader, body );
+    return Object.assign({}, type ==='get' ? DEFAULT_GET : DEFAULT_POST, { url }, otherParam, newHeader );
 }
 
 
+function doRequest(param) {
+    return Taro.request(param)
+        .then(data => {
+            console.log("data", data);
+            return data;
+        }).catch(e => {
+        console.log("error", e);
+    })
+}
   
 
 /**
@@ -78,18 +90,15 @@ function tranformParam(param: MainParam, type) {
 function get(param: MainParam) {
     const normalParam = tranformParam(param, 'get');
     console.log("normalParam", normalParam);
-    return Taro.request(normalParam).catch(e => {
-        console.log("error", e);
-    })
+    return doRequest(normalParam);
 }
 
 function post(param: MainParam) {
     const normalParam = tranformParam(param, 'post');
-    console.log("normalParam", normalParam);
-    return Taro.request(normalParam).catch(e => {
-        console.log("error", e);
-    })
+    return doRequest(normalParam);
 }
+
+
 
 
 export { get, post };
