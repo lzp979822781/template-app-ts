@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
 import DataList from "@/components/DataList/index";
-import Request from "@/utils/Request";
+import {get, post} from "@/utils/Request";
 import "./index.scss";
 
 export default class ListPage extends Component<any, any> {
@@ -27,7 +27,7 @@ export default class ListPage extends Component<any, any> {
     loadList = async () => {
         const currentPage = this.state.currentPage;
         try {
-            const res = await Request.get("api_partnerVender_list", {
+            const res = await get("api_partnerVender_list", {
                 currentPage: currentPage,
                 pageSize: 10,
                 venderType: null
