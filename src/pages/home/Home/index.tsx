@@ -204,8 +204,9 @@ class Home extends Component<IProps, PageState> {
             Taro.navigateTo({
                 url: `/pages/login/index/index?returnPage=${returnPage}`
             })
+        } else {
+            Taro.showToast({ title: 'rn端调用'})
         }
-        Taro.showToast({ title: 'rn端调用'})
     }
 
     sendReq = async () => {
@@ -216,7 +217,8 @@ class Home extends Component<IProps, PageState> {
                 functionId: 'api_user_userInfo',
                 appid: 'yjc_pc',
                 loginType: 2
-            }
+            },
+            returnPage: '/pages/home/Home/index'
         });
         
         console.log("res", res);

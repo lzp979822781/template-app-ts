@@ -10,6 +10,7 @@ interface MainParam {
     data?: object;
     header?: any;
     url: string;
+    returnPage?: string;
 }
 
 interface UrlParam {
@@ -29,7 +30,16 @@ const DEFAULT_PARAM = {
 const DEFAULT_GET = { ...DEFAULT_PARAM, method: 'GET'};
 const DEFAULT_POST = { ...DEFAULT_PARAM, method: 'POST'};
 
-function handleNoLogin(response = {}) {
+function handleNoLogin(response = { }, reqParam) {
+    const { returnPage } = reqParam;
+    const { data: { code = '', data: { systemUserStatusEnum = '' } = { }, success = false} = {} } = response;
+    if(success && (code === 999 || systemUserStatusEnum === 'NO_LOGIN')) {
+        Taro.navigateTo({
+            url: `/pages/login/index/index?returnPage=${returnPage || '/pages/home/Home/index' }`
+        })
+    } else {
+        return response;
+    }
 }
 
 /**
@@ -46,6 +56,11 @@ function getCookie(cookie) {
     return cookie ? `${cookie};${_cookie}` :`${_cookie}`;
 } 
 
+/**
+ * 拼接url参数
+ * @param {UrlParam} param urlParam为request url参数数据字段
+ * @returns
+ */
 function getUrl(param: UrlParam) {
     const { url, urlParam = {} } = param;
     const comParam = {
@@ -59,6 +74,8 @@ function tranformParam(param: MainParam, type) {
     const { header: { cookie = '', ...otherHeader } = {}, } = param;
     const url = getUrl(pick(param, ['url', 'urlParam']));
     const otherParam = omit(param, ['url', 'urlParam', 'header']);
+
+    // 重新拼接
     const newHeader = {
         header: {
             ...otherHeader,
@@ -75,7 +92,7 @@ function doRequest(param) {
     return Taro.request(param)
         .then(data => {
             console.log("data", data);
-            return data;
+            return handleNoLogin(data, param);
         }).catch(e => {
         console.log("error", e);
     })

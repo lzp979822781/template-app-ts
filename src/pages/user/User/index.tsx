@@ -1,9 +1,6 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 
-import unpay from '@/assets/my/unpay.png';
-import unsend from '@/assets/my/unsend.png';
-
 import { OrderState, Grid } from '../components';
 
 
