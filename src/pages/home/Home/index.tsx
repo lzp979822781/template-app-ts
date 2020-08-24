@@ -204,26 +204,30 @@ class Home extends Component<IProps, PageState> {
             Taro.navigateTo({
                 url: `/pages/login/index/index?returnPage=${returnPage}`
             })
+        } else {
+            Taro.showToast({ title: 'rn端调用'})
         }
-        Taro.showToast({ title: 'rn端调用'})
     }
 
     sendReq = async () => {
-        /* const res = await Taro.request({
-            url: 'https://yao.jd.com/api/user/userInfo',
-            method: "GET",
-            header: {
-                'content-type': 'application/json' // 默认值
-            },
-            credentials: "include",
-            mode: "cors",
-
-        }); */
         const res = await get({
+            url: 'https://api.m.jd.com/api',
+            // header: ,
+            data: {
+                functionId: 'api_user_userInfo',
+                appid: 'yjc_pc',
+                loginType: 2
+            },
+            returnPage: '/pages/home/Home/index'
+        });
+        
+        console.log("res", res);
+        
+        /* const res = await get({
             url: `https://api.m.jd.com/api`,
             urlParam: { functionId: 'queryNameList', appid: 'jdhunion', loginType: 2},
         });
-        console.log("res", res);
+        console.log("res", res); */
         /* try {
             const res = await Request.get("api_user_userInfo", {
                 content: "hello",

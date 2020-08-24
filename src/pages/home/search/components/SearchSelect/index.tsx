@@ -1,13 +1,12 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Image, Text } from '@tarojs/components';
 
-import highImg from '@/assets/search/high.png';
-import lowImg from '@/assets/search/low.png';
-
 import './index.scss';
 
 const rootTag = `search-select`;
 const goodTag = `search-select-good`;
+const highImg = 'https://img11.360buyimg.com/imagetools/jfs/t1/123695/13/9458/306/5f34efc4Ef8162377/4da889d7fe34439b.png';
+const lowImg = 'https://img10.360buyimg.com/imagetools/jfs/t1/130187/12/6891/412/5f34efc5Efa176c44/2819ac0b4e3f49e0.png';
 
 type PageOwnProps = {
     onFilter: (data) => void

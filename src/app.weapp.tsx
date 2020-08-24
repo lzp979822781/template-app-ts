@@ -25,9 +25,9 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-        'pages/demo/demo',
         'pages/home/Home/index',
-        'pages/BusinessList/index',
+        'pages/demo/demo',
+        /* 'pages/BusinessList/index',
         'pages/Index/index',
         'pages/List/index',
         'pages/Form/index',
@@ -36,10 +36,61 @@ class App extends Component {
         'pages/user/User/index',
         'pages/cart/Cart/index',
         'pages/home/search/Search/index',
-        'pages/home/search/components/SearchGoodsList/index',
+        'pages/home/search/components/SearchGoodsList/index', */
         'pages/login/index/index',
         "pages/login/web-view/web-view",
         "pages/login/wv-common/wv-common"
+    ],
+    subPackages: [
+        {
+            "root": "pages/home/search/",
+            "pages": [
+              "Search/index",
+              "components/SearchGoodsList/index"
+            ]
+        },
+        {
+            "root": "pages/Test/",
+            "pages": [
+              "index"
+            ]
+        },
+        {
+            "root": "pages/BusinessList/",
+            "pages": [
+              "index"
+            ]
+        },
+        {
+            "root": "pages/Index/",
+            "pages": [
+              "index"
+            ]
+        },
+        {
+            "root": "pages/Form/",
+            "pages": [
+              "index"
+            ]
+        },
+        {
+            "root": "pages/ReferPage/",
+            "pages": [
+              "index"
+            ]
+        },
+        {
+            "root": "pages/user/User/",
+            "pages": [
+              "index"
+            ]
+        },
+        {
+            "root": "pages/cart/Cart/",
+            "pages": [
+              "index"
+            ]
+        },
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -76,6 +127,7 @@ class App extends Component {
             }
         ]
     }, */
+    
     plugins: {
         loginPlugin: {
             "version": "1.1.8",

@@ -1,22 +1,28 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 
-import defaultAvatar from '@/assets/my/defaultAvatar.png';
-import baseInfoUrl from '@/assets/my/name.png';
-import settingImg from '@/assets/my/setting.png';
-import messageImg from '@/assets/my/message.png';
-
-import pendingAudit from '@/assets/my/pendingaudit.png';
-import unpay from '@/assets/my/unpay.png';
-import unsend from '@/assets/my/unsend.png';
-import postSale from '@/assets/my/postsale.png';
-
 import { OrderState, Grid } from '../components';
 
 
 import './index.scss';
 
+const defaultAvatar =  'https://img14.360buyimg.com/imagetools/jfs/t1/144896/12/5516/4130/5f34efa6E18afc898/ebc665a4c8366129.png';
+
 const arrowRight = 'https://img10.360buyimg.com/imagetools/jfs/t1/150044/30/5372/430/5f34ef8fE160c5191/d8d488805d680d91.png';
+
+const messageImg = 'https://img11.360buyimg.com/imagetools/jfs/t1/147457/16/5273/1803/5f34efa6E81a51fa9/42ac11f7349140f2.png';
+
+const baseInfoUrl = 'https://img14.360buyimg.com/imagetools/jfs/t1/124651/40/9577/1439663/5f34efa6E27c66696/6493831b47bd4ad4.png';
+
+const pendingAudit = 'https://img14.360buyimg.com/imagetools/jfs/t1/112148/12/14931/17131/5f34efa7E65234d93/d87410d615276619.png';
+
+const postSale = 'https://img11.360buyimg.com/imagetools/jfs/t1/126441/27/9523/21108/5f34efa7E8c5a14fc/050c86ca8ebffd86.png';
+
+const settingImg = 'https://img14.360buyimg.com/imagetools/jfs/t1/126705/37/9595/2933/5f34efa7Efc81749f/82812e19ec93ed83.png';
+
+const unpay = 'https://img11.360buyimg.com/imagetools/jfs/t1/131412/12/6842/17902/5f34efa7E6c9ed77c/7faeb303e8ec4018.png';
+
+const unsend = 'https://img13.360buyimg.com/imagetools/jfs/t1/145325/26/5485/18329/5f34efa7E0f92d669/8e7ece85c5c2d6bd.png';
 
 class User extends Component{
 

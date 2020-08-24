@@ -56,7 +56,7 @@ class App extends Component {
         list: [
             {
                 pagePath: "pages/home/Home/index",
-                iconPath: "./assets/tab-bar/home.png",
+                iconPath: "https://img13.360buyimg.com/imagetools/jfs/t1/135587/24/6938/1857/5f34efd3E554a02e0/96676a809c3443b3.png",
                 selectedIconPath: "./assets/tab-bar/home-active.png",
                 text: "首页"
             }, 

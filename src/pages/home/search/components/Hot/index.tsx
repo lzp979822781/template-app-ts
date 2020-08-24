@@ -1,13 +1,12 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 
-import hotImg from '@/assets/search/hot.png';
-
 import { addId } from '@/utils/utils';
 
 import SearchItem from '../SearchItem';
 import './index.scss';
 
+const hotImg = 'https://img13.360buyimg.com/imagetools/jfs/t1/124093/7/9538/6368/5f34efc5E0611153a/7341d54081667f7f.png';
 
 type PageOwnProps = {
     data: Array<object>,
