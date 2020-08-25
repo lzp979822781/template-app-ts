@@ -6,6 +6,13 @@
     background-color: #F23030;
 }
 
+.header-con-noBgColor {
+    height: 88px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
 .back-con {
     display: flex;
     flex:1;

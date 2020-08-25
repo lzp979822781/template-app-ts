@@ -1,16 +1,17 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import back from "@/assets/images/back@3x.png";
-import search from "@/assets/images/search-icon-white@3x.png";
 import "./index.scss";
 
 interface ListOption {
     title?: string;
+    noBgColor?: boolean;
 }
 
 class Header extends Component<ListOption, any> {
     static defaultProps = {
-        title: "标题"
+        title: "标题",
+        noBgColor: false
     };
 
     constructor(props: ListOption) {
@@ -47,8 +48,10 @@ class Header extends Component<ListOption, any> {
     };
 
     render() {
+        const {noBgColor} = this.props;
+        const conClassName = noBgColor ? "header-con-noBgColor" : "header-con";
         return (
-            <View className="header-con">
+            <View className={conClassName}>
                 <View className="back-con">{this.renderLeft()}</View>
                 <View className="title-con">
                     <Text className="title-txt">{this.props.title}</Text>

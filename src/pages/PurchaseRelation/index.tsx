@@ -67,11 +67,11 @@ export default class PurchaseRelation extends Component<any, any> {
         const dataSource = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
         const Shadow = {
-            shadowColor: "#242424",
-            shadowOffset: { w: 10, h: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 10,
-            elevation: 2
+            // shadowColor: "#242424",
+            // shadowOffset: { w: 10, h: 2 },
+            // shadowOpacity: 0.1,
+            // shadowRadius: 10,
+            // elevation: 2
         };
 
         return dataSource.map((item, index) => {
@@ -94,7 +94,9 @@ export default class PurchaseRelation extends Component<any, any> {
                     </View>
                     <View className="item-division"></View>
                     <View className="item-dec">
-                        <Text className="item-dec-txt">建材时间：2018.08.25 12:00:00</Text>
+                        <Text className="item-dec-txt">
+                            建材时间：2018.08.25 12:00:00
+                        </Text>
                     </View>
                 </View>
             );
@@ -103,7 +105,7 @@ export default class PurchaseRelation extends Component<any, any> {
 
     render() {
         return (
-            <View className="list">
+            <View className="container">
                 <Header title="建采关系" />
                 <DataList
                     minusHeight={0}

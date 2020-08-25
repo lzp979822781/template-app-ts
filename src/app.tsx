@@ -39,6 +39,7 @@ class App extends Component {
         'pages/PlanDetail/index',
         'pages/PurchaseRelation/index',
         'pages/Index/index',
+        'pages/BusinessList/index',
     ],
     window: {
       backgroundTextStyle: 'light',
