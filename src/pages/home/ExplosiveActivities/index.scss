@@ -1,23 +1,4 @@
-@mixin flex($direction: row, $rowAlign: flex-start, $colAlign: center) {
-    display: flex;
-    flex-direction: $direction;
-    justify-content: $rowAlign;
-    align-items: $colAlign;
-}
-
-@mixin font($fontSize: 24px, $color: #000, $fontFamily: 'PingFangSC-Light') {
-    font-size: $fontSize;
-    color: $color;
-    font-family: $fontFamily;
-    // line-height: $fontSize;
-}
-
-@mixin padding($top:0, $right: 0, $bottom: 0, $left: 0) {
-    padding-left: $top;
-    padding-right: $right;
-    padding-bottom: $bottom;
-    padding-left: $left;
-}
+@import '../../../global/common.scss';
 
 .explosive {
     padding: 30px;

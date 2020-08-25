@@ -1,0 +1,19 @@
+@import '../../global/common.scss';
+
+.custom-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(#7F7F7F, .7);
+    z-index: 9999;
+    @include flex(row, center, center);
+
+    &-entity {
+        width: 600px;
+        height: 1000px;
+        background-color: #fff;
+        border-radius: 8px;
+    }
+}

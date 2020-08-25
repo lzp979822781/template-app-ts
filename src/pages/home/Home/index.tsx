@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Swiper, Image, SwiperItem, ScrollView, Button } from '@tarojs/components'
+import { View, Swiper, Image, SwiperItem, ScrollView, Button, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 
 import { UUID } from '@/utils/utils';
@@ -11,6 +11,7 @@ import { Title, HomeSearch } from '../components';
 import WonderfulVenue from '../WonderfulVenue';
 import ExplosiveActivities from '../ExplosiveActivities';
 import DrugItem from '../DrugItem';
+import CustomModal from '../../CustomModal';
 import './index.scss'
 
 type dispatchProps = {
@@ -26,7 +27,9 @@ type PageDispatchProps = {
 
 type PageOwnProps = {}
 
-type PageState = {}
+type PageState = {
+    show: boolean
+}
 
 type IProps = PageDispatchProps & PageOwnProps
 
@@ -49,6 +52,7 @@ class Home extends Component<IProps, PageState> {
         super(props);
 
         this.state = {
+            show: false
         }
     }
 
@@ -262,9 +266,23 @@ class Home extends Component<IProps, PageState> {
         console.log("rn", res);
     }
 
-    render() {
+    openModal = () => {
+        this.setState({ show: true })
+    }
+
+    render() { 
+        const { show } = this.state;
+        const homeStyle = show ? {
+            position: 'absolute',
+            height: '100%',
+            overflow: 'scroll'
+        } : {};
+
         return (
-            <View className='home'>
+            <View className='home' style={homeStyle}>
+                <CustomModal show={show}>
+                    <Text>弹框测试</Text>
+                </CustomModal>
                 <View className='nav'>
                     <View className='header'>
                         <HomeSearch 
@@ -275,6 +293,7 @@ class Home extends Component<IProps, PageState> {
                 <Button type='primary' onClick={this.toLogin}>微信登录</Button>
                 <Button type='primary' onClick={this.sendReq}>发送请求</Button>
                 <Button type='primary' onClick={this.sendRnReq}>rn请求</Button>
+                <Button type='primary' onClick={this.openModal}>弹框测试</Button>
                 <Swiper
                     className='swipper-container'
                     indicatorColor='#999'
