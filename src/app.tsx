@@ -33,8 +33,11 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-        'pages/home/Home/index',
-        'pages/BusinessList/index',
+        'pages/home/index',
+        'pages/CustomerDetail/index',
+        'pages/CustomerTag/index',
+        'pages/PlanDetail/index',
+        'pages/PurchaseRelation/index',
         'pages/Index/index',
     ],
     window: {

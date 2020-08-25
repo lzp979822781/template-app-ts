@@ -133,7 +133,7 @@ class Index extends Component<any, any> {
 
     onToHome = () => {
         Taro.navigateTo({
-            url: "/pages/home/Home/index"
+            url: "/pages/home/index"
         });
     };
 
