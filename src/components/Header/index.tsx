@@ -1,6 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-
+import back from "@/assets/images/back@3x.png";
+import search from "@/assets/images/search-icon-white@3x.png";
 import "./index.scss";
 
 interface ListOption {
@@ -17,20 +18,42 @@ class Header extends Component<ListOption, any> {
         this.state = {};
     }
 
+    renderLeft = () => {
+        if (this.props.renderLeft) {
+            return this.props.renderLeft;
+        }
+        return (
+            <View
+                className="back-btn"
+                onClick={() => {
+                    Taro.navigateBack();
+                }}
+            >
+                <Image className="back-img" src={back} />
+            </View>
+        );
+    };
+    renderRignt = () => {
+        if (this.props.renderRignt) {
+            return this.props.renderRignt;
+        }
+
+        return null;
+        // return (
+        //     <View className="handle-btn">
+        //         <Image className="handle-img" src={search} />
+        //     </View>
+        // );
+    };
+
     render() {
         return (
             <View className="header-con">
-                <View className="back-con">
-                    <Image
-                        src={"../../img/back.png"}
-                    />
-                </View>
+                <View className="back-con">{this.renderLeft()}</View>
                 <View className="title-con">
                     <Text className="title-txt">{this.props.title}</Text>
                 </View>
-                <View className="handle-con">
-                    <Text className="handle-txt">搜索</Text>
-                </View>
+                <View className="handle-con">{this.renderRignt()}</View>
             </View>
         );
     }

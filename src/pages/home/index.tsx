@@ -152,31 +152,28 @@ class Index extends Component<any, any> {
                 <Header />
                 <Button
                     onClick={() => {
-                        //this.routerTo("/pages/Test/index");
-                        Taro.makePhoneCall({
-                            phoneNumber: "17319266172" //仅为示例，并非真实的电话号码
-                        });
+                        this.routerTo("/pages/CustomerDetail/index");
                     }}
                 >
                     客户详情
                 </Button>
                 <Button
                     onClick={() => {
-                        this.routerTo("/pages/Test/index");
+                        this.routerTo("/pages/CustomerTag/index");
                     }}
                 >
                     客户标签
                 </Button>
                 <Button
                     onClick={() => {
-                        this.routerTo("/pages/Test/index");
+                        this.routerTo("/pages/PlanDetail/index");
                     }}
                 >
                     计划详情
                 </Button>
                 <Button
                     onClick={() => {
-                        this.routerTo("/pages/Test/index");
+                        this.routerTo("/pages/PurchaseRelation/index");
                     }}
                 >
                     建采关系
