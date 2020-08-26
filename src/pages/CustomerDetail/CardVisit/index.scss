@@ -1,0 +1,72 @@
+@import "@/global/common.scss";
+
+.card-visit {
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    padding: 30px;
+}
+
+.visit-head {
+    @include flex(row, center, center);
+}
+
+
+.data-list {
+    margin-top: 38px;
+}
+
+.list-item {
+    margin-bottom: 30px;
+    border-radius: 8px;
+    padding-top: 15px;
+    padding-bottom: 25px;
+}
+
+.list-item-head {
+    @include flex(row, flex-start, center);
+    height: 68px;
+}
+
+.list-item-title-icon {
+    height: 68px;
+    width: 36px;
+}
+
+.list-item-title-txt {
+    @include font(30px, #444444);
+    font-weight: 600;
+}
+
+.list-item-des {
+    @include flex(row, flex-start, center);
+    padding-left: 36px;
+    margin-top: 16px;
+}
+
+.list-item-des-txt {
+    @include font(26px, #999999);
+}
+
+.divide-line {
+    width: 1px;
+    height: 22px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.list-item-footer {
+    @include flex(row, flex-start, center);
+    padding-left: 36px;
+    margin-top: 38px;
+}
+
+.item-footer-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+}
+
+.item-footer-txt {
+    @include font(26px, #999999);
+    margin-left: 20px;
+}

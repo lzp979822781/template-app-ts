@@ -1,0 +1,43 @@
+@import "@/global/common.scss";
+
+.card-purchasing {
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    padding: 30px;
+}
+
+.purchasing-head {
+    @include flex(row, center, center);
+}
+
+.head-left-des-label{
+    @include font(24px, #B0B0B0);
+    margin-left: 25px;
+}
+
+.head-left-des-value{
+    @include font(24px, #F23030);
+    margin-left: 10px;
+}
+.head-left-des-unit{
+    @include font(24px, #B0B0B0);
+}
+
+.purchasing-body {
+    @include flex(row, space-around, flex-start);
+    margin-top: 50px;
+}
+
+.purchasing-item {
+    @include flex(column, center, center);
+}
+
+.purchasing-item-icon {
+    width: 94px;
+    height: 94px;
+}
+
+.purchasing-item-txt {
+    @include font(26px, #444444);
+    margin-top: 20px;
+}

@@ -1,0 +1,66 @@
+@import "@/global/common.scss";
+
+.card-tag {
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    padding: 30px;
+}
+
+.tag-head {
+    @include flex(row, center, center);
+}
+
+.head-left {
+    @include flex(row, flex-start, center);
+    flex: 1;
+    height: 60px;
+}
+
+.head-left-icon {
+    width: 40px;
+    height: 32px;
+}
+
+.head-left-title {
+    @include font(32px, #444444);
+    line-height: 42px;
+    margin-left: 15px;
+    font-weight: bold;
+}
+
+.head-right {
+    @include flex(row, flex-end, center);
+    height: 60px;
+    width: 100px;
+}
+
+.head-right-txt {
+    @include font(24px, #B0B0B0);
+    margin-right: 10px;
+    line-height: 30px;
+}
+
+.head-right-icon {
+    width: 12px;
+    height: 20px;
+}
+
+.tag-body {
+    @include flex(row, flex-start, flex-start);
+    margin-top: 50px;
+}
+
+.tag-item {
+    height: 44px;
+    background-color: #FFEFEF;
+    padding-left: 26px;
+    padding-right: 26px;
+    margin-right: 22px;
+    margin-bottom: 20px;
+    border-radius: 22px;
+}
+
+.tag-item-txt {
+    @include font(24px, #F23030);
+    line-height: 44px;
+}
