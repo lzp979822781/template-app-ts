@@ -1,29 +1,27 @@
+@import "@/global/common.scss";
+
 .header-con {
+    @include flex(row, center, center);
     height: 88px;
     width: 100%;
-    display: flex;
-    flex-direction: row;
     background-color: #F23030;
     z-index: 100;
 }
 
 .header-con-noBgColor {
+    @include flex(row, center, center);
     height: 88px;
     width: 100%;
-    display: flex;
-    flex-direction: row;
 }
 
 .back-con {
-    display: flex;
-    flex:1;
+    @include flex(row, flex-start, center);
+    flex: 1;
 }
 
 .back-btn {
-    display: flex;
-    flex:1;
-    justify-content: center;
-    align-items: flex-start;
+    @include flex(row, flex-start, center);
+    flex: 1;
 }
 
 .back-img {
@@ -33,27 +31,24 @@
 }
 
 .title-con {
-    display: flex;
-    flex:1;
+    @include flex(row, center, center);
+    flex: 1;
 }
 
 .title-txt {
-    color: #FFFFFF;
+    @include font(34px, #FFFFFF);
+    font-weight: 500;
     line-height: 88px;
-    text-align: center;
-    font-size: 32px;
 }
 
 .handle-con {
-    display: flex;
-    flex:1;
+    @include flex(row, flex-end, center);
+    flex: 1;
 }
 
 .handle-btn {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    flex:1;
+    @include flex(row, flex-end, center);
+    flex: 1;
 }
 
 .handle-img {
@@ -61,7 +56,3 @@
     width: 52px;
     height: 52px;
 }
-
-
-
-

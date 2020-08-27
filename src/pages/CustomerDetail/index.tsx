@@ -32,24 +32,22 @@ export default class OrderRecord extends Component<any, any> {
     render() {
         const image = { uri: bgImage };
         return (
-            <View className="container">
-                <ScrollView>
-                    <ImageBackground
-                        source={image}
-                        style={{
-                            resizeMode: "cover",
-                            height: 160
-                        }}
-                    >
-                        <StatusBar />
-                        <Header title="客户详情" noBgColor />
-                    </ImageBackground>
-                    <CardBase />
-                    <CardTag />
-                    <PurchasingInfo />
-                    <CardVisit />
-                </ScrollView>
-            </View>
+            <ScrollView className="container">
+                <StatusBar />
+                <ImageBackground
+                    source={image}
+                    style={{
+                        resizeMode: "cover",
+                        height: 160
+                    }}
+                >
+                    <Header title="客户详情" noBgColor />
+                </ImageBackground>
+                <CardBase />
+                <CardTag />
+                <PurchasingInfo />
+                <CardVisit />
+            </ScrollView>
         );
     }
 }

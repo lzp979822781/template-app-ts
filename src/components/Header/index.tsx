@@ -3,12 +3,14 @@ import { View, Text, Image } from "@tarojs/components";
 import back from "@/assets/images/back@3x.png";
 import "./index.scss";
 
-interface ListOption {
+interface Option {
     title?: string;
     noBgColor?: boolean;
+    renderLeft?: object;
+    renderRight?: object;
 }
 
-class Header extends Component<ListOption, any> {
+class Header extends Component<Option, any> {
     static defaultProps = {
         title: "标题",
         noBgColor: false
@@ -34,17 +36,12 @@ class Header extends Component<ListOption, any> {
             </View>
         );
     };
-    renderRignt = () => {
-        if (this.props.renderRignt) {
-            return this.props.renderRignt;
+    renderRight = () => {
+        if (this.props.renderRight) {
+            return this.props.renderRight;
         }
 
         return null;
-        // return (
-        //     <View className="handle-btn">
-        //         <Image className="handle-img" src={search} />
-        //     </View>
-        // );
     };
 
     render() {
@@ -56,7 +53,7 @@ class Header extends Component<ListOption, any> {
                 <View className="title-con">
                     <Text className="title-txt">{this.props.title}</Text>
                 </View>
-                <View className="handle-con">{this.renderRignt()}</View>
+                <View className="handle-con">{this.renderRight()}</View>
             </View>
         );
     }
