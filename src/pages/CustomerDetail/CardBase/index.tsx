@@ -15,7 +15,7 @@ export default class CardBase extends Component<any, any> {
                     <View className="card-base-head">
                         <Image
                             className="card-base-head-img"
-                            src="https://zh-hans.reactjs.org/logo-og.png"
+                            src="https://m.360buyimg.com/jmeside/jfs/t1/57152/18/11709/90893/5d88b603E5f78381c/f27e683a0ac599f9.png"
                         />
                     </View>
                     <View className="base-msg">
@@ -29,7 +29,7 @@ export default class CardBase extends Component<any, any> {
                             客户经理：张琳琳
                         </Text>
                     </View>
-                    <View className="divide-line" />
+                    <View className="divide-line-horizontal" />
                     <View className="contact-address-con">
                         <View className="con-address">
                             <Text className="con-address-txt">

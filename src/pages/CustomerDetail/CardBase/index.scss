@@ -19,12 +19,12 @@
     margin-top: -80px;
     align-self: center;
     @include flex(row, center, center);
+    overflow: hidden;
 }
 .card-base-head-img {
     border-radius: 8px;
     width: 160px;
     height: 160px;
-    overflow: hidden;
 }
 
 .base-msg {
@@ -37,6 +37,7 @@
 .company-title{
     @include font(36px, #444444);
     text-align: center;
+    font-weight: 600;
 }
 
 .company-pin {
@@ -51,9 +52,9 @@
     margin-top: 10px;
 }
 
-.divide-line {
-    height: 2px;
-    background-color: #EEEEEE;
+.divide-line-horizontal {
+    height: 4px;
+    background-color: rgba(238,238,238,1);
     width: 100%;
     margin-top: 18px;
 }
@@ -76,8 +77,9 @@
 .contact-address-divide {
     height: 26px;
     width: 4px;
-    background-color: #E4E4E4;
+    background-color: rgba(228,228,228,1);
 }
+
 .con-contact {
     width: 80px;
     align-items: flex-end;

@@ -6,7 +6,7 @@ import CardBase from "./CardBase/index";
 import CardTag from "./CardTag/index";
 import PurchasingInfo from "./PurchasingInfo/index";
 import CardVisit from "./CardVisit/index";
-
+import StatusBar from "@/components/StatusBar/index";
 import bgImage from "@/assets/images/customer-bg@3x.png";
 import "./index.scss";
 
@@ -41,6 +41,7 @@ export default class OrderRecord extends Component<any, any> {
                             height: 160
                         }}
                     >
+                        <StatusBar />
                         <Header title="客户详情" noBgColor />
                     </ImageBackground>
                     <CardBase />

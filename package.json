@@ -33,6 +33,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@jdreact/jdreact-core-lib": "^2.0.11",
+    "@jdreact/jdreact-core-scripts": "^2.0.3",
     "@ant-design/react-native": "^3.2.2",
     "@tarojs/components": "2.2.13",
     "@tarojs/components-qa": "2.2.13",

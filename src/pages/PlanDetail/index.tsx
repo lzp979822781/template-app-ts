@@ -1,15 +1,10 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Button, Text, Image } from "@tarojs/components";
 import Header from "@/components/Header";
+import StatusBar from "@/components/StatusBar/index";
 import "./index.scss";
 
-const currentEnv = Taro.getEnv(); // 获取当前环境平台
 
-interface option {
-    text: string;
-    style?: object;
-    code: number;
-}
 
 export default class DiscountCoupon extends Component<any, any> {
     constructor(props) {
@@ -37,6 +32,7 @@ export default class DiscountCoupon extends Component<any, any> {
     render() {
         return (
             <View className="list">
+                <StatusBar />
                 <Header title="计划详情" />
             </View>
         );

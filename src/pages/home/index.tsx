@@ -15,6 +15,7 @@ import { connect } from "@tarojs/redux";
 import Request from "@/utils/Request";
 import { UUID } from "@/utils/utils";
 import Header from "@/components/Header";
+import StatusBar from "@/components/statusBar";
 
 import "./index.scss";
 
@@ -149,6 +150,7 @@ class Index extends Component<any, any> {
     render() {
         return (
             <View className="index">
+                <StatusBar />
                 <Header />
                 <Button
                     onClick={() => {

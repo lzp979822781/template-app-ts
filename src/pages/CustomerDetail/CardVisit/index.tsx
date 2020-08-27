@@ -37,9 +37,9 @@ export default class CardVisit extends Component<any, any> {
                     </View>
                     <View className="list-item-des">
                         <Text className="list-item-des-txt">拜访人：张爽</Text>
-                        <View className="divide-line"></View>
+                        <View className="divide-line-vertical"></View>
                         <Text className="list-item-des-txt">13804217770</Text>
-                        <View className="divide-line"></View>
+                        <View className="divide-line-vertical"></View>
                         <Text className="list-item-des-txt">法人</Text>
                     </View>
                     <View className="list-item-des">
@@ -48,7 +48,14 @@ export default class CardVisit extends Component<any, any> {
                         </Text>
                     </View>
                     <View className="list-item-footer">
-                        <Image className="item-footer-icon" src={calendar} />
+                        <View className="item-footer-icon-con">
+                            <Image
+                                className="item-footer-icon"
+                                src={
+                                    "https://m.360buyimg.com/jmeside/jfs/t1/57152/18/11709/90893/5d88b603E5f78381c/f27e683a0ac599f9.png"
+                                }
+                            />
+                        </View>
                         <Text className="item-footer-txt">
                             客户经理：王佳丽
                         </Text>
