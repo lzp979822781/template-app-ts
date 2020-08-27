@@ -15,7 +15,7 @@ import { connect } from "@tarojs/redux";
 import Request from "@/utils/Request";
 import { UUID } from "@/utils/utils";
 import Header from "@/components/Header";
-import StatusBar from "@/components/statusBar";
+import StatusBar from "@/components/StatusBar/index";
 
 import "./index.scss";
 
