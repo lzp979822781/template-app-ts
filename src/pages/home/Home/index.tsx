@@ -270,6 +270,13 @@ class Home extends Component<IProps, PageState> {
         this.setState({ show: true })
     }
 
+    onPhone = () => {
+        Taro.makePhoneCall({
+            phoneNumber: '17319266172' //仅为示例，并非真实的电话号码
+        })
+          
+    }
+
     render() { 
         const { show } = this.state;
         const homeStyle = show ? {
@@ -294,6 +301,7 @@ class Home extends Component<IProps, PageState> {
                 <Button type='primary' onClick={this.sendReq}>发送请求</Button>
                 <Button type='primary' onClick={this.sendRnReq}>rn请求</Button>
                 <Button type='primary' onClick={this.openModal}>弹框测试</Button>
+                <Button type='primary' onClick={this.onPhone}>拨打电话</Button>
                 <Swiper
                     className='swipper-container'
                     indicatorColor='#999'
