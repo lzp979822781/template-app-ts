@@ -17,7 +17,7 @@ export default class PurchasingInfo extends Component<any, any> {
 
     render() {
         return (
-            <View className="card-tag">
+            <View className="card-purchasing">
                 <View className="purchasing-head">
                     <View className="head-left">
                         <Image className="head-left-icon" src={RelationTitleIcon} />

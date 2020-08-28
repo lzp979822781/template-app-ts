@@ -7,17 +7,24 @@ import {
     Text,
     Image
 } from "@tarojs/components";
+import { Modal } from "@/components/index";
 import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
 import ListItem from "./ListItem/index";
+import { hoverStyle } from "@/utils/utils";
 import TagAlertBtn from "@/assets/images/tag-alert-btn@3x.png";
+import TagModelClose from "@/assets/images/tag-model-close@3x.png";
+import ModelHeadIcon from "@/assets/images/order-record-icon@3x.png";
+import TagModelTitleIcon from "@/assets/images/tag-model-title-icon@3x.png";
 
 import "./index.scss";
 
 export default class Goods extends Component<any, any> {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            visible: false
+        };
     }
 
     config: Config = {
@@ -39,7 +46,49 @@ export default class Goods extends Component<any, any> {
             }
         });
     };
+
+    onOpenModal = () => {
+        this.setState({ visible: true });
+    };
+
+    onClose = () => {
+        this.setState({ visible: false });
+    };
+
+    onConfirm = () => {
+        this.onClose();
+    };
+
+    renderContent = () => {
+        return (
+            <View className="tag-model">
+                <View className="tag-model-close">
+                    <View className="tag-close-icon-con" onClick={this.onClose}>
+                        <Image className="tag-close-icon" src={TagModelClose} />
+                    </View>
+                </View>
+                <View className="model-head">
+                    <Image className="model-head-icon" src={ModelHeadIcon} />
+                    <Text className="model-head-title">标签说明</Text>
+                </View>
+                <View className="model-body">
+                    <View className="model-body-title">
+                        <Image
+                            className="model-body-title-icon"
+                            src={TagModelTitleIcon}
+                        />
+                        <Text className="model-body-title-txt">生命周期</Text>
+                    </View>
+                    <Text className="model-body-des">
+                        根据用户首单时间、历史下单行为、最近一单时间等因素综合定义用户在各个类目的生命周期
+                    </Text>
+                </View>
+            </View>
+        );
+    };
+
     render() {
+        const { visible } = this.state;
         const Shadow = {
             shadowColor: "#f5f5f5",
             shadowOffset: { w: 10, h: 2 },
@@ -47,13 +96,18 @@ export default class Goods extends Component<any, any> {
             shadowRadius: 10,
             elevation: 2
         };
+
         return (
             <View className="container">
                 <StatusBar />
                 <Header
                     title="客户标签"
                     renderRight={
-                        <View className="tag-head-right" onClick={this.alert}>
+                        <View
+                            className="tag-head-right"
+                            onClick={this.onOpenModal}
+                            hoverStyle={hoverStyle}
+                        >
                             <Image
                                 className="head-right-btn"
                                 src={TagAlertBtn}
@@ -95,6 +149,15 @@ export default class Goods extends Component<any, any> {
                         value={"全站非新人；药品新人；非药非新人"}
                     />
                 </View>
+                <Modal
+                    visible={visible}
+                    className="test-modal"
+                    onCancel={this.onClose}
+                    onConfirm={this.onConfirm}
+                    renderContent={this.renderContent()}
+                    customFooter
+                    customHeader
+                />
             </View>
         );
     }

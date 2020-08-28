@@ -17,6 +17,7 @@
 .back-con {
     @include flex(row, flex-start, center);
     flex: 1;
+    height: 100%;
 }
 
 .back-btn {
@@ -33,17 +34,19 @@
 .title-con {
     @include flex(row, center, center);
     flex: 1;
+    height: 100%;
 }
 
 .title-txt {
     @include font(34px, #FFFFFF);
-    font-weight: 500;
+    font-weight: 700;
     line-height: 88px;
 }
 
 .handle-con {
     @include flex(row, flex-end, center);
     flex: 1;
+    height: 100%;
 }
 
 .handle-btn {

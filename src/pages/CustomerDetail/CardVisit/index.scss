@@ -1,7 +1,8 @@
 @import "@/global/common.scss";
 
 .card-visit {
-    margin-top: 20px;
+    border-top-width: 20px;
+    border-top-color: #F5F5F5;
     background-color: #FFFFFF;
     padding: 30px;
 }
@@ -34,7 +35,8 @@
 
 .list-item-title-txt {
     @include font(30px, #444444);
-    font-weight: 600;
+    line-height: 40px;
+    font-weight: 700;
 }
 
 .list-item-des {

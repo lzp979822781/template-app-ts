@@ -134,3 +134,9 @@ export { upload };
 const isRn = Taro.getEnv().toLowerCase() === 'rn';
 
 export { isRn };
+
+const hoverStyle = {
+    opacity: 0.8,
+};
+
+export { hoverStyle };

@@ -5,7 +5,6 @@
     margin-left: 30px;
     margin-right: 30px;
     border-radius: 8px;
-    margin-top: -120px;
     padding-left: 30px;
     padding-right: 30px;
     padding-bottom: 41px;
@@ -37,7 +36,8 @@
 .company-title{
     @include font(36px, #444444);
     text-align: center;
-    font-weight: 600;
+    font-weight: 700;
+    line-height: 50px;
 }
 
 .company-pin {
@@ -53,7 +53,7 @@
 }
 
 .divide-line-horizontal {
-    height: 4px;
+    height: 1px;
     background-color: rgba(238,238,238,1);
     width: 100%;
     margin-top: 18px;
@@ -76,14 +76,21 @@
 
 .contact-address-divide {
     height: 26px;
-    width: 4px;
+    width: 2px;
     background-color: rgba(228,228,228,1);
 }
 
 .con-contact {
     width: 80px;
-    align-items: flex-end;
+    @include flex(row, flex-end, center);
 }
+
+.contact-img-con {
+    @include flex(row, flex-end, center);
+    width: 42px;
+    height: 60px;
+};
+
 .contact-img {
     width: 42px;
     height: 45px;

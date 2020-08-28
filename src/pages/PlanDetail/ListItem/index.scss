@@ -17,8 +17,7 @@
 }
 
 .list-item-lable-txt {
-    @include font(28px, #333333);
-    font-weight: 700;
+    @include font(28px, #999999);
 }
 
 .list-item-value-txt {

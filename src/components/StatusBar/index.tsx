@@ -3,9 +3,13 @@ import { View, Text } from "@tarojs/components";
 import "./index.scss";
 
 interface Option {
+    noBgColor?: boolean;
 }
 
 export default class TopBar extends Component<Option, any> {
+    static defaultProps = {
+        noBgColor: false
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -21,6 +25,8 @@ export default class TopBar extends Component<Option, any> {
 
     render() {
         const { statusBarHeight } = this.state;
+        const { noBgColor } = this.props;
+        const conClassName = noBgColor ? "status-bar-noBgColor" : "status-bar";
 
         const styleStr = {
             height: statusBarHeight
@@ -31,7 +37,7 @@ export default class TopBar extends Component<Option, any> {
         };
 
         return (
-            <View className="status-bar-height" style={styleStr}>
+            <View className={conClassName} style={styleStr}>
                 <Text style={styleStr2}>{statusBarHeight}</Text>
             </View>
         );

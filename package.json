@@ -74,6 +74,7 @@
     "taro-ui": "^2.2.4"
   },
   "devDependencies": {
+    "@jdreact/jdreact-core-web": "^2.0.2",
     "@tarojs/mini-runner": "2.2.13",
     "@tarojs/plugin-sass": "2.2.13",
     "@tarojs/plugin-terser": "2.2.13",

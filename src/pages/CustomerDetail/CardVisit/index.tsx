@@ -20,7 +20,7 @@ export default class CardVisit extends Component<any, any> {
             shadowOffset: { w: 10, h: 2 },
             shadowOpacity: 1,
             shadowRadius: 10,
-            elevation: 2
+            elevation: 1
         };
 
         return data.map(item => {

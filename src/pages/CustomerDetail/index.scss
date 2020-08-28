@@ -3,3 +3,10 @@
     height: 100%;
     background-color: #F8F8F8;
 }
+
+.container-no-bg {
+    display: flex;
+    height: 100%;
+    z-index: 100;
+    margin-top: -160px;
+}
