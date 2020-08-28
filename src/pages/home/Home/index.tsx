@@ -4,7 +4,7 @@ import { connect } from '@tarojs/redux';
 
 import { UUID } from '@/utils/utils';
 import Request from '@/utils/Request';
-import { get, post } from "@/utils/multi-request";
+import { get } from "@/utils/multi-request";
 
 import { Title, HomeSearch } from '../components';
 
@@ -269,10 +269,7 @@ class Home extends Component<IProps, PageState> {
     }
 
     openModal = () => {
-        // this.setState({ show: true })
-        if(this.floatBtn) {
-            console.log("this.floatBtn", this.floatBtn);
-        }
+        this.setState({ show: true })
     }
 
     onPhone = () => {

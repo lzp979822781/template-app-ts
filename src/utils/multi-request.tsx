@@ -30,7 +30,7 @@ const DEFAULT_PARAM = {
 const DEFAULT_GET = { ...DEFAULT_PARAM, method: 'GET'};
 const DEFAULT_POST = { ...DEFAULT_PARAM, method: 'POST'};
 
-function handleNoLogin(response = { }, reqParam) {
+function handleNoLogin(response: any, reqParam) {
     const { returnPage } = reqParam;
     const { data: { code = '', data: { systemUserStatusEnum = '' } = { }, success = false} = {} } = response;
     if(success && (code === 999 || systemUserStatusEnum === 'NO_LOGIN')) {
