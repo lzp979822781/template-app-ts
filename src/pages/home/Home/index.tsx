@@ -1,6 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Swiper, Image, SwiperItem, ScrollView, Button, Text } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
+import { connect } from '@tarojs/redux';
+import { View as TaroRnView} from 'react-native';
 
 import { UUID } from '@/utils/utils';
 import Request from '@/utils/Request';
@@ -13,6 +14,8 @@ import ExplosiveActivities from '../ExplosiveActivities';
 import DrugItem from '../DrugItem';
 import CustomModal from '../../CustomModal';
 import './index.scss'
+
+
 
 type dispatchProps = {
     type: string,
@@ -267,7 +270,10 @@ class Home extends Component<IProps, PageState> {
     }
 
     openModal = () => {
-        this.setState({ show: true })
+        // this.setState({ show: true })
+        if(this.floatBtn) {
+            console.log("this.floatBtn", this.floatBtn);
+        }
     }
 
     onPhone = () => {
@@ -290,34 +296,43 @@ class Home extends Component<IProps, PageState> {
                 <CustomModal show={show}>
                     <Text>弹框测试</Text>
                 </CustomModal>
-                <View className='nav'>
-                    <View className='header'>
-                        <HomeSearch 
-                            onClick={this.onSearchClick}
+                <View onClick={this.onPhone} className='home-float-btn'><Text>拨打电话</Text></View>
+                <View style={{ height: 720}}>
+                    <ScrollView
+                        scrollY
+                    >
+
+                        <View className='nav'>
+                            <View className='header'>
+                                <HomeSearch 
+                                    onClick={this.onSearchClick}
+                                />
+                            </View>
+                        </View>
+                        <Button type='primary' onClick={this.toLogin}>微信登录</Button>
+                        <Button type='primary' onClick={this.sendReq}>发送请求</Button>
+                        <Button type='primary' onClick={this.sendRnReq}>rn请求</Button>
+                        <Button type='primary' onClick={this.openModal}>弹框测试</Button>
+                
+                        <Swiper
+                            className='swipper-container'
+                            indicatorColor='#999'
+                            indicatorActiveColor='#333'
+                            circular
+                            indicatorDots
+                            interval={2000}
+                            autoplay
+                        >
+                            { this.renderSwipperItem()}
+                        </Swiper>
+                        <WonderfulVenue />
+                        <ExplosiveActivities 
+                            custom-cls='explosive-custom'
                         />
-                    </View>
+                        { this.renderList()}
+                    </ScrollView>
                 </View>
-                <Button type='primary' onClick={this.toLogin}>微信登录</Button>
-                <Button type='primary' onClick={this.sendReq}>发送请求</Button>
-                <Button type='primary' onClick={this.sendRnReq}>rn请求</Button>
-                <Button type='primary' onClick={this.openModal}>弹框测试</Button>
-                <Button type='primary' onClick={this.onPhone}>拨打电话</Button>
-                <Swiper
-                    className='swipper-container'
-                    indicatorColor='#999'
-                    indicatorActiveColor='#333'
-                    circular
-                    indicatorDots
-                    interval={2000}
-                    autoplay
-                >
-                    { this.renderSwipperItem()}
-                </Swiper>
-                <WonderfulVenue />
-                <ExplosiveActivities 
-                    custom-cls='explosive-custom'
-                />
-                { this.renderList()}
+                
             </View>
         )
     }
