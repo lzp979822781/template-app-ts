@@ -17,7 +17,7 @@ export default class PurchaseRelation extends Component<any, any> {
     }
 
     config: Config = {
-        navigationBarTitleText: "列表",
+        navigationBarTitleText: "",
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
 
@@ -68,26 +68,26 @@ export default class PurchaseRelation extends Component<any, any> {
         };
 
         return dataSource.map((item, index) => {
-            let className =
+            const className =
                 index === 0 ? "list-item-box top-gap" : "list-item-box";
             return (
                 <View key={item} style={Shadow} className={className}>
-                    <View className="list-item">
-                        <View className="list-image-box">
+                    <View className='list-item'>
+                        <View className='list-image-box'>
                             <Image
-                                className="item-image"
-                                src="https://taro-ui.jd.com/img/logo-taro.png"
+                                className='item-image'
+                                src='https://taro-ui.jd.com/img/logo-taro.png'
                             />
                         </View>
-                        <View className="content-box">
-                            <Text className="item-title">
+                        <View className='content-box'>
+                            <Text className='item-title'>
                                 测试商品日用百货-{item}
                             </Text>
                         </View>
                     </View>
-                    <View className="item-division"></View>
-                    <View className="item-dec">
-                        <Text className="item-dec-txt">
+                    <View className='item-division'></View>
+                    <View className='item-dec'>
+                        <Text className='item-dec-txt'>
                             建材时间：2018.08.25 12:00:00
                         </Text>
                     </View>
@@ -98,9 +98,9 @@ export default class PurchaseRelation extends Component<any, any> {
 
     render() {
         return (
-            <View className="container">
+            <View className='container'>
                 <StatusBar />
-                <Header title="建采关系" />
+                <Header title='建采关系' />
                 <DataList
                     minusHeight={0}
                     refreshing={this.state.refreshing}

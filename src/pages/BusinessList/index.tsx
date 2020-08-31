@@ -113,46 +113,46 @@ export default class ListPage extends Component<any, any> {
 
         return data.map(item => {
             return (
-                <View key={item.id} className='list-item-box'>
+                <View key={item.id} className="list-item-box">
                     <View
-                        className='list-item'
-                        hoverClass='list-item-hover'
+                        className="list-item"
+                        hoverClass="list-item-hover"
                         onClick={this.gotoShopDetail.bind(this, item.venderId)}
                         hoverStyle={{
                             backgroundColor: "#F8F8F8"
                         }}
                     >
-                        <View className='list-left-box'>
+                        <View className="list-left-box">
                             {item.shopLogo ? (
-                                <View className='item-image-box'>
+                                <View className="item-image-box">
                                     <Image
-                                        className='item-image'
+                                        className="item-image"
                                         src={`http:${item.shopLogo}`}
                                     />
                                 </View>
                             ) : (
-                                <Text className='item-image-none'>药京采</Text>
+                                <Text className="item-image-none">药京采</Text>
                             )}
                         </View>
-                        <View className='content-box'>
+                        <View className="content-box">
                             <View>
-                                <Text className='item-title'>
+                                <Text className="item-title">
                                     {item.companyName}
                                 </Text>
                             </View>
-                            <View className='item-dec'>
-                                <Text className='item-dec-1'>上架</Text>
-                                <Text className='item-dec-3'>
+                            <View className="item-dec">
+                                <Text className="item-dec-1">上架</Text>
+                                <Text className="item-dec-3">
                                     {item.upShelfSkuCount}
                                 </Text>
-                                <Text className='item-dec-1'>品种</Text>
-                                <View className='item-dec-vertical-division'></View>
-                                <Text className='item-dec-1'>
+                                <Text className="item-dec-1">品种</Text>
+                                <View className="item-dec-vertical-division"></View>
+                                <Text className="item-dec-1">
                                     起送金额{item.deliveryMoney}元
                                 </Text>
                             </View>
-                            <View className='item-dec'>
-                                <Text className='item-dec-2'>
+                            <View className="item-dec">
+                                <Text className="item-dec-2">
                                     配送区域：{item.operatingArea || "--"}
                                 </Text>
                             </View>
@@ -176,7 +176,7 @@ export default class ListPage extends Component<any, any> {
             { title: "自营店铺", type: "4", id: 4 }
         ];
         return (
-            <View className='tab-con'>
+            <View className="tab-con">
                 {tabsData.map(item => {
                     const classNameTxt =
                         active.type === item.type
@@ -185,8 +185,8 @@ export default class ListPage extends Component<any, any> {
                     return (
                         <View
                             key={item.type}
-                            className='tab-item'
-                            hoverClass='tab-item-hover'
+                            className="tab-item"
+                            hoverClass="tab-item-hover"
                             hoverStyle={{
                                 backgroundColor: "#F8F8F8"
                             }}
@@ -217,7 +217,7 @@ export default class ListPage extends Component<any, any> {
 
     render() {
         return (
-            <View className='list'>
+            <View className="list">
                 {this.renderTabs()}
                 <DataList
                     minusHeight={0}
