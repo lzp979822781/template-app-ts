@@ -13,7 +13,7 @@ import PopUpCon from "./PopUpCon/index";
 import "./index.scss";
 
 interface Option {
-    name?: any
+    name?: any;
 }
 
 export default class OrderRecord extends Component<Option, any> {
@@ -22,35 +22,35 @@ export default class OrderRecord extends Component<Option, any> {
         this.state = {
             visible: false
         };
-    };
+    }
 
     config: Config = {
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
 
-    onPopupShow() {
+    onPopupShow = () => {
         this.setState({ visible: true });
     };
 
-    onPopupClose() {
+    onPopupClose = () => {
         this.setState({ visible: false });
     };
 
     render() {
         return (
-            <View className='container'>
+            <View className="container">
                 <ImageBackground
                     source={{ uri: bgImage }}
                     style={{
-                        resizeMode: 'repeat',
+                        resizeMode: "repeat",
                         height: 160
                     }}
                 >
                     <StatusBar noBgColor></StatusBar>
-                    <Header title='客户详情' noBgColor></Header>
+                    <Header title="客户详情" noBgColor></Header>
                 </ImageBackground>
-                <ScrollView className='container-no-bg'>
-                    <View className='no-bg-gap' />
+                <ScrollView className="container-no-bg">
+                    <View className="no-bg-gap" />
                     <CardBase onPopupShow={this.onPopupShow}></CardBase>
                     <CardTag></CardTag>
                     <PurchasingInfo></PurchasingInfo>
