@@ -48,7 +48,7 @@ export default class CardBase extends Component<any, any> {
                     </View>
                 </View>
                 <View className='base-btn-con'>
-                    <View className='base-btn'>
+                    <View className='base-btn' hoverStyle={hoverStyle}>
                         <Gradient
                             angle={0}
                             colors={["#FF6600", "#FFC100"]}
@@ -63,7 +63,7 @@ export default class CardBase extends Component<any, any> {
                         </Gradient>
                     </View>
                     <View className='btn-gap' />
-                    <View className='base-btn'>
+                    <View className='base-btn' hoverStyle={hoverStyle}>
                         <Gradient
                             style={{
                                 height: 40,

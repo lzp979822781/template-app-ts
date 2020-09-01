@@ -1,6 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import back from "@/assets/images/back@3x.png";
+import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 
 interface Option {
@@ -13,10 +14,11 @@ interface Option {
 class Header extends Component<Option, any> {
     static defaultProps = {
         title: "标题",
-        noBgColor: false
+        noBgColor: false,
+        renderLeft: null
     };
 
-    constructor(props: ListOption) {
+    constructor(props) {
         super(props);
         this.state = {};
     }
@@ -27,12 +29,13 @@ class Header extends Component<Option, any> {
         }
         return (
             <View
-                className="back-btn"
+                className='back-btn'
+                hoverStyle={hoverStyle}
                 onClick={() => {
                     Taro.navigateBack();
                 }}
             >
-                <Image className="back-img" src={back} />
+                <Image className='back-img' src={back} />
             </View>
         );
     };
@@ -49,11 +52,11 @@ class Header extends Component<Option, any> {
         const conClassName = noBgColor ? "header-con-noBgColor" : "header-con";
         return (
             <View className={conClassName}>
-                <View className="back-con">{this.renderLeft()}</View>
-                <View className="title-con">
-                    <Text className="title-txt">{this.props.title}</Text>
+                <View className='back-con'>{this.renderLeft()}</View>
+                <View className='title-con'>
+                    <Text className='title-txt'>{this.props.title}</Text>
                 </View>
-                <View className="handle-con">{this.renderRight()}</View>
+                <View className='handle-con'>{this.renderRight()}</View>
             </View>
         );
     }

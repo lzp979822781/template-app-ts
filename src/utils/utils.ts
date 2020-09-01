@@ -136,7 +136,7 @@ const isRn = Taro.getEnv().toLowerCase() === 'rn';
 export { isRn };
 
 const hoverStyle = {
-    opacity: 0.8,
+    opacity: 0.8
 };
 
 export { hoverStyle };

@@ -2,9 +2,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { Provider } from "@tarojs/redux";
 import store from "./store/createStore";
-
 import { Index } from "./pages";
-
 import "./app.scss";
 
 console.ignoredYellowBox = [
@@ -31,13 +29,11 @@ class App extends Component {
      */
     config: Config = {
         pages: [
-            "pages/home/index",
+            "pages/Empty/index",
             "pages/CustomerDetail/index",
             "pages/CustomerTag/index",
             "pages/PlanDetail/index",
-            "pages/PurchaseRelation/index",
-            "pages/Index/index",
-            "pages/BusinessList/index"
+            "pages/PurchaseRelation/index"
         ],
         window: {
             backgroundTextStyle: "light",

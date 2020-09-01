@@ -33,6 +33,9 @@ export default class ListPage extends Component<any, any> {
 
     loadList = async () => {
         const { currentPage, active } = this.state;
+        Taro.showLoading({
+            title: "加载中"
+        });
         try {
             const res = await Request.get("api_partnerVender_list", {
                 currentPage: currentPage,

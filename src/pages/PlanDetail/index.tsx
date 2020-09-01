@@ -85,13 +85,13 @@ export default class PlanDetail extends Component<any, any> {
                         </View>
                     </View>
                     <View className='card-operation'>
-                        <ListItem label={"创建人"} value={"范希娟"} />
-                        <ListItem label={"客户经理"} value={"徐美誉"} />
-                        <ListItem label={"拜访日期"} value={"2015-05-08"} />
-                        <ListItem label={"被拜访人"} value={"无"} />
-                        <ListItem label={"拜访目的"} value={"正常跟进"} />
-                        <ListItem label={"拜访类型"} value={"无计划拜访"} />
-                        <ListItem label={"拜访方式"} value={"到店拜访"} />
+                        <ListItem label='创建人' value='范希娟' />
+                        <ListItem label='客户经理' value='徐美誉' />
+                        <ListItem label='拜访日期' value='2015-05-08' />
+                        <ListItem label='被拜访人' value='无' />
+                        <ListItem label='拜访目的' value='正常跟进' />
+                        <ListItem label='拜访类型' value='无计划拜访' />
+                        <ListItem label='拜访方式' value='到店拜访' />
                     </View>
                     <View
                         className='plan-btn'
