@@ -6,6 +6,7 @@ import "./index.scss";
 
 interface Option {
     title?: string;
+    noBack?: boolean;
     noBgColor?: boolean;
     renderLeft?: object;
     renderRight?: object;
@@ -24,9 +25,17 @@ class Header extends Component<Option, any> {
     }
 
     renderLeft = () => {
+
+        // 不显示返回箭头
+        if(this.props.noBack){
+            return null;
+        };
+
+        // 自定义返回按钮
         if (this.props.renderLeft) {
             return this.props.renderLeft;
         }
+
         return (
             <View
                 className='back-btn'
@@ -40,6 +49,8 @@ class Header extends Component<Option, any> {
         );
     };
     renderRight = () => {
+
+        //自定义右边按钮
         if (this.props.renderRight) {
             return this.props.renderRight;
         }

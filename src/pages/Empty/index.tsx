@@ -39,7 +39,7 @@ class Empty extends Component<any, any> {
         return (
             <View className='index'>
                 <StatusBar />
-                <Header title='empty' renderLeft={<View />} />
+                <Header title='empty' noBack />
                 <Button
                     onClick={() => {
                         this.routerTo("/pages/CustomerDetail/index");
