@@ -4,6 +4,7 @@ import DataList from "@/components/DataList/index";
 import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
 import JDRequest from "@/utils/jd-request";
+import ClockIcon from "@/assets/images/clock-icon@3x.png";
 import "./index.scss";
 
 export default class PurchaseRelation extends Component<any, any> {
@@ -42,10 +43,13 @@ export default class PurchaseRelation extends Component<any, any> {
         // });
         const { currentPage } = this.state;
         try {
-            const res = await JDRequest.get("mjying_assist_buyer_relation_queryPage", {
-                pageNum: currentPage,
-                pageSize: 10,
-            });
+            const res = await JDRequest.get(
+                "mjying_assist_buyer_relation_queryPage",
+                {
+                    pageNum: currentPage,
+                    pageSize: 10
+                }
+            );
 
             let listData = this.state.data;
             let data = [];
@@ -137,22 +141,23 @@ export default class PurchaseRelation extends Component<any, any> {
                 index === 0 ? "list-item-box top-gap" : "list-item-box";
             return (
                 <View key={item} style={Shadow} className={className}>
-                    <View className='list-item'>
-                        <View className='list-image-box'>
+                    <View className="list-item">
+                        <View className="list-image-box">
                             <Image
-                                className='item-image'
-                                src='https://taro-ui.jd.com/img/logo-taro.png'
+                                className="item-image"
+                                src="https://taro-ui.jd.com/img/logo-taro.png"
                             />
                         </View>
-                        <View className='content-box'>
-                            <Text className='item-title'>
+                        <View className="content-box">
+                            <Text className="item-title">
                                 测试商品日用百货-{item}
                             </Text>
                         </View>
                     </View>
-                    <View className='item-division'></View>
-                    <View className='item-dec'>
-                        <Text className='item-dec-txt'>
+                    <View className="item-division"></View>
+                    <View className="item-dec">
+                        <Image className="item-dec-icon" src={ClockIcon} />
+                        <Text className="item-dec-txt">
                             建材时间：2018.08.25 12:00:00
                         </Text>
                     </View>
@@ -163,9 +168,9 @@ export default class PurchaseRelation extends Component<any, any> {
 
     render() {
         return (
-            <View className='container'>
+            <View className="container">
                 <StatusBar />
-                <Header title='建采关系' />
+                <Header title="建采关系" />
                 <DataList
                     minusHeight={0}
                     refreshing={this.state.refreshing}

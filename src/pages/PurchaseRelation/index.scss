@@ -68,7 +68,12 @@
     padding-left: 26px;
     height: 65px;
 }
-
+.item-dec-icon {
+    width: 24px;
+    height: 24px;
+    margin:0 10px;
+}
 .item-dec-txt {
     @include font(24px, #999999);
+    line-height: 34px;
 }

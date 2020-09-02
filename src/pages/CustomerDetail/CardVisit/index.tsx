@@ -19,7 +19,7 @@ export default class CardVisit extends Component<any, any> {
         const Shadow = {
             shadowColor: "#f5f5f5",
             shadowOffset: { w: 10, h: 2 },
-            shadowOpacity: 1,
+            shadowOpacity: 0.5,
             shadowRadius: 10,
             elevation: 1
         };
