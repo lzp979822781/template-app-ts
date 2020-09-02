@@ -4,6 +4,7 @@ import { Modal } from "@/components/index";
 import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
 import { hoverStyle } from "@/utils/utils";
+import JDRequest from "@/utils/jd-request";
 import TagAlertBtn from "@/assets/images/tag-alert-btn@3x.png";
 import TagModelClose from "@/assets/images/tag-model-close@3x.png";
 import ModelHeadIcon from "@/assets/images/order-record-icon@3x.png";
@@ -27,6 +28,15 @@ export default class Goods extends Component<any, any> {
     };
 
     componentDidShow() {}
+
+    getTags = async () =>  {
+        const res = await JDRequest.get("mjying_assist_customer_getTags");
+    };
+
+    getTagExplanation = async () =>  {
+        const res = await JDRequest.get("mjying_assist_customer_getTagExplanation");
+    };
+    
     alert = () => {
         Taro.showModal({
             title: "提示",
@@ -113,7 +123,7 @@ export default class Goods extends Component<any, any> {
                 <View className='card-base' style={Shadow}>
                     <View className='card-base-item'>
                         <Text className='card-base-item-label'>生命周期</Text>
-                        <Text className='card-base-item-value'>稳定</Text>
+                        <Text className='card-base-item-value1'>暂无</Text>
                     </View>
                     <View className='tag-divide-line'></View>
                     <View className='card-base-item'>

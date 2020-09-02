@@ -4,7 +4,8 @@ import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
 import Gradient from "@/components/Gradient";
 import { hoverStyle } from "@/utils/utils";
-import phone from "@/assets/images/phone@3x.png";
+import JDRequest from "@/utils/jd-request";
+import Phone from "@/assets/images/phone@3x.png";
 import PlanBtnIcon from "@/assets/images/plan-btn-icon@3x.png";
 import ListItem from "./ListItem/index";
 import "./index.scss";
@@ -21,13 +22,22 @@ export default class PlanDetail extends Component<any, any> {
 
     componentDidShow() {}
 
+    getData = async () =>  {
+        const res = await JDRequest.get("mjying_assist_customer_getTags");
+    };
+    
     jumpTo = () => {
         Taro.showToast({
-            title: '成功',
-            icon: 'success',
+            title: "成功",
+            icon: "success",
             duration: 2000
-          })
-            .then(res => console.log(res))
+        }).then(res => console.log(res));
+    };
+
+    makePhoneCall = obj => {
+        Taro.makePhoneCall({
+            phoneNumber: "18301442850" //仅为示例，并非真实的电话号码
+        });
     };
 
     render() {
@@ -74,7 +84,16 @@ export default class PlanDetail extends Component<any, any> {
                             </View>
                             <View className='contact-address-divide'></View>
                             <View className='con-contact'>
-                                <Image className='contact-img' src={phone} />
+                                <View
+                                    className='contact-img-con'
+                                    onClick={this.makePhoneCall}
+                                    hoverStyle={hoverStyle}
+                                >
+                                    <Image
+                                        className='contact-img'
+                                        src={Phone}
+                                    />
+                                </View>
                             </View>
                         </View>
                     </View>

@@ -48,6 +48,13 @@
     line-height: 50px;
 }
 
+.card-base-item-value1 {
+    @include font(36px, #8C8C8C);
+    font-weight: 700;
+    margin-top: 20px;
+    line-height: 50px;
+}
+
 .tag-divide-line {
     width: 2px;
     height: 58px;

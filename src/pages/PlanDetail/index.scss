@@ -79,6 +79,13 @@
     width: 80px;
     align-items: flex-end;
 }
+
+.contact-img-con {
+    @include flex(row, flex-end, center);
+    width: 42px;
+    height: 60px;
+};
+
 .contact-img {
     width: 42px;
     height: 45px;

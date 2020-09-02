@@ -2,29 +2,10 @@ import {
   JDNetwork,
   JDJumping
 } from "@jdreact/jdreact-core-lib";
-import { Loading, Toast } from "./model";
+
+import { Toast } from "./model";
+
 export default class JDRequest {
-  static defaultOption = {
-    url: "",
-    param: {},
-    loadingCallBack: () => {},
-    callBackSuccess: (response) => {
-      Loading.hide();
-    },
-    callBackWarn: (response) => {
-      Loading.hide();
-      if (response && response.errorMsg) {
-        Toast.show(response.errorMsg);
-      }
-    },
-    callBackError: (error) => {
-      if (error && error.message) {
-        Toast.show(error.message);
-      } else {
-        Toast.show("网络错误");
-      }
-    },
-  };
 
   static timeoutFetch = (originalFetch, timeout = 30000) => {
     let timeoutBlock = () => {};
@@ -46,92 +27,13 @@ export default class JDRequest {
     return abortablePromise;
   };
 
-  static get(options) {
-    const extendOptions = {
-      ...this.defaultOption,
-      ...options,
-    };
-
-    extendOptions.loadingCallBack();
-
-    let param = null;
-    if (
-      JSON.stringify(extendOptions.param) === "{}" ||
-      extendOptions.param === "" ||
-      extendOptions.param === undefined
-    ) {
-      param = null;
-    } else {
-      param = {
-        ...extendOptions.param,
-      };
-      param = JSON.stringify(param);
-    }
-
-    return this.timeoutFetch(JDNetwork.fetchWithoutHost(options.url, param, "get"))
-      .then((response) => {
-        if (response.code === 5005) {
-          this.logout();
-        }
-        this.printLog(extendOptions.url, param, response);
-        if (response && response.success) {
-          extendOptions.callBackSuccess(response);
-        } else {
-          extendOptions.callBackWarn(response);
-        }
-      })
-      .catch((error) => {
-        this.printLog(extendOptions.url, param, error);
-        extendOptions.callBackError(error);
-      });
+  static get(functionId, param=null) {
+    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, param, "get"));
   }
 
-  static post(options) {
-    const extendOptions = {
-      ...this.defaultOption,
-      ...options,
-    };
-
-    extendOptions.loadingCallBack();
-
-    let param = null;
-    if (
-      JSON.stringify(extendOptions.param) === "{}" ||
-      extendOptions.param === "" ||
-      extendOptions.param === undefined
-    ) {
-      param = null;
-    } else {
-      param = {
-        ...extendOptions.param,
-      };
-      param = JSON.stringify(param);
-    }
-    return this.timeoutFetch(JDNetwork.fetchWithoutHost(options.url, param, "post"))
-      .then((response) => {
-        if (response.code === 5005) {
-          this.logout();
-        }
-        this.printLog(extendOptions.url, param, response);
-        if (response && response.success) {
-          extendOptions.callBackSuccess(response);
-        } else {
-          extendOptions.callBackWarn(response);
-        }
-      })
-      .catch((error) => {
-        this.printLog(extendOptions.url, param, error);
-        extendOptions.callBackError(error);
-      });
+  static post(functionId, param=null) {
+    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, param, "post"));
   }
-  static printLog = (url, param, response) => {
-    if (__DEV__) {
-      console.log(`--接口start: ${url}--`);
-      console.log(param);
-      console.log(response);
-      console.log(`--接口end`);
-    }
-  };
 
   static logout = () => {
     JDJumping.jumpToOpenapp(

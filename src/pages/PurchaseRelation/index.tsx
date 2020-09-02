@@ -3,7 +3,7 @@ import { View, Block, Text, Image } from "@tarojs/components";
 import DataList from "@/components/DataList/index";
 import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
-import Request from "@/utils/Request";
+import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 
 export default class PurchaseRelation extends Component<any, any> {
@@ -40,12 +40,11 @@ export default class PurchaseRelation extends Component<any, any> {
         // this.setState({
         //     refreshing: true
         // });
-        const { currentPage, active } = this.state;
+        const { currentPage } = this.state;
         try {
-            const res = await Request.get("api_partnerVender_list", {
-                currentPage: currentPage,
+            const res = await JDRequest.get("mjying_assist_buyer_relation_queryPage", {
+                pageNum: currentPage,
                 pageSize: 10,
-                venderType: active.id
             });
 
             let listData = this.state.data;

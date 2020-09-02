@@ -5,6 +5,8 @@ import { ImageBackground, ScrollView, RefreshControl } from "react-native";
 import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
 import bgImage from "@/assets/images/customer-bg@3x.png";
+import JDRequest from "@/utils/jd-request";
+
 import CardBase from "./CardBase/index";
 import CardTag from "./CardTag/index";
 import PurchasingInfo from "./PurchasingInfo/index";
@@ -64,7 +66,7 @@ class OrderRecord extends Component<any, any> {
         }, 3000);
         // const { currentPage, active } = this.state;
         // try {
-        //     const res = await Request.get("api_partnerVender_list", {
+        //     const res = await JDRequest.get("mjying_assist_customer_getDetail", {
         //         currentPage: currentPage,
         //         pageSize: 10,
         //         venderType: active.id
