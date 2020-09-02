@@ -25,7 +25,7 @@ if(isRn) {
 // Taro plugin 
 const extraPlugins = [];
 const copyRnPlugin = [copyRnToJdreact, {
-    dest: path.resolve(__dirname, '../../', 'jdreact-jsbundle-JDReactMasterOfLoader')
+    dest: path.resolve(__dirname, '../../', 'jdreact-jsbundle-JDReactJYingAppCustomer')
 }];
 
 if(isRn) {
