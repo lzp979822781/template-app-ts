@@ -24,7 +24,7 @@ export default class PurchaseRelation extends Component<any, any> {
     };
 
     componentDidShow() {
-        this.loadList();
+        // this.loadList();
     }
 
     loadList = async () => {
@@ -37,9 +37,9 @@ export default class PurchaseRelation extends Component<any, any> {
         // Taro.showLoading({
         //     title: "加载中"
         // });
-        this.setState({
-            refreshing: true
-        });
+        // this.setState({
+        //     refreshing: true
+        // });
         const { currentPage, active } = this.state;
         try {
             const res = await Request.get("api_partnerVender_list", {

@@ -16,24 +16,18 @@ export default class PlanDetail extends Component<any, any> {
     }
 
     config: Config = {
-        navigationBarTitleText: "列表",
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
 
     componentDidShow() {}
 
-    alert = () => {
-        Taro.showModal({
-            title: "提示",
-            content: "这是一个模态弹窗",
-            success: function(res) {
-                if (res.confirm) {
-                    console.log("用户点击确定");
-                } else if (res.cancel) {
-                    console.log("用户点击取消");
-                }
-            }
-        });
+    jumpTo = () => {
+        Taro.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 2000
+          })
+            .then(res => console.log(res))
     };
 
     render() {
@@ -95,7 +89,7 @@ export default class PlanDetail extends Component<any, any> {
                     </View>
                     <View
                         className='plan-btn'
-                        onClick={this.alert}
+                        onClick={this.jumpTo}
                         hoverStyle={hoverStyle}
                     >
                         <Gradient
