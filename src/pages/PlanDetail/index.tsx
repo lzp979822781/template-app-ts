@@ -52,7 +52,7 @@ export default class PlanDetail extends Component<any, any> {
         return (
             <View className='container'>
                 <StatusBar />
-                <Header title='计划详情' />
+                <Header title='计划详情' backApp />
                 <ScrollView className='container'>
                     <View className='plan-banner-bg'></View>
                     <View className='card-base' style={Shadow}>

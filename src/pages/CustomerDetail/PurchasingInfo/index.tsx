@@ -29,6 +29,12 @@ export default class PurchasingInfo extends Component<any, any> {
         });
     };
 
+    routerTo = url => {
+        Taro.navigateTo({
+            url: url
+        });
+    };
+
     render() {
         return (
             <View className='card-purchasing'>
@@ -92,7 +98,9 @@ export default class PurchasingInfo extends Component<any, any> {
                         key='item-4'
                         className='purchasing-item'
                         hoverStyle={hoverStyle}
-                        onClick={this.alert}
+                        onClick={()=>{
+                            this.routerTo("/pages/PurchaseRelation/index");
+                        }}
                     >
                         <Image
                             className='purchasing-item-icon'

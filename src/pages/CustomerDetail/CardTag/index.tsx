@@ -25,6 +25,12 @@ export default class CardTag extends Component<any, any> {
         });
     };
 
+    routerTo = url => {
+        Taro.navigateTo({
+            url: url
+        });
+    };
+
     render() {
         return (
             <View className='card-tag'>
@@ -39,7 +45,9 @@ export default class CardTag extends Component<any, any> {
                     <View
                         className='head-right'
                         hoverStyle={hoverStyle}
-                        onClick={this.alert}
+                        onClick={()=>{
+                            this.routerTo("/pages/CustomerTag/index");
+                        }}
                     >
                         <Text className='head-right-txt'>全部</Text>
                         <Image className='head-right-icon' src={arrows} />

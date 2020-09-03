@@ -160,7 +160,7 @@ class OrderRecord extends Component<any, any> {
                     }}
                 >
                     <StatusBar noBgColor></StatusBar>
-                    <Header title='客户详情' noBgColor></Header>
+                    <Header title='客户详情' noBgColor backApp></Header>
                 </ImageBackground>
                 <ScrollView
                     style={{

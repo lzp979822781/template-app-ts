@@ -9,6 +9,7 @@ import "./index.scss";
 
 interface Option {
     title?: string;
+    backApp: boolean;
     noBack?: boolean;
     noBgColor?: boolean;
     renderLeft?: object;
@@ -19,7 +20,8 @@ class Header extends Component<Option, any> {
     static defaultProps = {
         title: "标题",
         noBgColor: false,
-        renderLeft: null
+        backApp: false,
+        noBack: false
     };
 
     constructor(props) {
@@ -29,14 +31,15 @@ class Header extends Component<Option, any> {
 
     renderLeft = () => {
 
+        const { noBack, renderLeft, backApp } = this.props;
         // 不显示返回箭头
-        if(this.props.noBack){
+        if (noBack) {
             return null;
         };
 
         // 自定义返回按钮
-        if (this.props.renderLeft) {
-            return this.props.renderLeft;
+        if (renderLeft) {
+            return renderLeft;
         }
 
         return (
@@ -44,8 +47,11 @@ class Header extends Component<Option, any> {
                 className='back-btn'
                 hoverStyle={hoverStyle}
                 onClick={() => {
-                    JDJumping.jumpToBack();
-                    // Taro.navigateBack();
+                    if (backApp) {
+                        JDJumping.jumpToBack();
+                    } else {
+                        Taro.navigateBack();
+                    }
                 }}
             >
                 <Image className='back-img' src={back} />
@@ -53,17 +59,17 @@ class Header extends Component<Option, any> {
         );
     };
     renderRight = () => {
-
+        const { renderRight } = this.props;
         //自定义右边按钮
-        if (this.props.renderRight) {
-            return this.props.renderRight;
+        if (renderRight) {
+            return renderRight;
         }
 
         return null;
     };
 
     render() {
-        const {noBgColor} = this.props;
+        const { noBgColor } = this.props;
         const conClassName = noBgColor ? "header-con-noBgColor" : "header-con";
         return (
             <View className={conClassName}>
