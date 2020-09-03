@@ -31,10 +31,12 @@ export default class Goods extends Component<any, any> {
 
     getTags = async () =>  {
         const res = await JDRequest.get("mjying_assist_customer_getTags");
+        console.log(res);
     };
 
     getTagExplanation = async () =>  {
         const res = await JDRequest.get("mjying_assist_customer_getTagExplanation");
+        console.log(res);
     };
     
     alert = () => {

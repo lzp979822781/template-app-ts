@@ -1,8 +1,10 @@
 /* eslint-disable react/sort-comp */
 import Taro, { Component, Config } from "@tarojs/taro";
 import { Provider } from "@tarojs/redux";
+import {
+    set as setGlobalData,
+} from "@/utils/global_data";
 import store from "./store/createStore";
-import { set as setGlobalData, get as getGlobalData } from '@/utils/global_data';
 import { Index } from "./pages";
 import "./app.scss";
 
@@ -20,7 +22,11 @@ console.disableYellowBox = true; // 关闭全部黄色警告
 //   require('nerv-devtools')
 // }
 
-class App extends Component {
+type appProps = {
+    pageName?: string;
+} 
+
+class App extends Component<appProps, any> {
     /**
      * 指定config的类型声明为: Taro.Config
      *
@@ -44,9 +50,9 @@ class App extends Component {
         }
     };
 
-    componentWillMount(){
-        const pageName = this.props.pageName;
-        setGlobalData('pageName', pageName);
+    componentWillMount() {
+        const { pageName } = this.props;
+        setGlobalData("pageName", pageName);
     }
 
     componentDidMount() {}

@@ -1,9 +1,9 @@
 import { ComponentClass } from "react";
 import Taro, { Component } from "@tarojs/taro";
-import { View, Button, Text } from "@tarojs/components";
+import { View, Button } from "@tarojs/components";
 import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
-import { set as setGlobalData, get as getGlobalData } from '@/utils/global_data';
+import { get as getGlobalData } from '@/utils/global_data';
 
 import "./index.scss";
 
@@ -12,8 +12,8 @@ type PageState = {};
 
 const routers = {
     customDetail: "pages/CustomerDetail/index",
-    customTag :"pages/CustomerTag/index",
-    planDetail :"pages/PlanDetail/index",
+    customTag: "pages/CustomerTag/index",
+    planDetail: "pages/PlanDetail/index",
     purchaseRelation: "pages/PurchaseRelation/index"
 }
 
@@ -33,7 +33,7 @@ class Empty extends Component<any, any> {
 
     componentWillMount() {
         const key = getGlobalData('pageName');
-        if(key){
+        if (key) {
             this.routerTo(routers[key]);
         };
     }
@@ -50,9 +50,9 @@ class Empty extends Component<any, any> {
     render() {
 
         return (
-            <View className="index">
+            <View className='index'>
                 <StatusBar />
-                <Header title="中间页" noBack />
+                <Header title='中间页' noBack />
                 <Button
                     onClick={() => {
                         this.routerTo("/pages/CustomerDetail/index");
