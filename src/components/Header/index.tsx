@@ -1,5 +1,8 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
+import {
+    JDJumping
+} from '@jdreact/jdreact-core-lib';
 import back from "@/assets/images/back@3x.png";
 import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
@@ -41,7 +44,8 @@ class Header extends Component<Option, any> {
                 className='back-btn'
                 hoverStyle={hoverStyle}
                 onClick={() => {
-                    Taro.navigateBack();
+                    JDJumping.jumpToBack();
+                    // Taro.navigateBack();
                 }}
             >
                 <Image className='back-img' src={back} />

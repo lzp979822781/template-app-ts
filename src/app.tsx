@@ -2,6 +2,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { Provider } from "@tarojs/redux";
 import store from "./store/createStore";
+import { set as setGlobalData, get as getGlobalData } from '@/utils/global_data';
 import { Index } from "./pages";
 import "./app.scss";
 
@@ -42,6 +43,11 @@ class App extends Component {
             navigationStyle: "custom"
         }
     };
+
+    componentWillMount(){
+        const pageName = this.props.pageName || "customDetail";
+        setGlobalData('pageName', pageName);
+    }
 
     componentDidMount() {}
 
