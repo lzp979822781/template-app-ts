@@ -23,8 +23,8 @@ console.disableYellowBox = true; // 关闭全部黄色警告
 // }
 
 type appProps = {
-    pageName?: string;
-} 
+    jyNativeData?: string;
+}
 
 class App extends Component<appProps, any> {
     /**
@@ -51,7 +51,7 @@ class App extends Component<appProps, any> {
     };
 
     componentWillMount() {
-        const { jyNativeData } = this.props;
+        const jyNativeData = this.props.jyNativeData || "";
         setGlobalData("jyNativeData", JSON.parse(jyNativeData));
     }
 
