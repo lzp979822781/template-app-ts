@@ -12,9 +12,7 @@ type PageState = {};
 
 const routers = {
     customDetail: "pages/CustomerDetail/index",
-    customTag: "pages/CustomerTag/index",
-    planDetail: "pages/PlanDetail/index",
-    purchaseRelation: "pages/PurchaseRelation/index"
+    planDetail: "pages/PlanDetail/index"
 }
 
 class Empty extends Component<any, any> {
@@ -34,14 +32,17 @@ class Empty extends Component<any, any> {
     componentWillMount() {
         const key = getGlobalData('pageName');
         if (key) {
-            this.routerTo(routers[key]);
+            this.redirectTo(routers[key]);
         };
     }
 
     routerTo = url => {
-        // Taro.navigateTo({
-        //     url: url
-        // });
+        Taro.navigateTo({
+            url: url
+        });
+    };
+
+    redirectTo = url => {
         Taro.redirectTo({
             url: url
         });
@@ -62,24 +63,10 @@ class Empty extends Component<any, any> {
                 </Button>
                 <Button
                     onClick={() => {
-                        this.routerTo("/pages/CustomerTag/index");
-                    }}
-                >
-                    客户标签
-                </Button>
-                <Button
-                    onClick={() => {
                         this.routerTo("/pages/PlanDetail/index");
                     }}
                 >
                     计划详情
-                </Button>
-                <Button
-                    onClick={() => {
-                        this.routerTo("/pages/PurchaseRelation/index");
-                    }}
-                >
-                    建采关系
                 </Button>
             </View>
         );
