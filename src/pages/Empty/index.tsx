@@ -33,7 +33,9 @@ class Empty extends Component<any, any> {
 
     componentWillMount() {
         const key = getGlobalData('pageName');
-        this.routerTo(routers[key]);
+        if(key){
+            this.routerTo(routers[key]);
+        };
     }
 
     routerTo = url => {

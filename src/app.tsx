@@ -45,7 +45,7 @@ class App extends Component {
     };
 
     componentWillMount(){
-        const pageName = this.props.pageName || "customDetail";
+        const pageName = this.props.pageName;
         setGlobalData('pageName', pageName);
     }
 
