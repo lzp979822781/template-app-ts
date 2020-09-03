@@ -51,10 +51,8 @@ class App extends Component<appProps, any> {
     };
 
     componentWillMount() {
-        const { pageName, data } = this.props;
-        debugger
-        setGlobalData("pageName", pageName);
-        setGlobalData("appData", data);
+        const { jyNativeData } = this.props;
+        setGlobalData("jyNativeData", JSON.parse(jyNativeData));
     }
 
     componentDidMount() {}
