@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
 import bgImage from "@/assets/images/customer-bg@3x.png";
 import JDRequest from "@/utils/jd-request";
-
+import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
 import CardTag from "./CardTag/index";
 import PurchasingInfo from "./PurchasingInfo/index";
@@ -55,57 +55,55 @@ class OrderRecord extends Component<any, any> {
     canAction = false;
 
     componentDidShow() {
+        debugger
         this.loadList();
     }
 
-    loadList = async () => {
-        setTimeout(() => {
-            this.setState({
-                refreshing: false
-            });
-        }, 3000);
-        // const { currentPage, active } = this.state;
-        // try {
-        //     const res = await JDRequest.get("mjying_assist_customer_getDetail", {
-        //         currentPage: currentPage,
-        //         pageSize: 10,
-        //         venderType: active.id
-        //     });
+    loadList = () => {
+        const appData = getGlobalData('appData');
+        // const customerId = getGlobalData('customerId');
+        debugger
+        const { currentPage } = this.state;
 
-        //     let listData = this.state.data;
-        //     let data = [];
-        //     if (res.data.data) {
-        //         data = res.data.data.result;
-        //     }
+        // JDRequest.post("mjying_assist_customer_getDetail", {
+        //     customerId: customerId
+        // }).then((response) => {
+        //     debugger
+        //     alert(JSON.stringify(response));
+        // }).catch(err => alert(err));;
 
-        //     if (currentPage === 1) {
-        //         listData = data;
-        //     } else {
-        //         listData = listData.concat(data);
-        //     }
 
-        //     // console.log("res", res);
-        //     this.setState(
-        //         {
-        //             data: listData,
-        //             refreshing: false,
-        //             ...res.data.data.page
-        //             //   statusCode: response.code,
-        //         },
-        //         () => {
-        //             if (data.length < this.state.pageSize) {
-        //                 this.canAction = false;
-        //             } else {
-        //                 setTimeout(() => {
-        //                     this.canAction = true;
-        //                 }, 50);
-        //             }
-        //         }
-        //     );
-        // } catch (e) {
-        //     console.log("e", e);
+        // let listData = this.state.data;
+        // let data = [];
+        // if (res.data.data) {
+        //     data = res.data.data.result;
         // }
-        // Taro.hideLoading();
+
+        // if (currentPage === 1) {
+        //     listData = data;
+        // } else {
+        //     listData = listData.concat(data);
+        // }
+
+        // // console.log("res", res);
+        // this.setState(
+        //     {
+        //         data: listData,
+        //         refreshing: false,
+        //         ...res.data.data.page
+        //         //   statusCode: response.code,
+        //     },
+        //     () => {
+        //         if (data.length < this.state.pageSize) {
+        //             this.canAction = false;
+        //         } else {
+        //             setTimeout(() => {
+        //                 this.canAction = true;
+        //             }, 50);
+        //         }
+        //     }
+        // );
+        //Taro.hideLoading();
     };
 
     onRefresh() {

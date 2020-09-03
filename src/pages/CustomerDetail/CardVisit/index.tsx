@@ -10,7 +10,7 @@ export default class CardVisit extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
-            data: [{}, {}]
+            data: [{id:1}, {id:2}]
         };
     }
 
@@ -24,9 +24,9 @@ export default class CardVisit extends Component<any, any> {
             elevation: 1
         };
 
-        return data.map(item => {
+        return data.map((item) => {
             return (
-                <View className='list-item' style={Shadow}>
+                <View className='list-item' key={item.id} style={Shadow}>
                     <View className='list-item-head'>
                         <Image
                             className='list-item-title-icon'

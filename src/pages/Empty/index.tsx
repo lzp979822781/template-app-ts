@@ -30,9 +30,9 @@ class Empty extends Component<any, any> {
     }
 
     componentWillMount() {
-        const key = getGlobalData('pageName');
-        if (key) {
-            this.redirectTo(routers[key]);
+        const pageNameKey = getGlobalData('pageName');
+        if (pageNameKey) {
+            this.redirectTo(routers[pageNameKey]);
         };
     }
 

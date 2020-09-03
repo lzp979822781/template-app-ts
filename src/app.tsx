@@ -51,8 +51,10 @@ class App extends Component<appProps, any> {
     };
 
     componentWillMount() {
-        const { pageName } = this.props;
+        const { pageName, data } = this.props;
+        debugger
         setGlobalData("pageName", pageName);
+        setGlobalData("appData", data);
     }
 
     componentDidMount() {}

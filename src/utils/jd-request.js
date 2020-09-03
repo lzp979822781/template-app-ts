@@ -28,11 +28,31 @@ export default class JDRequest {
   };
 
   static get(functionId, param=null) {
-    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, param, "get"));
+    const newParam = this.formatParam(param);
+    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "get"));
   }
 
   static post(functionId, param=null) {
-    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, param, "post"));
+    const newParam = this.formatParam(param);
+    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "post"));
+  }
+
+  static formatParam(param){
+    let newParam = null;
+    if (
+      JSON.stringify(param) === "{}" ||
+      param === "" ||
+      param === undefined
+    ) {
+      newParam = null;
+    } else {
+      newParam = {
+        ...param,
+      };
+      newParam = JSON.stringify(newParam);
+    }
+
+    return newParam;
   }
 
   static logout = () => {
