@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Text, Image } from "@tarojs/components";
+import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
 import { Modal } from "@/components/index";
 import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
@@ -18,7 +18,13 @@ export default class Goods extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
-            visible: false
+            visible: false,
+            tagsData: {
+                1: [],
+                2: [],
+                3: []
+            },
+            tagsExplanation: []
         };
     }
 
@@ -28,31 +34,33 @@ export default class Goods extends Component<any, any> {
     };
 
     componentDidShow() {
-       this.getTags();
+        this.getTags();
+        this.getTagsExplanation();
     }
 
-    getTags = async () =>  {
-        const res = await JDRequest.get("mjying_assist_customer_getTags");
-        console.log(res);
+    getTags = async () => {
+        //客户标签
+        Taro.showLoading({
+            title: "加载中"
+        });
+        const params = this.$router.params;
+        const resTags = await JDRequest.get("mjying_assist_customer_getTags", {
+            pin: params.pin
+        });
+        if (resTags.success) {
+            this.setState({ tagsData: resTags.data }, () => {
+                Taro.hideLoading();
+            })
+        };
     };
 
-    getTagExplanation = async () =>  {
-        const res = await JDRequest.get("mjying_assist_customer_getTagExplanation");
-        console.log(res);
-    };
-    
-    alert = () => {
-        Taro.showModal({
-            title: "提示",
-            content: "这是一个模态弹窗",
-            success: function(res) {
-                if (res.confirm) {
-                    console.log("用户点击确定");
-                } else if (res.cancel) {
-                    console.log("用户点击取消");
-                }
-            }
-        });
+
+    getTagsExplanation = async () => {
+        //客户标签注释
+        const resTagsExplanation = await JDRequest.get("mjying_assist_customer_getTagExplanation");
+        if (resTagsExplanation.success) {
+            this.setState({ tagsExplanation: resTagsExplanation.data })
+        }
     };
 
     onOpenModal = () => {
@@ -67,7 +75,23 @@ export default class Goods extends Component<any, any> {
         this.onClose();
     };
 
+
     renderContent = () => {
+        const { tagsExplanation } = this.state;
+
+        const tagsExplanationList = tagsExplanation.map((item) => {
+            return <View key={item.key} className='model-body-list-item'>
+                <View className='model-body-title'>
+                    <Image
+                        className='model-body-title-icon'
+                        src={TagModelTitleIcon}
+                    />
+                    <Text className='model-body-title-txt'>{item.title}</Text>
+                </View>
+                <Text className='model-body-des'>{item.desc}</Text>
+            </View>
+        });
+
         return (
             <View className='tag-model'>
                 <View className='tag-model-close'>
@@ -80,23 +104,14 @@ export default class Goods extends Component<any, any> {
                     <Text className='model-head-title'>标签说明</Text>
                 </View>
                 <View className='model-body'>
-                    <View className='model-body-title'>
-                        <Image
-                            className='model-body-title-icon'
-                            src={TagModelTitleIcon}
-                        />
-                        <Text className='model-body-title-txt'>生命周期</Text>
-                    </View>
-                    <Text className='model-body-des'>
-                        根据用户首单时间、历史下单行为、最近一单时间等因素综合定义用户在各个类目的生命周期
-                    </Text>
+                    {tagsExplanationList}
                 </View>
             </View>
         );
     };
 
-    render() {
-        const { visible } = this.state;
+    renderGroup1 = () => {
+        const { tagsData } = this.state;
         const Shadow = {
             shadowColor: "#f5f5f5",
             shadowOffset: { w: 10, h: 2 },
@@ -105,6 +120,58 @@ export default class Goods extends Component<any, any> {
             elevation: 2
         };
 
+        const nodeList = tagsData["1"].map((item, index) => {
+            return <Block key={item.key}><View className='card-base-item'>
+                <Text className='card-base-item-label'>{item.title}</Text>
+                <Text className={item.value ? 'card-base-item-value' : "card-base-item-value1"}>{item.value || "暂无"}</Text>
+            </View>
+                {index === tagsData["1"].length - 1 ? null : <View className='tag-divide-line'></View>}
+            </Block>
+        });
+
+        return <View className='card-base' style={Shadow}>
+            {nodeList}
+        </View>
+    }
+
+    renderGroup2 = () => {
+        const { tagsData } = this.state;
+        const listData = tagsData["2"].filter((item) => {
+            return !!item.value;
+        })
+        const nodeList = listData.map((item) => {
+            return <ListItem
+                key={item.key}
+                label={item.title}
+                value={item.value || "--"}
+            />
+        })
+
+        return <View className='card-operation'>
+            {nodeList}
+        </View>
+    }
+
+    renderGroup3 = () => {
+        const { tagsData } = this.state;
+        const listData = tagsData["3"].filter((item) => {
+            return !!item.value;
+        });
+
+        const nodeList = listData.map((item) => {
+            return <ListItem
+                key={item.key}
+                label={item.title}
+                value={item.value || "--"}
+            />
+        })
+        return <View className='card-operation'>
+            {nodeList}
+        </View>
+    }
+
+    render() {
+        const { visible } = this.state;
         return (
             <View className='container'>
                 <StatusBar />
@@ -123,45 +190,19 @@ export default class Goods extends Component<any, any> {
                         </View>
                     }
                 />
-                <View className='tag-banner-bg'></View>
-                <View className='card-base' style={Shadow}>
-                    <View className='card-base-item'>
-                        <Text className='card-base-item-label'>生命周期</Text>
-                        <Text className='card-base-item-value1'>暂无</Text>
-                    </View>
-                    <View className='tag-divide-line'></View>
-                    <View className='card-base-item'>
-                        <Text className='card-base-item-label'>客户价值</Text>
-                        <Text className='card-base-item-value'>重要价值</Text>
-                    </View>
-                </View>
-                <View className='card-operation'>
-                    <ListItem
-                        label='服务标签'
-                        value='在线问诊；可开处方；送药服务'
-                    />
-                    <ListItem
-                        label='展示标签'
-                        value='在线问诊；可开处方；送药服务'
-                    />
-                    <ListItem
-                        label='服务位置'
-                        value='在线问诊；可开处方；送药服务'
-                    />
-                </View>
-                <View className='card-operation'>
-                    <ListItem label='复购周期' value='11' />
-                    <ListItem label='促销敏感度' value='不敏感' />
-                    <ListItem
-                        label='购买标签'
-                        value='全站非新人；药品新人；非药非新人'
-                    />
-                </View>
+
+                <ScrollView>
+                    <View className='tag-banner-bg'></View>
+                    {this.renderGroup1()}
+                    {this.renderGroup2()}
+                    {this.renderGroup3()}
+                </ScrollView>
                 <Modal
                     visible={visible}
                     className='test-modal'
                     onCancel={this.onClose}
                     onConfirm={this.onConfirm}
+                    bodyStyle={{ height: 410 }}
                     // eslint-disable-next-line taro/render-props
                     renderContent={this.renderContent()}
                     customFooter

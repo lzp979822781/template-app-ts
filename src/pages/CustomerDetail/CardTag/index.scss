@@ -64,3 +64,12 @@
     @include font(24px, #F23030);
     line-height: 44px;
 }
+
+.tag-none-con {
+    width: 100%;
+}
+
+.tag-list-none {
+    @include font(20px, #9B9B9B);
+    text-align: center;
+}

@@ -1,5 +1,8 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View } from "@tarojs/components";
+import {
+    set as setGlobalData,
+} from "@/utils/global_data";
 import "./index.scss";
 
 interface Option {
@@ -21,6 +24,7 @@ export default class TopBar extends Component<Option, any> {
         this.setState({
             statusBarHeight: res.statusBarHeight
         });
+        setGlobalData("statusBarHeight", res.statusBarHeight);
     }
 
     render() {

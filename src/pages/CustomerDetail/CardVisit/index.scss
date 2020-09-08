@@ -81,3 +81,9 @@
     @include font(26px, #999999);
     margin-left: 20px;
 }
+
+.visit-list-none {
+    @include font(20px, #9B9B9B);
+    text-align: center;
+}
+

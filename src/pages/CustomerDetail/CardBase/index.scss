@@ -12,8 +12,6 @@
 
 .card-base-head {
     border-radius: 8px;
-    width: 170px;
-    height: 170px;
     background-color: rgba(255, 255, 255, 0.4);
     margin-top: -80px;
     align-self: center;
@@ -112,4 +110,5 @@
 .base-btn-txt {
     @include font(28px, #FFFFFF);
     line-height: 80px;
+    font-weight: 700;
 }

@@ -20,10 +20,13 @@ export default class PlanDetail extends Component<any, any> {
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
 
-    componentDidShow() {}
+    componentDidShow() {
+        this.getData();
+    }
 
     getData = async () =>  {
         const res = await JDRequest.get("mjying_assist_customer_getTags");
+        console.log(res);
     };
     
     jumpTo = () => {

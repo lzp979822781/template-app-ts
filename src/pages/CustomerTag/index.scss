@@ -72,6 +72,7 @@
 // model
 .tag-model {
     padding: 28px;
+    height: 1000px;
 }
 
 .tag-model-close {
@@ -88,6 +89,10 @@
 .tag-close-icon {
     width: 20px;
     height: 20px;
+}
+
+.model-body-list-item {
+    margin-bottom: 30px;
 }
 
 .model-head{
@@ -109,6 +114,7 @@
 
 .model-body{
    padding: 20px;
+   height: auto;
 }
 
 .model-body-title{

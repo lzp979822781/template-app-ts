@@ -1,11 +1,12 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import { ImageBackground, ScrollView, RefreshControl } from "react-native";
 import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
 import bgImage from "@/assets/images/customer-bg@3x.png";
 import JDRequest from "@/utils/jd-request";
+// import JDRequest from "@/utils/JDrequest";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
 import CardTag from "./CardTag/index";
@@ -23,9 +24,16 @@ class OrderRecord extends Component<any, any> {
         super(props);
         this.state = {
             visible: false,
-            // currentPage: 1,
-            refreshing: false
-            // data: []
+            currentPage: 1,
+            pageSize: 20,
+            refreshing: false,
+            detailData: {},
+            customerTags: {
+                "1": [],
+                "2": [],
+                "3": []
+            },
+            visitListData: []
         };
         this.onRefresh = this.onRefresh.bind(this);
         this.onEndReached = this.onEndReached.bind(this);
@@ -55,106 +63,124 @@ class OrderRecord extends Component<any, any> {
     canAction = false;
 
     componentDidShow() {
-        debugger
-        this.loadList();
+        this.getDetailData();
     }
+    getDetailData = async () => {
+        //获取原生提供的客户id
+        Taro.showLoading({
+            title: "加载中"
+        });
+        const jyNativeData = getGlobalData('jyNativeData');
+        const { currentPage, pageSize } = this.state;
+        //客户详情获取
+        const resDetail = await JDRequest.get("mjying_assist_customer_getDetail", {
+            customerId: jyNativeData.customerId
+        });
 
-    loadList = () => {
-        const appData = getGlobalData('appData');
-        // const customerId = getGlobalData('customerId');
-        debugger
-        const { currentPage } = this.state;
-
-        // JDRequest.post("mjying_assist_customer_getDetail", {
-        //     customerId: customerId
-        // }).then((response) => {
-        //     debugger
-        //     alert(JSON.stringify(response));
-        // }).catch(err => alert(err));;
+        if (resDetail.success) {
+            this.setState({ detailData: resDetail.data, refreshing: false })
+        }
 
 
-        // let listData = this.state.data;
-        // let data = [];
-        // if (res.data.data) {
-        //     data = res.data.data.result;
-        // }
+        //客户标签
+        const resCustomerTags = await JDRequest.get("mjying_assist_customer_getTags", {
+            pin: resDetail.data.pin
+        });
 
-        // if (currentPage === 1) {
-        //     listData = data;
-        // } else {
-        //     listData = listData.concat(data);
-        // }
+        if (resCustomerTags.success) {
+            this.setState({ customerTags: resCustomerTags.data })
+        }
 
-        // // console.log("res", res);
-        // this.setState(
-        //     {
-        //         data: listData,
-        //         refreshing: false,
-        //         ...res.data.data.page
-        //         //   statusCode: response.code,
-        //     },
-        //     () => {
-        //         if (data.length < this.state.pageSize) {
-        //             this.canAction = false;
-        //         } else {
-        //             setTimeout(() => {
-        //                 this.canAction = true;
-        //             }, 50);
-        //         }
-        //     }
-        // );
-        //Taro.hideLoading();
+        //拜访记录列表获取
+        const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", {
+            customerId: jyNativeData.customerId,
+            status: 2, // 任务状态：1未完成，2已完成，3已超时
+            queryType: 1, // 查询类型：1.我的任务 2.下属任务
+            pageNum: currentPage,
+            pageSize: pageSize,
+            appName: jyNativeData.userType // 系统来源：saint-地勤,partner-合伙人
+        });
+
+        if (resVisit.success) {
+            this.setVisitListData(resVisit);
+        }
+
+    };
+
+    setVisitListData = (res) => {
+        let visitListData = this.state.visitListData;
+        let resData = [];
+        const currentPage = this.state.currentPage;
+        if (res.success) {
+            resData = res.data.data || [];
+        }
+
+        if (currentPage === 1) {
+            visitListData = resData;
+        } else {
+            visitListData = visitListData.concat(resData);
+        }
+
+        this.setState(
+            {
+                visitListData: visitListData,
+                refreshing: false,
+            },
+            () => {
+                Taro.hideLoading();
+                if (resData.length < this.state.pageSize) {
+                    this.canAction = false;
+                } else {
+                    setTimeout(() => {
+                        this.canAction = true;
+                    }, 50);
+                }
+            }
+        );
     };
 
     onRefresh() {
-        this.setState({
-            refreshing: true
-        });
-        this.loadList();
-        // this.setState(
-        //     {
-        //         refreshing: true,
-        //         currentPage: 1
-        //     },
-        //     () => {
-        //         this.loadList();
-        //     }
-        // );
+        this.setState(
+            {
+                refreshing: true,
+                currentPage: 1
+            },
+            () => {
+                this.getDetailData();
+            }
+        );
     };
 
     onEndReached() {
-        Taro.showToast({
-            title: "底部",
-            icon: "none",
-            duration: 500
-        }).then(res => console.log(res));
+        if (this.canAction) {
+            Taro.showLoading({
+                title: "加载中"
+            });
+            this.canAction = false;
+            const currentPage = this.state.currentPage + 1;
 
-        // if (this.canAction) {
-        //     Taro.showLoading({
-        //         title: "加载中"
-        //     });
-        //     this.canAction = false;
-        //     const currentPage = this.state.currentPage + 1;
-
-        //     this.setState(
-        //         {
-        //             currentPage
-        //         },
-        //         () => {
-        //             this.loadList();
-        //         }
-        //     );
-        // }
+            this.setState(
+                {
+                    currentPage
+                },
+                () => {
+                    this.getDetailData();
+                }
+            );
+        }
     };
 
     render() {
+
+        const statusBarHeight = getGlobalData('statusBarHeight');
+        const { detailData, customerTags, visitListData } = this.state;
         return (
             <View className='container'>
                 <ImageBackground
                     source={{ uri: bgImage }}
                     style={{
                         resizeMode: "repeat",
-                        height: 160
+                        height: 134 + statusBarHeight
                     }}
                 >
                     <StatusBar noBgColor></StatusBar>
@@ -165,7 +191,7 @@ class OrderRecord extends Component<any, any> {
                         flex: 1,
                         height: "100%",
                         zIndex: 100,
-                        marginTop: -80
+                        marginTop: -86
                     }}
                     onMomentumScrollEnd={this._contentViewScroll}
                     refreshControl={
@@ -176,11 +202,12 @@ class OrderRecord extends Component<any, any> {
                     }
                 >
                     <View className='no-bg-gap' />
-                    <CardBase onPopupShow={this.onPopupShow} />
-                    <CardTag />
-                    <PurchasingInfo />
-                    <CardVisit />
+                    <CardBase data={detailData} onPopupShow={this.onPopupShow} />
+                    <CardTag data={detailData} tagsData={customerTags} />
+                    <PurchasingInfo data={detailData} />
+                    <CardVisit data={detailData} visitList={visitListData} />
                     <PopUpCon
+                        data={detailData.contacts || []}
                         visible={this.state.visible}
                         onPopupClose={this.onPopupClose}
                     />

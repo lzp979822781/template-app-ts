@@ -3,6 +3,8 @@ import { View } from '@tarojs/components';
 import './index.scss';
 
 type PageOwnprops = {
+    style?: object,
+    angle?: number,
     children?: any,
     badgeValue?: number|string|undefined,
     colors?: Array<string>,

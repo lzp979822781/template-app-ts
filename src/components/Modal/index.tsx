@@ -31,7 +31,8 @@ type PageOwnProps = {
     customHeader?: boolean, // 是否显示定制头 直接用renderHeader判断的话, 获取不到正确结果
     customFooter?: boolean,  // 是否使用自定义footer
     customStyle?: object,
-    closable?: boolean
+    closable?: boolean,
+    bodyStyle?: object,
 }
 
 type PageState = {}

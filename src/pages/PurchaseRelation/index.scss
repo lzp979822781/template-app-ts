@@ -77,3 +77,9 @@
     @include font(24px, #999999);
     line-height: 34px;
 }
+
+.purchaseRelation-list-none {
+    @include font(20px, #9B9B9B);
+    text-align: center;
+    margin-top: 20px;
+}

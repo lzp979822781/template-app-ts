@@ -6,16 +6,25 @@ import ListItemTitleIcon from "@/assets/images/list-item-title-icon@3x.png";
 import calendar from "@/assets/images/calendar@3x.png";
 import "./index.scss";
 
-export default class CardVisit extends Component<any, any> {
+type baseProps = {
+    data?: object;
+    visitList: Array<object>;
+}
+
+export default class CardVisit extends Component<baseProps, any> {
+    static defaultProps = {
+        data: {},
+        visitList: [{ id: 1 }]
+    }
+
     constructor(props) {
         super(props);
         this.state = {
-            data: [{id:1}, {id:2}]
         };
     }
 
     renderItems() {
-        const { data } = this.state;
+        const { visitList } = this.props;
         const Shadow = {
             shadowColor: "#f5f5f5",
             shadowOffset: { w: 10, h: 2 },
@@ -24,7 +33,11 @@ export default class CardVisit extends Component<any, any> {
             elevation: 1
         };
 
-        return data.map((item) => {
+        if(visitList.length===0){
+            return <Text className='visit-list-none' >暂无数据</Text>
+        }
+
+        return visitList.map((item) => {
             return (
                 <View className='list-item' key={item.id} style={Shadow}>
                     <View className='list-item-head'>
@@ -65,14 +78,15 @@ export default class CardVisit extends Component<any, any> {
     }
 
     render() {
+        const { data } = this.props;
         return (
             <View className='card-visit'>
                 <View className='visit-head'>
                     <View className='head-left'>
                         <Image className='head-left-icon' src={calendar} />
                         <Text className='head-left-title'>拜访记录</Text>
-                        <Text className='head-left-des-label'>最近下单</Text>
-                        <Text className='head-left-des-value'>今天</Text>
+                        <Text className='head-left-des-label'>最近拜访</Text>
+                        <Text className='head-left-des-value'>{data.partnerLastVisitDateStr}</Text>
                     </View>
                 </View>
                 <View className='visit-body'>

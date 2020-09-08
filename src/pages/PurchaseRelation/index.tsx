@@ -12,8 +12,9 @@ export default class PurchaseRelation extends Component<any, any> {
         super(props);
         this.state = {
             currentPage: 1,
+            pageSize: 20,
             refreshing: false,
-            data: [1, 2, 3]
+            data: []
         };
         this.onRefresh = this.onRefresh.bind(this);
         this.onEndReached = this.onEndReached.bind(this);
@@ -25,66 +26,55 @@ export default class PurchaseRelation extends Component<any, any> {
     };
 
     componentDidShow() {
-        // this.loadList();
+        this.loadList();
     }
 
     loadList = async () => {
-        // setTimeout(() => {
-        //     this.setState({
-        //         refreshing: false
-        //     });
-        // }, 3000);
-        // return ;
-        // Taro.showLoading({
-        //     title: "加载中"
-        // });
-        // this.setState({
-        //     refreshing: true
-        // });
-        const { currentPage } = this.state;
-        try {
-            const res = await JDRequest.get(
-                "mjying_assist_buyer_relation_queryPage",
-                {
-                    pageNum: currentPage,
-                    pageSize: 10
-                }
-            );
-
-            let listData = this.state.data;
-            let data = [];
-            if (res.data.data) {
-                data = res.data.data.result;
+        const params = this.$router.params;
+        
+        Taro.showLoading({
+            title: "加载中"
+        });
+        const { currentPage, pageSize } = this.state;
+        const res = await JDRequest.get(
+            "mjying_assist_buyer_relation_queryPage",
+            {
+                pin: params.pin,
+                pageNum: currentPage,
+                pageSize: pageSize
             }
+        );
 
-            if (currentPage === 1) {
-                listData = data;
-            } else {
-                listData = listData.concat(data);
-            }
-
-            // console.log("res", res);
-            this.setState(
-                {
-                    data: listData,
-                    refreshing: false,
-                    ...res.data.data.page
-                    //   statusCode: response.code,
-                },
-                () => {
-                    if (data.length < this.state.pageSize) {
-                        this.canAction = false;
-                    } else {
-                        setTimeout(() => {
-                            this.canAction = true;
-                        }, 50);
-                    }
-                }
-            );
-        } catch (e) {
-            console.log("e", e);
+        let listData = this.state.data;
+        let data = [];
+        if (res.success) {
+            data = res.data.data;
         }
-        // Taro.hideLoading();
+
+        if (currentPage === 1) {
+            listData = data;
+        } else {
+            listData = listData.concat(data);
+        }
+
+        this.setState(
+            {
+                data: listData,
+                refreshing: false
+            },
+            () => {
+                if (data.length < this.state.pageSize) {
+                    this.canAction = false;
+                } else {
+                    setTimeout(() => {
+                        this.canAction = true;
+                    }, 50);
+                };
+
+                Taro.hideLoading();
+            }
+        );
+        
     };
 
     onRefresh() {
@@ -135,6 +125,10 @@ export default class PurchaseRelation extends Component<any, any> {
             // shadowRadius: 10,
             // elevation: 2
         };
+
+        if(dataSource.length === 0){
+            return <Text className='purchaseRelation-list-none' >暂无数据</Text>
+        }
 
         return dataSource.map((item, index) => {
             const className =

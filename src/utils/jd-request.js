@@ -8,7 +8,7 @@ import { Toast } from "./model";
 export default class JDRequest {
 
   static timeoutFetch = (originalFetch, timeout = 30000) => {
-    let timeoutBlock = () => {};
+    let timeoutBlock = () => { };
     const timeoutPromise = new Promise((resolve, reject) => {
       timeoutBlock = () => {
         // 请求超时处理
@@ -27,22 +27,21 @@ export default class JDRequest {
     return abortablePromise;
   };
 
-  static get(functionId, param=null) {
+  static get(functionId, param = null) {
     const newParam = this.formatParam(param);
     return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "get"));
   }
 
-  static post(functionId, param=null) {
+  static post(functionId, param = null) {
     const newParam = this.formatParam(param);
     return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "post"));
   }
 
-  static formatParam(param){
+  static formatParam(param) {
     let newParam = null;
     if (
       JSON.stringify(param) === "{}" ||
-      param === "" ||
-      param === undefined
+      !param
     ) {
       newParam = null;
     } else {
@@ -59,7 +58,7 @@ export default class JDRequest {
     JDJumping.jumpToOpenapp(
       `openApp.jyingApp://virtual?params={"category":"jump","des":"logoutJumpToLoginPage"}`
     )
-      .then(() => {})
+      .then(() => { })
       .catch(error => {
         Toast.show(error.message);
       });

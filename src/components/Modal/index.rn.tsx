@@ -35,7 +35,8 @@ type PageOwnProps = {
     renderContent?: any, // 内容区元素
     customStyle?: object,
     maskClosable?: boolean,
-    closable?: boolean
+    closable?: boolean,
+    bodyStyle?: object
 }
 
 type PageState = {}
@@ -46,7 +47,8 @@ const defaultProps = {
     closable: false,
     popup: false,
     animationType: 'fade',
-    footer: []
+    footer: [],
+    bodyStyle: {}
 }
 
 const BORDER_COLOR = '#E5E5E5';
@@ -101,7 +103,7 @@ class TaroModal extends Component<any, any> {
     }
 
     render() {
-        const { visible, transparent = true, maskClosable = true, closable = false, } = this.props;
+        const { visible, transparent = true, maskClosable = true, closable = false, bodyStyle} = this.props;
         return (
             <Modal
                 transparent={transparent}
@@ -110,7 +112,7 @@ class TaroModal extends Component<any, any> {
                 closable={closable}
                 footer={[]}
                 style={[{ marginVertical: 0, paddingVertical: 0, paddingTop: 0}]}
-                bodyStyle={{ marginHorizontal: 0, marginVertical: 0, paddingHorizontal: 0, paddingVertical: 0, paddingBottom: 0, minHeight: 210, display: 'flex' }}
+                bodyStyle={{ marginHorizontal: 0, marginVertical: 0, paddingHorizontal: 0, paddingVertical: 0, paddingBottom: 0, minHeight: 210, ...bodyStyle }}
                 onClose={this.onClickMask}
             >
                 { this.getHeader()}
