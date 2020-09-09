@@ -2,9 +2,9 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { parseUrl } from "@/utils/utils";
-import ListItemTitleIcon from "@/assets/images/list-item-title-icon@3x.png";
-import calendar from "@/assets/images/calendar@3x.png";
-import customerManagerDefaultHead from "@/assets/images/customer-manager-default-head@3x.png";
+// import ListItemTitleIcon from "@/assets/images/list-item-title-icon@3x.png";
+// import calendar from "@/assets/images/calendar@3x.png";
+// import customerManagerDefaultHead from "@/assets/images/customer-manager-default-head@3x.png";
 
 import "./index.scss";
 
@@ -36,7 +36,7 @@ export default class CardVisit extends Component<baseProps, any> {
     };
 
     renderItems() {
-        const { visitList } = this.props;
+        let { visitList } = this.props;
         const Shadow = {
             shadowColor: "#f5f5f5",
             shadowOffset: { w: 10, h: 2 },
@@ -45,7 +45,7 @@ export default class CardVisit extends Component<baseProps, any> {
             elevation: 1
         };
 
-        // visitList = [{visitorList:[{}]}]
+        visitList = [{visitorList:[{}]}]
 
         if (visitList.length === 0) {
             return <Text className='visit-list-none' >暂无数据</Text>
@@ -63,7 +63,7 @@ export default class CardVisit extends Component<baseProps, any> {
                     <View className='list-item-head'>
                         <Image
                             className='list-item-title-icon'
-                            src={ListItemTitleIcon}
+                            src="https://img10.360buyimg.com/imagetools/jfs/t1/124605/18/11985/1524/5f58ac4eEcadb87aa/e8016790250e8b64.png"
                         />
                         <Text className='list-item-title-txt'>
                             拜访日期：{item.finishDate || "--"}
@@ -85,7 +85,7 @@ export default class CardVisit extends Component<baseProps, any> {
                         <View className='item-footer-icon-con'>
                             <Image
                                 className='item-footer-icon'
-                                src={item.headPortrait || customerManagerDefaultHead}
+                                src={item.headPortrait || "https://img12.360buyimg.com/imagetools/jfs/t1/117795/39/17237/9507/5f58ac4eEbac6f1aa/bd467cb98fce7724.png"}
                             />
                         </View>
                         <Text className='item-footer-txt'>
@@ -103,7 +103,7 @@ export default class CardVisit extends Component<baseProps, any> {
             <View className='card-visit'>
                 <View className='visit-head'>
                     <View className='head-left'>
-                        <Image className='head-left-icon' src={calendar} />
+                        <Image className='head-left-icon' src="https://img12.360buyimg.com/imagetools/jfs/t1/124862/19/12175/1481/5f58ac4dE55b26764/7cb827149a95b6e5.png" />
                         <Text className='head-left-title'>拜访记录</Text>
                         <Text className='head-left-des-label'>最近拜访</Text>
                         <Text className='head-left-des-value'>{data.partnerLastVisitDateStr}</Text>

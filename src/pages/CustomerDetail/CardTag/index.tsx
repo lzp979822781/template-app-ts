@@ -1,8 +1,8 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 
-import arrows from "@/assets/images/arrows@3x.png";
-import CustomerTagIcon from "@/assets/images/customer-tag-icon@3x.png";
+// import arrows from "@/assets/images/arrows@3x.png";
+// import CustomerTagIcon from "@/assets/images/customer-tag-icon@3x.png";
 import { hoverStyle, parseUrl } from "@/utils/utils";
 import "./index.scss";
 
@@ -70,7 +70,7 @@ export default class CardTag extends Component<baseProps, any> {
                     <View className='head-left'>
                         <Image
                             className='tag-head-left-icon'
-                            src={CustomerTagIcon}
+                            src="https://img14.360buyimg.com/imagetools/jfs/t1/148500/13/7886/4132/5f58ac4eEf4738aaa/4fdb10cd71bf35e3.png"
                         />
                         <Text className='head-left-title'>客户标签</Text>
                     </View>
@@ -82,7 +82,7 @@ export default class CardTag extends Component<baseProps, any> {
                         }}
                     >
                         <Text className='head-right-txt'>全部</Text>
-                        <Image className='head-right-icon' src={arrows} />
+                        <Image className='head-right-icon' src="https://img11.360buyimg.com/imagetools/jfs/t1/112898/10/17386/543/5f58ac4dEb76984c6/fd46e9d2b0230023.png" />
                     </View>
                 </View>
                 <View className='tag-body'>

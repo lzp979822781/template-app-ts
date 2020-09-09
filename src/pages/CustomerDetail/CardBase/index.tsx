@@ -2,8 +2,6 @@ import Taro, { Component } from "@tarojs/taro";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { View, Text, Image } from "@tarojs/components";
 import Gradient from "@/components/Gradient";
-import CustomerDefaultHead from "@/assets/images/customer-default-head@3x.png";
-import Phone from "@/assets/images/phone@3x.png";
 
 import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
@@ -37,7 +35,7 @@ export default class CardBase extends Component<baseProps, any> {
                 <View className={data.headImg ? 'card-base-head' : 'card-base-head-default'}>
                     <Image
                         className={data.headImg ? 'card-base-head-img' : "card-base-head-img-default"}
-                        src={data.headImg || CustomerDefaultHead}
+                        src={data.headImg || "https://img11.360buyimg.com/imagetools/jfs/t1/140195/31/7995/18951/5f58ac4eE019f959a/dcd004d1aa98f66f.png"}
                     />
                 </View>
                 <View className='base-msg'>
@@ -61,7 +59,7 @@ export default class CardBase extends Component<baseProps, any> {
                         <View
                             className='contact-img-con'
                         >
-                            <Image className='contact-img' src={Phone} />
+                            <Image className='contact-img' src="https://img12.360buyimg.com/imagetools/jfs/t1/128651/9/12268/1100/5f58ac4eEa6562e75/38280dd6bf5b0fb4.png" />
                         </View>
                     </View>
                 </View>

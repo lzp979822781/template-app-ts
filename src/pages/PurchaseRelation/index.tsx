@@ -2,8 +2,8 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, DataList } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
-import ClockIcon from "@/assets/images/clock-icon@3x.png";
-import ShopFailLogo from "@/assets/images/shop-fail-logo@3x.png";
+// import ClockIcon from "@/assets/images/clock-icon@3x.png";
+// import ShopFailLogo from "@/assets/images/shop-fail-logo@3x.png";
 
 import "./index.scss";
 
@@ -148,7 +148,7 @@ export default class PurchaseRelation extends Component<any, any> {
                         <View className='list-image-box'>
                             <Image
                                 className='item-image'
-                                src={item.shopLogo || ShopFailLogo}
+                                src={item.shopLogo || "https://img14.360buyimg.com/imagetools/jfs/t1/143550/5/8037/22510/5f58ac4fE3ea6f5d3/17d424f4c4437584.png"}
                             />
                         </View>
                         <View className='content-box'>
@@ -159,7 +159,7 @@ export default class PurchaseRelation extends Component<any, any> {
                     </View>
                     <View className='item-division'></View>
                     <View className='item-dec'>
-                        <Image className='item-dec-icon' src={ClockIcon} />
+                        <Image className='item-dec-icon' src="https://img12.360buyimg.com/imagetools/jfs/t1/121527/2/12047/1394/5f58ac4dE84b296d4/47ce73fa447d387e.png" />
                         <Text className='item-dec-txt'>
                             建材时间：{item.auditTime}
                         </Text>

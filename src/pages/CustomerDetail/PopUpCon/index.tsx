@@ -1,8 +1,8 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Button, Text, Image } from "@tarojs/components";
-import PopupCloseIcon from "@/assets/images/popup-close-icon@3x.png";
+// import PopupCloseIcon from "@/assets/images/popup-close-icon@3x.png";
 import { PopUp } from "@/components/index";
-import Phone from "@/assets/images/phone@3x.png";
+// import Phone from "@/assets/images/phone@3x.png";
 import "./index.scss";
 
 type baseProps = {
@@ -38,7 +38,7 @@ export default class PopUpCon extends Component<baseProps, any> {
                     <View className='popup-list-btn-con' onClick={this.makePhoneCall.bind(this, item)}>
                         <Image
                             className='popup-list-btn-icon'
-                            src={Phone}
+                            src="https://img12.360buyimg.com/imagetools/jfs/t1/128651/9/12268/1100/5f58ac4eEa6562e75/38280dd6bf5b0fb4.png"
                         />
                     </View>
                 </View>
@@ -72,7 +72,7 @@ export default class PopUpCon extends Component<baseProps, any> {
                             >
                                 <Image
                                     className='popup-head-right-icon'
-                                    src={PopupCloseIcon}
+                                    src="https://img10.360buyimg.com/imagetools/jfs/t1/110863/8/20338/1524/5f58ac4fE5cf177e6/d3a15bc416cf5afa.png"
                                 />
                             </View>
                         </View>

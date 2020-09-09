@@ -3,7 +3,6 @@ import { View, Text, Image } from "@tarojs/components";
 import {
     JDJumping
 } from '@jdreact/jdreact-core-lib';
-import back from "@/assets/images/back@3x.png";
 import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 
@@ -54,7 +53,7 @@ class Header extends Component<Option, any> {
                     }
                 }}
             >
-                <Image className='back-img' src={back} />
+                <Image className='back-img' src="https://img10.360buyimg.com/imagetools/jfs/t1/131583/34/9685/2776/5f58ac4dEc286157f/56bb716cb76286f2.png" />
             </View>
         );
     };

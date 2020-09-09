@@ -4,8 +4,8 @@ import { StatusBar, Header, Gradient, JDListItem } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
-import Phone from "@/assets/images/phone@3x.png";
-import PlanBtnIcon from "@/assets/images/plan-btn-icon@3x.png";
+// import Phone from "@/assets/images/phone@3x.png";
+// import PlanBtnIcon from "@/assets/images/plan-btn-icon@3x.png";
 import PopUpCon from "./PopUpCon/index";
 import "./index.scss";
 
@@ -132,7 +132,7 @@ export default class PlanDetail extends Component<any, any> {
                                 >
                                     <Image
                                         className='contact-img'
-                                        src={Phone}
+                                        src="https://img12.360buyimg.com/imagetools/jfs/t1/128651/9/12268/1100/5f58ac4eEa6562e75/38280dd6bf5b0fb4.png"
                                     />
                                 </View>
                             </View>
@@ -166,7 +166,7 @@ export default class PlanDetail extends Component<any, any> {
                         >
                             <Image
                                 className='plan-btn-icon'
-                                src={PlanBtnIcon}
+                                src="https://img10.360buyimg.com/imagetools/jfs/t1/113628/40/17503/916/5f58ac4eEb273925e/f9adf5d054778889.png"
                             />
                             <Text className='plan-btn-txt'>拜访纪要</Text>
                         </Gradient>
