@@ -4,8 +4,6 @@ import { StatusBar, Header, Gradient, JDListItem } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
-// import Phone from "@/assets/images/phone@3x.png";
-// import PlanBtnIcon from "@/assets/images/plan-btn-icon@3x.png";
 import PopUpCon from "./PopUpCon/index";
 import "./index.scss";
 

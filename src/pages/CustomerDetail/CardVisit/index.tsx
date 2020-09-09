@@ -2,10 +2,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { parseUrl } from "@/utils/utils";
-// import ListItemTitleIcon from "@/assets/images/list-item-title-icon@3x.png";
-// import calendar from "@/assets/images/calendar@3x.png";
-// import customerManagerDefaultHead from "@/assets/images/customer-manager-default-head@3x.png";
-
 import "./index.scss";
 
 type baseProps = {

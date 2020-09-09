@@ -1,8 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 
-// import arrows from "@/assets/images/arrows@3x.png";
-// import CustomerTagIcon from "@/assets/images/customer-tag-icon@3x.png";
 import { hoverStyle, parseUrl } from "@/utils/utils";
 import "./index.scss";
 

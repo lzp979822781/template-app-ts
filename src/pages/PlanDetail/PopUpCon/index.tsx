@@ -1,8 +1,6 @@
-import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Block, Button, Text, Image } from "@tarojs/components";
-// import PopupCloseIcon from "@/assets/images/popup-close-icon@3x.png";
+import Taro, { Component } from "@tarojs/taro";
+import { View, Text, Image } from "@tarojs/components";
 import { PopUp } from "@/components/index";
-// import Phone from "@/assets/images/phone@3x.png";
 import "./index.scss";
 
 type baseProps = {

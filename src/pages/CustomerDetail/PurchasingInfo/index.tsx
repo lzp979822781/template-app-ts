@@ -2,12 +2,6 @@ import Taro, { Component } from "@tarojs/taro";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 
 import { View, Text, Image } from "@tarojs/components";
-// import arrows from "@/assets/images/arrows@3x.png";
-// import RelationTitleIcon from "@/assets/images/relation-title-icon@3x.png";
-// import OrderRecordIcon from "@/assets/images/order-record-icon@3x.png";
-// import AddGoodsIcon from "@/assets/images/add-goods-icon@3x.png";
-// import DiscountCouponIcon from "@/assets/images/discount-coupon-icon@3x.png";
-// import RelationIcon from "@/assets/images/relation-icon@3x.png";
 // import { get as getGlobalData } from '@/utils/global_data';
 import { hoverStyle, parseUrl } from "@/utils/utils";
 import "./index.scss";

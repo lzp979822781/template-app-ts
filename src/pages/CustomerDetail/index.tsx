@@ -3,7 +3,6 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { ImageBackground, ScrollView, RefreshControl } from "react-native";
 import { StatusBar, Header } from "@/components/index";
-import bgImage from "@/assets/images/customer-bg@3x.png";
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
@@ -191,7 +190,7 @@ class OrderRecord extends Component<any, any> {
         return (
             <View className='container'>
                 <ImageBackground
-                    source={{ uri: bgImage }}
+                    source={{ uri: "https://img10.360buyimg.com/imagetools/jfs/t1/148849/4/8068/212960/5f58ac4eE89463cb5/ffba549489bfd3e0.png" }}
                     style={{
                         resizeMode: "repeat",
                         height: 134 + statusBarHeight

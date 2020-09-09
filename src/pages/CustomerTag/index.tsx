@@ -3,10 +3,6 @@ import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Modal, JDListItem} from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
-// import TagAlertBtn from "@/assets/images/tag-alert-btn@3x.png";
-// import TagModelClose from "@/assets/images/tag-model-close@3x.png";
-// import ModelHeadIcon from "@/assets/images/customer-tag-model-title-icon@3x.png";
-// import TagModelTitleIcon from "@/assets/images/tag-model-title-icon@3x.png";
 
 import "./index.scss";
 
