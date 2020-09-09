@@ -1,16 +1,12 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
-import { Modal } from "@/components/index";
-import Header from "@/components/Header";
-import StatusBar from "@/components/StatusBar/index";
+import { StatusBar, Header, Modal, JDListItem} from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 import TagAlertBtn from "@/assets/images/tag-alert-btn@3x.png";
 import TagModelClose from "@/assets/images/tag-model-close@3x.png";
 import ModelHeadIcon from "@/assets/images/customer-tag-model-title-icon@3x.png";
 import TagModelTitleIcon from "@/assets/images/tag-model-title-icon@3x.png";
-
-import ListItem from "./ListItem/index";
 
 import "./index.scss";
 
@@ -142,7 +138,7 @@ export default class Goods extends Component<any, any> {
             return !!item.value;
         })
         const nodeList = listData.map((item) => {
-            return <ListItem
+            return <JDListItem
                 key={item.key}
                 label={item.title}
                 value={item.value || "--"}
@@ -161,7 +157,7 @@ export default class Goods extends Component<any, any> {
         });
 
         const nodeList = listData.map((item) => {
-            return <ListItem
+            return <JDListItem
                 key={item.key}
                 label={item.title}
                 value={item.value || "--"}
@@ -205,7 +201,6 @@ export default class Goods extends Component<any, any> {
                     onCancel={this.onClose}
                     onConfirm={this.onConfirm}
                     bodyStyle={{ height: 410 }}
-                    // eslint-disable-next-line taro/render-props
                     renderContent={this.renderContent()}
                     customFooter
                     customHeader

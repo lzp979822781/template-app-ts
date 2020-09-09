@@ -1,5 +1,5 @@
-import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Block, Button, Text, Image } from "@tarojs/components";
+import Taro, { Component } from "@tarojs/taro";
+import { View, Text } from "@tarojs/components";
 import "./index.scss";
 
 interface Option {
@@ -8,7 +8,7 @@ interface Option {
 }
 
 
-export default class ListItem extends Component<Option, any> {
+export default class JDListItem extends Component<Option, any> {
     static defaultProps = {
         label: "标题",
         value: "内容"

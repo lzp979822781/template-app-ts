@@ -4,8 +4,8 @@ import { Provider } from "@tarojs/redux";
 import {
     set as setGlobalData,
 } from "@/utils/global_data";
-import store from "./store/createStore";
-import { Index } from "./pages";
+// import store from "./store/createStore";
+// import { Index } from "./pages";
 import "./app.scss";
 
 console.ignoredYellowBox = [
@@ -67,8 +67,7 @@ class App extends Component<appProps, any> {
     // 请勿修改此函数
     render() {
         return (
-            <Provider store={store}>
-                <Index />
+            <Provider>
             </Provider>
         );
     }

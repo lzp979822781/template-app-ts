@@ -1,12 +1,10 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Text } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { ImageBackground, ScrollView, RefreshControl } from "react-native";
-import Header from "@/components/Header";
-import StatusBar from "@/components/StatusBar/index";
+import { StatusBar, Header } from "@/components/index";
 import bgImage from "@/assets/images/customer-bg@3x.png";
 import JDRequest from "@/utils/jd-request";
-// import JDRequest from "@/utils/JDrequest";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
 import CardTag from "./CardTag/index";

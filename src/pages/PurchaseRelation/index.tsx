@@ -1,8 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
-import DataList from "@/components/DataList/index";
-import Header from "@/components/Header";
-import StatusBar from "@/components/StatusBar/index";
+import { StatusBar, Header, DataList } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
 import ClockIcon from "@/assets/images/clock-icon@3x.png";
 import ShopFailLogo from "@/assets/images/shop-fail-logo@3x.png";

@@ -139,6 +139,8 @@ const hoverStyle = {
     opacity: 0.8
 };
 
+// const hoverStyle = "opacity: 0.8";
+
 export { hoverStyle };
 
 /**

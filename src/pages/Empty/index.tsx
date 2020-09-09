@@ -1,8 +1,7 @@
 import { ComponentClass } from "react";
 import Taro, { Component } from "@tarojs/taro";
 import { View, Button } from "@tarojs/components";
-import Header from "@/components/Header";
-import StatusBar from "@/components/StatusBar/index";
+import { StatusBar, Header } from "@/components/index";
 import { get as getGlobalData } from '@/utils/global_data';
 
 import "./index.scss";

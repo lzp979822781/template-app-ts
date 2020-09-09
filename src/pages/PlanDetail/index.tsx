@@ -1,14 +1,11 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Text, Image } from "@tarojs/components";
-import Header from "@/components/Header";
-import StatusBar from "@/components/StatusBar/index";
-import Gradient from "@/components/Gradient";
+import { StatusBar, Header, Gradient, JDListItem } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import Phone from "@/assets/images/phone@3x.png";
 import PlanBtnIcon from "@/assets/images/plan-btn-icon@3x.png";
-import ListItem from "./ListItem/index";
 import PopUpCon from "./PopUpCon/index";
 import "./index.scss";
 
@@ -142,13 +139,13 @@ export default class PlanDetail extends Component<any, any> {
                         </View>
                     </View>
                     <View className='card-operation'>
-                        <ListItem label='创建人' value={tastDetail.creator || "--"} />
-                        <ListItem label='客户经理' value={tastDetail.userName || "--"} />
-                        <ListItem label='拜访日期' value={tastDetail.finishDate || "--"} />
-                        <ListItem label='被拜访人' value={this.renderContact()} />
-                        <ListItem label='拜访目的' value={tastDetail.taskMemoName || "--"} />
-                        <ListItem label='拜访类型' value={tastDetail.taskModelName || "--"} />
-                        <ListItem label='拜访方式' value={tastDetail.taskWayName || "--"} />
+                        <JDListItem label='创建人' value={tastDetail.creator || "--"} />
+                        <JDListItem label='客户经理' value={tastDetail.userName || "--"} />
+                        <JDListItem label='拜访日期' value={tastDetail.finishDate || "--"} />
+                        <JDListItem label='被拜访人' value={this.renderContact()} />
+                        <JDListItem label='拜访目的' value={tastDetail.taskMemoName || "--"} />
+                        <JDListItem label='拜访类型' value={tastDetail.taskModelName || "--"} />
+                        <JDListItem label='拜访方式' value={tastDetail.taskWayName || "--"} />
                     </View>
                     {tastDetail.canBeModified ? <View
                         className='plan-btn'
