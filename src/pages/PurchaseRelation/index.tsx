@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import StatusBar from "@/components/StatusBar/index";
 import JDRequest from "@/utils/jd-request";
 import ClockIcon from "@/assets/images/clock-icon@3x.png";
+import ShopFailLogo from "@/assets/images/shop-fail-logo@3x.png";
+
 import "./index.scss";
 
 export default class PurchaseRelation extends Component<any, any> {
@@ -14,7 +16,15 @@ export default class PurchaseRelation extends Component<any, any> {
             currentPage: 1,
             pageSize: 20,
             refreshing: false,
-            data: []
+            lastPage: false,
+            data: [
+                // {
+                //     relationId: 1,
+                //     shopName: "成都市沙溪镇悦心康大药房成都市沙溪镇悦心康",
+                //     auditTime: "2020-05-22 16:40:49",
+                //     shopLogo: ""
+                // }
+            ]
         };
         this.onRefresh = this.onRefresh.bind(this);
         this.onEndReached = this.onEndReached.bind(this);
@@ -31,10 +41,11 @@ export default class PurchaseRelation extends Component<any, any> {
 
     loadList = async () => {
         const params = this.$router.params;
-        
+
         Taro.showLoading({
             title: "加载中"
         });
+
         const { currentPage, pageSize } = this.state;
         const res = await JDRequest.get(
             "mjying_assist_buyer_relation_queryPage",
@@ -45,11 +56,27 @@ export default class PurchaseRelation extends Component<any, any> {
             }
         );
 
+
+        if (res.success) {
+            this.setVisitListData(res);
+        } else {
+            this.setState({
+                currentPage: currentPage > 1 ? currentPage - 1 : 1,
+                refreshing: false
+            });
+        };
+
+        Taro.hideLoading();
+    };
+
+    setVisitListData = (res) => {
         let listData = this.state.data;
         let data = [];
-        if (res.success) {
-            data = res.data.data;
-        }
+        let lastPage = false;
+        const { currentPage } = this.state;
+
+        data = res.data.data;
+        lastPage = res.data.lastPage;
 
         if (currentPage === 1) {
             listData = data;
@@ -60,7 +87,8 @@ export default class PurchaseRelation extends Component<any, any> {
         this.setState(
             {
                 data: listData,
-                refreshing: false
+                refreshing: false,
+                lastPage
             },
             () => {
                 if (data.length < this.state.pageSize) {
@@ -70,11 +98,8 @@ export default class PurchaseRelation extends Component<any, any> {
                         this.canAction = true;
                     }, 50);
                 };
-
-                Taro.hideLoading();
             }
         );
-        
     };
 
     onRefresh() {
@@ -91,12 +116,6 @@ export default class PurchaseRelation extends Component<any, any> {
 
     canAction = false;
     onEndReached() {
-        // Taro.showToast({
-        //     title: "底部",
-        //     icon: "none",
-        //     duration: 500
-        // }).then(res => console.log(res));
-        // return ;
         if (this.canAction) {
             Taro.showLoading({
                 title: "加载中"
@@ -118,15 +137,7 @@ export default class PurchaseRelation extends Component<any, any> {
     renderItems() {
         const dataSource = this.state.data;
 
-        const Shadow = {
-            // shadowColor: "#242424",
-            // shadowOffset: { w: 10, h: 2 },
-            // shadowOpacity: 0.1,
-            // shadowRadius: 10,
-            // elevation: 2
-        };
-
-        if(dataSource.length === 0){
+        if (dataSource.length === 0) {
             return <Text className='purchaseRelation-list-none' >暂无数据</Text>
         }
 
@@ -134,25 +145,25 @@ export default class PurchaseRelation extends Component<any, any> {
             const className =
                 index === 0 ? "list-item-box top-gap" : "list-item-box";
             return (
-                <View key={item} style={Shadow} className={className}>
-                    <View className="list-item">
-                        <View className="list-image-box">
+                <View key={item.relationId} className={className}>
+                    <View className='list-item'>
+                        <View className='list-image-box'>
                             <Image
-                                className="item-image"
-                                src="https://taro-ui.jd.com/img/logo-taro.png"
+                                className='item-image'
+                                src={item.shopLogo || ShopFailLogo}
                             />
                         </View>
-                        <View className="content-box">
-                            <Text className="item-title">
-                                测试商品日用百货-{item}
+                        <View className='content-box'>
+                            <Text className='item-title'>
+                                {item.shopName}
                             </Text>
                         </View>
                     </View>
-                    <View className="item-division"></View>
-                    <View className="item-dec">
-                        <Image className="item-dec-icon" src={ClockIcon} />
-                        <Text className="item-dec-txt">
-                            建材时间：2018.08.25 12:00:00
+                    <View className='item-division'></View>
+                    <View className='item-dec'>
+                        <Image className='item-dec-icon' src={ClockIcon} />
+                        <Text className='item-dec-txt'>
+                            建材时间：{item.auditTime}
                         </Text>
                     </View>
                 </View>
@@ -161,10 +172,11 @@ export default class PurchaseRelation extends Component<any, any> {
     }
 
     render() {
+        const { lastPage, data } = this.state;
         return (
-            <View className="container">
+            <View className='container'>
                 <StatusBar />
-                <Header title="建采关系" />
+                <Header title='建采关系' />
                 <DataList
                     minusHeight={0}
                     refreshing={this.state.refreshing}
@@ -172,6 +184,7 @@ export default class PurchaseRelation extends Component<any, any> {
                     onEndReached={this.onEndReached}
                 >
                     <Block>{this.renderItems()}</Block>
+                    {lastPage && data.length > 0 ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
                 </DataList>
             </View>
         );

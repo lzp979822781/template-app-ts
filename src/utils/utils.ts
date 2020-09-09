@@ -21,8 +21,8 @@ function UUID() {
 }
 
 function addId(arr) {
-    if(Array.isArray(arr)) {
-        return arr.map(item => ({ ...item, id: UUID()}))
+    if (Array.isArray(arr)) {
+        return arr.map(item => ({ ...item, id: UUID() }))
     }
     return arr;
 }
@@ -83,16 +83,16 @@ function rnUpload(reqParam) {
     const { url, header, body } = reqParam
     return new Promise((resolve) => {
         fetch(url, {
-                method: 'POST',
-                headers: header,
-                credentials: 'include',
-                body
-            }).then(response => response.json())
+            method: 'POST',
+            headers: header,
+            credentials: 'include',
+            body
+        }).then(response => response.json())
             .then(res => {
-                const result: Success = { data:res, success: true }
+                const result: Success = { data: res, success: true }
                 resolve(result)
             }).catch(res => {
-                const failRes: Fail = { error:res, success: false };
+                const failRes: Fail = { error: res, success: false };
                 resolve(failRes);
             })
     })
@@ -109,19 +109,19 @@ function commonUpload(reqParam) {
             formData,
             ...otherParam,
             success: ({ data, statusCode, errMsg }) => {
-                resolve({ data, success: true, error: errMsg, code: statusCode  })
+                resolve({ data, success: true, error: errMsg, code: statusCode })
             },
             fail: res => {
                 const failRes: Fail = { error: res, success: false };
                 resolve(failRes);
             }
-        }) 
+        })
     })
-    
+
 }
 
-function upload(uploadParam: UploadParam){
-    const reqParam  = jointParam(uploadParam);
+function upload(uploadParam: UploadParam) {
+    const reqParam = jointParam(uploadParam);
     return new Promise(async (resolve) => {
         const isRn = Taro.getEnv().toLowerCase() === 'rn';
         const res = isRn ? await rnUpload(reqParam.rn) : await commonUpload(reqParam.other)
@@ -140,3 +140,30 @@ const hoverStyle = {
 };
 
 export { hoverStyle };
+
+/**
+    * 传入对象返回url参数
+    * @param {Object} data {a:1}
+    * @returns {string}
+    */
+function parseParam(data) {
+    let url = '';
+    for (const k in data) {
+        const value = data[k] !== undefined ? data[k] : '';
+        url += `&${k}=${encodeURIComponent(value)}`
+    }
+    return url ? url.substring(1) : ''
+}
+
+/**
+ * 将url和参数拼接成完整地址
+ * @param {string} url url地址
+ * @param {Json} data json对象
+ * @returns {string}
+ */
+function parseUrl(url, data) {
+    //看原始url地址中开头是否带?，然后拼接处理好的参数
+    return url += (url.indexOf('?') < 0 ? '?' : '') + parseParam(data)
+}
+
+export { parseUrl };

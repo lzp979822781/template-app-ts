@@ -27,6 +27,7 @@ class OrderRecord extends Component<any, any> {
             currentPage: 1,
             pageSize: 20,
             refreshing: false,
+            lastPage: false,
             detailData: {},
             customerTags: {
                 "1": [],
@@ -71,7 +72,6 @@ class OrderRecord extends Component<any, any> {
             title: "加载中"
         });
         const jyNativeData = getGlobalData('jyNativeData');
-        const { currentPage, pageSize } = this.state;
         //客户详情获取
         const resDetail = await JDRequest.get("mjying_assist_customer_getDetail", {
             customerId: jyNativeData.customerId
@@ -91,6 +91,15 @@ class OrderRecord extends Component<any, any> {
             this.setState({ customerTags: resCustomerTags.data })
         }
 
+        this.getVisitDate();
+
+        Taro.hideLoading();
+    };
+
+    getVisitDate = async () => {
+        const jyNativeData = getGlobalData('jyNativeData');
+        const { currentPage, pageSize } = this.state;
+
         //拜访记录列表获取
         const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", {
             customerId: jyNativeData.customerId,
@@ -103,17 +112,24 @@ class OrderRecord extends Component<any, any> {
 
         if (resVisit.success) {
             this.setVisitListData(resVisit);
-        }
+        } else {
+            this.setState({
+                currentPage: currentPage > 1 ? currentPage - 1 : 1
+            })
+        };
 
-    };
+        Taro.hideLoading();
+    }
 
     setVisitListData = (res) => {
         let visitListData = this.state.visitListData;
         let resData = [];
+        let lastPage = false;
         const currentPage = this.state.currentPage;
-        if (res.success) {
-            resData = res.data.data || [];
-        }
+
+
+        resData = res.data.data || [];
+        lastPage = res.data.lastPage;
 
         if (currentPage === 1) {
             visitListData = resData;
@@ -125,9 +141,9 @@ class OrderRecord extends Component<any, any> {
             {
                 visitListData: visitListData,
                 refreshing: false,
+                lastPage
             },
             () => {
-                Taro.hideLoading();
                 if (resData.length < this.state.pageSize) {
                     this.canAction = false;
                 } else {
@@ -164,7 +180,7 @@ class OrderRecord extends Component<any, any> {
                     currentPage
                 },
                 () => {
-                    this.getDetailData();
+                    this.getVisitDate();
                 }
             );
         }
@@ -173,7 +189,7 @@ class OrderRecord extends Component<any, any> {
     render() {
 
         const statusBarHeight = getGlobalData('statusBarHeight');
-        const { detailData, customerTags, visitListData } = this.state;
+        const { detailData, customerTags, visitListData, lastPage } = this.state;
         return (
             <View className='container'>
                 <ImageBackground
@@ -205,7 +221,7 @@ class OrderRecord extends Component<any, any> {
                     <CardBase data={detailData} onPopupShow={this.onPopupShow} />
                     <CardTag data={detailData} tagsData={customerTags} />
                     <PurchasingInfo data={detailData} />
-                    <CardVisit data={detailData} visitList={visitListData} />
+                    <CardVisit lastPage={lastPage} data={detailData} visitList={visitListData} />
                     <PopUpCon
                         data={detailData.contacts || []}
                         visible={this.state.visible}

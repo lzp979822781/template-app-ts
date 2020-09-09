@@ -13,15 +13,35 @@
 .card-base-head {
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.4);
+    width: 170px;
+    height: 170px;
+    margin-top: -85px;
+    align-self: center;
+    @include flex(row, center, center);
+    overflow: hidden;
+}
+
+.card-base-head-default {
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 170px;
+    height: 170px;
     margin-top: -80px;
     align-self: center;
     @include flex(row, center, center);
     overflow: hidden;
 }
+
 .card-base-head-img {
     border-radius: 8px;
     width: 160px;
     height: 160px;
+}
+
+.card-base-head-img-default {
+    border-radius: 8px;
+    width: 170px;
+    height: 170px;
 }
 
 .base-msg {
@@ -41,13 +61,13 @@
 .company-pin {
     @include font(24px, #999999);
     text-align: center;
-    margin-top: 10px;
+    line-height: 44px;
 }
 
 .company-manager {
     @include font(24px, #999999);
     text-align: center;
-    margin-top: 10px;
+    line-height: 44px;
 }
 
 .divide-line-horizontal {
@@ -70,6 +90,7 @@
 .con-address-txt {
     @include font(28px, #666666);
     text-align: left;
+    line-height: 44px;
 }
 
 .contact-address-divide {

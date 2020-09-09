@@ -16,6 +16,11 @@
     height: 60px;
 }
 
+.tag-head-left-icon {
+    width: 40px;
+    height: 34px;
+}
+
 .head-left-icon {
     width: 46px;
     height: 42px;
@@ -37,7 +42,7 @@
 .head-right-txt {
     @include font(24px, #B0B0B0);
     margin-right: 10px;
-    line-height: 30px;
+    line-height: 32px;
 }
 
 .head-right-icon {
@@ -48,6 +53,7 @@
 .tag-body {
     @include flex(row, flex-start, flex-start);
     margin-top: 50px;
+    flex-wrap: wrap;
 }
 
 .tag-item {

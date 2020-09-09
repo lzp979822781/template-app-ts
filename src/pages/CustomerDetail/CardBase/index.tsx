@@ -1,4 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
+import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { View, Text, Image } from "@tarojs/components";
 import Gradient from "@/components/Gradient";
 import CustomerDefaultHead from "@/assets/images/customer-default-head@3x.png";
@@ -14,19 +15,28 @@ type baseProps = {
 export default class CardBase extends Component<baseProps, any> {
     static defaultProps = {
         data: {},
-        onPopupShow: () => {}
+        onPopupShow: () => { }
     }
     constructor(props) {
         super(props);
+    }
+
+    jumpToApp(des) {
+        // const jyNativeData = getGlobalData('jyNativeData');
+        const { data } = this.props;
+        // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`)
+        JDJumping.jumpToOpenapp(
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({ customerPin: data.pin })}}`
+        )
     }
 
     render() {
         const { data, onPopupShow } = this.props;
         return (
             <View className='card-base'>
-                <View className='card-base-head'>
+                <View className={data.headImg ? 'card-base-head' : 'card-base-head-default'}>
                     <Image
-                        className='card-base-head-img'
+                        className={data.headImg ? 'card-base-head-img' : "card-base-head-img-default"}
                         src={data.headImg || CustomerDefaultHead}
                     />
                 </View>
@@ -43,22 +53,23 @@ export default class CardBase extends Component<baseProps, any> {
                 <View className='contact-address-con'>
                     <View className='con-address'>
                         <Text className='con-address-txt'>
-                            { data.address || "--"}
+                            {data.address || "--"}
                         </Text>
                     </View>
                     <View className='contact-address-divide'></View>
-                    <View className='con-contact'>
+                    <View className='con-contact' onClick={onPopupShow} hoverStyle={hoverStyle}>
                         <View
                             className='contact-img-con'
-                            onClick={onPopupShow}
-                            hoverStyle={hoverStyle}
                         >
                             <Image className='contact-img' src={Phone} />
                         </View>
                     </View>
                 </View>
                 <View className='base-btn-con'>
-                    <View className='base-btn' hoverStyle={hoverStyle}>
+                    <View className='base-btn' hoverStyle={hoverStyle} onClick={() => {
+                        this.jumpToApp("orderPage");
+                    }}
+                    >
                         <Gradient
                             angle={0}
                             colors={["#FF6600", "#FFC100"]}
@@ -73,7 +84,10 @@ export default class CardBase extends Component<baseProps, any> {
                         </Gradient>
                     </View>
                     <View className='btn-gap' />
-                    <View className='base-btn' hoverStyle={hoverStyle}>
+                    <View className='base-btn' hoverStyle={hoverStyle} onClick={() => {
+                        this.jumpToApp("orderPage");
+                    }}
+                    >
                         <Gradient
                             style={{
                                 height: 40,

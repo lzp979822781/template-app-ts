@@ -43,15 +43,17 @@ export default class Goods extends Component<any, any> {
         Taro.showLoading({
             title: "加载中"
         });
+        
         const params = this.$router.params;
         const resTags = await JDRequest.get("mjying_assist_customer_getTags", {
             pin: params.pin
         });
+
         if (resTags.success) {
-            this.setState({ tagsData: resTags.data }, () => {
-                Taro.hideLoading();
-            })
+            this.setState({ tagsData: resTags.data })
         };
+
+        Taro.hideLoading();
     };
 
 
