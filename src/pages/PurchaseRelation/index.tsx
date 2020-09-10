@@ -43,7 +43,7 @@ export default class PurchaseRelation extends Component<any, any> {
         });
 
         const { currentPage, pageSize } = this.state;
-        const res = await JDRequest.get(
+        const res = await JDRequest.post(
             "mjying_assist_buyer_relation_queryPage",
             {
                 pin: params.pin,
@@ -54,6 +54,7 @@ export default class PurchaseRelation extends Component<any, any> {
 
         Taro.hideLoading();
         if (res.success) {
+            debugger
             this.setVisitListData(res);
         } else {
             Toast.info(res.errorMsg, 1);
@@ -112,7 +113,6 @@ export default class PurchaseRelation extends Component<any, any> {
 
     canAction = false;
     onEndReached() {
-        debugger
         if (this.canAction) {
             Taro.showLoading({
                 title: "加载中"
@@ -137,7 +137,6 @@ export default class PurchaseRelation extends Component<any, any> {
         if (dataSource.length === 0) {
             return <Text className='purchaseRelation-list-none' >暂无数据</Text>
         }
-
         return dataSource.map((item, index) => {
             const className =
                 index === 0 ? "list-item-box top-gap" : "list-item-box";
@@ -147,7 +146,7 @@ export default class PurchaseRelation extends Component<any, any> {
                         <View className='list-image-box'>
                             <Image
                                 className='item-image'
-                                src={item.shopLogo || "https://img14.360buyimg.com/imagetools/jfs/t1/143550/5/8037/22510/5f58ac4fE3ea6f5d3/17d424f4c4437584.png"}
+                                src={item.shopLogo ? "https:" + item.shopLogo : "https://img14.360buyimg.com/imagetools/jfs/t1/143550/5/8037/22510/5f58ac4fE3ea6f5d3/17d424f4c4437584.png"}
                             />
                         </View>
                         <View className='content-box'>
