@@ -5,6 +5,7 @@ import { hoverStyle, parseUrl } from "@/utils/utils";
 import "./index.scss";
 
 type baseProps = {
+    loaded: boolean;
     data?: object;
     tagsData: object;
 }
@@ -32,7 +33,7 @@ export default class CardTag extends Component<baseProps, any> {
     };
 
     renderItems = () => {
-        const tagsData = this.props.tagsData;
+        const {loaded, tagsData} = this.props;
         let arrayTags = tagsData["1"];
         arrayTags = arrayTags.concat(tagsData["2"]);
         arrayTags = arrayTags.concat(tagsData["3"]);
@@ -40,8 +41,10 @@ export default class CardTag extends Component<baseProps, any> {
             return !!item.value;
         });
 
-        if (newArrayTags.length === 0) {
+        if (newArrayTags.length === 0 && loaded) {
             return <View className='tag-none-con'><Text className='tag-list-none' >暂无数据</Text></View>
+        }else if(newArrayTags.length === 0 && !loaded){
+            return <View className='tag-none-con'><Text className='tag-list-none' >--</Text></View>
         };
 
         return newArrayTags.slice(0, 5).map((item) => {

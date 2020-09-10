@@ -25,6 +25,7 @@ class OrderRecord extends Component<any, any> {
             currentPage: 1,
             pageSize: 20,
             refreshing: false,
+            loaded: false,
             lastPage: false,
             detailData: {},
             customerTags: {
@@ -91,8 +92,6 @@ class OrderRecord extends Component<any, any> {
         } else {
             Toast.info(resDetail.errorMsg, 1);
         }
-
-
     };
 
     getVisitDate = async () => {
@@ -146,6 +145,7 @@ class OrderRecord extends Component<any, any> {
             {
                 visitListData: visitListData,
                 refreshing: false,
+                loaded: true,
                 lastPage
             },
             () => {
@@ -194,7 +194,7 @@ class OrderRecord extends Component<any, any> {
     render() {
 
         const statusBarHeight = getGlobalData('statusBarHeight');
-        const { detailData, customerTags, visitListData, lastPage } = this.state;
+        const { detailData, customerTags, visitListData, lastPage, loaded } = this.state;
         return (
             <View className='container'>
                 <ImageBackground
@@ -224,9 +224,9 @@ class OrderRecord extends Component<any, any> {
                 >
                     <View className='no-bg-gap' />
                     <CardBase data={detailData} onPopupShow={this.onPopupShow} />
-                    <CardTag data={detailData} tagsData={customerTags} />
+                    <CardTag loaded={loaded} data={detailData} tagsData={customerTags} />
                     <PurchasingInfo data={detailData} />
-                    <CardVisit lastPage={lastPage} data={detailData} visitList={visitListData} />
+                    <CardVisit lastPage={lastPage} loaded={loaded} data={detailData} visitList={visitListData} />
                     <PopUpCon
                         data={detailData.contacts || []}
                         visible={this.state.visible}

@@ -6,6 +6,7 @@ import "./index.scss";
 
 type baseProps = {
     lastPage: boolean;
+    loaded: boolean;
     data?: object;
     visitList: Array<object>;
 }
@@ -13,6 +14,7 @@ type baseProps = {
 export default class CardVisit extends Component<baseProps, any> {
     static defaultProps = {
         lastPage:false,
+        loaded: false,
         data: {},
         visitList: [{ id: 1 }]
     }
@@ -32,7 +34,7 @@ export default class CardVisit extends Component<baseProps, any> {
     };
 
     renderItems() {
-        const { visitList } = this.props;
+        const { visitList, loaded } = this.props;
         const Shadow = {
             shadowColor: "#f5f5f5",
             shadowOffset: { w: 10, h: 2 },
@@ -43,9 +45,11 @@ export default class CardVisit extends Component<baseProps, any> {
 
         // visitList = [{id:1, visitorList:[{}]}]
 
-        if (visitList.length === 0) {
+        if (visitList.length === 0 && loaded) {
             return <Text className='visit-list-none' >暂无数据</Text>
-        }
+        }else if(visitList.length === 0 && !loaded){
+            return <Text className='visit-list-none' >--</Text>
+        };
 
         return visitList.map((item) => {
             return (
