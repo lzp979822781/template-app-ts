@@ -65,7 +65,7 @@ class OrderRecord extends Component<any, any> {
 
     // }
 
-    componentDidMount() {
+    componentWillMount() {
         this.getDetailData();
     }
 
@@ -110,7 +110,7 @@ class OrderRecord extends Component<any, any> {
             queryType: 1, // 查询类型：1.我的任务 2.下属任务
             pageNum: currentPage,
             pageSize: pageSize,
-            appName: "saint" // 系统来源：saint-地勤,partner-合伙人
+            appName: jyNativeData.userType === "CM" ?  "saint" : "partner" // 系统来源：saint-地勤,partner-合伙人
         };
         console.log(JSON.stringify(params));
 

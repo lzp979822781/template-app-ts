@@ -77,7 +77,7 @@ export default class Goods extends Component<any, any> {
     renderContent = () => {
         const { tagsExplanation } = this.state;
         const tagsExplanationList = tagsExplanation.map((item) => {
-            return <View key={item.key} className='model-body-list-item'>
+            return <View key={item.title} className='model-body-list-item'>
                 <View className='model-body-title'>
                     <Image
                         className='model-body-title-icon'

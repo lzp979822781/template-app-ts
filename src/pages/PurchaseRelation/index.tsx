@@ -13,6 +13,7 @@ export default class PurchaseRelation extends Component<any, any> {
             pageSize: 20,
             refreshing: false,
             lastPage: false,
+            loaded: false,
             data: [
                 // {
                 //     relationId: 1,
@@ -51,10 +52,8 @@ export default class PurchaseRelation extends Component<any, any> {
                 pageSize: pageSize
             }
         );
-
         Taro.hideLoading();
         if (res.success) {
-            debugger
             this.setVisitListData(res);
         } else {
             Toast.info(res.errorMsg, 1);
@@ -73,7 +72,7 @@ export default class PurchaseRelation extends Component<any, any> {
         let lastPage = false;
         const { currentPage } = this.state;
 
-        data = res.data.data;
+        data = res.data.data || [];
         lastPage = res.data.lastPage;
 
         if (currentPage === 1) {
@@ -85,6 +84,7 @@ export default class PurchaseRelation extends Component<any, any> {
             {
                 data: listData,
                 refreshing: false,
+                loaded: true,
                 lastPage
             },
             () => {
@@ -132,12 +132,12 @@ export default class PurchaseRelation extends Component<any, any> {
     }
 
     renderItems() {
-        const dataSource = this.state.data;
-
-        if (dataSource.length === 0) {
+        const {data = [], loaded } = this.state;
+        
+        if (data.length === 0 && loaded) {
             return <Text className='purchaseRelation-list-none' >暂无数据</Text>
         }
-        return dataSource.map((item, index) => {
+        return data.map((item, index) => {
             const className =
                 index === 0 ? "list-item-box top-gap" : "list-item-box";
             return (
@@ -168,7 +168,7 @@ export default class PurchaseRelation extends Component<any, any> {
     }
 
     render() {
-        const { lastPage, data } = this.state;
+        const { lastPage, data} = this.state;
         return (
             <View className='container'>
                 <StatusBar />
@@ -180,7 +180,7 @@ export default class PurchaseRelation extends Component<any, any> {
                     onEndReached={this.onEndReached}
                 >
                     <Block>{this.renderItems()}</Block>
-                    {lastPage && data.length > 0 ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
+                    {lastPage && data.length !=0 ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
                 </DataList>
             </View>
         );
