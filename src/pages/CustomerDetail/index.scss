@@ -1,3 +1,4 @@
+@import "@/global/common.scss";
 .container {
     display: flex;
     height: 100%;
@@ -13,4 +14,22 @@
 
 .no-bg-gap {
     height: 100px;
+}
+
+.customer-head-right {
+    @include flex(row, flex-end, center);
+    flex: 1;
+    height: 100%;
+}
+
+.head-right-btn-con {
+    @include flex(row, flex-end, center);
+    width: 120px;
+    height: 88px;
+    padding-right: 30px;
+}
+
+.head-right-btn {
+    width: 44px;
+    height: 6px;
 }

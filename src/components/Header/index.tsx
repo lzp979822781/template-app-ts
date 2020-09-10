@@ -42,18 +42,20 @@ class Header extends Component<Option, any> {
         }
 
         return (
-            <View
-                className='back-btn'
-                hoverStyle={hoverStyle}
-                onClick={() => {
-                    if (backApp) {
-                        JDJumping.jumpToBack();
-                    } else {
-                        Taro.navigateBack();
-                    }
-                }}
-            >
-                <Image className='back-img' src="https://img10.360buyimg.com/imagetools/jfs/t1/131583/34/9685/2776/5f58ac4dEc286157f/56bb716cb76286f2.png" />
+            <View className='back-btn'>
+                <View
+                    className='back-btn-con'
+                    hoverStyle={hoverStyle}
+                    onClick={() => {
+                        if (backApp) {
+                            JDJumping.jumpToBack();
+                        } else {
+                            Taro.navigateBack();
+                        }
+                    }}
+                >
+                    <Image className='back-img' src="https://img10.360buyimg.com/imagetools/jfs/t1/131583/34/9685/2776/5f58ac4dEc286157f/56bb716cb76286f2.png" />
+                </View>
             </View>
         );
     };

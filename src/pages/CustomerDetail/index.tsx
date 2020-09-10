@@ -1,15 +1,17 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import { ImageBackground, ScrollView, RefreshControl } from "react-native";
 import { StatusBar, Header } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
+import { hoverStyle } from "@/utils/utils";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
 import CardTag from "./CardTag/index";
 import PurchasingInfo from "./PurchasingInfo/index";
 import CardVisit from "./CardVisit/index";
 import PopUpCon from "./PopUpCon/index";
+import PopUpDistribute from "./PopUpDistribute/index"
 
 import "./index.scss";
 
@@ -21,6 +23,7 @@ class CustomerDetail extends Component<any, any> {
         super(props);
         this.state = {
             visible: false,
+            visibleTwo: false,
             currentPage: 1,
             pageSize: 20,
             refreshing: false,
@@ -38,7 +41,7 @@ class CustomerDetail extends Component<any, any> {
         this.onEndReached = this.onEndReached.bind(this);
     };
 
-   
+
 
     // componentDidShow() {
 
@@ -64,6 +67,14 @@ class CustomerDetail extends Component<any, any> {
 
     onPopupClose = () => {
         this.setState({ visible: false });
+    };
+
+    onPopupShowTwo = () => {
+        this.setState({ visibleTwo: true });
+    };
+
+    onPopupCloseTwo = () => {
+        this.setState({ visibleTwo: false });
     };
 
     _contentViewScroll = (e: Record<string, any>) => {
@@ -223,7 +234,27 @@ class CustomerDetail extends Component<any, any> {
                     }}
                 >
                     <StatusBar noBgColor></StatusBar>
-                    <Header title='客户详情' noBgColor backApp></Header>
+                    <Header
+                        title='客户详情'
+                        noBgColor
+                        backApp
+                        renderRight={
+                            <View
+                                className='customer-head-right'
+                            >
+                                <View
+                                    className='head-right-btn-con'
+                                    onClick={this.onPopupShowTwo}
+                                    hoverStyle={hoverStyle}
+                                >
+                                    <Image
+                                        className='head-right-btn'
+                                        src="https://img11.360buyimg.com/imagetools/jfs/t1/112573/14/17669/800/5f5a1513E402fed84/37fcf5d8c360e8be.png"
+                                    />
+                                </View>
+                            </View>
+                        }
+                    />
                 </ImageBackground>
                 <ScrollView
                     style={{
@@ -249,6 +280,10 @@ class CustomerDetail extends Component<any, any> {
                         data={detailData.contacts || []}
                         visible={this.state.visible}
                         onPopupClose={this.onPopupClose}
+                    />
+                    <PopUpDistribute
+                        visible={this.state.visibleTwo}
+                        onPopupClose={this.onPopupCloseTwo}
                     />
                 </ScrollView>
             </View>

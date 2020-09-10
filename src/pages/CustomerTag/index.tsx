@@ -191,13 +191,17 @@ export default class Goods extends Component<any, any> {
                     renderRight={
                         <View
                             className='tag-head-right'
-                            onClick={this.onOpenModal}
-                            hoverStyle={hoverStyle}
                         >
-                            <Image
-                                className='head-right-btn'
-                                src="https://img13.360buyimg.com/imagetools/jfs/t1/132600/8/9621/3231/5f58ac4fEe8dd77a3/2900a31cea1a2d1f.png"
-                            />
+                            <View
+                                className='head-right-btn-con'
+                                onClick={this.onOpenModal}
+                                hoverStyle={hoverStyle}
+                            >
+                                <Image
+                                    className='head-right-btn'
+                                    src="https://img13.360buyimg.com/imagetools/jfs/t1/132600/8/9621/3231/5f58ac4fEe8dd77a3/2900a31cea1a2d1f.png"
+                                />
+                            </View>
                         </View>
                     }
                 />

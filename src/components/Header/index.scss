@@ -20,13 +20,19 @@
     height: 100%;
 }
 
+.back-btn-con {
+    @include flex(row, flex-start, center);
+    width: 120px;
+    height: 88px;
+    padding-left: 20px;
+}
+
 .back-btn {
     @include flex(row, flex-start, center);
     flex: 1;
 }
 
 .back-img {
-    margin-left: 20px;
     width: 52px;
     height: 52px;
 }
