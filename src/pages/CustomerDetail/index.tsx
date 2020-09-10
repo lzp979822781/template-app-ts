@@ -65,7 +65,7 @@ class OrderRecord extends Component<any, any> {
 
     // }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getDetailData();
     }
 
@@ -104,15 +104,17 @@ class OrderRecord extends Component<any, any> {
         });
 
         //拜访记录列表获取
-        const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", {
+        const params = {
             customerId: jyNativeData.customerId,
             status: 2, // 任务状态：1未完成，2已完成，3已超时
             queryType: 1, // 查询类型：1.我的任务 2.下属任务
             pageNum: currentPage,
             pageSize: pageSize,
-            appName: jyNativeData.userType // 系统来源：saint-地勤,partner-合伙人
-        });
+            appName: "saint" // 系统来源：saint-地勤,partner-合伙人
+        };
+        console.log(JSON.stringify(params));
 
+        const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", params);
         Taro.hideLoading();
         if (resVisit.success) {
             this.setVisitListData(resVisit);

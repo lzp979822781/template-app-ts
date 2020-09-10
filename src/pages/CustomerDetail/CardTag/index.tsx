@@ -55,7 +55,7 @@ export default class CardTag extends Component<baseProps, any> {
         Taro.showToast({
             title: txt,
             icon: "none",
-            duration: 2000
+            duration: 1500
         })
     }
 

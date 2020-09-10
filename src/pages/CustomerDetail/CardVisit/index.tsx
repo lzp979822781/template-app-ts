@@ -32,7 +32,7 @@ export default class CardVisit extends Component<baseProps, any> {
     };
 
     renderItems() {
-        let { visitList } = this.props;
+        const { visitList } = this.props;
         const Shadow = {
             shadowColor: "#f5f5f5",
             shadowOffset: { w: 10, h: 2 },
@@ -41,7 +41,7 @@ export default class CardVisit extends Component<baseProps, any> {
             elevation: 1
         };
 
-        visitList = [{id:1, visitorList:[{}]}]
+        // visitList = [{id:1, visitorList:[{}]}]
 
         if (visitList.length === 0) {
             return <Text className='visit-list-none' >暂无数据</Text>
