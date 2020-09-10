@@ -1,7 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, DataList } from "@/components/index";
-import { Toast } from '@ant-design/react-native';
 import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 
@@ -39,9 +38,12 @@ export default class PurchaseRelation extends Component<any, any> {
     loadList = async () => {
         const params = this.$router.params;
 
-        Taro.showLoading({
-            title: "加载中"
-        });
+        if (!this.state.refreshing) {
+            Taro.showLoading({
+                title: "加载中"
+            });
+        };
+
 
         const { currentPage, pageSize } = this.state;
         const res = await JDRequest.post(
@@ -56,7 +58,11 @@ export default class PurchaseRelation extends Component<any, any> {
         if (res.success) {
             this.setVisitListData(res);
         } else {
-            Toast.info(res.errorMsg, 1);
+            Taro.showToast({
+                title: res.errorMsg,
+                icon: 'none',
+                duration: 1000
+            })
             this.setState({
                 currentPage: currentPage > 1 ? currentPage - 1 : 1,
                 refreshing: false
@@ -132,8 +138,8 @@ export default class PurchaseRelation extends Component<any, any> {
     }
 
     renderItems() {
-        const {data = [], loaded } = this.state;
-        
+        const { data = [], loaded } = this.state;
+
         if (data.length === 0 && loaded) {
             return <Text className='purchaseRelation-list-none' >暂无数据</Text>
         }
@@ -168,7 +174,7 @@ export default class PurchaseRelation extends Component<any, any> {
     }
 
     render() {
-        const { lastPage, data} = this.state;
+        const { lastPage, data } = this.state;
         return (
             <View className='container'>
                 <StatusBar />
@@ -180,7 +186,7 @@ export default class PurchaseRelation extends Component<any, any> {
                     onEndReached={this.onEndReached}
                 >
                     <Block>{this.renderItems()}</Block>
-                    {lastPage && data.length !=0 ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
+                    {lastPage && data.length != 0 ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
                 </DataList>
             </View>
         );

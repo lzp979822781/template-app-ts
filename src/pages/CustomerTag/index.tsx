@@ -1,7 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Modal, JDListItem } from "@/components/index";
-import { Toast } from '@ant-design/react-native';
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 
@@ -46,7 +45,11 @@ export default class Goods extends Component<any, any> {
         if (resTags.success) {
             this.setState({ tagsData: resTags.data })
         } else {
-            Toast.info(resTags.errorMsg, 1);
+            Taro.showToast({
+                title: resTags.errorMsg,
+                icon: 'none',
+                duration: 1000
+            })
         };
     };
 
@@ -57,7 +60,11 @@ export default class Goods extends Component<any, any> {
         if (resTagsExplanation.success) {
             this.setState({ tagsExplanation: resTagsExplanation.data })
         } else {
-            Toast.info(resTagsExplanation.errorMsg, 1);
+            Taro.showToast({
+                title: resTagsExplanation.errorMsg,
+                icon: 'none',
+                duration: 1000
+            })
         }
     };
 

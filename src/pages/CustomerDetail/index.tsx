@@ -3,7 +3,6 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { ImageBackground, ScrollView, RefreshControl } from "react-native";
 import { StatusBar, Header } from "@/components/index";
-import { Toast } from '@ant-design/react-native';
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
@@ -90,7 +89,6 @@ class CustomerDetail extends Component<any, any> {
         const resDetail = await JDRequest.get("mjying_assist_customer_getDetail", {
             customerId: jyNativeData.customerId
         });
-        debugger
         //客户标签
         const resCustomerTags = await JDRequest.get("mjying_assist_customer_getTags", {
             pin: resDetail.data.pin
@@ -100,17 +98,23 @@ class CustomerDetail extends Component<any, any> {
         if (resDetail.success && resCustomerTags.success) {
             this.setState({ detailData: resDetail.data, customerTags: resCustomerTags.data, refreshing: false })
         } else {
-            Toast.info(resDetail.errorMsg, 1);
+            Taro.showToast({
+                title: resDetail.errorMsg,
+                icon: 'none',
+                duration: 1000
+            })
         }
     };
 
     getVisitDate = async () => {
         const jyNativeData = getGlobalData('jyNativeData');
-        const { currentPage, pageSize } = this.state;
+        const { currentPage, pageSize, refreshing } = this.state;
 
-        Taro.showLoading({
-            title: "加载中"
-        });
+        if (!refreshing) {
+            Taro.showLoading({
+                title: "加载中"
+            });
+        };
 
         //拜访记录列表获取
         const params = {
@@ -128,7 +132,11 @@ class CustomerDetail extends Component<any, any> {
         if (resVisit.success) {
             this.setVisitListData(resVisit);
         } else {
-            Toast.info(resVisit.errorMsg, 1);
+            Taro.showToast({
+                title: resVisit.errorMsg,
+                icon: 'none',
+                duration: 1000
+            })
             this.setState({
                 currentPage: currentPage > 1 ? currentPage - 1 : 1
             })

@@ -44,13 +44,21 @@ export default class PlanDetail extends Component<any, any> {
             taskId: params.taskId || jyNativeData.taskId
         });
 
+        Taro.hideLoading();
+        
         if (res.success) {
             this.setState({
                 tastDetail: res.data
             })
+        }else{
+            Taro.showToast({
+                title: res.errorMsg,
+                icon: 'none',
+                duration: 1000
+            })
         };
 
-        Taro.hideLoading();
+        
     };
 
     jumpTo = () => {
