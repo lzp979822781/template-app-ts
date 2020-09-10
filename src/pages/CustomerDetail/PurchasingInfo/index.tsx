@@ -2,7 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 
 import { View, Text, Image } from "@tarojs/components";
-// import { get as getGlobalData } from '@/utils/global_data';
+import { get as getGlobalData } from '@/utils/global_data';
 import { hoverStyle, parseUrl } from "@/utils/utils";
 import "./index.scss";
 
@@ -38,6 +38,7 @@ export default class PurchasingInfo extends Component<baseProps, any> {
 
 
     render() {
+        const jyNativeData = getGlobalData('jyNativeData');
         const { data } = this.props;
         return (
             <View className='card-purchasing'>
@@ -49,7 +50,7 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                         />
                         <Text className='head-left-title'>采购信息</Text>
                         <Text className='head-left-des-label'>最近下单</Text>
-                        <Text className='head-left-des-value'>{data.lastOrderDateStr}</Text>
+                        <Text className='head-left-des-value'>{jyNativeData.userType === "CM" ?  data.lastOrderDateStr : data.partnerLastOrderDateStr }</Text>
                         {/* <Text className='head-left-des-unit'>天前</Text> */}
                     </View>
                     <View

@@ -156,7 +156,7 @@ export default class PurchaseRelation extends Component<any, any> {
                             />
                         </View>
                         <View className='content-box'>
-                            <Text className='item-title'>
+                            <Text  numberOfLines={2}  className='item-title'>
                                 {item.shopName}
                             </Text>
                         </View>
