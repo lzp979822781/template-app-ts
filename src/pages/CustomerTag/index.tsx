@@ -1,6 +1,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, Modal, JDListItem} from "@/components/index";
+import { StatusBar, Header, Modal, JDListItem } from "@/components/index";
+import { Toast } from '@ant-design/react-native';
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 
@@ -35,17 +36,18 @@ export default class Goods extends Component<any, any> {
         Taro.showLoading({
             title: "加载中"
         });
-        
+
         const params = this.$router.params;
         const resTags = await JDRequest.get("mjying_assist_customer_getTags", {
             pin: params.pin
         });
 
+        Taro.hideLoading();
         if (resTags.success) {
             this.setState({ tagsData: resTags.data })
+        } else {
+            Toast.info(resTags.errorMsg, 1);
         };
-
-        Taro.hideLoading();
     };
 
 
@@ -54,6 +56,8 @@ export default class Goods extends Component<any, any> {
         const resTagsExplanation = await JDRequest.get("mjying_assist_customer_getTagExplanation");
         if (resTagsExplanation.success) {
             this.setState({ tagsExplanation: resTagsExplanation.data })
+        } else {
+            Toast.info(resTagsExplanation.errorMsg, 1);
         }
     };
 
@@ -72,7 +76,6 @@ export default class Goods extends Component<any, any> {
 
     renderContent = () => {
         const { tagsExplanation } = this.state;
-
         const tagsExplanationList = tagsExplanation.map((item) => {
             return <View key={item.key} className='model-body-list-item'>
                 <View className='model-body-title'>
@@ -153,10 +156,17 @@ export default class Goods extends Component<any, any> {
         });
 
         const nodeList = listData.map((item) => {
+            if (item.key === "avg_repurchase") {
+                return <JDListItem
+                    key={item.key}
+                    label={item.title}
+                    renderValue={<View className='list-item-value-con'><Text className='list-item-value-txt'>{item.value}</Text><Text className='list-item-value-desc'>（平均值）</Text></View>}
+                />
+            }
             return <JDListItem
                 key={item.key}
                 label={item.title}
-                value={item.value || "--"}
+                value={item.value}
             />
         })
         return <View className='card-operation'>

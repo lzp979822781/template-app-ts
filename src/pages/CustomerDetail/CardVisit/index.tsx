@@ -41,7 +41,7 @@ export default class CardVisit extends Component<baseProps, any> {
             elevation: 1
         };
 
-        visitList = [{visitorList:[{}]}]
+        visitList = [{id:1, visitorList:[{}]}]
 
         if (visitList.length === 0) {
             return <Text className='visit-list-none' >暂无数据</Text>

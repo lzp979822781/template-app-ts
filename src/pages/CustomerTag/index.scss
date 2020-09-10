@@ -135,3 +135,15 @@
     @include font(18px, #666666);
     margin-left: 26px;
 }
+
+.list-item-value-con {
+    @include flex(row, flex-start, center);
+}
+
+.list-item-value-txt {
+    @include font(28px, #444444);
+}
+
+.list-item-value-desc {
+    @include font(28px, #979797);
+}

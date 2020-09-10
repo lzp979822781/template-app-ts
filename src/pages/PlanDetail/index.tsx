@@ -7,15 +7,17 @@ import { get as getGlobalData } from '@/utils/global_data';
 import PopUpCon from "./PopUpCon/index";
 import "./index.scss";
 
+const noneTxt = "无";
+
 export default class PlanDetail extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
             visible: false,
             tastDetail: {
-                companyName: "医药城下沉112公司",
-                address: "沃尔沃二无热无若无热翁人",
-                creatorName: "张三丰",
+                companyName: "",
+                address: "",
+                creatorName: "",
                 visitorList: []
             }
         };
@@ -26,7 +28,7 @@ export default class PlanDetail extends Component<any, any> {
     };
 
     componentDidShow() {
-        // this.getData();
+        this.getData();
     }
 
     getData = async () => {
@@ -69,7 +71,7 @@ export default class PlanDetail extends Component<any, any> {
 
     renderContact = () => {
         const { tastDetail } = this.state;
-        if(tastDetail.visitorList || tastDetail.visitorList.length > 0){
+        if(tastDetail.visitorList && tastDetail.visitorList.length > 0){
             const arrayName = tastDetail.visitorList.map((item) => {
                 return item.contactName
             });
@@ -77,7 +79,7 @@ export default class PlanDetail extends Component<any, any> {
             return arrayName.join()
         };
         
-        return "--";
+        return  noneTxt;
     };
 
     render() {
@@ -98,7 +100,7 @@ export default class PlanDetail extends Component<any, any> {
                     <View className='plan-banner-bg'></View>
                     <View className='card-base' style={Shadow}>
                         <Text className='card-base-title'>
-                            {tastDetail.companyName || "--"}
+                            {tastDetail.companyName || noneTxt}
                         </Text>
                         <View className='plan-status'>
                             <Gradient
@@ -112,13 +114,13 @@ export default class PlanDetail extends Component<any, any> {
                                 angle={0}
                                 colors={["#FF6600", "#FF9B00"]}
                             >
-                                <Text className='plan-status-txt'>{tastDetail.taskStatusName || "--"}</Text>
+                                <Text className='plan-status-txt'>{tastDetail.taskStatusName || noneTxt}</Text>
                             </Gradient>
                         </View>
                         <View className='contact-address-con'>
                             <View className='con-address'>
                                 <Text className='con-address-txt'>
-                                    {tastDetail.address || "--"}
+                                    {tastDetail.address || noneTxt}
                                 </Text>
                             </View>
                             <View className='contact-address-divide'></View>
@@ -137,13 +139,13 @@ export default class PlanDetail extends Component<any, any> {
                         </View>
                     </View>
                     <View className='card-operation'>
-                        <JDListItem label='创建人' value={tastDetail.creator || "--"} />
-                        <JDListItem label='客户经理' value={tastDetail.userName || "--"} />
-                        <JDListItem label='拜访日期' value={tastDetail.finishDate || "--"} />
+                        <JDListItem label='创建人' value={tastDetail.creator || noneTxt} />
+                        <JDListItem label='客户经理' value={tastDetail.userName || noneTxt} />
+                        <JDListItem label='拜访日期' value={tastDetail.finishDate || noneTxt} />
                         <JDListItem label='被拜访人' value={this.renderContact()} />
-                        <JDListItem label='拜访目的' value={tastDetail.taskMemoName || "--"} />
-                        <JDListItem label='拜访类型' value={tastDetail.taskModelName || "--"} />
-                        <JDListItem label='拜访方式' value={tastDetail.taskWayName || "--"} />
+                        <JDListItem label='拜访目的' value={tastDetail.taskMemoName || noneTxt} />
+                        <JDListItem label='拜访类型' value={tastDetail.taskModelName || noneTxt} />
+                        <JDListItem label='拜访方式' value={tastDetail.taskWayName || noneTxt} />
                     </View>
                     {tastDetail.canBeModified ? <View
                         className='plan-btn'

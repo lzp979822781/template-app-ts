@@ -1,8 +1,8 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, DataList } from "@/components/index";
+import { Toast } from '@ant-design/react-native';
 import JDRequest from "@/utils/jd-request";
-
 import "./index.scss";
 
 export default class PurchaseRelation extends Component<any, any> {
@@ -52,17 +52,18 @@ export default class PurchaseRelation extends Component<any, any> {
             }
         );
 
-
+        Taro.hideLoading();
         if (res.success) {
             this.setVisitListData(res);
         } else {
+            Toast.info(res.errorMsg, 1);
             this.setState({
                 currentPage: currentPage > 1 ? currentPage - 1 : 1,
                 refreshing: false
             });
         };
 
-        Taro.hideLoading();
+
     };
 
     setVisitListData = (res) => {
@@ -79,7 +80,6 @@ export default class PurchaseRelation extends Component<any, any> {
         } else {
             listData = listData.concat(data);
         }
-
         this.setState(
             {
                 data: listData,
@@ -112,6 +112,7 @@ export default class PurchaseRelation extends Component<any, any> {
 
     canAction = false;
     onEndReached() {
+        debugger
         if (this.canAction) {
             Taro.showLoading({
                 title: "加载中"

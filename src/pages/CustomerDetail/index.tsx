@@ -3,6 +3,7 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { ImageBackground, ScrollView, RefreshControl } from "react-native";
 import { StatusBar, Header } from "@/components/index";
+import { Toast } from '@ant-design/react-native';
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
@@ -65,37 +66,37 @@ class OrderRecord extends Component<any, any> {
     }
     getDetailData = async () => {
         //获取原生提供的客户id
-        Taro.showLoading({
-            title: "加载中"
-        });
+        
         const jyNativeData = getGlobalData('jyNativeData');
+
+        this.getVisitDate();
         //客户详情获取
         const resDetail = await JDRequest.get("mjying_assist_customer_getDetail", {
             customerId: jyNativeData.customerId
         });
-
-        if (resDetail.success) {
-            this.setState({ detailData: resDetail.data, refreshing: false })
-        }
-
 
         //客户标签
         const resCustomerTags = await JDRequest.get("mjying_assist_customer_getTags", {
             pin: resDetail.data.pin
         });
 
-        if (resCustomerTags.success) {
-            this.setState({ customerTags: resCustomerTags.data })
+
+        if (resDetail.success && resCustomerTags.success) {
+            this.setState({ detailData: resDetail.data, customerTags: resCustomerTags.data, refreshing: false })
+        }else{
+            Toast.info(resDetail.errorMsg, 1);
         }
 
-        this.getVisitDate();
-
-        Taro.hideLoading();
+        
     };
 
     getVisitDate = async () => {
         const jyNativeData = getGlobalData('jyNativeData');
         const { currentPage, pageSize } = this.state;
+
+        Taro.showLoading({
+            title: "加载中"
+        });
 
         //拜访记录列表获取
         const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", {
@@ -107,15 +108,15 @@ class OrderRecord extends Component<any, any> {
             appName: jyNativeData.userType // 系统来源：saint-地勤,partner-合伙人
         });
 
+        Taro.hideLoading();
         if (resVisit.success) {
             this.setVisitListData(resVisit);
         } else {
+            Toast.info(resVisit.errorMsg, 1);
             this.setState({
                 currentPage: currentPage > 1 ? currentPage - 1 : 1
             })
         };
-
-        Taro.hideLoading();
     }
 
     setVisitListData = (res) => {
