@@ -1,0 +1,34 @@
+@import "@/global/common.scss";
+
+.popup-dist-con {
+}
+
+.popup-dist-confirm {
+    @include flex(row, center, center);
+    height: 120px;
+    background-color: #FFFFFF;
+    margin-bottom: 6px;
+    border-radius: 4px;
+}
+
+.popup-dist-confirm-icon {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+}
+
+.popup-dist-confirm-txt {
+    @include font(32px, #444444);
+}
+
+.popup-dist-cancel {
+    @include flex(row, center, center);
+    height: 100px;
+    background-color: #FFFFFF;
+    border-radius: 4px;
+}
+
+.popup-dist-cancel-txt {
+    @include font(32px, #F23030);
+    font-weight: 700;
+}
