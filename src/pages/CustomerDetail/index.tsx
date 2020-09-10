@@ -61,12 +61,17 @@ class OrderRecord extends Component<any, any> {
 
     canAction = false;
 
-    componentDidShow() {
+    // componentDidShow() {
+
+    // }
+
+    componentWillMount() {
         this.getDetailData();
     }
+
     getDetailData = async () => {
         //获取原生提供的客户id
-        
+
         const jyNativeData = getGlobalData('jyNativeData');
 
         this.getVisitDate();
@@ -83,11 +88,11 @@ class OrderRecord extends Component<any, any> {
 
         if (resDetail.success && resCustomerTags.success) {
             this.setState({ detailData: resDetail.data, customerTags: resCustomerTags.data, refreshing: false })
-        }else{
+        } else {
             Toast.info(resDetail.errorMsg, 1);
         }
 
-        
+
     };
 
     getVisitDate = async () => {

@@ -59,7 +59,7 @@ export default class CardVisit extends Component<baseProps, any> {
                     <View className='list-item-head'>
                         <Image
                             className='list-item-title-icon'
-                            src="https://img10.360buyimg.com/imagetools/jfs/t1/124605/18/11985/1524/5f58ac4eEcadb87aa/e8016790250e8b64.png"
+                            src='https://img10.360buyimg.com/imagetools/jfs/t1/124605/18/11985/1524/5f58ac4eEcadb87aa/e8016790250e8b64.png'
                         />
                         <Text className='list-item-title-txt'>
                             拜访日期：{item.finishDate || "--"}
@@ -99,7 +99,7 @@ export default class CardVisit extends Component<baseProps, any> {
             <View className='card-visit'>
                 <View className='visit-head'>
                     <View className='head-left'>
-                        <Image className='head-left-icon' src="https://img12.360buyimg.com/imagetools/jfs/t1/124862/19/12175/1481/5f58ac4dE55b26764/7cb827149a95b6e5.png" />
+                        <Image className='head-left-icon' src='https://img12.360buyimg.com/imagetools/jfs/t1/124862/19/12175/1481/5f58ac4dE55b26764/7cb827149a95b6e5.png' />
                         <Text className='head-left-title'>拜访记录</Text>
                         <Text className='head-left-des-label'>最近拜访</Text>
                         <Text className='head-left-des-value'>{data.partnerLastVisitDateStr}</Text>
