@@ -106,7 +106,7 @@ export default class CardVisit extends Component<baseProps, any> {
                         <Image className='head-left-icon' src='https://img12.360buyimg.com/imagetools/jfs/t1/124862/19/12175/1481/5f58ac4dE55b26764/7cb827149a95b6e5.png' />
                         <Text className='head-left-title'>拜访记录</Text>
                         <Text className='head-left-des-label'>最近拜访</Text>
-                        <Text className='head-left-des-value'>{data.partnerLastVisitDateStr}</Text>
+                        <Text className='head-left-des-value'>{data.lastVisitDateStr}</Text>
                     </View>
                 </View>
                 <View className='visit-body'>

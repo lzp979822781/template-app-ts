@@ -49,7 +49,7 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                         />
                         <Text className='head-left-title'>采购信息</Text>
                         <Text className='head-left-des-label'>最近下单</Text>
-                        <Text className='head-left-des-value'>{data.partnerLastOrderDateStr}</Text>
+                        <Text className='head-left-des-value'>{data.lastOrderDateStr}</Text>
                         {/* <Text className='head-left-des-unit'>天前</Text> */}
                     </View>
                     <View

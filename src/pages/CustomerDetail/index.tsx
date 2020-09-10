@@ -17,7 +17,7 @@ import "./index.scss";
 type PageOwnProps = {};
 type PageState = {};
 
-class OrderRecord extends Component<any, any> {
+class CustomerDetail extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
@@ -39,7 +39,23 @@ class OrderRecord extends Component<any, any> {
         this.onEndReached = this.onEndReached.bind(this);
     };
 
+   
+
+    // componentDidShow() {
+
+    // }
+
+    componentWillMount() {
+        this.getDetailData();
+    }
+
+
+    componentWillUnmount() {
+        clearTimeout(this.timer);
+    }
+
     config: Config = {
+        navigationBarTitleText: "",
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
 
@@ -62,13 +78,7 @@ class OrderRecord extends Component<any, any> {
 
     canAction = false;
 
-    // componentDidShow() {
 
-    // }
-
-    componentWillMount() {
-        this.getDetailData();
-    }
 
     getDetailData = async () => {
         //获取原生提供的客户id
@@ -80,7 +90,7 @@ class OrderRecord extends Component<any, any> {
         const resDetail = await JDRequest.get("mjying_assist_customer_getDetail", {
             customerId: jyNativeData.customerId
         });
-
+        debugger
         //客户标签
         const resCustomerTags = await JDRequest.get("mjying_assist_customer_getTags", {
             pin: resDetail.data.pin
@@ -109,9 +119,9 @@ class OrderRecord extends Component<any, any> {
             queryType: 1, // 查询类型：1.我的任务 2.下属任务
             pageNum: currentPage,
             pageSize: pageSize,
-            appName: jyNativeData.userType === "CM" ?  "saint" : "partner" // 系统来源：saint-地勤,partner-合伙人
+            appName: jyNativeData.userType === "CM" ? "saint" : "partner" // 系统来源：saint-地勤,partner-合伙人
         };
-        console.log(JSON.stringify(params));
+        // console.log(JSON.stringify(params));
 
         const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", params);
         Taro.hideLoading();
@@ -152,7 +162,7 @@ class OrderRecord extends Component<any, any> {
                 if (resData.length < this.state.pageSize) {
                     this.canAction = false;
                 } else {
-                    setTimeout(() => {
+                    this.timer = setTimeout(() => {
                         this.canAction = true;
                     }, 50);
                 }
@@ -238,4 +248,4 @@ class OrderRecord extends Component<any, any> {
     }
 }
 
-export default OrderRecord as ComponentClass<PageOwnProps, PageState>;
+export default CustomerDetail as ComponentClass<PageOwnProps, PageState>;
