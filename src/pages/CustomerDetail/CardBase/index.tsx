@@ -7,11 +7,13 @@ import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 
 type baseProps = {
+    canBind?: boolean;
     data?: object;
     onPopupShow?: any;
 }
 export default class CardBase extends Component<baseProps, any> {
     static defaultProps = {
+        canBind: false,
         data: {},
         onPopupShow: () => { }
     }
@@ -29,7 +31,7 @@ export default class CardBase extends Component<baseProps, any> {
     }
 
     render() {
-        const { data, onPopupShow } = this.props;
+        const { data, onPopupShow, canBind } = this.props;
         return (
             <View className='card-base'>
                 <View className={data.headImg ? 'card-base-head' : 'card-base-head-default'}>
@@ -43,7 +45,7 @@ export default class CardBase extends Component<baseProps, any> {
                         {data.companyName || "--"}
                     </Text>
                     <Text className='company-pin'>
-                        客户pin：{data.pin || "--"}
+                        {data.pin ? `客户pin：${data.pin}` : ""}
                     </Text>
                     <Text className='company-manager'>客户经理：{data.userName || "--"}</Text>
                 </View>
@@ -64,7 +66,7 @@ export default class CardBase extends Component<baseProps, any> {
                     </View>
                 </View>
                 <View className='base-btn-con'>
-                    <View className='base-btn' hoverStyle={hoverStyle} onClick={() => {
+                    {canBind ? <View className='base-btn' hoverStyle={hoverStyle} onClick={() => {
                         onPopupShow("binding")
                     }}
                     >
@@ -80,8 +82,8 @@ export default class CardBase extends Component<baseProps, any> {
                         >
                             <Text className='base-btn-txt'>绑定客户</Text>
                         </Gradient>
-                    </View>
-                    <View className='btn-gap' />
+                    </View> : null}
+                    {canBind ?<View className='btn-gap' />  : null}
                     <View className='base-btn' hoverStyle={hoverStyle} onClick={() => {
                         this.jumpToApp("orderPage");
                     }}

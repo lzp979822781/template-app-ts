@@ -33,6 +33,7 @@ class CustomerDetail extends Component<any, any> {
             refreshing: false,
             loaded: false,
             lastPage: false,
+            canBind: false,
             detailData: {},
             customerTags: {
                 "1": [],
@@ -45,8 +46,6 @@ class CustomerDetail extends Component<any, any> {
         this.onEndReached = this.onEndReached.bind(this);
     };
 
-
-
     // componentDidShow() {
 
     // }
@@ -54,7 +53,6 @@ class CustomerDetail extends Component<any, any> {
     componentWillMount() {
         this.getDetailData();
     }
-
 
     componentWillUnmount() {
     }
@@ -83,7 +81,41 @@ class CustomerDetail extends Component<any, any> {
 
     canAction = false;
 
+    //判断客户是否可以绑定
+    getCanBind = async (pin) => {
+        const res = await JDRequest.get("/assist/partner/customer/canBind", {
+            customerPin: pin
+        });
 
+        if (res.success) {
+            this.setState({
+                canBind: res.code === 1
+            });
+        } else {
+            Taro.showToast({
+                title: res.errorMsg,
+                icon: 'none',
+                duration: 1000
+            })
+        }
+    }
+
+    getCustomerTags = async (pin) => {
+        const resCustomerTags = await JDRequest.get("mjying_assist_customer_getTags", {
+            pin: pin
+        });
+
+
+        if (resCustomerTags.success) {
+            this.setState({ customerTags: resCustomerTags.data, refreshing: false });
+        } else {
+            Taro.showToast({
+                title: resCustomerTags.errorMsg,
+                icon: 'none',
+                duration: 1000
+            });
+        };
+    }
 
     getDetailData = async () => {
         //获取原生提供的客户id
@@ -96,20 +128,30 @@ class CustomerDetail extends Component<any, any> {
             customerId: jyNativeData.customerId
         });
         //客户标签
-        const resCustomerTags = await JDRequest.get("mjying_assist_customer_getTags", {
-            pin: resDetail.data.pin
-        });
+       
 
+        debugger
+        Taro.hideLoading();
+        if (resDetail.success) {
+            this.setState({ detailData: resDetail.data, refreshing: false });
 
-        if (resDetail.success && resCustomerTags.success) {
-            this.setState({ detailData: resDetail.data, customerTags: resCustomerTags.data, refreshing: false })
+            this.getCustomerTags(resDetail.data.pin)
+
+            //是否有绑定客户按钮：合伙人单独接口，客户是用pin判断
+            if (jyNativeData.userType === "CM") {
+                this.setState({
+                    canBind: !resDetail.data.pin
+                });
+            } else {
+                this.getCanBind(resDetail.data.pin);
+            };
         } else {
             Taro.showToast({
                 title: resDetail.errorMsg,
                 icon: 'none',
                 duration: 1000
-            })
-        }
+            });
+        };
     };
 
     getVisitDate = async () => {
@@ -228,7 +270,8 @@ class CustomerDetail extends Component<any, any> {
         //     title: "加载中"
         // });
 
-        const res = await JDRequest.get("/assist/partner/customer/bind", {
+        const uri = jyNativeData.userType === "CM" ? "mjying_assist_customer_merge" : "mjying_assist_partner_customer_bind";
+        const res = await JDRequest.get(uri, {
             pin: inputValue,
             customerId: jyNativeData.customerId
         });
@@ -316,7 +359,7 @@ class CustomerDetail extends Component<any, any> {
     render() {
 
         const statusBarHeight = getGlobalData('statusBarHeight');
-        const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType } = this.state;
+        const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType, canBind } = this.state;
         return (
             <View className='container'>
                 <ImageBackground
@@ -351,7 +394,7 @@ class CustomerDetail extends Component<any, any> {
                     }
                 >
                     <View className='no-bg-gap' />
-                    <CardBase data={detailData} onPopupShow={(type) => this.onPopupShow(type)} />
+                    <CardBase data={detailData} onPopupShow={(type) => this.onPopupShow(type)} canBind={canBind} />
                     <CardTag loaded={loaded} data={detailData} tagsData={customerTags} />
                     <PurchasingInfo data={detailData} />
                     <CardVisit lastPage={lastPage} loaded={loaded} data={detailData} visitList={visitListData} />
@@ -366,9 +409,6 @@ class CustomerDetail extends Component<any, any> {
                     onPopupClose={this.onPopupClose}
                 />
                 {this.renderConfirmDialog()}
-                {/* <JDToast show={!!this.state.toast} during={1000} style={this.state.toastStyle} mode={JDToast.MODE.MODAL}>
-                    toast
-                </JDToast> */}
             </View>
         );
     }
