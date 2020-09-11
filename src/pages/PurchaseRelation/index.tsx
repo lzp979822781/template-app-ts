@@ -152,6 +152,7 @@ export default class PurchaseRelation extends Component<any, any> {
                         <View className='list-image-box'>
                             <Image
                                 className='item-image'
+                                mode="aspectFit"
                                 src={item.shopLogo ? "https:" + item.shopLogo : "https://img14.360buyimg.com/imagetools/jfs/t1/143550/5/8037/22510/5f58ac4fE3ea6f5d3/17d424f4c4437584.png"}
                             />
                         </View>
