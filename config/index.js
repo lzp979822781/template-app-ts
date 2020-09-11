@@ -143,6 +143,12 @@ const config = {
                 path.resolve(__dirname, '..', 'src/pages/login'),
             ]
         }
+    },
+    terser: {
+        enable: true,
+    },
+    csso: {
+        enable: true,
     }
 }
 
