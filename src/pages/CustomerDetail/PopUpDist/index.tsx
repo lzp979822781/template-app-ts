@@ -3,11 +3,11 @@ import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { View, Text, Image } from "@tarojs/components";
 import { PopUp } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
+import { get as getGlobalData } from '@/utils/global_data';
 import "./index.scss";
 
 type baseProps = {
     visible: boolean;
-    data?: Array<object>;
     onPopupClose?: any;
 }
 export default class PopUpConDist extends Component<baseProps, any> {
@@ -17,12 +17,11 @@ export default class PopUpConDist extends Component<baseProps, any> {
 
 
     jumpToApp(des) {
-        // const jyNativeData = getGlobalData('jyNativeData');
-        const { data } = this.props;
+        const jyNativeData = getGlobalData('jyNativeData');
         debugger
         // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`)
         JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerId: data.customerId})}}`
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerId: jyNativeData.customerId})}}`
         )
     }
 

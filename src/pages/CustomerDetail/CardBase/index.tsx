@@ -22,6 +22,7 @@ export default class CardBase extends Component<baseProps, any> {
     }
 
     jumpToApp(des) {
+        debugger
         // const jyNativeData = getGlobalData('jyNativeData');
         const { data } = this.props;
         // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`)
