@@ -40,7 +40,7 @@ export default class CardBase extends Component<baseProps, any> {
                         src={data.headImg || "https://img11.360buyimg.com/imagetools/jfs/t1/140195/31/7995/18951/5f58ac4eE019f959a/dcd004d1aa98f66f.png"}
                     />
                 </View>
-                <View className='base-msg'>
+                <View className='base-msg' onClick={()=>jumpToApp("orderPage")}>
                     <Text className='company-title'>
                         {data.companyName || "--"}
                     </Text>

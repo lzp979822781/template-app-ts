@@ -19,9 +19,10 @@ export default class PopUpConDist extends Component<baseProps, any> {
     jumpToApp(des) {
         // const jyNativeData = getGlobalData('jyNativeData');
         const { data } = this.props;
+        debugger
         // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`)
         JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerId: data.customerId})}}`
         )
     }
 
@@ -41,7 +42,7 @@ export default class PopUpConDist extends Component<baseProps, any> {
                 rnContainerStyle={{ height: 140, minHeight: 80 }}
             >
                 <View className='popup-dist-con'>
-                    <View className='popup-dist-confirm' hoverStyle={hoverStyle} onClick={onPopupClose}>
+                    <View className='popup-dist-confirm' hoverStyle={hoverStyle} onClick={()=>{this.jumpToApp("dispatchCMPage")}}>
                         <Image
                             className='popup-dist-confirm-icon'
                             src="https://img14.360buyimg.com/imagetools/jfs/t1/133583/28/9732/2225/5f5a1513E972ff853/31b3038350d9a137.png"

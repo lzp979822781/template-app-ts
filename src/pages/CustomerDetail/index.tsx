@@ -130,7 +130,6 @@ class CustomerDetail extends Component<any, any> {
         //客户标签
        
 
-        debugger
         Taro.hideLoading();
         if (resDetail.success) {
             this.setState({ detailData: resDetail.data, refreshing: false });
