@@ -72,11 +72,11 @@ export default class CardVisit extends Component<baseProps, any> {
                         </Text>
                     </View>
                     <View className='list-item-des'>
-                        <Text className='list-item-des-txt'>拜访人：{visitorListFirst.contactName}</Text>
+                        <Text className='list-item-des-txt'>拜访人：{visitorListFirst.contactName || "--"}</Text>
                         <View className='divide-line-vertical'></View>
-                        <Text className='list-item-des-txt'>{visitorListFirst.mobile}</Text>
+                        <Text className='list-item-des-txt'>{visitorListFirst.mobile || "--"}</Text>
                         <View className='divide-line-vertical'></View>
-                        <Text className='list-item-des-txt'>{visitorListFirst.roleName}</Text>
+                        <Text className='list-item-des-txt'>{visitorListFirst.roleName || "--"}</Text>
                     </View>
                     <View className='list-item-des'>
                         <Text className='list-item-des-txt'>
