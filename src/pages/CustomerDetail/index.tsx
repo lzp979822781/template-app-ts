@@ -23,7 +23,7 @@ class CustomerDetail extends Component<any, any> {
         super(props);
         this.state = {
             visible: false,
-            visibleTwo: false,
+            popupType: "contact", //联系人 contact, 分配 dist
             currentPage: 1,
             pageSize: 20,
             refreshing: false,
@@ -60,20 +60,12 @@ class CustomerDetail extends Component<any, any> {
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
 
-    onPopupShow = () => {
-        this.setState({ visible: true });
+    onPopupShow = (type) => {
+        this.setState({ visible: true, popupType: type  });
     };
 
     onPopupClose = () => {
         this.setState({ visible: false });
-    };
-
-    onPopupShowTwo = () => {
-        this.setState({ visibleTwo: true });
-    };
-
-    onPopupCloseTwo = () => {
-        this.setState({ visibleTwo: false });
     };
 
     _contentViewScroll = (e: Record<string, any>) => {
@@ -222,7 +214,7 @@ class CustomerDetail extends Component<any, any> {
     render() {
 
         const statusBarHeight = getGlobalData('statusBarHeight');
-        const { detailData, customerTags, visitListData, lastPage, loaded } = this.state;
+        const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType } = this.state;
         return (
             <View className='container'>
                 <ImageBackground
@@ -243,7 +235,7 @@ class CustomerDetail extends Component<any, any> {
                             >
                                 <View
                                     className='head-right-btn-con'
-                                    onClick={()=>this.onPopupShowTwo()}
+                                    onClick={()=>this.onPopupShow("contact")}
                                     hoverStyle={hoverStyle}
                                 >
                                     <Image
@@ -271,7 +263,7 @@ class CustomerDetail extends Component<any, any> {
                     }
                 >
                     <View className='no-bg-gap' />
-                    <CardBase data={detailData} onPopupShow={this.onPopupShow} />
+                    <CardBase data={detailData} onPopupShow={()=>this.onPopupShow("dist")} />
                     <CardTag loaded={loaded} data={detailData} tagsData={customerTags} />
                     <PurchasingInfo data={detailData} />
                     <CardVisit lastPage={lastPage} loaded={loaded} data={detailData} visitList={visitListData} />
@@ -279,12 +271,12 @@ class CustomerDetail extends Component<any, any> {
 
                 </ScrollView>
                 <PopUpDist
-                    visible={this.state.visibleTwo}
-                    onPopupClose={this.onPopupCloseTwo}
+                    visible={visible && popupType === "contact"}
+                    onPopupClose={this.onPopupClose}
                 />
                 <PopUpCon
                     data={detailData.contacts || []}
-                    visible={this.state.visible}
+                    visible={visible && popupType === "dist"}
                     onPopupClose={this.onPopupClose}
                 />
             </View>

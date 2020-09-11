@@ -24,10 +24,10 @@
 
 .head-right-btn-con {
     @include flex(row, flex-end, center);
-    width: 200px;
+    width: 120px;
     height: 88px;
     padding-right: 30px;
-    // background-color: tomato;
+    background-color: transparent;
 }
 
 .head-right-btn {
