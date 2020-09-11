@@ -1,19 +1,19 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Image, Input } from "@tarojs/components";
+import { View, Input } from "@tarojs/components";
 import { ImageBackground, ScrollView, RefreshControl } from "react-native";
-// import { Toast } from '@ant-design/react-native';
 import { JDConfirmDialog } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
-import { hoverStyle } from "@/utils/utils";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
 import CardTag from "./CardTag/index";
 import PurchasingInfo from "./PurchasingInfo/index";
 import CardVisit from "./CardVisit/index";
 import PopUpCon from "./PopUpCon/index";
-import PopUpDist from "./PopUpDist/index"
+import PopUpDist from "./PopUpDist/index";
+import DistBtn from "./DistBtn/index";
+
 
 import "./index.scss";
 
@@ -25,7 +25,6 @@ class CustomerDetail extends Component<any, any> {
         super(props);
         this.state = {
             visible: false,
-            // toast: false,
             popupType: "contact", //联系人 contact, 分配 dist, 绑定 binding
             inputValue: "",
             currentPage: 1,
@@ -175,7 +174,6 @@ class CustomerDetail extends Component<any, any> {
         // console.log(JSON.stringify(params));
 
         const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", params);
-        debugger
         Taro.hideLoading();
         if (resVisit.success) {
             this.setVisitListData(resVisit);
@@ -339,23 +337,6 @@ class CustomerDetail extends Component<any, any> {
         );
     }
 
-    renderHeaderRight = () => {
-        return <View
-            className='customer-head-right'
-        >
-            <View
-                className='head-right-btn-con'
-                onClick={() => this.onPopupShow("dist")}
-                hoverStyle={hoverStyle}
-            >
-                <Image
-                    className='head-right-btn'
-                    src='https://img11.360buyimg.com/imagetools/jfs/t1/112573/14/17669/800/5f5a1513E402fed84/37fcf5d8c360e8be.png'
-                />
-            </View>
-        </View>
-    }
-
     render() {
 
         const statusBarHeight = getGlobalData('statusBarHeight');
@@ -375,7 +356,7 @@ class CustomerDetail extends Component<any, any> {
                         noBgColor
                         backApp
                         // eslint-disable-next-line taro/render-props
-                        renderRight={this.renderHeaderRight()}
+                        renderRight={<DistBtn onPopupShow={() => this.onPopupShow("dist")} />}
                     />
                 </ImageBackground>
                 <ScrollView
