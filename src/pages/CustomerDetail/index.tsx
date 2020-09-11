@@ -11,7 +11,7 @@ import CardTag from "./CardTag/index";
 import PurchasingInfo from "./PurchasingInfo/index";
 import CardVisit from "./CardVisit/index";
 import PopUpCon from "./PopUpCon/index";
-import PopUpDistribute from "./PopUpDistribute/index"
+import PopUpDist from "./PopUpDist/index"
 
 import "./index.scss";
 
@@ -53,7 +53,6 @@ class CustomerDetail extends Component<any, any> {
 
 
     componentWillUnmount() {
-        clearTimeout(this.timer);
     }
 
     config: Config = {
@@ -244,7 +243,7 @@ class CustomerDetail extends Component<any, any> {
                             >
                                 <View
                                     className='head-right-btn-con'
-                                    onClick={this.onPopupShowTwo}
+                                    onClick={()=>this.onPopupShowTwo()}
                                     hoverStyle={hoverStyle}
                                 >
                                     <Image
@@ -276,16 +275,18 @@ class CustomerDetail extends Component<any, any> {
                     <CardTag loaded={loaded} data={detailData} tagsData={customerTags} />
                     <PurchasingInfo data={detailData} />
                     <CardVisit lastPage={lastPage} loaded={loaded} data={detailData} visitList={visitListData} />
-                    <PopUpCon
-                        data={detailData.contacts || []}
-                        visible={this.state.visible}
-                        onPopupClose={this.onPopupClose}
-                    />
-                    <PopUpDistribute
-                        visible={this.state.visibleTwo}
-                        onPopupClose={this.onPopupCloseTwo}
-                    />
+
+
                 </ScrollView>
+                <PopUpDist
+                    visible={this.state.visibleTwo}
+                    onPopupClose={this.onPopupCloseTwo}
+                />
+                <PopUpCon
+                    data={detailData.contacts || []}
+                    visible={this.state.visible}
+                    onPopupClose={this.onPopupClose}
+                />
             </View>
         );
     }

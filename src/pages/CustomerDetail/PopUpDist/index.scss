@@ -7,7 +7,8 @@
     @include flex(row, center, center);
     height: 120px;
     background-color: #FFFFFF;
-    margin-bottom: 6px;
+    border-bottom-width: 1px;
+    border-bottom-color: #EEEEEE;
     border-radius: 4px;
 }
 
@@ -24,11 +25,12 @@
 .popup-dist-cancel {
     @include flex(row, center, center);
     height: 100px;
-    background-color: #FFFFFF;
     border-radius: 4px;
+    background-color: #FFFFFF;
 }
 
 .popup-dist-cancel-txt {
-    @include font(32px, #F23030);
+    @include font(32px, #444444);
     font-weight: 700;
+    line-height: 50px;
 }

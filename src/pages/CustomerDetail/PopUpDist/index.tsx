@@ -10,7 +10,7 @@ type baseProps = {
     data?: Array<object>;
     onPopupClose?: any;
 }
-export default class PopUpConTwo extends Component<baseProps, any> {
+export default class PopUpConDist extends Component<baseProps, any> {
     constructor(props) {
         super(props);
     }
@@ -36,7 +36,6 @@ export default class PopUpConTwo extends Component<baseProps, any> {
                     borderBottomRightRadius: 0,
                     borderTopLeftRadius: 4,
                     borderTopRightRadius: 4,
-                    backgroundColor: "#f5f5f5",
                     padding:0
                 }}
                 rnContainerStyle={{ height: 140, minHeight: 80 }}
