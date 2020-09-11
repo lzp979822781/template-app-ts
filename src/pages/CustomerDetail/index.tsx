@@ -167,7 +167,7 @@ class CustomerDetail extends Component<any, any> {
         const params = {
             customerId: jyNativeData.customerId,
             status: 2, // 任务状态：1未完成，2已完成，3已超时
-            queryType: 1, // 查询类型：1.我的任务 2.下属任务
+            // queryType: 1, // 查询类型：1.我的任务 2.下属任务
             pageNum: currentPage,
             pageSize: pageSize,
             appName: jyNativeData.userType === "CM" ? "saint" : "partner" // 系统来源：saint-地勤,partner-合伙人
@@ -175,6 +175,7 @@ class CustomerDetail extends Component<any, any> {
         // console.log(JSON.stringify(params));
 
         const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", params);
+        debugger
         Taro.hideLoading();
         if (resVisit.success) {
             this.setVisitListData(resVisit);

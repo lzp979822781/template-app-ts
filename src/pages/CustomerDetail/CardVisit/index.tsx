@@ -53,6 +53,7 @@ export default class CardVisit extends Component<baseProps, any> {
         };
 
         return visitList.map((item) => {
+            let visitorListFirst = item.visitorList && item.visitorList[0] ? item.visitorList[0] : {}
             return (
                 <View className='list-item' key={item.id} style={Shadow} onClick={() => {
                     this.routerTo("/pages/PlanDetail/index", {
@@ -71,11 +72,11 @@ export default class CardVisit extends Component<baseProps, any> {
                         </Text>
                     </View>
                     <View className='list-item-des'>
-                        <Text className='list-item-des-txt'>拜访人：{item.visitorList[0].contactName}</Text>
+                        <Text className='list-item-des-txt'>拜访人：{visitorListFirst.contactName}</Text>
                         <View className='divide-line-vertical'></View>
-                        <Text className='list-item-des-txt'>{item.visitorList[0].mobile}</Text>
+                        <Text className='list-item-des-txt'>{visitorListFirst.mobile}</Text>
                         <View className='divide-line-vertical'></View>
-                        <Text className='list-item-des-txt'>{item.visitorList[0].roleName}</Text>
+                        <Text className='list-item-des-txt'>{visitorListFirst.roleName}</Text>
                     </View>
                     <View className='list-item-des'>
                         <Text className='list-item-des-txt'>

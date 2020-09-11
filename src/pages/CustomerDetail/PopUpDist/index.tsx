@@ -15,10 +15,8 @@ export default class PopUpConDist extends Component<baseProps, any> {
         super(props);
     }
 
-
     jumpToApp(des) {
         const jyNativeData = getGlobalData('jyNativeData');
-        debugger
         // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`)
         JDJumping.jumpToOpenapp(
             `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerId: jyNativeData.customerId})}}`
