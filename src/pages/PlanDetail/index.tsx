@@ -52,13 +52,11 @@ export default class PlanDetail extends Component<any, any> {
             })
         }else{
             Taro.showToast({
-                title: res.errorMsg,
+                title: "计划详情获取失败",
                 icon: 'none',
-                duration: 1000
+                duration: 2000
             })
         };
-
-        
     };
 
     jumpTo = () => {

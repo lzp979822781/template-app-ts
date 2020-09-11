@@ -59,9 +59,9 @@ export default class PurchaseRelation extends Component<any, any> {
             this.setVisitListData(res);
         } else {
             Taro.showToast({
-                title: res.errorMsg,
+                title: "采购关系获取失败",
                 icon: 'none',
-                duration: 1000
+                duration: 2000
             })
             this.setState({
                 currentPage: currentPage > 1 ? currentPage - 1 : 1,

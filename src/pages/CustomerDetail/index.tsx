@@ -14,7 +14,6 @@ import PopUpCon from "./PopUpCon/index";
 import PopUpDist from "./PopUpDist/index";
 import DistBtn from "./DistBtn/index";
 
-
 import "./index.scss";
 
 type PageOwnProps = {};
@@ -92,7 +91,7 @@ class CustomerDetail extends Component<any, any> {
             });
         } else {
             Taro.showToast({
-                title: res.errorMsg,
+                title: "获取客户绑定权限失败",
                 icon: 'none',
                 duration: 1000
             })
@@ -109,7 +108,7 @@ class CustomerDetail extends Component<any, any> {
             this.setState({ customerTags: resCustomerTags.data, refreshing: false });
         } else {
             Taro.showToast({
-                title: resCustomerTags.errorMsg,
+                title: "客户标签获取失败",
                 icon: 'none',
                 duration: 1000
             });
@@ -179,7 +178,7 @@ class CustomerDetail extends Component<any, any> {
             this.setVisitListData(resVisit);
         } else {
             Taro.showToast({
-                title: resVisit.errorMsg,
+                title: "拜访列表获取失败",
                 icon: 'none',
                 duration: 1000
             })
@@ -264,39 +263,23 @@ class CustomerDetail extends Component<any, any> {
             visible: false
         });
 
-        // Taro.showLoading({
-        //     title: "加载中"
-        // });
-
         const uri = jyNativeData.userType === "CM" ? "mjying_assist_customer_merge" : "mjying_assist_partner_customer_bind";
         const res = await JDRequest.get(uri, {
             pin: inputValue,
             customerId: jyNativeData.customerId
         });
 
-        // this.setState({
-        //     toast: true
-        // });
-
-        // setTimeout(() => {
-        //     this.setState({
-        //         toast: false
-        //     });
-
-        // }, 2000);
 
         Taro.hideLoading();
         if (res.success && res.code === 1) {
-            // Toast.info('This is a toast tips 3 !!!', 1);
             Taro.showToast({
                 title: "绑定成功",
                 icon: 'success',
                 duration: 2000
             });
         } else {
-            // Toast.info('This is a toast tips 3 !!!', 1);
             Taro.showToast({
-                title: "绑定失败",
+                title: "绑定客户失败",
                 icon: 'none',
                 duration: 2000,
                 complete: () => {
