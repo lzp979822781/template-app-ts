@@ -4,8 +4,8 @@
 }
 
 .popup-dist-confirm {
-    @include flex(row, center, center);
-    height: 120px;
+    @include flex(column, center, center);
+    height: 140px;
     background-color: #FFFFFF;
     border-bottom-width: 1px;
     border-bottom-color: #EEEEEE;
@@ -15,11 +15,11 @@
 .popup-dist-confirm-icon {
     width: 80px;
     height: 80px;
-    margin-right: 20px;
+    margin-bottom: 10px;
 }
 
 .popup-dist-confirm-txt {
-    @include font(32px, #444444);
+    @include font(28px, #444444);
 }
 
 .popup-dist-cancel {

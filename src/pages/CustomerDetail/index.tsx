@@ -1,7 +1,9 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Image } from "@tarojs/components";
+import { View, Image, Input } from "@tarojs/components";
 import { ImageBackground, ScrollView, RefreshControl } from "react-native";
+// import { Toast } from '@ant-design/react-native';
+import { JDConfirmDialog } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
 import { hoverStyle } from "@/utils/utils";
@@ -23,7 +25,9 @@ class CustomerDetail extends Component<any, any> {
         super(props);
         this.state = {
             visible: false,
-            popupType: "contact", //联系人 contact, 分配 dist
+            // toast: false,
+            popupType: "contact", //联系人 contact, 分配 dist, 绑定 binding
+            inputValue: "",
             currentPage: 1,
             pageSize: 20,
             refreshing: false,
@@ -61,7 +65,7 @@ class CustomerDetail extends Component<any, any> {
     };
 
     onPopupShow = (type) => {
-        this.setState({ visible: true, popupType: type  });
+        this.setState({ visible: true, popupType: type });
     };
 
     onPopupClose = () => {
@@ -211,6 +215,104 @@ class CustomerDetail extends Component<any, any> {
         }
     };
 
+    //确认绑定客户
+    onConfirm = async () => {
+        const { inputValue } = this.state;
+        const jyNativeData = getGlobalData('jyNativeData');
+        //绑定客户
+        this.setState({
+            visible: false
+        });
+
+        // Taro.showLoading({
+        //     title: "加载中"
+        // });
+
+        const res = await JDRequest.get("/assist/partner/customer/bind", {
+            pin: inputValue,
+            customerId: jyNativeData.customerId
+        });
+
+        // this.setState({
+        //     toast: true
+        // });
+
+        // setTimeout(() => {
+        //     this.setState({
+        //         toast: false
+        //     });
+
+        // }, 2000);
+
+        Taro.hideLoading();
+        if (res.success && res.code === 1) {
+            // Toast.info('This is a toast tips 3 !!!', 1);
+            Taro.showToast({
+                title: "绑定成功",
+                icon: 'success',
+                duration: 2000
+            });
+        } else {
+            // Toast.info('This is a toast tips 3 !!!', 1);
+            Taro.showToast({
+                title: "绑定失败",
+                icon: 'none',
+                duration: 2000,
+                complete: () => {
+                    setTimeout(() => {
+                        this.setState({
+                            visible: true
+                        })
+                    }, 2500);
+                }
+            })
+        }
+    }
+
+    onChange = (e) => {
+        this.setState({
+            inputValue: e.target.value
+        });
+    }
+
+    renderConfirmDialog() {
+        const { visible, popupType, inputValue } = this.state;
+        return (
+            <JDConfirmDialog
+                show={visible && popupType === "binding"}
+                onClose={this.onPopupClose}
+                onConfirm={this.onConfirm}
+            >
+                <View style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: "100%",
+                    padding: 30
+                }}
+                >
+                    <Input className='custom-pin-input' type='text' value={inputValue} placeholder='请输入客户pin' focus onInput={this.onChange} />
+                </View>
+            </JDConfirmDialog>
+        );
+    }
+
+    renderHeaderRight = () => {
+        return <View
+            className='customer-head-right'
+        >
+            <View
+                className='head-right-btn-con'
+                onClick={() => this.onPopupShow("dist")}
+                hoverStyle={hoverStyle}
+            >
+                <Image
+                    className='head-right-btn'
+                    src='https://img11.360buyimg.com/imagetools/jfs/t1/112573/14/17669/800/5f5a1513E402fed84/37fcf5d8c360e8be.png'
+                />
+            </View>
+        </View>
+    }
+
     render() {
 
         const statusBarHeight = getGlobalData('statusBarHeight');
@@ -229,22 +331,8 @@ class CustomerDetail extends Component<any, any> {
                         title='客户详情'
                         noBgColor
                         backApp
-                        renderRight={
-                            <View
-                                className='customer-head-right'
-                            >
-                                <View
-                                    className='head-right-btn-con'
-                                    onClick={()=>this.onPopupShow("contact")}
-                                    hoverStyle={hoverStyle}
-                                >
-                                    <Image
-                                        className='head-right-btn'
-                                        src="https://img11.360buyimg.com/imagetools/jfs/t1/112573/14/17669/800/5f5a1513E402fed84/37fcf5d8c360e8be.png"
-                                    />
-                                </View>
-                            </View>
-                        }
+                        // eslint-disable-next-line taro/render-props
+                        renderRight={this.renderHeaderRight()}
                     />
                 </ImageBackground>
                 <ScrollView
@@ -263,22 +351,24 @@ class CustomerDetail extends Component<any, any> {
                     }
                 >
                     <View className='no-bg-gap' />
-                    <CardBase data={detailData} onPopupShow={()=>this.onPopupShow("dist")} />
+                    <CardBase data={detailData} onPopupShow={(type) => this.onPopupShow(type)} />
                     <CardTag loaded={loaded} data={detailData} tagsData={customerTags} />
                     <PurchasingInfo data={detailData} />
                     <CardVisit lastPage={lastPage} loaded={loaded} data={detailData} visitList={visitListData} />
-
-
                 </ScrollView>
                 <PopUpDist
-                    visible={visible && popupType === "contact"}
+                    visible={visible && popupType === "dist"}
                     onPopupClose={this.onPopupClose}
                 />
                 <PopUpCon
                     data={detailData.contacts || []}
-                    visible={visible && popupType === "dist"}
+                    visible={visible && popupType === "contact"}
                     onPopupClose={this.onPopupClose}
                 />
+                {this.renderConfirmDialog()}
+                {/* <JDToast show={!!this.state.toast} during={1000} style={this.state.toastStyle} mode={JDToast.MODE.MODAL}>
+                    toast
+                </JDToast> */}
             </View>
         );
     }

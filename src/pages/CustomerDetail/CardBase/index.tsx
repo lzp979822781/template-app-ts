@@ -55,7 +55,7 @@ export default class CardBase extends Component<baseProps, any> {
                         </Text>
                     </View>
                     <View className='contact-address-divide'></View>
-                    <View className='con-contact' onClick={onPopupShow} hoverStyle={hoverStyle}>
+                    <View className='con-contact' onClick={()=>onPopupShow("contact")} hoverStyle={hoverStyle}>
                         <View
                             className='contact-img-con'
                         >
@@ -65,7 +65,7 @@ export default class CardBase extends Component<baseProps, any> {
                 </View>
                 <View className='base-btn-con'>
                     <View className='base-btn' hoverStyle={hoverStyle} onClick={() => {
-                        this.jumpToApp("orderPage");
+                        onPopupShow("binding")
                     }}
                     >
                         <Gradient
