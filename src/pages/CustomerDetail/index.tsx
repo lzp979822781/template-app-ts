@@ -13,7 +13,7 @@ import CardVisit from "./CardVisit/index";
 import PopUpCon from "./PopUpCon/index";
 import PopUpDist from "./PopUpDist/index";
 import DistBtn from "./DistBtn/index";
-import BaseBtn from "./BaseBtn/index";
+// import BaseBtn from "./BaseBtn/index";
 
 import "./index.scss";
 
@@ -76,18 +76,18 @@ class CustomerDetail extends Component<any, any> {
         if (offsetY + oriageScrollHeight + 10 >= contentSizeHeight) {
             this.onEndReached();
         };
-        if (offsetY >= 400) {
-            this.setState({ showBottomBtn: true })
-        } else {
-            this.setState({ showBottomBtn: false })
-            // Animated.timing(                  // 随时间变化而执行动画
-            //     this.state.fadeAnim,                       // 动画中的变量值
-            //     {
-            //         toValue: 0,                   // 透明度最终变为0，即完全透明
-            //         duration: 2000,              // 让动画持续一段时间
-            //     }
-            // ).start();
-        }
+        // if (offsetY >= 400) {
+        //     this.setState({ showBottomBtn: true })
+        // } else {
+        //     this.setState({ showBottomBtn: false })
+        //     // Animated.timing(                  // 随时间变化而执行动画
+        //     //     this.state.fadeAnim,                       // 动画中的变量值
+        //     //     {
+        //     //         toValue: 0,                   // 透明度最终变为0，即完全透明
+        //     //         duration: 2000,              // 让动画持续一段时间
+        //     //     }
+        //     // ).start();
+        // }
     };
 
     canAction = false;
@@ -386,9 +386,9 @@ class CustomerDetail extends Component<any, any> {
                     <PurchasingInfo data={detailData} />
                     <CardVisit lastPage={lastPage} loaded={loaded} data={detailData} visitList={visitListData} />
                 </ScrollView>
-                {showBottomBtn && <View className='bottom-btn-con'>
+                {/* {showBottomBtn && <View className='bottom-btn-con'>
                     <BaseBtn onPopupShow={(type) => this.onPopupShow(type)} canBind={canBind} />
-                </View>}
+                </View>} */}
                 <PopUpDist
                     visible={visible && popupType === "dist"}
                     onPopupClose={this.onPopupClose}

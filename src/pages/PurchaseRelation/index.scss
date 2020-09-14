@@ -39,6 +39,8 @@
     height: 66px;
 }
 
+
+
 .content-box {
     flex: 1
 }
@@ -77,10 +79,30 @@
     line-height: 34px;
 }
 
-.purchaseRelation-list-none {
-    @include font(20px, #9B9B9B);
+.item-image-none {
+    padding-top: 100px;
+    display: flex;
+    @include flex(column, center, center);
+    height: 100%;
+}
+
+.item-image-none-icon {
+    width: 240px;
+    height: 171px;
+}
+
+.item-image-none-txt {
+    @include font(20px, #999999);
     text-align: center;
-    margin-top: 10px;
+    margin-top: 62px;
+    line-height: 40px;
+    margin-bottom: 15px;
+}
+
+.purchaseRelation-list-none {
+    @include font(20px, #999999);
+    text-align: center;
+    margin-top: 12px;
     line-height: 30px;
     margin-bottom: 15px;
 }

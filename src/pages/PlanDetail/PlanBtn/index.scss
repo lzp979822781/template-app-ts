@@ -2,7 +2,8 @@
 
 .plan-btn-con {
     @include flex(row, center, center);
-    height: 120px;
+    height: 140px;
+    padding: 40px;
     border-top-color: #EEEEEE;
     border-top-width: 1px;
     background-color: #FFFFFF;

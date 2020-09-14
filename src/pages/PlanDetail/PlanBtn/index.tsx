@@ -40,30 +40,18 @@ export default class PlanBtn extends Component<baseProps, any> {
         )
     }
 
-
-    isToday(date) {
-        if (date) {
-            return new Date().toString().substr(0, 15) === date.toString().substr(0, 15);
-        } else {
-            return false;
-        };
-    }
-
     render() {
         const { data } = this.props;
-        const isToday = this.isToday(data.created)
-
-        const signParam = { customerId: data.customerId, customerName: data.customerName, taskId: data.taskId };
-        const planSummaryParam = { customerId: data.customerId, taskId: data.taskId, visitType: data.taskWay };
-
+        const signParam = { customerId: data.customerId, customerName: data.customerName, taskId: data.id };
+        const planSummaryParam = { customerId: data.customerId, taskId: data.id, visitType: data.taskModel };
 
         //已完成，已超时
-        const hideAllBtn = [2, 3].includes(data.taskStatus);
+        const showAllBtn = [0, 1].includes(data.taskStatus);
 
         //是今天，未打卡，显示打卡按钮
-        const showSign = isToday && !data.hasSigned;
+        const canSign = data.canSign;
 
-        if(hideAllBtn){
+        if(!showAllBtn){
            return <View />
         };
 
@@ -71,7 +59,7 @@ export default class PlanBtn extends Component<baseProps, any> {
             <View
                 className='plan-btn-con'
             >
-                {showSign ? <View
+                {canSign ? <View
                     className='plan-btn'
                     onClick={() => { this.jumpToApp("visitPlanSignInPage", signParam) }}
                     hoverStyle={hoverStyle}

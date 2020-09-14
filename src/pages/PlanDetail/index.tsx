@@ -1,14 +1,17 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Gradient, JDListItem } from "@/components/index";
+import { Modal, Dimensions } from "react-native";
+import ImageViewer from "react-native-image-zoom-viewer";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import PopUpCon from "./PopUpCon/index";
 import PlanBtn from "./PlanBtn/index";
-
 import "./index.scss";
+
+const { width } = Dimensions.get("window");
 
 // 任务状态：0待进行，1已提交，2已完成，3已超时
 const TaskStatus = [{
@@ -31,7 +34,10 @@ export default class PlanDetail extends Component<any, any> {
         super(props);
         this.state = {
             visible: false,
+            visibleImg: false,
+            shouIndex: 0,
             tastDetail: {
+                visible: false,
                 noneTxt: "",
                 companyName: "",
                 address: "",
@@ -44,20 +50,24 @@ export default class PlanDetail extends Component<any, any> {
     config: Config = {
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
+
     back = false;
-    componentDidShow() {
-        if (!this.back) {
-            this.getData();
-        }
+
+    componentWillMount() {
+        this.getData();
     }
+
+    // componentDidShow() {
+    //     if (this.back) {
+    //         this.getData();
+    //     }
+    // }
 
     getData = async () => {
 
-        if (!this.back) {
-            Taro.showLoading({
-                title: "加载中"
-            });
-        }
+        Taro.showLoading({
+            title: "加载中"
+        });
 
         const jyNativeData = getGlobalData('jyNativeData');
 
@@ -89,13 +99,16 @@ export default class PlanDetail extends Component<any, any> {
         )
     }
 
-
     onPopupShow = () => {
         this.setState({ visible: true });
     };
 
     onPopupClose = () => {
         this.setState({ visible: false });
+    };
+
+    onPopupShowImg= () => {
+        this.setState({ visibleImg: false });
     };
 
     renderContact = () => {
@@ -111,31 +124,15 @@ export default class PlanDetail extends Component<any, any> {
         return noneTxt;
     };
 
-    isToday(date) {
-        if (date) {
-            return new Date().toString().substr(0, 15) === date.toString().substr(0, 15);
-        } else {
-            return false;
-        };
-    }
-
     renderRight = () => {
         const { tastDetail } = this.state;
-        const isToday = this.isToday(tastDetail.created)
-        if (tastDetail.created && isToday) {
+        if (!tastDetail.canBeModified) {
             return null;
-        };
-
-        //未完成，未超时
-        const hideAllBtn = [2, 3].includes(tastDetail.taskStatus);
-
-        if (hideAllBtn) {
-            return null
         };
 
         const params = {
             customerId: tastDetail.customerId,
-            taskId: tastDetail.taskId
+            taskId: tastDetail.id
         };
 
         return <View
@@ -157,11 +154,18 @@ export default class PlanDetail extends Component<any, any> {
         const { tastDetail } = this.state;
         const visitImgUrlList = tastDetail.visitImgUrlList || [];
 
-        return visitImgUrlList.map((item) => {
-            return <Image
-                className='visit-item-img'
-                src={item}
-            />
+        return visitImgUrlList.map((item, index) => {
+            return <View
+                key={item}
+                onClick={() => {
+                    this.setState({ visibleImg: true, shouIndex: index })
+                }}
+            >
+                <Image
+                    className='visit-item-img'
+                    src={item}
+                />
+            </View>
         })
     }
 
@@ -182,6 +186,13 @@ export default class PlanDetail extends Component<any, any> {
         const taskMemoName = taskMemoList.map((item) => {
             return item.name
         }).join();
+
+        const imgUrlList = tastDetail.visitImgUrlList || [];
+        const visitImgUrlList = imgUrlList.map((item) => {
+            return {
+                url: item
+            }
+        })
 
         return (
             <View className='container'>
@@ -226,7 +237,7 @@ export default class PlanDetail extends Component<any, any> {
                                 >
                                     <Image
                                         className='contact-img'
-                                        src="https://img12.360buyimg.com/imagetools/jfs/t1/128651/9/12268/1100/5f58ac4eEa6562e75/38280dd6bf5b0fb4.png"
+                                        src='https://img12.360buyimg.com/imagetools/jfs/t1/128651/9/12268/1100/5f58ac4eEa6562e75/38280dd6bf5b0fb4.png'
                                     />
                                 </View>
                             </View> : null}
@@ -250,6 +261,30 @@ export default class PlanDetail extends Component<any, any> {
                     visible={this.state.visible}
                     onPopupClose={this.onPopupClose}
                 />
+                <Modal
+                    visible={this.state.visibleImg}
+                    animationType='fade'
+                    transparent
+                    presentationStyle='overFullScreen'
+                >
+                    <ImageViewer
+                        backgroundColor='#rgba(0, 0, 0, 0.8)'
+                        onClick={this.onPopupShowImg}
+                        renderFooter={() => {
+                            return (
+                                <View
+                                    style={{ width: width }}
+                                    className='image-viewer-close'
+                                    onClick={this.onPopupShowImg}
+                                >
+                                    <Text className='image-viewer-close-icon'>关闭</Text>
+                                </View>
+                            );
+                        }}
+                        index={this.state.shouIndex}
+                        imageUrls={visitImgUrlList}
+                    />
+                </Modal>
             </View >
         );
     }

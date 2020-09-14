@@ -125,5 +125,16 @@
 .visit-item-img {
    width: 120px;
    height: 120px;
-   padding: 5px;
+   margin: 5px;
+}
+
+.image-viewer-close{
+    @include flex(row, center, center);
+    height: 80px;
+    background-color: rgba(255, 255, 255, 0.8)
+}
+
+.image-viewer-close-icon {
+    @include font(30px, #333333);
+    text-align: center;
 }

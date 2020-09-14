@@ -139,10 +139,15 @@ export default class PurchaseRelation extends Component<any, any> {
 
     renderItems() {
         const { data = [], loaded } = this.state;
-
         if (data.length === 0 && loaded) {
-            return <Text className='purchaseRelation-list-none' >暂无数据</Text>
-        }
+            return <View className='item-image-none'>
+                <Image
+                    className='item-image-none-icon'
+                    src={"https://img12.360buyimg.com/imagetools/jfs/t1/121246/7/12582/29481/5f5f49cdE3b123199/8cb12f08a4713104.png"}
+                />
+                <Text className='item-image-none-txt' >暂无数据</Text>
+            </View>
+        };
         return data.map((item, index) => {
             const className =
                 index === 0 ? "list-item-box top-gap" : "list-item-box";
@@ -157,7 +162,7 @@ export default class PurchaseRelation extends Component<any, any> {
                             />
                         </View>
                         <View className='content-box'>
-                            <Text  numberOfLines={2}  className='item-title'>
+                            <Text numberOfLines={2} className='item-title'>
                                 {item.shopName}
                             </Text>
                         </View>
