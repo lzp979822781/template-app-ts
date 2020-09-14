@@ -12,7 +12,7 @@ interface Option {
 export default class ListItem extends Component<Option, any> {
     static defaultProps = {
         label: "标题",
-        value: "内容"
+        value: ""
     };
     constructor(props) {
         super(props);

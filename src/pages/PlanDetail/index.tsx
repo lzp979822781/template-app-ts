@@ -10,8 +10,6 @@ import PlanBtn from "./PlanBtn/index";
 
 import "./index.scss";
 
-const noneTxt = "无";
-
 // 任务状态：0待进行，1已提交，2已完成，3已超时
 const TaskStatus = [{
     txt: "待进行",
@@ -34,6 +32,7 @@ export default class PlanDetail extends Component<any, any> {
         this.state = {
             visible: false,
             tastDetail: {
+                noneTxt: "",
                 companyName: "",
                 address: "",
                 creatorName: "",
@@ -70,8 +69,10 @@ export default class PlanDetail extends Component<any, any> {
         this.back = true;
         if (res.success) {
             this.setState({
-                tastDetail: res.data
+                tastDetail: res.data,
+                noneTxt: "无"
             });
+
         } else {
             Taro.showToast({
                 title: "计划详情获取失败",
@@ -98,7 +99,7 @@ export default class PlanDetail extends Component<any, any> {
     };
 
     renderContact = () => {
-        const { tastDetail } = this.state;
+        const { tastDetail, noneTxt } = this.state;
         if (tastDetail.visitorList && tastDetail.visitorList.length > 0) {
             const arrayName = tastDetail.visitorList.map((item) => {
                 return item.contactName
@@ -166,7 +167,7 @@ export default class PlanDetail extends Component<any, any> {
 
     render() {
         const jyNativeData = getGlobalData('jyNativeData');
-        const { tastDetail } = this.state;
+        const { tastDetail, noneTxt } = this.state;
         const Shadow = {
             shadowColor: "#f5f5f5",
             shadowOffset: { w: 10, h: 2 },
