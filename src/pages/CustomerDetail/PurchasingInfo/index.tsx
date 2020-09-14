@@ -28,12 +28,10 @@ export default class PurchasingInfo extends Component<baseProps, any> {
     };
 
     jumpToApp(des) {
-        // const jyNativeData = getGlobalData('jyNativeData');
         const { data } = this.props;
-        // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`)
         JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`
-        )
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin, customerType: data.buyerUserType})}}`
+        );
     }
 
 
