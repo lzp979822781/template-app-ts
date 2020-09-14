@@ -6,22 +6,21 @@ import { hoverStyle } from "@/utils/utils";
 import { get as getGlobalData } from '@/utils/global_data';
 import "./index.scss";
 
-const noneTxt = "无";
 
 // 任务状态：0待进行，1已提交，2已完成，3已超时
-const TaskStatus = [{
-    txt: "待进行",
-    color: ""
-}, {
-    txt: "已提交",
-    color: ""
-}, {
-    txt: "已完成",
-    color: ""
-}, {
-    txt: "已超时",
-    color: ""
-}]
+// const TaskStatus = [{
+//     txt: "待进行",
+//     color: ""
+// }, {
+//     txt: "已提交",
+//     color: ""
+// }, {
+//     txt: "已完成",
+//     color: ""
+// }, {
+//     txt: "已超时",
+//     color: ""
+// }]
 
 
 type baseProps = {
@@ -45,13 +44,9 @@ export default class PlanBtn extends Component<baseProps, any> {
         const signParam = { customerId: data.customerId, customerName: data.customerName, taskId: data.id };
         const planSummaryParam = { customerId: data.customerId, taskId: data.id, visitType: data.taskModel };
 
-        //已完成，已超时
-        const showAllBtn = [0, 1].includes(data.taskStatus);
+        const hideAllBtn = !data.canSign &&  !data.canLog;
 
-        //是今天，未打卡，显示打卡按钮
-        const canSign = data.canSign;
-
-        if(!showAllBtn){
+        if(hideAllBtn){
            return <View />
         };
 
@@ -59,7 +54,7 @@ export default class PlanBtn extends Component<baseProps, any> {
             <View
                 className='plan-btn-con'
             >
-                {canSign ? <View
+                {data.canSign ? <View
                     className='plan-btn'
                     onClick={() => { this.jumpToApp("visitPlanSignInPage", signParam) }}
                     hoverStyle={hoverStyle}
@@ -79,7 +74,7 @@ export default class PlanBtn extends Component<baseProps, any> {
                         <Text className='plan-btn-txt'>打卡</Text>
                     </Gradient>
                 </View> : null}
-                <View
+                {data.canLog ? <View
                     className='plan-btn'
                     onClick={() => { this.jumpToApp("VisitPlanSummaryPage", planSummaryParam) }}
                     hoverStyle={hoverStyle}
@@ -103,7 +98,7 @@ export default class PlanBtn extends Component<baseProps, any> {
                         />
                         <Text className='plan-btn-txt'>拜访纪要</Text>
                     </Gradient>
-                </View>
+                </View> : null}
             </View>
         );
     }

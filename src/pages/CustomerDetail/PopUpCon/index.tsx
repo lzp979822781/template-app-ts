@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View,  Text, Image } from "@tarojs/components";
-import { PopUp } from "@/components/index";
+import { PopUp, Footer } from "@/components/index";
 import "./index.scss";
 
 type baseProps = {
@@ -76,6 +76,7 @@ export default class PopUpCon extends Component<baseProps, any> {
                         </View>
                     </View>
                     <View className='popup-body'>{this.renderItems()}</View>
+                    <Footer></Footer>
                 </View>
             </PopUp>
         );

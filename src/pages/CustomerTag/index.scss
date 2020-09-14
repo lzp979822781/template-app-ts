@@ -10,7 +10,7 @@
     @include flex(row, flex-end, center);
     flex: 1;
     height: 100%;
-    
+
 }
 
 .head-right-btn-con {
@@ -30,6 +30,7 @@
     height: 160px;
     background-color: #F23030;
 }
+
 .card-base {
     @include flex(row, center, center);
     height: 230px;
@@ -39,14 +40,15 @@
     margin-right: 27px;
     margin-top: -115px;
 }
+
 .card-base-item {
     @include flex(column, center, center);
     flex: 1;
 }
 
-.card-base-item-label{
+.card-base-item-label {
     @include font(28px, #262626);
-    
+
 }
 
 .card-base-item-value {
@@ -86,6 +88,7 @@
 .tag-model-close {
     @include flex(row, flex-end, center);
 }
+
 .tag-close-icon-con {
     @include flex(row, center, center);
     margin-top: -20px;
@@ -103,43 +106,45 @@
     margin-bottom: 30px;
 }
 
-.model-head{
+.model-head {
     @include flex(column, center, center);
     height: 190px;
 }
 
-.model-head-icon{
+.model-head-icon {
     width: 160px;
     height: 126px;
     margin-bottom: 10px;
 }
 
-.model-head-title{
+.model-head-title {
     @include font(30px, #444444);
     line-height: 50px;
     font-weight: 700;
 }
 
-.model-body{
-   padding: 20px;
-   height: auto;
+.model-body {
+    flex: 1;
+    padding: 20px;
 }
 
-.model-body-title{
+.model-body-title {
     @include flex(row, flex-start, center);
     margin-bottom: 4px;
 }
-.model-body-title-icon{
+
+.model-body-title-icon {
     width: 12px;
     height: 12px;
     margin-right: 14px;
 }
-.model-body-title-txt{
+
+.model-body-title-txt {
     @include font(26px, #2B2D2D);
     font-weight: 700;
 }
 
-.model-body-des{
+.model-body-des {
     @include font(18px, #666666);
     margin-left: 26px;
 }

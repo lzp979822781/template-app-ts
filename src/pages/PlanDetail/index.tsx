@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, Gradient, JDListItem } from "@/components/index";
+import { StatusBar, Header, Gradient, JDListItem, Footer } from "@/components/index";
 import { Modal, Dimensions } from "react-native";
 import ImageViewer from "react-native-image-zoom-viewer";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
@@ -57,17 +57,18 @@ export default class PlanDetail extends Component<any, any> {
         this.getData();
     }
 
-    // componentDidShow() {
-    //     if (this.back) {
-    //         this.getData();
-    //     }
-    // }
+    componentDidShow() {
+        if (this.back) {
+            this.getData();
+        }
+    }
 
     getData = async () => {
-
-        Taro.showLoading({
-            title: "加载中"
-        });
+        if (!this.back) {
+            Taro.showLoading({
+                title: "加载中"
+            });
+        };
 
         const jyNativeData = getGlobalData('jyNativeData');
 
@@ -107,7 +108,7 @@ export default class PlanDetail extends Component<any, any> {
         this.setState({ visible: false });
     };
 
-    onPopupShowImg= () => {
+    onPopupShowImg = () => {
         this.setState({ visibleImg: false });
     };
 
@@ -256,6 +257,7 @@ export default class PlanDetail extends Component<any, any> {
                     </View>
                 </ScrollView>
                 <PlanBtn data={tastDetail} />
+                <Footer />
                 <PopUpCon
                     data={tastDetail.visitorList || []}
                     visible={this.state.visible}

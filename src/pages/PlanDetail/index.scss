@@ -44,12 +44,10 @@
 
 .plan-status-txt {
     @include font(22px, #FFFFFF);
-    line-height: 44px;
 }
 
 .plan-status-txt2 {
     @include font(24px, #999999);
-    line-height: 44px;
     margin-right: 10px;
 }
 

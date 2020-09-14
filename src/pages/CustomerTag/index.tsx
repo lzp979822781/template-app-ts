@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, Modal, JDListItem } from "@/components/index";
+import { StatusBar, Header, Modal, JDListItem, Footer } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 
@@ -97,7 +97,7 @@ export default class Goods extends Component<any, any> {
         });
 
         return (
-            <View className='tag-model'>
+            <ScrollView className='tag-model'>
                 <View className='tag-model-close'>
                     <View className='tag-close-icon-con' onClick={this.onClose}>
                         <Image className='tag-close-icon' src="https://img11.360buyimg.com/imagetools/jfs/t1/140989/12/8055/459/5f58ac4fE8aa0f2c7/8121a8647fb70c46.png" />
@@ -110,7 +110,7 @@ export default class Goods extends Component<any, any> {
                 <View className='model-body'>
                     {tagsExplanationList}
                 </View>
-            </View>
+            </ScrollView>
         );
     };
 
@@ -212,6 +212,7 @@ export default class Goods extends Component<any, any> {
                     {this.renderGroup2()}
                     {this.renderGroup3()}
                 </ScrollView>
+                <Footer />
                 <Modal
                     visible={visible}
                     className='test-modal'

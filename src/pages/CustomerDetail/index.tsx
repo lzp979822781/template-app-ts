@@ -3,7 +3,7 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Input } from "@tarojs/components";
 import { ImageBackground, ScrollView, RefreshControl } from "react-native";
 import { JDConfirmDialog } from '@jdreact/jdreact-core-lib';
-import { StatusBar, Header } from "@/components/index";
+import { StatusBar, Header, Footer } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
@@ -400,6 +400,7 @@ class CustomerDetail extends Component<any, any> {
                 />
                 {this.renderConfirmDialog()}
                 {this.renderInputDialog()}
+                <Footer></Footer>
             </View>
         );
     }

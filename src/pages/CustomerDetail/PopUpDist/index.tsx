@@ -1,7 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { View, Text, Image } from "@tarojs/components";
-import { PopUp } from "@/components/index";
+import { PopUp, Footer } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
 import { get as getGlobalData } from '@/utils/global_data';
 import "./index.scss";
@@ -38,7 +38,7 @@ export default class PopUpConDist extends Component<baseProps, any> {
                     borderTopRightRadius: 4,
                     padding:0
                 }}
-                rnContainerStyle={{ height: 140, minHeight: 80 }}
+                rnContainerStyle={{ height: 174, minHeight: 80 }}
             >
                 <View className='popup-dist-con'>
                     <View className='popup-dist-confirm' hoverStyle={hoverStyle} onClick={()=>{this.jumpToApp("dispatchCMPage")}}>
@@ -51,6 +51,7 @@ export default class PopUpConDist extends Component<baseProps, any> {
                     <View className='popup-dist-cancel' hoverStyle={hoverStyle} onClick={onPopupClose}>
                         <Text className='popup-dist-cancel-txt'>取消</Text>
                     </View>
+                    <Footer></Footer>
                 </View>
             </PopUp>
         );

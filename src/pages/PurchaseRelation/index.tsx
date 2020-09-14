@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, DataList } from "@/components/index";
+import { StatusBar, Header, DataList, Footer } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 
@@ -194,6 +194,7 @@ export default class PurchaseRelation extends Component<any, any> {
                     <Block>{this.renderItems()}</Block>
                     {lastPage && data.length != 0 ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
                 </DataList>
+                <Footer />
             </View>
         );
     }
