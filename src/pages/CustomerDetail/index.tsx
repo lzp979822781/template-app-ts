@@ -13,6 +13,7 @@ import CardVisit from "./CardVisit/index";
 import PopUpCon from "./PopUpCon/index";
 import PopUpDist from "./PopUpDist/index";
 import DistBtn from "./DistBtn/index";
+import BaseBtn from "./BaseBtn/index";
 
 import "./index.scss";
 
@@ -32,6 +33,7 @@ class CustomerDetail extends Component<any, any> {
             loaded: false,
             lastPage: false,
             canBind: false,
+            showBottomBtn: false,
             detailData: {},
             customerTags: {
                 "1": [],
@@ -74,6 +76,11 @@ class CustomerDetail extends Component<any, any> {
         const oriageScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
         if (offsetY + oriageScrollHeight + 10 >= contentSizeHeight) {
             this.onEndReached();
+        };
+        if (offsetY >= 400) {
+            this.setState({ showBottomBtn: true })
+        } else {
+            this.setState({ showBottomBtn: false })
         }
     };
 
@@ -126,7 +133,7 @@ class CustomerDetail extends Component<any, any> {
             customerId: jyNativeData.customerId
         });
         //客户标签
-       
+
 
         Taro.hideLoading();
         if (resDetail.success) {
@@ -323,7 +330,7 @@ class CustomerDetail extends Component<any, any> {
     render() {
 
         const statusBarHeight = getGlobalData('statusBarHeight');
-        const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType, canBind } = this.state;
+        const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType, canBind, showBottomBtn } = this.state;
         return (
             <View className='container'>
                 <ImageBackground
@@ -363,6 +370,7 @@ class CustomerDetail extends Component<any, any> {
                     <PurchasingInfo data={detailData} />
                     <CardVisit lastPage={lastPage} loaded={loaded} data={detailData} visitList={visitListData} />
                 </ScrollView>
+                {showBottomBtn ? <View className='bottom-btn-con'><BaseBtn onPopupShow={(type) => this.onPopupShow(type)} canBind={canBind} /></View> : null }
                 <PopUpDist
                     visible={visible && popupType === "dist"}
                     onPopupClose={this.onPopupClose}

@@ -1,0 +1,19 @@
+@import "@/global/common.scss";
+
+.base-btn-con{
+    @include flex(row, center, center);
+}
+
+.base-btn {
+    flex: 1;
+}
+
+.btn-gap {
+    width: 30px;
+}
+
+.base-btn-txt {
+    @include font(28px, #FFFFFF);
+    line-height: 70px;
+    font-weight: 700;
+}

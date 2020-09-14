@@ -79,8 +79,8 @@
 .contact-address-con {
     @include flex(row, center, center);
     margin-top: 38px;
+    margin-bottom: 43px;
 }
-
 
 .con-address {
     flex: 1;
@@ -113,23 +113,4 @@
 .contact-img {
     width: 42px;
     height: 45px;
-}
-
-.base-btn-con{
-    @include flex(row, center, center);
-    margin-top: 43px;
-}
-
-.base-btn {
-    flex: 1;
-}
-
-.btn-gap {
-    width: 30px;
-}
-
-.base-btn-txt {
-    @include font(28px, #FFFFFF);
-    line-height: 70px;
-    font-weight: 700;
 }

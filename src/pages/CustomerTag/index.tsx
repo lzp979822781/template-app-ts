@@ -61,7 +61,7 @@ export default class Goods extends Component<any, any> {
             this.setState({ tagsExplanation: resTagsExplanation.data })
         } else {
             Taro.showToast({
-                title: "绑定客户失败",
+                title: "绑定客户标签失败",
                 icon: 'none',
                 duration: 2000
             })

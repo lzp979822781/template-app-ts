@@ -4,6 +4,8 @@ import { View, Text, Image } from "@tarojs/components";
 import Gradient from "@/components/Gradient";
 import { get as getGlobalData } from '@/utils/global_data';
 import { hoverStyle } from "@/utils/utils";
+import BaseBtn from "../BaseBtn/index";
+
 import "./index.scss";
 
 type baseProps = {
@@ -71,43 +73,7 @@ export default class CardBase extends Component<baseProps, any> {
                         </View>
                     </View>
                 </View>
-                <View className='base-btn-con'>
-                    {canBind ? <View className='base-btn' hoverStyle={hoverStyle} onClick={() => {
-                        onPopupShow("binding")
-                    }}
-                    >
-                        <Gradient
-                            angle={0}
-                            colors={["#FF6600", "#FFC100"]}
-                            style={{
-                                height: 40,
-                                borderRadius: 20,
-                                alignItems: "center",
-                                justifyContent: "center"
-                            }}
-                        >
-                            <Text className='base-btn-txt'>绑定客户</Text>
-                        </Gradient>
-                    </View> : null}
-                    {canBind ?<View className='btn-gap' />  : null}
-                    <View className='base-btn' hoverStyle={hoverStyle} onClick={() => {
-                        this.jumpToApp("visitPlanPage");
-                    }}
-                    >
-                        <Gradient
-                            style={{
-                                height: 40,
-                                borderRadius: 20,
-                                alignItems: "center",
-                                justifyContent: "center"
-                            }}
-                            angle={0}
-                            colors={["#EC1B1B", "#FF511D"]}
-                        >
-                            <Text className='base-btn-txt'>新建计划</Text>
-                        </Gradient>
-                    </View>
-                </View>
+                <BaseBtn onPopupShow={onPopupShow} canBind={canBind}></BaseBtn>  
             </View>
         );
     }
