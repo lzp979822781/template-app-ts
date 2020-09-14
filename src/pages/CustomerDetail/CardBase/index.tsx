@@ -23,14 +23,6 @@ export default class CardBase extends Component<baseProps, any> {
         super(props);
     }
 
-    jumpToApp(des) {
-        const jyNativeData = getGlobalData('jyNativeData');
-        // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`)
-        JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({ customerId: jyNativeData.customerId })}}`
-        )
-    }
-
     jumpToAppWeb() {
         const jyNativeData = getGlobalData('jyNativeData');
         JDJumping.jumpToOpenapp(
@@ -73,7 +65,7 @@ export default class CardBase extends Component<baseProps, any> {
                         </View>
                     </View>
                 </View>
-                <BaseBtn onPopupShow={onPopupShow} canBind={canBind}></BaseBtn>  
+                <BaseBtn data={data} onPopupShow={onPopupShow} canBind={canBind}></BaseBtn>  
             </View>
         );
     }

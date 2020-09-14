@@ -30,7 +30,21 @@
     position: absolute;
     bottom: 0;
     z-index: 1001;
-    // background-color: #FFFFFF;
-    // border-top-width: 1px;
-    // border-top-color: #eeeeee;
+}
+
+.jd-dialog-con {
+    width: "100%";
+    padding: 50px 0;
+}
+
+.jd-dialog-input-con {
+    @include flex(row, center, center);
+    width: "100%";
+    padding: 50px;
+}
+
+
+.jd-dialog-txt {
+    @include font(24px, #444444);
+    line-height: 32px;
 }

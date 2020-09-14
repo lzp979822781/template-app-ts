@@ -53,12 +53,13 @@ export default class CardVisit extends Component<baseProps, any> {
         };
 
         return visitList.map((item) => {
-            let visitorListFirst = item.visitorList && item.visitorList[0] ? item.visitorList[0] : {}
+            const visitorListFirst = item.visitorList && item.visitorList[0] ? item.visitorList[0] : {}
+
             return (
                 <View className='list-item' key={item.id} style={Shadow} onClick={() => {
                     this.routerTo("/pages/PlanDetail/index", {
                         customerId: item.customerId,
-                        taskId: item.taskId
+                        taskId: item.id
                     });
                 }}
                 >
@@ -79,7 +80,7 @@ export default class CardVisit extends Component<baseProps, any> {
                         <Text className='list-item-des-txt'>{visitorListFirst.roleName || "--"}</Text>
                     </View>
                     <View className='list-item-des'>
-                        <Text className='list-item-des-txt'>
+                        <Text numberOfLines={1} className='list-item-des-txt'>
                             拜访纪要：{item.commContent || "--"}
                         </Text>
                     </View>

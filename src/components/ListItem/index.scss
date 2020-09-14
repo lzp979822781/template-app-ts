@@ -1,7 +1,7 @@
 @import "@/global/common.scss";
 .list-item {
     @include flex(row, center, center);
-    height: 124px;
+    padding: 40px 0;
     border-bottom-width: 1px;
     border-bottom-color: #EEEEEE;
 }

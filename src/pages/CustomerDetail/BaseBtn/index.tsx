@@ -2,7 +2,6 @@ import Taro, { Component } from "@tarojs/taro";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { View, Text } from "@tarojs/components";
 import Gradient from "@/components/Gradient";
-import { get as getGlobalData } from '@/utils/global_data';
 import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 
@@ -13,6 +12,7 @@ type baseProps = {
 }
 export default class BaseBtn extends Component<baseProps, any> {
     static defaultProps = {
+        data: {},
         canBind: false,
     }
     constructor(props) {
@@ -20,27 +20,32 @@ export default class BaseBtn extends Component<baseProps, any> {
     }
 
     jumpToApp(des) {
-        const jyNativeData = getGlobalData('jyNativeData');
-        // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`)
+        const { data } = this.props;
+        const params = {
+            customerId: data.id,
+            customerName: data.companyName,
+            userId: data.userId,
+            userName: data.userName
+        }
+        // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify(params)}}`)
         JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({ customerId: jyNativeData.customerId })}}`
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify(params)}}`
         )
     }
 
     jumpToAppWeb() {
-        const jyNativeData = getGlobalData('jyNativeData');
+        const { data } = this.props;
         JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"webView", "params": ${JSON.stringify({ url: `/assist/customer/detail/info?customerId=${jyNativeData.customerId}` })}}`
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"webView", "params": ${JSON.stringify({ url: `/assist/customer/detail/info?customerId=${data.id}` })}}`
         )
     }
 
     render() {
         const { onPopupShow, canBind } = this.props;
         return (
-
             <View className='base-btn-con'>
                 {canBind ? <View className='base-btn' hoverStyle={hoverStyle} onClick={() => {
-                    onPopupShow("binding")
+                    onPopupShow("input")
                 }}
                 >
                     <Gradient
@@ -58,7 +63,7 @@ export default class BaseBtn extends Component<baseProps, any> {
                 </View> : null}
                 {canBind ? <View className='btn-gap' /> : null}
                 <View className='base-btn' hoverStyle={hoverStyle} onClick={() => {
-                    this.jumpToApp("visitPlanPage");
+                    this.jumpToApp("VisitPlanCreatePage");
                 }}
                 >
                     <Gradient

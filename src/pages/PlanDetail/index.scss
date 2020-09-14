@@ -69,10 +69,16 @@
     text-align: left;
 }
 
+.signed-txt {
+    @include font(22px, #999999);
+    line-height: 44px;
+    margin-left: 20px;
+}
+
 .contact-address-divide {
     height: 26px;
     width: 2px;
-    background-color: rgba(228,228,228,1);
+    background-color: rgba(228, 228, 228, 1);
 }
 
 .con-contact {
@@ -84,7 +90,7 @@
     @include flex(row, flex-end, center);
     width: 42px;
     height: 60px;
-};
+}
 
 .contact-img {
     width: 42px;
@@ -97,22 +103,27 @@
     background-color: #FFFFFF;
 }
 
-.plan-btn {
-    @include flex(row, center, center);
-    height: 100px;
-    border-radius: 50px;
-    margin-left: 27px;
-    margin-right: 27px;
-    margin-bottom: 30px;
+.head-right-btn {
+    @include flex(row, flex-end, center);
+    flex: 1;
+    height: 100%;
 }
 
-.plan-btn-icon {
-    width: 34px;
-    height: 34px;
+.head-right-btn-con {
+    @include flex(row, flex-end, center);
+    width: 120px;
+    height: 88px;
+    padding-right: 30px;
+    background-color: transparent;
 }
 
-.plan-btn-txt {
+.head-right-btn-txt {
     @include font(30px, #FFFFFF);
-    margin-left: 18px;
-    line-height: 100px;
+    line-height: 88px;
+}
+
+.visit-item-img {
+   width: 120px;
+   height: 120px;
+   padding: 5px;
 }

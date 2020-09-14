@@ -1,13 +1,32 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, ScrollView, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Gradient, JDListItem } from "@/components/index";
+import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import PopUpCon from "./PopUpCon/index";
+import PlanBtn from "./PlanBtn/index";
+
 import "./index.scss";
 
 const noneTxt = "无";
+
+// 任务状态：0待进行，1已提交，2已完成，3已超时
+const TaskStatus = [{
+    txt: "待进行",
+    color: ""
+}, {
+    txt: "已提交",
+    color: ""
+}, {
+    txt: "已完成",
+    color: ""
+}, {
+    txt: "已超时",
+    color: ""
+}]
+
 
 export default class PlanDetail extends Component<any, any> {
     constructor(props) {
@@ -26,16 +45,20 @@ export default class PlanDetail extends Component<any, any> {
     config: Config = {
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
-
+    back = false;
     componentDidShow() {
-        this.getData();
+        if (!this.back) {
+            this.getData();
+        }
     }
 
     getData = async () => {
 
-        Taro.showLoading({
-            title: "加载中"
-        });
+        if (!this.back) {
+            Taro.showLoading({
+                title: "加载中"
+            });
+        }
 
         const jyNativeData = getGlobalData('jyNativeData');
 
@@ -43,14 +66,13 @@ export default class PlanDetail extends Component<any, any> {
         const res = await JDRequest.get("mjying_assist_visit_task_getInfo", {
             taskId: params.taskId || jyNativeData.taskId
         });
-
         Taro.hideLoading();
-        
+        this.back = true;
         if (res.success) {
             this.setState({
                 tastDetail: res.data
-            })
-        }else{
+            });
+        } else {
             Taro.showToast({
                 title: "计划详情获取失败",
                 icon: 'none',
@@ -59,13 +81,13 @@ export default class PlanDetail extends Component<any, any> {
         };
     };
 
-    jumpTo = () => {
-        Taro.showToast({
-            title: "成功",
-            icon: "success",
-            duration: 2000
-        }).then(res => console.log(res));
-    };
+    jumpToApp(des, params = {}) {
+        // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin})}}`)
+        JDJumping.jumpToOpenapp(
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify(params)}}`
+        )
+    }
+
 
     onPopupShow = () => {
         this.setState({ visible: true });
@@ -77,18 +99,73 @@ export default class PlanDetail extends Component<any, any> {
 
     renderContact = () => {
         const { tastDetail } = this.state;
-        if(tastDetail.visitorList && tastDetail.visitorList.length > 0){
+        if (tastDetail.visitorList && tastDetail.visitorList.length > 0) {
             const arrayName = tastDetail.visitorList.map((item) => {
                 return item.contactName
             });
-    
+
             return arrayName.join()
         };
-        
-        return  noneTxt;
+
+        return noneTxt;
     };
 
+    isToday(date) {
+        if (date) {
+            return new Date().toString().substr(0, 15) === date.toString().substr(0, 15);
+        } else {
+            return false;
+        };
+    }
+
+    renderRight = () => {
+        const { tastDetail } = this.state;
+        const isToday = this.isToday(tastDetail.created)
+        if (tastDetail.created && isToday) {
+            return null;
+        };
+
+        //未完成，未超时
+        const hideAllBtn = [2, 3].includes(tastDetail.taskStatus);
+
+        if (hideAllBtn) {
+            return null
+        };
+
+        const params = {
+            customerId: tastDetail.customerId,
+            taskId: tastDetail.taskId
+        };
+
+        return <View
+            className='head-right-btn'
+        >
+            <View
+                className='head-right-btn-con'
+                onClick={() => { this.jumpToApp("VisitPlanEditPage", params) }}
+                hoverStyle={hoverStyle}
+            >
+                <Text className='head-right-btn-txt'>
+                    编辑
+                </Text>
+            </View>
+        </View>
+    }
+
+    renderImage = () => {
+        const { tastDetail } = this.state;
+        const visitImgUrlList = tastDetail.visitImgUrlList || [];
+
+        return visitImgUrlList.map((item) => {
+            return <Image
+                className='visit-item-img'
+                src={item}
+            />
+        })
+    }
+
     render() {
+        const jyNativeData = getGlobalData('jyNativeData');
         const { tastDetail } = this.state;
         const Shadow = {
             shadowColor: "#f5f5f5",
@@ -98,15 +175,22 @@ export default class PlanDetail extends Component<any, any> {
             elevation: 2
         };
 
+        const showPhone = tastDetail.visitorList && tastDetail.visitorList.length > 0;
+
+        const taskMemoList = tastDetail.taskMemoList || []
+        const taskMemoName = taskMemoList.map((item) => {
+            return item.name
+        }).join();
+
         return (
             <View className='container'>
                 <StatusBar />
-                <Header title='计划详情' backApp />
+                <Header title='计划详情' backApp={!!jyNativeData.taskId} renderRight={this.renderRight()} />
                 <ScrollView className='container'>
                     <View className='plan-banner-bg'></View>
                     <View className='card-base' style={Shadow}>
                         <Text className='card-base-title'>
-                            {tastDetail.companyName || noneTxt}
+                            {tastDetail.customerName || noneTxt}
                         </Text>
                         <View className='plan-status'>
                             <Gradient
@@ -120,17 +204,20 @@ export default class PlanDetail extends Component<any, any> {
                                 angle={0}
                                 colors={["#FF6600", "#FF9B00"]}
                             >
-                                <Text className='plan-status-txt'>{tastDetail.taskStatusName || noneTxt}</Text>
+                                <Text className='plan-status-txt'>{[0, 1, 2, 3].includes(tastDetail.taskStatus) ? TaskStatus[tastDetail.taskStatus].txt : noneTxt}</Text>
                             </Gradient>
+                            <Text className='signed-txt'>
+                                {tastDetail.hasSigned ? "已打卡" : "未打卡"}
+                            </Text>
                         </View>
                         <View className='contact-address-con'>
                             <View className='con-address'>
                                 <Text className='con-address-txt'>
-                                    {tastDetail.address || noneTxt}
+                                    {tastDetail.customerAddress || noneTxt}
                                 </Text>
                             </View>
-                            <View className='contact-address-divide'></View>
-                            <View className='con-contact'>
+                            {showPhone ? <View className='contact-address-divide'></View> : null}
+                            {showPhone ? <View className='con-contact'>
                                 <View
                                     className='contact-img-con'
                                     onClick={this.onPopupShow}
@@ -141,49 +228,28 @@ export default class PlanDetail extends Component<any, any> {
                                         src="https://img12.360buyimg.com/imagetools/jfs/t1/128651/9/12268/1100/5f58ac4eEa6562e75/38280dd6bf5b0fb4.png"
                                     />
                                 </View>
-                            </View>
+                            </View> : null}
                         </View>
                     </View>
                     <View className='card-operation'>
-                        <JDListItem label='创建人' value={tastDetail.creator || noneTxt} />
+                        <JDListItem label='创建人' value={tastDetail.creatorName || noneTxt} />
                         <JDListItem label='客户经理' value={tastDetail.userName || noneTxt} />
                         <JDListItem label='拜访日期' value={tastDetail.finishDate || noneTxt} />
                         <JDListItem label='被拜访人' value={this.renderContact()} />
-                        <JDListItem label='拜访目的' value={tastDetail.taskMemoName || noneTxt} />
+                        <JDListItem label='拜访目的' value={taskMemoName || noneTxt} />
                         <JDListItem label='拜访类型' value={tastDetail.taskModelName || noneTxt} />
                         <JDListItem label='拜访方式' value={tastDetail.taskWayName || noneTxt} />
+                        {tastDetail.taskStatus === 2 ? <JDListItem label='拜访纪要' value={tastDetail.commContent || noneTxt} /> : null}
+                        {tastDetail.taskStatus === 2 ? <JDListItem label='图片' renderValue={this.renderImage()} /> : null}
                     </View>
-                    {tastDetail.canBeModified ? <View
-                        className='plan-btn'
-                        onClick={this.jumpTo}
-                        hoverStyle={hoverStyle}
-                    >
-                        <Gradient
-                            style={{
-                                flex: 1,
-                                flexDirection: "row",
-                                height: 50,
-                                alignItems: "center",
-                                justifyContent: "center",
-                                borderRadius: 25
-                            }}
-                            angle={0}
-                            colors={["#EC1B1B", "#FF511D"]}
-                        >
-                            <Image
-                                className='plan-btn-icon'
-                                src="https://img10.360buyimg.com/imagetools/jfs/t1/113628/40/17503/916/5f58ac4eEb273925e/f9adf5d054778889.png"
-                            />
-                            <Text className='plan-btn-txt'>拜访纪要</Text>
-                        </Gradient>
-                    </View> : null}
                 </ScrollView>
+                <PlanBtn data={tastDetail} />
                 <PopUpCon
                     data={tastDetail.visitorList || []}
                     visible={this.state.visible}
                     onPopupClose={this.onPopupClose}
                 />
-            </View>
+            </View >
         );
     }
 }

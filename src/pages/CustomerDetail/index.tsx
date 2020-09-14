@@ -1,6 +1,6 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Input } from "@tarojs/components";
+import { View, Text, Input } from "@tarojs/components";
 import { ImageBackground, ScrollView, RefreshControl } from "react-native";
 import { JDConfirmDialog } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
@@ -47,7 +47,6 @@ class CustomerDetail extends Component<any, any> {
     };
 
     // componentDidShow() {
-
     // }
 
     componentWillMount() {
@@ -81,6 +80,13 @@ class CustomerDetail extends Component<any, any> {
             this.setState({ showBottomBtn: true })
         } else {
             this.setState({ showBottomBtn: false })
+            // Animated.timing(                  // 随时间变化而执行动画
+            //     this.state.fadeAnim,                       // 动画中的变量值
+            //     {
+            //         toValue: 0,                   // 透明度最终变为0，即完全透明
+            //         duration: 2000,              // 让动画持续一段时间
+            //     }
+            // ).start();
         }
     };
 
@@ -105,6 +111,7 @@ class CustomerDetail extends Component<any, any> {
         }
     }
 
+    //客户标签
     getCustomerTags = async (pin) => {
         const resCustomerTags = await JDRequest.get("mjying_assist_customer_getTags", {
             pin: pin
@@ -132,8 +139,6 @@ class CustomerDetail extends Component<any, any> {
         const resDetail = await JDRequest.get("mjying_assist_customer_getDetail", {
             customerId: jyNativeData.customerId
         });
-        //客户标签
-
 
         Taro.hideLoading();
         if (resDetail.success) {
@@ -307,20 +312,31 @@ class CustomerDetail extends Component<any, any> {
     }
 
     renderConfirmDialog() {
-        const { visible, popupType, inputValue } = this.state;
+        const { visible, popupType, detailData } = this.state;
         return (
             <JDConfirmDialog
                 show={visible && popupType === "binding"}
                 onClose={this.onPopupClose}
                 onConfirm={this.onConfirm}
             >
-                <View style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: "100%",
-                    padding: 30
-                }}
-                >
+                <View className='jd-dialog-con'>
+                    <Text className='jd-dialog-txt'>客户名称：{detailData.companyName || "--"}</Text>
+                    <Text className='jd-dialog-txt'>客户类型：{detailData.storeTypeName || "--"}</Text>
+                    <Text className='jd-dialog-txt'>客户经理：{detailData.userName}</Text>
+                </View>
+            </JDConfirmDialog>
+        );
+    }
+
+    renderInputDialog() {
+        const { visible, popupType, inputValue } = this.state;
+        return (
+            <JDConfirmDialog
+                show={visible && popupType === "input"}
+                onClose={this.onPopupClose}
+                onConfirm={() => { this.setState({ popupType: "binding" }) }}
+            >
+                <View className='jd-dialog-input-con'>
                     <Input className='custom-pin-input' type='text' value={inputValue} placeholder='请输入客户pin' focus onInput={this.onChange} />
                 </View>
             </JDConfirmDialog>
@@ -370,7 +386,9 @@ class CustomerDetail extends Component<any, any> {
                     <PurchasingInfo data={detailData} />
                     <CardVisit lastPage={lastPage} loaded={loaded} data={detailData} visitList={visitListData} />
                 </ScrollView>
-                {showBottomBtn ? <View className='bottom-btn-con'><BaseBtn onPopupShow={(type) => this.onPopupShow(type)} canBind={canBind} /></View> : null }
+                {showBottomBtn && <View className='bottom-btn-con'>
+                    <BaseBtn onPopupShow={(type) => this.onPopupShow(type)} canBind={canBind} />
+                </View>}
                 <PopUpDist
                     visible={visible && popupType === "dist"}
                     onPopupClose={this.onPopupClose}
@@ -381,6 +399,7 @@ class CustomerDetail extends Component<any, any> {
                     onPopupClose={this.onPopupClose}
                 />
                 {this.renderConfirmDialog()}
+                {this.renderInputDialog()}
             </View>
         );
     }

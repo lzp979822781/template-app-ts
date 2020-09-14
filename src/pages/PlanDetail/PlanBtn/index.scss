@@ -1,0 +1,27 @@
+@import "@/global/common.scss";
+
+.plan-btn-con {
+    @include flex(row, center, center);
+    height: 120px;
+    border-top-color: #EEEEEE;
+    border-top-width: 1px;
+    background-color: #FFFFFF;
+}
+
+.plan-btn {
+    padding:0 27px;
+    flex:1;
+    height: 80px;
+    border-radius: 50px;
+}
+
+.plan-btn-icon {
+    width: 34px;
+    height: 34px;
+}
+
+.plan-btn-txt {
+    @include font(30px, #FFFFFF);
+    margin-left: 18px;
+    line-height: 100px;
+}
