@@ -32,7 +32,8 @@ class CustomerDetail extends Component<any, any> {
             refreshing: false,
             loaded: false,
             lastPage: false,
-            canBind: false,
+            canBind: false,  //是否能绑定客户
+            canDist: false, //是否能分配
             showBottomBtn: false,
             detailData: {},
             customerTags: {
@@ -46,14 +47,14 @@ class CustomerDetail extends Component<any, any> {
         this.onEndReached = this.onEndReached.bind(this);
     };
 
-    // componentDidShow() {
-    // }
+
 
     componentWillMount() {
         this.getDetailData();
     }
 
-    componentWillUnmount() {
+    componentDidShow() {
+        this.reloadDetail();
     }
 
     config: Config = {
@@ -127,6 +128,25 @@ class CustomerDetail extends Component<any, any> {
                 duration: 1000
             });
         };
+    }
+
+    reloadDetail = async () => {
+        const jyNativeData = getGlobalData('jyNativeData');
+        //客户详情获取
+        const resDetail = await JDRequest.get("mjying_assist_customer_getDetail", {
+            customerId: jyNativeData.customerId
+        });
+
+        if (resDetail.success) {
+            this.setState({ detailData: resDetail.data, refreshing: false });
+        } else {
+            Taro.showToast({
+                title: resDetail.errorMsg,
+                icon: 'none',
+                duration: 1000
+            });
+        };
+
     }
 
     getDetailData = async () => {
@@ -344,9 +364,11 @@ class CustomerDetail extends Component<any, any> {
     }
 
     render() {
-
+        const jyNativeData = getGlobalData('jyNativeData');
         const statusBarHeight = getGlobalData('statusBarHeight');
         const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType, canBind, showBottomBtn } = this.state;
+        //地勤能分配，合伙人没有分配
+        const renderRight = jyNativeData.userType === "CM" ? <DistBtn onPopupShow={() => this.onPopupShow("dist")} /> : null
         return (
             <View className='container'>
                 <ImageBackground
@@ -361,8 +383,8 @@ class CustomerDetail extends Component<any, any> {
                         title='客户详情'
                         noBgColor
                         backApp
-                        // eslint-disable-next-line taro/render-props
-                        renderRight={<DistBtn onPopupShow={() => this.onPopupShow("dist")} />}
+                        // eslint-disable-next-line taro/render-props 
+                        renderRight={renderRight}
                     />
                 </ImageBackground>
                 <ScrollView
@@ -383,7 +405,7 @@ class CustomerDetail extends Component<any, any> {
                     <View className='no-bg-gap' />
                     <CardBase data={detailData} onPopupShow={(type) => this.onPopupShow(type)} canBind={canBind} />
                     <CardTag loaded={loaded} data={detailData} tagsData={customerTags} />
-                    <PurchasingInfo data={detailData} />
+                    {jyNativeData.userType === "CM" ? <PurchasingInfo data={detailData} /> : null}
                     <CardVisit lastPage={lastPage} loaded={loaded} data={detailData} visitList={visitListData} />
                 </ScrollView>
                 {/* {showBottomBtn && <View className='bottom-btn-con'>

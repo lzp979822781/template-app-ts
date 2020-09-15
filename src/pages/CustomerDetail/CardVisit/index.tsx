@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 import Taro, { Component } from "@tarojs/taro";
+import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { View, Text, Image } from "@tarojs/components";
 import { get as getGlobalData } from '@/utils/global_data';
 import { parseUrl } from "@/utils/utils";
@@ -26,21 +27,28 @@ export default class CardVisit extends Component<baseProps, any> {
         };
     }
 
-    routerTo = (url, params) => {
-        const uri = parseUrl(url, params)
+    // routerTo = (url, params) => {
+    //     const uri = parseUrl(url, params)
 
-        Taro.navigateTo({
-            url: uri
-        });
-    };
+    //     Taro.navigateTo({
+    //         url: uri
+    //     });
+    // };
+
+    jumpToApp(des, params={}) {
+        // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify(params)}}`)
+        JDJumping.jumpToOpenapp(
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify(params)}}`
+        )
+    }
 
     renderItems() {
         const { visitList, loaded } = this.props;
         const Shadow = {
-            shadowColor: "#f5f5f5",
-            shadowOffset: { w: 10, h: 2 },
-            shadowOpacity: 0.5,
-            shadowRadius: 10,
+            shadowColor: "#000000",
+            shadowOffset: { w: 4, h: 4 },
+            shadowOpacity: 0.1,
+            shadowRadius: 6,
             elevation: 1
         };
 
@@ -57,7 +65,7 @@ export default class CardVisit extends Component<baseProps, any> {
 
             return (
                 <View className='list-item' key={item.id} style={Shadow} onClick={() => {
-                    this.routerTo("/pages/PlanDetail/index", {
+                    this.jumpToApp("visitPlanDetailPage", {
                         customerId: item.customerId,
                         taskId: item.id
                     });

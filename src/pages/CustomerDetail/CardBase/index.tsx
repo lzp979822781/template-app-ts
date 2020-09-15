@@ -34,13 +34,13 @@ export default class CardBase extends Component<baseProps, any> {
         const { data, onPopupShow, canBind } = this.props;
         return (
             <View className='card-base'>
-                <View className={data.headImg ? 'card-base-head' : 'card-base-head-default'}>
+                <View hoverStyle={hoverStyle} className={data.headImg ? 'card-base-head' : 'card-base-head-default'}  onClick={()=>this.jumpToAppWeb("webView")}>
                     <Image
                         className={data.headImg ? 'card-base-head-img' : "card-base-head-img-default"}
                         src={data.headImg || "https://img11.360buyimg.com/imagetools/jfs/t1/140195/31/7995/18951/5f58ac4eE019f959a/dcd004d1aa98f66f.png"}
                     />
                 </View>
-                <View className='base-msg' onClick={()=>this.jumpToAppWeb("webView")}>
+                <View hoverStyle={hoverStyle}  className='base-msg' onClick={()=>this.jumpToAppWeb("webView")}>
                     <Text className='company-title'>
                         {data.companyName || "--"}
                     </Text>
