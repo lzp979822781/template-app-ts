@@ -117,13 +117,6 @@ class CustomerDetail extends Component<any, any> {
         //     this.setState({ showBottomBtn: true })
         // } else {
         //     this.setState({ showBottomBtn: false })
-        //     // Animated.timing(                  // 随时间变化而执行动画
-        //     //     this.state.fadeAnim,                       // 动画中的变量值
-        //     //     {
-        //     //         toValue: 0,                   // 透明度最终变为0，即完全透明
-        //     //         duration: 2000,              // 让动画持续一段时间
-        //     //     }
-        //     // ).start();
         // }
     };
 
@@ -175,9 +168,14 @@ class CustomerDetail extends Component<any, any> {
 
         if (resDetail.success) {
             this.setState({ detailData: resDetail.data, refreshing: false });
-            if(resDetail.data.pin){
-                this.getCustomerTags(resDetail.data.pin)
-            }
+            //是否有绑定客户按钮：合伙人单独接口，客户是用pin判断
+            if (jyNativeData.userType === "CM") {
+                this.setState({
+                    canBind: !resDetail.data.pin
+                });
+            } else {
+                this.getCanBind(resDetail.data.pin);
+            };
         } else {
             Taro.showToast({
                 title: resDetail.errorMsg,
@@ -202,10 +200,10 @@ class CustomerDetail extends Component<any, any> {
         Taro.hideLoading();
         if (resDetail.success) {
             this.setState({ detailData: resDetail.data, refreshing: false });
-            if(resDetail.data.pin){
+            if (resDetail.data.pin) {
                 this.getCustomerTags(resDetail.data.pin)
             }
-        
+
             //是否有绑定客户按钮：合伙人单独接口，客户是用pin判断
             if (jyNativeData.userType === "CM") {
                 this.setState({
@@ -326,13 +324,7 @@ class CustomerDetail extends Component<any, any> {
         }
     };
 
-    onChange = (e) => {
-        this.setState({
-            inputValue: e.target.value
-        });
-    }
-
-    renderConfirmDialog() {
+    renderBindDialog() {
         const { visible, popupType, bindData } = this.state;
         return (
             <JDConfirmDialog
@@ -367,10 +359,13 @@ class CustomerDetail extends Component<any, any> {
 
         Taro.hideLoading();
         if (res.success && res.code === 1) {
-            Taro.showToast({
-                title: "绑定成功",
-                icon: 'success',
-                duration: 1000
+            this.reloadDetail();
+            this.setState({ visible: false }, ()=>{
+                Taro.showToast({
+                    title: "绑定成功",
+                    icon: 'success',
+                    duration: 1000
+                });
             });
         } else {
             Taro.showToast({
@@ -400,6 +395,7 @@ class CustomerDetail extends Component<any, any> {
         );
     }
 
+    //获取绑定信息，做绑定前确认
     getBindData = async () => {
         const { inputValue } = this.state;
         //客户详情获取
@@ -422,6 +418,12 @@ class CustomerDetail extends Component<any, any> {
             });
 
         };
+    }
+
+    onChange = (e) => {
+        this.setState({
+            inputValue: e.target.value
+        });
     }
 
     render() {
@@ -481,7 +483,7 @@ class CustomerDetail extends Component<any, any> {
                     visible={visible && popupType === "contact"}
                     onPopupClose={this.onPopupClose}
                 />
-                {this.renderConfirmDialog()}
+                {this.renderBindDialog()}
                 {this.renderInputDialog()}
             </View>
         );
