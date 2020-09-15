@@ -63,7 +63,14 @@ export default class CardTag extends Component<baseProps, any> {
     }
 
     render() {
-        const { data } = this.props;
+        const { data, tagsData } = this.props;
+
+        let arrayTags = tagsData["1"];
+        arrayTags = arrayTags.concat(tagsData["2"]);
+        arrayTags = arrayTags.concat(tagsData["3"]);
+        const newArrayTags = arrayTags.filter((item) => {
+            return !!item.value;
+        });
 
         return (
             <View className='card-tag'>
@@ -75,7 +82,7 @@ export default class CardTag extends Component<baseProps, any> {
                         />
                         <Text className='head-left-title'>客户标签</Text>
                     </View>
-                    <View
+                    {data.pin && newArrayTags.length > 0 ? <View
                         className='head-right'
                         hoverStyle={hoverStyle}
                         onClick={
@@ -86,7 +93,7 @@ export default class CardTag extends Component<baseProps, any> {
                     >
                         <Text className='head-right-txt'>全部</Text>
                         <Image className='head-right-icon' src="https://img11.360buyimg.com/imagetools/jfs/t1/112898/10/17386/543/5f58ac4dEb76984c6/fd46e9d2b0230023.png" />
-                    </View>
+                    </View> : null}
                 </View>
                 <View className='tag-body'>
                     {this.renderItems()}

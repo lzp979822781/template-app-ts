@@ -175,6 +175,9 @@ class CustomerDetail extends Component<any, any> {
 
         if (resDetail.success) {
             this.setState({ detailData: resDetail.data, refreshing: false });
+            if(resDetail.data.pin){
+                this.getCustomerTags(resDetail.data.pin)
+            }
         } else {
             Taro.showToast({
                 title: resDetail.errorMsg,
@@ -199,9 +202,10 @@ class CustomerDetail extends Component<any, any> {
         Taro.hideLoading();
         if (resDetail.success) {
             this.setState({ detailData: resDetail.data, refreshing: false });
-
-            this.getCustomerTags(resDetail.data.pin)
-
+            if(resDetail.data.pin){
+                this.getCustomerTags(resDetail.data.pin)
+            }
+        
             //是否有绑定客户按钮：合伙人单独接口，客户是用pin判断
             if (jyNativeData.userType === "CM") {
                 this.setState({
@@ -374,7 +378,7 @@ class CustomerDetail extends Component<any, any> {
                 icon: 'none',
                 duration: 2000
             });
-            
+
             this.timer = setTimeout(() => {
                 this.setState({ visible: true });
             }, 2000);
