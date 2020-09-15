@@ -185,6 +185,7 @@ class CustomerDetail extends Component<any, any> {
                 icon: 'none',
                 duration: 1000
             });
+            this.canReload = true;
         };
     };
 
