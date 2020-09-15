@@ -363,24 +363,21 @@ class CustomerDetail extends Component<any, any> {
 
         Taro.hideLoading();
         if (res.success && res.code === 1) {
-            this.setState({
-                visible: true
-            });
             Taro.showToast({
                 title: "绑定成功",
                 icon: 'success',
                 duration: 1000
             });
         } else {
-            this.setState({
-                visible: true
-            }, () => {
-                Taro.showToast({
-                    title: res.errorMsg,
-                    icon: 'none',
-                    duration: 1500
-                })
+            Taro.showToast({
+                title: res.errorMsg,
+                icon: 'none',
+                duration: 2000
             });
+            
+            this.timer = setTimeout(() => {
+                this.setState({ visible: true });
+            }, 2000);
         }
     }
 
