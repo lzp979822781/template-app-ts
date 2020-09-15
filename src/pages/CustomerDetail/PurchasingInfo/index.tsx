@@ -51,12 +51,12 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                         <Text className='head-left-des-value'>{jyNativeData.userType === "CM" ?  data.lastOrderDateStr : data.partnerLastOrderDateStr }</Text>
                         {/* <Text className='head-left-des-unit'>天前</Text> */}
                     </View>
-                    <View
+                    {/* <View
                         className='head-right'
                         hoverStyle={hoverStyle}
                     >
                         <Image className='head-right-icon' src="https://img11.360buyimg.com/imagetools/jfs/t1/112898/10/17386/543/5f58ac4dEb76984c6/fd46e9d2b0230023.png" />
-                    </View>
+                    </View> */}
                 </View>
                 <View className='purchasing-body'>
                     <View

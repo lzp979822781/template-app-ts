@@ -257,7 +257,7 @@ export default class PlanDetail extends Component<any, any> {
                     </View>
                 </ScrollView>
                 <PlanBtn data={tastDetail} />
-                <Footer />
+                <Footer noBgColor />
                 <PopUpCon
                     data={tastDetail.visitorList || []}
                     visible={this.state.visible}

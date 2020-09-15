@@ -20,15 +20,15 @@ export default class Goods extends Component<any, any> {
         };
     }
 
+    componentWillMount(){
+        this.getTags();
+        this.getTagsExplanation();
+    }
+
     config: Config = {
         navigationBarTitleText: "",
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
-
-    componentDidShow() {
-        this.getTags();
-        this.getTagsExplanation();
-    }
 
     getTags = async () => {
         //客户标签
@@ -211,8 +211,8 @@ export default class Goods extends Component<any, any> {
                     {this.renderGroup1()}
                     {this.renderGroup2()}
                     {this.renderGroup3()}
+                    <View style={{height: 100}}></View>
                 </ScrollView>
-                <Footer />
                 <Modal
                     visible={visible}
                     className='test-modal'

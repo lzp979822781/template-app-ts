@@ -427,7 +427,6 @@ class CustomerDetail extends Component<any, any> {
                 />
                 {this.renderConfirmDialog()}
                 {this.renderInputDialog()}
-                <Footer></Footer>
             </View>
         );
     }

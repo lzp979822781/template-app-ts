@@ -26,14 +26,14 @@ export default class PurchaseRelation extends Component<any, any> {
         this.onEndReached = this.onEndReached.bind(this);
     }
 
+    componentWillMount() {
+        this.loadList();
+    }
+
     config: Config = {
         navigationBarTitleText: "",
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
-
-    componentDidShow() {
-        this.loadList();
-    }
 
     loadList = async () => {
         const params = this.$router.params;
@@ -68,8 +68,6 @@ export default class PurchaseRelation extends Component<any, any> {
                 refreshing: false
             });
         };
-
-
     };
 
     setVisitListData = (res) => {
@@ -194,7 +192,6 @@ export default class PurchaseRelation extends Component<any, any> {
                     <Block>{this.renderItems()}</Block>
                     {lastPage && data.length != 0 ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
                 </DataList>
-                <Footer />
             </View>
         );
     }
