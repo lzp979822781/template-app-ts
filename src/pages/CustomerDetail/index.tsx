@@ -2,7 +2,11 @@ import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Input } from "@tarojs/components";
 import {
-    ImageBackground, ScrollView, RefreshControl, Platform, NativeModules,
+    ImageBackground,
+    ScrollView,
+    RefreshControl,
+    Platform,
+    NativeModules,
     NativeEventEmitter,
     DeviceEventEmitter
 } from "react-native";
@@ -32,6 +36,7 @@ class CustomerDetail extends Component<any, any> {
             visible: false,
             popupType: "contact", //联系人 contact, 分配 dist, 绑定 binding
             inputValue: "",
+            bindData: {},
             currentPage: 1,
             pageSize: 20,
             refreshing: false,
@@ -315,8 +320,31 @@ class CustomerDetail extends Component<any, any> {
         }
     };
 
+    onChange = (e) => {
+        this.setState({
+            inputValue: e.target.value
+        });
+    }
+
+    renderConfirmDialog() {
+        const { visible, popupType, bindData } = this.state;
+        return (
+            <JDConfirmDialog
+                show={visible && popupType === "binding"}
+                onClose={this.onPopupClose}
+                onConfirm={this.bindCustomer}
+            >
+                <View className='jd-dialog-con'>
+                    <Text className='jd-dialog-txt'>客户名称：{bindData.companyName || "--"}</Text>
+                    <Text className='jd-dialog-txt'>客户类型：{bindData.storeTypeName || "--"}</Text>
+                    <Text className='jd-dialog-txt'>客户经理：{bindData.userName}</Text>
+                </View>
+            </JDConfirmDialog>
+        );
+    }
+
     //确认绑定客户
-    onConfirm = async () => {
+    bindCustomer = async () => {
         const { inputValue } = this.state;
         const jyNativeData = getGlobalData('jyNativeData');
         //绑定客户
@@ -333,48 +361,24 @@ class CustomerDetail extends Component<any, any> {
 
         Taro.hideLoading();
         if (res.success && res.code === 1) {
+            this.setState({
+                visible: true
+            });
             Taro.showToast({
                 title: "绑定成功",
                 icon: 'success',
-                duration: 2000
+                duration: 1000
             });
         } else {
+            this.setState({
+                visible: true
+            });
             Taro.showToast({
-                title: "绑定客户失败",
+                title: "绑定失败",
                 icon: 'none',
-                duration: 2000,
-                complete: () => {
-                    setTimeout(() => {
-                        this.setState({
-                            visible: true
-                        })
-                    }, 2500);
-                }
+                duration: 1000
             })
         }
-    }
-
-    onChange = (e) => {
-        this.setState({
-            inputValue: e.target.value
-        });
-    }
-
-    renderConfirmDialog() {
-        const { visible, popupType, detailData } = this.state;
-        return (
-            <JDConfirmDialog
-                show={visible && popupType === "binding"}
-                onClose={this.onPopupClose}
-                onConfirm={this.onConfirm}
-            >
-                <View className='jd-dialog-con'>
-                    <Text className='jd-dialog-txt'>客户名称：{detailData.companyName || "--"}</Text>
-                    <Text className='jd-dialog-txt'>客户类型：{detailData.storeTypeName || "--"}</Text>
-                    <Text className='jd-dialog-txt'>客户经理：{detailData.userName}</Text>
-                </View>
-            </JDConfirmDialog>
-        );
     }
 
     renderInputDialog() {
@@ -383,13 +387,31 @@ class CustomerDetail extends Component<any, any> {
             <JDConfirmDialog
                 show={visible && popupType === "input"}
                 onClose={this.onPopupClose}
-                onConfirm={() => { this.setState({ popupType: "binding" }) }}
+                onConfirm={this.getBindData}
             >
                 <View className='jd-dialog-input-con'>
                     <Input className='custom-pin-input' type='text' value={inputValue} placeholder='请输入客户pin' focus onInput={this.onChange} />
                 </View>
             </JDConfirmDialog>
         );
+    }
+
+    getBindData = async () => {
+        const { inputValue } = this.state;
+        //客户详情获取
+        const res = await JDRequest.get("mjying_assist_customer_merge_getCustomer", {
+            pin: inputValue
+        });
+        if (res.success) {
+            this.setState({ bindData: res.data, popupType: "binding" });
+        } else {
+            this.setState({ visible: false });
+            Taro.showToast({
+                title: res.errorMsg,
+                icon: 'none',
+                duration: 1000
+            });
+        };
     }
 
     render() {
