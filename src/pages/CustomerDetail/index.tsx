@@ -359,8 +359,8 @@ class CustomerDetail extends Component<any, any> {
 
         Taro.hideLoading();
         if (res.success && res.code === 1) {
-            this.reloadDetail();
             this.setState({ visible: false }, ()=>{
+                this.reloadDetail();
                 Taro.showToast({
                     title: "绑定成功",
                     icon: 'success',
