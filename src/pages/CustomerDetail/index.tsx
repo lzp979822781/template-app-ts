@@ -53,8 +53,12 @@ class CustomerDetail extends Component<any, any> {
         this.getDetailData();
     }
 
+    canReload = false;
+
     componentDidShow() {
-        this.reloadDetail();
+        if(this.canReload){
+            this.reloadDetail();
+        };
     }
 
     config: Config = {
@@ -174,6 +178,7 @@ class CustomerDetail extends Component<any, any> {
             } else {
                 this.getCanBind(resDetail.data.pin);
             };
+            this.canReload = true;
         } else {
             Taro.showToast({
                 title: resDetail.errorMsg,
