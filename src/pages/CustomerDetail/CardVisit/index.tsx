@@ -3,10 +3,10 @@ import Taro, { Component } from "@tarojs/taro";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { View, Text, Image } from "@tarojs/components";
 import { get as getGlobalData } from '@/utils/global_data';
-import { parseUrl } from "@/utils/utils";
 import "./index.scss";
 
 type baseProps = {
+    pageSize: number;
     lastPage: boolean;
     loaded: boolean;
     data?: object;
@@ -26,14 +26,6 @@ export default class CardVisit extends Component<baseProps, any> {
         this.state = {
         };
     }
-
-    // routerTo = (url, params) => {
-    //     const uri = parseUrl(url, params)
-
-    //     Taro.navigateTo({
-    //         url: uri
-    //     });
-    // };
 
     jumpToApp(des, params={}) {
         // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify(params)}}`)
@@ -110,7 +102,7 @@ export default class CardVisit extends Component<baseProps, any> {
 
     render() {
         const jyNativeData = getGlobalData('jyNativeData');
-        const { lastPage, data, visitList } = this.props;
+        const { lastPage, data, visitList, pageSize } = this.props;
         return (
             <View className='card-visit'>
                 <View className='visit-head'>
@@ -123,7 +115,7 @@ export default class CardVisit extends Component<baseProps, any> {
                 </View>
                 <View className='visit-body'>
                     <View className='data-list'>{this.renderItems()}</View>
-                    {lastPage && visitList.length > 0 ? <Text className='visit-list-none' >没有更多数据了</Text> : null}
+                    {lastPage && visitList.length >= pageSize ? <Text className='visit-list-none' >没有更多数据了</Text> : null}
                 </View>
             </View>
         );

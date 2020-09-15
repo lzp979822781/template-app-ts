@@ -178,7 +178,7 @@ export default class PurchaseRelation extends Component<any, any> {
     }
 
     render() {
-        const { lastPage, data } = this.state;
+        const { lastPage, data, pageSize } = this.state;
         return (
             <View className='container'>
                 <StatusBar />
@@ -190,7 +190,8 @@ export default class PurchaseRelation extends Component<any, any> {
                     onEndReached={this.onEndReached}
                 >
                     <Block>{this.renderItems()}</Block>
-                    {lastPage && data.length != 0 ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
+                    {lastPage && data.length >= pageSize ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
+                    <View style={{height: 50}}></View>
                 </DataList>
             </View>
         );

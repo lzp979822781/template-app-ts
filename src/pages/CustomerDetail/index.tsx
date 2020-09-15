@@ -371,7 +371,7 @@ class CustomerDetail extends Component<any, any> {
     render() {
         const jyNativeData = getGlobalData('jyNativeData');
         const statusBarHeight = getGlobalData('statusBarHeight');
-        const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType, canBind, showBottomBtn } = this.state;
+        const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType, canBind, pageSize } = this.state;
         //地勤能分配，合伙人没有分配
         const renderRight = jyNativeData.userType === "CM" ? <DistBtn onPopupShow={() => this.onPopupShow("dist")} /> : null
         return (
@@ -411,7 +411,7 @@ class CustomerDetail extends Component<any, any> {
                     <CardBase data={detailData} onPopupShow={(type) => this.onPopupShow(type)} canBind={canBind} />
                     <CardTag loaded={loaded} data={detailData} tagsData={customerTags} />
                     {jyNativeData.userType === "CM" ? <PurchasingInfo data={detailData} /> : null}
-                    <CardVisit lastPage={lastPage} loaded={loaded} data={detailData} visitList={visitListData} />
+                    <CardVisit lastPage={lastPage} pageSize={pageSize} loaded={loaded} data={detailData} visitList={visitListData} />
                 </ScrollView>
                 {/* {showBottomBtn && <View className='bottom-btn-con'>
                     <BaseBtn onPopupShow={(type) => this.onPopupShow(type)} canBind={canBind} />

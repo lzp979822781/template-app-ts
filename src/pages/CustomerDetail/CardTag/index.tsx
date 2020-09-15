@@ -1,7 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 
-import { hoverStyle, parseUrl } from "@/utils/utils";
+import { hoverStyle, parseUrl, debounce } from "@/utils/utils";
 import "./index.scss";
 
 type baseProps = {
@@ -33,7 +33,7 @@ export default class CardTag extends Component<baseProps, any> {
     };
 
     renderItems = () => {
-        const {loaded, tagsData} = this.props;
+        const { loaded, tagsData } = this.props;
         let arrayTags = tagsData["1"];
         arrayTags = arrayTags.concat(tagsData["2"]);
         arrayTags = arrayTags.concat(tagsData["3"]);
@@ -43,7 +43,7 @@ export default class CardTag extends Component<baseProps, any> {
 
         if (newArrayTags.length === 0 && loaded) {
             return <View className='tag-none-con'><Text className='tag-list-none' >暂无数据</Text></View>
-        }else if(newArrayTags.length === 0 && !loaded){
+        } else if (newArrayTags.length === 0 && !loaded) {
             return <View className='tag-none-con'><Text className='tag-list-none' >--</Text></View>
         };
 
@@ -78,9 +78,11 @@ export default class CardTag extends Component<baseProps, any> {
                     <View
                         className='head-right'
                         hoverStyle={hoverStyle}
-                        onClick={() => {
-                            this.routerTo("/pages/CustomerTag/index", { pin: data.pin });
-                        }}
+                        onClick={
+                            debounce(() => {
+                                this.routerTo("/pages/CustomerTag/index", { pin: data.pin });
+                            }, 150)
+                        }
                     >
                         <Text className='head-right-txt'>全部</Text>
                         <Image className='head-right-icon' src="https://img11.360buyimg.com/imagetools/jfs/t1/112898/10/17386/543/5f58ac4dEb76984c6/fd46e9d2b0230023.png" />

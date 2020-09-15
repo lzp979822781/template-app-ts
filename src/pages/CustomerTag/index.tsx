@@ -211,7 +211,7 @@ export default class Goods extends Component<any, any> {
                     {this.renderGroup1()}
                     {this.renderGroup2()}
                     {this.renderGroup3()}
-                    <View style={{height: 100}}></View>
+                    <View style={{height: 50}}></View>
                 </ScrollView>
                 <Modal
                     visible={visible}

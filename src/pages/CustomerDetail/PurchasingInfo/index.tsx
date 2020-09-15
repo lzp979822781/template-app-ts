@@ -3,7 +3,7 @@ import { JDJumping } from "@jdreact/jdreact-core-lib";
 
 import { View, Text, Image } from "@tarojs/components";
 import { get as getGlobalData } from '@/utils/global_data';
-import { hoverStyle, parseUrl } from "@/utils/utils";
+import { hoverStyle, parseUrl, debounce } from "@/utils/utils";
 import "./index.scss";
 
 type baseProps = {
@@ -30,7 +30,7 @@ export default class PurchasingInfo extends Component<baseProps, any> {
     jumpToApp(des) {
         const { data } = this.props;
         JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({customerPin: data.pin, customerType: data.buyerUserType})}}`
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify({ customerPin: data.pin, customerType: data.buyerUserType })}}`
         );
     }
 
@@ -48,7 +48,7 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                         />
                         <Text className='head-left-title'>采购信息</Text>
                         <Text className='head-left-des-label'>最近下单</Text>
-                        <Text className='head-left-des-value'>{jyNativeData.userType === "CM" ?  data.lastOrderDateStr : data.partnerLastOrderDateStr }</Text>
+                        <Text className='head-left-des-value'>{jyNativeData.userType === "CM" ? data.lastOrderDateStr : data.partnerLastOrderDateStr}</Text>
                         {/* <Text className='head-left-des-unit'>天前</Text> */}
                     </View>
                     {/* <View
@@ -63,9 +63,11 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                         key='item-1'
                         className='purchasing-item'
                         hoverStyle={hoverStyle}
-                        onClick={() => {
-                            this.jumpToApp("orderPage");
-                        }}
+                        onClick={
+                            debounce(() => {
+                                this.jumpToApp("orderPage");
+                            }, 150)
+                        }
                     >
                         <Image
                             className='purchasing-item-icon'
@@ -77,9 +79,11 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                         key='item-2'
                         className='purchasing-item'
                         hoverStyle={hoverStyle}
-                        onClick={() => {
-                            this.jumpToApp("cartPage");
-                        }}
+                        onClick={
+                            debounce(() => {
+                                this.jumpToApp("cartPage");
+                            }, 150)
+                        }
                     >
                         <Image
                             className='purchasing-item-icon'
@@ -91,9 +95,11 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                         key='item-3'
                         className='purchasing-item'
                         hoverStyle={hoverStyle}
-                        onClick={() => {
-                            this.jumpToApp("discountPage");
-                        }}
+                        onClick={
+                            debounce(() => {
+                                this.jumpToApp("discountPage");
+                            }, 150)
+                        }
                     >
                         <Image
                             className='purchasing-item-icon'
@@ -105,9 +111,11 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                         key='item-4'
                         className='purchasing-item'
                         hoverStyle={hoverStyle}
-                        onClick={() => {
-                            this.routerTo("/pages/PurchaseRelation/index", { pin: data.pin });
-                        }}
+                        onClick={
+                            debounce(() => {
+                                this.routerTo("/pages/PurchaseRelation/index", { pin: data.pin });
+                            }, 150)
+                        }
                     >
                         <Image
                             className='purchasing-item-icon'
