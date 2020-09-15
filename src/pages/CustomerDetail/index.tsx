@@ -64,6 +64,8 @@ class CustomerDetail extends Component<any, any> {
     }
 
     componentWillUnmount() {
+        clearTimeout(this.timer);
+
         if (this.listener) {
             this.listener.remove();
         }
@@ -157,7 +159,7 @@ class CustomerDetail extends Component<any, any> {
             this.setState({ customerTags: resCustomerTags.data, refreshing: false });
         } else {
             Taro.showToast({
-                title: "客户标签获取失败",
+                title: "标签获取失败",
                 icon: 'none',
                 duration: 1000
             });
@@ -372,12 +374,13 @@ class CustomerDetail extends Component<any, any> {
         } else {
             this.setState({
                 visible: true
+            }, () => {
+                Taro.showToast({
+                    title: res.errorMsg,
+                    icon: 'none',
+                    duration: 1500
+                })
             });
-            Taro.showToast({
-                title: "绑定失败",
-                icon: 'none',
-                duration: 1000
-            })
         }
     }
 
@@ -405,12 +408,18 @@ class CustomerDetail extends Component<any, any> {
         if (res.success) {
             this.setState({ bindData: res.data, popupType: "binding" });
         } else {
-            this.setState({ visible: false });
-            Taro.showToast({
-                title: res.errorMsg,
-                icon: 'none',
-                duration: 1000
+            this.setState({ visible: false }, () => {
+                Taro.showToast({
+                    title: res.errorMsg,
+                    icon: 'none',
+                    duration: 2000
+                });
+
+                this.timer = setTimeout(() => {
+                    this.setState({ visible: true });
+                }, 2000);
             });
+
         };
     }
 
