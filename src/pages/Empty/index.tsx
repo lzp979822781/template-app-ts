@@ -11,7 +11,7 @@ type PageState = {};
 
 const routers = {
     customDetail: "pages/CustomerDetail/index",
-    planDetail: "pages/PlanDetail/index"
+    // planDetail: "pages/PlanDetail/index"
 }
 
 class Empty extends Component<any, any> {
@@ -59,13 +59,6 @@ class Empty extends Component<any, any> {
                     }}
                 >
                     客户详情
-                </Button>
-                <Button
-                    onClick={() => {
-                        this.routerTo("/pages/PlanDetail/index");
-                    }}
-                >
-                    计划详情
                 </Button>
             </View>
         );

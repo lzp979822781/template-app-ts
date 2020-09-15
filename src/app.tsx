@@ -39,7 +39,6 @@ class App extends Component<appProps, any> {
             "pages/Empty/index",
             "pages/CustomerDetail/index",
             "pages/CustomerTag/index",
-            "pages/PlanDetail/index",
             "pages/PurchaseRelation/index"
         ],
         window: {

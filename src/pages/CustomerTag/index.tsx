@@ -103,12 +103,14 @@ export default class Goods extends Component<any, any> {
                         <Image className='tag-close-icon' src="https://img11.360buyimg.com/imagetools/jfs/t1/140989/12/8055/459/5f58ac4fE8aa0f2c7/8121a8647fb70c46.png" />
                     </View>
                 </View>
-                <View className='model-head'>
-                    <Image className='model-head-icon' src="https://img11.360buyimg.com/imagetools/jfs/t1/126146/3/12024/85189/5f58ac4eE785272fa/18e598c61a2cff20.png" />
-                    <Text className='model-head-title'>标签说明</Text>
-                </View>
-                <View className='model-body'>
-                    {tagsExplanationList}
+                <View className='model-body-con' >
+                    <View className='model-head'>
+                        <Image className='model-head-icon' src="https://img11.360buyimg.com/imagetools/jfs/t1/126146/3/12024/85189/5f58ac4eE785272fa/18e598c61a2cff20.png" />
+                        <Text className='model-head-title'>标签说明</Text>
+                    </View>
+                    <View className='model-body'>
+                        {tagsExplanationList}
+                    </View>
                 </View>
             </ScrollView>
         );
