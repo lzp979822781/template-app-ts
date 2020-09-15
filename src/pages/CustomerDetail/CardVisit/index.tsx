@@ -48,8 +48,8 @@ export default class CardVisit extends Component<baseProps, any> {
             shadowColor: "#000000",
             shadowOffset: { w: 4, h: 4 },
             shadowOpacity: 0.1,
-            shadowRadius: 6,
-            elevation: 1
+            shadowRadius: 4,
+            elevation: 2
         };
 
         // visitList = [{id:1, visitorList:[{}]}]
