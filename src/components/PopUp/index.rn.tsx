@@ -81,7 +81,7 @@ class PopUp extends Component<IProps, PageState> {
                 transparent={false}
                 animationType='slide-up'
                 style={{ borderRadius: 16, ...rnStyle}}
-                bodyStyle={{ paddingHorizontal: 10, minHeight: 300, maxHeight: 475, ...rnContainerStyle }}
+                bodyStyle={{ paddingHorizontal: 10, minHeight: 246, ...rnContainerStyle }}
                 maskClosable={maskClosable}
             >
                 { this.renderHeader()}

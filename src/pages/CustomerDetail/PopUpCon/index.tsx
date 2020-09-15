@@ -1,13 +1,20 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View,  Text, Image } from "@tarojs/components";
-import { PopUp, Footer } from "@/components/index";
+import { View, ScrollView, Text, Image } from "@tarojs/components";
+import { PopUp } from "@/components/index";
 import "./index.scss";
+
+type contactType = {
+    contactsName: string;
+    mobile: string;
+    roleCodeName: string;
+}
 
 type baseProps = {
     visible: boolean;
-    data?: Array<object>;
+    data: Array<contactType>;
     onPopupClose?: any;
 }
+
 export default class PopUpCon extends Component<baseProps, any> {
     constructor(props) {
         super(props);
@@ -36,7 +43,7 @@ export default class PopUpCon extends Component<baseProps, any> {
                     <View className='popup-list-btn-con' onClick={this.makePhoneCall.bind(this, item)}>
                         <Image
                             className='popup-list-btn-icon'
-                            src="https://img12.360buyimg.com/imagetools/jfs/t1/128651/9/12268/1100/5f58ac4eEa6562e75/38280dd6bf5b0fb4.png"
+                            src='https://img12.360buyimg.com/imagetools/jfs/t1/128651/9/12268/1100/5f58ac4eEa6562e75/38280dd6bf5b0fb4.png'
                         />
                     </View>
                 </View>
@@ -70,13 +77,12 @@ export default class PopUpCon extends Component<baseProps, any> {
                             >
                                 <Image
                                     className='popup-head-right-icon'
-                                    src="https://img10.360buyimg.com/imagetools/jfs/t1/110863/8/20338/1524/5f58ac4fE5cf177e6/d3a15bc416cf5afa.png"
+                                    src='https://img10.360buyimg.com/imagetools/jfs/t1/110863/8/20338/1524/5f58ac4fE5cf177e6/d3a15bc416cf5afa.png'
                                 />
                             </View>
                         </View>
                     </View>
-                    <View className='popup-body'>{this.renderItems()}</View>
-                    <Footer></Footer>
+                    <ScrollView className='popup-body'>{this.renderItems()}</ScrollView>
                 </View>
             </PopUp>
         );

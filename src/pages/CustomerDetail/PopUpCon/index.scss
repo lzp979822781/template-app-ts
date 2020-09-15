@@ -45,11 +45,12 @@
 
 .popup-body {
    margin-bottom: 33px;
+   height: 270px;
 }
 
 .popup-list-item {
     @include flex(row, center, center);
-    height: 92px;
+    height: 91px;
     border-bottom-width: 1px;
     border-bottom-color:  #EEEEEE;
 }
