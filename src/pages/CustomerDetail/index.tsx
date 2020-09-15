@@ -1,9 +1,13 @@
 import { ComponentClass } from "react";
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Input } from "@tarojs/components";
-import { ImageBackground, ScrollView, RefreshControl } from "react-native";
-import { JDConfirmDialog } from '@jdreact/jdreact-core-lib';
-import { StatusBar, Header, Footer } from "@/components/index";
+import {
+    ImageBackground, ScrollView, RefreshControl, Platform, NativeModules,
+    NativeEventEmitter,
+    DeviceEventEmitter
+} from "react-native";
+import { JDDevice, JDConfirmDialog } from '@jdreact/jdreact-core-lib';
+import { StatusBar, Header } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
@@ -21,6 +25,7 @@ type PageOwnProps = {};
 type PageState = {};
 
 class CustomerDetail extends Component<any, any> {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -33,8 +38,7 @@ class CustomerDetail extends Component<any, any> {
             loaded: false,
             lastPage: false,
             canBind: false,  //是否能绑定客户
-            canDist: false, //是否能分配
-            showBottomBtn: false,
+            // showBottomBtn: false,
             detailData: {},
             customerTags: {
                 "1": [],
@@ -51,15 +55,36 @@ class CustomerDetail extends Component<any, any> {
 
     componentWillMount() {
         this.getDetailData();
+        this.listenerFn();
     }
 
-    canReload = false;
-
-    componentDidShow() {
-        if(this.canReload){
-            this.reloadDetail();
-        };
+    componentWillUnmount() {
+        if (this.listener) {
+            this.listener.remove();
+        }
     }
+
+    listener = null;
+
+    listenerFn = () => {
+        if (Platform.OS === "android") {
+            JDDevice.exitApp = () => { };
+            this.listener = DeviceEventEmitter.addListener(
+                "appNativeNoticeUpdateCustomerDetail",
+                () => {
+                    this.reloadDetail();
+                }
+            );
+        }
+
+        if (Platform.OS === "ios") {
+            const emitter = new NativeEventEmitter(NativeModules.JYNativeModule);
+            this.listener = emitter.addListener("appNativeNoticeUpdateCustomerDetail", () => {
+                this.reloadDetail();
+            });
+        }
+    };
+
 
     config: Config = {
         navigationBarTitleText: "",
@@ -178,14 +203,12 @@ class CustomerDetail extends Component<any, any> {
             } else {
                 this.getCanBind(resDetail.data.pin);
             };
-            this.canReload = true;
         } else {
             Taro.showToast({
                 title: resDetail.errorMsg,
                 icon: 'none',
                 duration: 1000
             });
-            this.canReload = true;
         };
     };
 
