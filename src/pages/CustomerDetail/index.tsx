@@ -359,7 +359,7 @@ class CustomerDetail extends Component<any, any> {
         });
 
         const uri = jyNativeData.userType === "CM" ? "mjying_assist_customer_merge" : "mjying_assist_partner_customer_bind";
-        const res = await JDRequest.get(uri, {
+        const res = await JDRequest.post(uri, {
             pin: inputValue,
             customerId: jyNativeData.customerId
         });

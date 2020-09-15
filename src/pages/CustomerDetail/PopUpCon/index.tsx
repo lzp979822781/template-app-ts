@@ -31,7 +31,7 @@ export default class PopUpCon extends Component<baseProps, any> {
         return data.map((item) => {
             return <View key={item.mobile} className='popup-list-item'>
                 <View className='popup-list-name'>
-                    <Text className='popup-list-name-txt'>{item.contactsName}</Text>
+                    <Text numberOfLines={2} className='popup-list-name-txt'>{item.contactsName}</Text>
                 </View>
                 <View className='popup-list-phone'>
                     <Text className='popup-list-phone-txt'>{item.mobile}</Text>
