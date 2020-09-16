@@ -5,9 +5,13 @@ import Gradient from "@/components/Gradient";
 import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 
+type dataObject = {
+    [key: string]: any;
+};
+
 type baseProps = {
     canBind?: boolean;
-    data?: object;
+    data: dataObject;
     onPopupShow?: any;
 }
 export default class BaseBtn extends Component<baseProps, any> {

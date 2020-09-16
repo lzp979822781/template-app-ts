@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, DataList, Footer } from "@/components/index";
+import { StatusBar, Header, DataList } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 
@@ -141,7 +141,7 @@ export default class PurchaseRelation extends Component<any, any> {
             return <View className='item-image-none'>
                 <Image
                     className='item-image-none-icon'
-                    src={"https://img12.360buyimg.com/imagetools/jfs/t1/121246/7/12582/29481/5f5f49cdE3b123199/8cb12f08a4713104.png"}
+                    src='https://img12.360buyimg.com/imagetools/jfs/t1/121246/7/12582/29481/5f5f49cdE3b123199/8cb12f08a4713104.png'
                 />
                 <Text className='item-image-none-txt' >暂无数据</Text>
             </View>
@@ -155,7 +155,7 @@ export default class PurchaseRelation extends Component<any, any> {
                         <View className='list-image-box'>
                             <Image
                                 className='item-image'
-                                mode="aspectFit"
+                                mode='aspectFit'
                                 src={item.shopLogo ? "https:" + item.shopLogo : "https://img14.360buyimg.com/imagetools/jfs/t1/143550/5/8037/22510/5f58ac4fE3ea6f5d3/17d424f4c4437584.png"}
                             />
                         </View>
@@ -167,7 +167,7 @@ export default class PurchaseRelation extends Component<any, any> {
                     </View>
                     <View className='item-division'></View>
                     <View className='item-dec'>
-                        <Image className='item-dec-icon' src="https://img12.360buyimg.com/imagetools/jfs/t1/121527/2/12047/1394/5f58ac4dE84b296d4/47ce73fa447d387e.png" />
+                        <Image className='item-dec-icon' src='https://img12.360buyimg.com/imagetools/jfs/t1/121527/2/12047/1394/5f58ac4dE84b296d4/47ce73fa447d387e.png' />
                         <Text className='item-dec-txt'>
                             建材时间：{item.auditTime}
                         </Text>

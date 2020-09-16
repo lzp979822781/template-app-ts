@@ -5,11 +5,17 @@ import { View, Text, Image } from "@tarojs/components";
 import { get as getGlobalData } from '@/utils/global_data';
 import "./index.scss";
 
+
+type dataObject = {
+    [key: string]: any;
+};
+
+
 type baseProps = {
     pageSize: number;
     lastPage: boolean;
     loaded: boolean;
-    data?: object;
+    data: dataObject;
     visitList: Array<object>;
 }
 
@@ -52,7 +58,7 @@ export default class CardVisit extends Component<baseProps, any> {
             return <Text className='visit-list-none' >--</Text>
         };
 
-        return visitList.map((item) => {
+        return visitList.map((item: {[key: string]: any;}) => {
             const visitorListFirst = item.visitorList && item.visitorList[0] ? item.visitorList[0] : {}
 
             return (

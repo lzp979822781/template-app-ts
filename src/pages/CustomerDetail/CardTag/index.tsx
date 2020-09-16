@@ -4,9 +4,13 @@ import { View, Text, Image } from "@tarojs/components";
 import { hoverStyle, parseUrl, debounce } from "@/utils/utils";
 import "./index.scss";
 
+type dataObject = {
+    [key: string]: any;
+};
+
 type baseProps = {
     loaded: boolean;
-    data?: object;
+    data: dataObject;
     tagsData: object;
 }
 

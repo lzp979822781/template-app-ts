@@ -7,17 +7,20 @@ import { hoverStyle, parseUrl, debounce } from "@/utils/utils";
 import "./index.scss";
 
 type baseProps = {
-    data?: object;
+    data: object;
 }
 
 export default class PurchasingInfo extends Component<baseProps, any> {
-    constructor(props) {
-        super(props);
-    }
+
 
     static defaultProps = {
         data: {}
     }
+    
+    constructor(props) {
+        super(props);
+    }
+
 
     routerTo = (url, params) => {
         const uri = parseUrl(url, params)
@@ -44,7 +47,7 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                     <View className='head-left'>
                         <Image
                             className='head-left-icon'
-                            src="https://img12.360buyimg.com/imagetools/jfs/t1/118715/23/17430/4896/5f58ac4fE40e24320/664d020c23d1392c.png"
+                            src='https://img12.360buyimg.com/imagetools/jfs/t1/118715/23/17430/4896/5f58ac4fE40e24320/664d020c23d1392c.png'
                         />
                         <Text className='head-left-title'>采购信息</Text>
                         <Text className='head-left-des-label'>最近下单</Text>
@@ -71,7 +74,7 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                     >
                         <Image
                             className='purchasing-item-icon'
-                            src="https://img13.360buyimg.com/imagetools/jfs/t1/142495/32/7880/39398/5f58ac4eE02b1ed82/d16fd992d06dbbb6.png"
+                            src='https://img13.360buyimg.com/imagetools/jfs/t1/142495/32/7880/39398/5f58ac4eE02b1ed82/d16fd992d06dbbb6.png'
                         />
                         <Text className='purchasing-item-txt'>订单记录</Text>
                     </View>
@@ -87,7 +90,7 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                     >
                         <Image
                             className='purchasing-item-icon'
-                            src="https://img14.360buyimg.com/imagetools/jfs/t1/122857/20/12129/38309/5f58ac4dE1f7b88e8/4733db3e6c1401a1.png"
+                            src='https://img14.360buyimg.com/imagetools/jfs/t1/122857/20/12129/38309/5f58ac4dE1f7b88e8/4733db3e6c1401a1.png'
                         />
                         <Text className='purchasing-item-txt'>加车商品</Text>
                     </View>
@@ -103,7 +106,7 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                     >
                         <Image
                             className='purchasing-item-icon'
-                            src="https://img14.360buyimg.com/imagetools/jfs/t1/132553/24/9543/37247/5f58ac4eE37cd9c1b/a5bf6137c1c781ae.png"
+                            src='https://img14.360buyimg.com/imagetools/jfs/t1/132553/24/9543/37247/5f58ac4eE37cd9c1b/a5bf6137c1c781ae.png'
                         />
                         <Text className='purchasing-item-txt'>优惠劵</Text>
                     </View>
@@ -119,7 +122,7 @@ export default class PurchasingInfo extends Component<baseProps, any> {
                     >
                         <Image
                             className='purchasing-item-icon'
-                            src="https://img11.360buyimg.com/imagetools/jfs/t1/133541/28/9499/59600/5f58ac4fE4fd82808/614eaeaf84a6cf7b.png"
+                            src='https://img11.360buyimg.com/imagetools/jfs/t1/133541/28/9499/59600/5f58ac4fE4fd82808/614eaeaf84a6cf7b.png'
                         />
                         <Text className='purchasing-item-txt'>建采关系</Text>
                     </View>

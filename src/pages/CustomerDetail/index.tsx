@@ -356,20 +356,20 @@ class CustomerDetail extends Component<any, any> {
             customerId: jyNativeData.customerId
         });
 
-
-        Taro.hideLoading();
-        if (res.success && res.code === 1) {
+        if (res.success) {
             this.setState({ visible: false }, ()=>{
-                this.reloadDetail();
                 Taro.showToast({
                     title: "绑定成功",
                     icon: 'success',
-                    duration: 1000
+                    duration: 2000
                 });
+                this.timer = setTimeout(() => {
+                    this.reloadDetail();
+                }, 2000);
             });
         } else {
             Taro.showToast({
-                title: res.errorMsg,
+                title: "绑定失败",
                 icon: 'none',
                 duration: 2000
             });
@@ -381,12 +381,13 @@ class CustomerDetail extends Component<any, any> {
     }
 
     renderInputDialog() {
+        const jyNativeData = getGlobalData('jyNativeData');
         const { visible, popupType, inputValue } = this.state;
         return (
             <JDConfirmDialog
                 show={visible && popupType === "input"}
                 onClose={this.onPopupClose}
-                onConfirm={this.getBindData}
+                onConfirm={jyNativeData.userType === "CM" ? this.getBindData : this.bindCustomer}
             >
                 <View className='jd-dialog-input-con'>
                     <Input className='custom-pin-input' type='text' value={inputValue} placeholder='请输入客户pin' focus onInput={this.onChange} />

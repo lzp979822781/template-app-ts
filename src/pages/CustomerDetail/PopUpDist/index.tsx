@@ -44,7 +44,7 @@ export default class PopUpConDist extends Component<baseProps, any> {
                     <View className='popup-dist-confirm' hoverStyle={hoverStyle} onClick={()=>{this.jumpToApp("dispatchCMPage")}}>
                         <Image
                             className='popup-dist-confirm-icon'
-                            src="https://img14.360buyimg.com/imagetools/jfs/t1/133583/28/9732/2225/5f5a1513E972ff853/31b3038350d9a137.png"
+                            src='https://img14.360buyimg.com/imagetools/jfs/t1/133583/28/9732/2225/5f5a1513E972ff853/31b3038350d9a137.png'
                         />
                         <Text className='popup-dist-confirm-txt'>分配</Text>
                     </View>

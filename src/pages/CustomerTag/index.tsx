@@ -88,7 +88,7 @@ export default class Goods extends Component<any, any> {
                 <View className='model-body-title'>
                     <Image
                         className='model-body-title-icon'
-                        src="https://img10.360buyimg.com/imagetools/jfs/t1/131683/25/9474/351/5f58ac4fE48c6db20/6230d2853be308e9.png"
+                        src='https://img10.360buyimg.com/imagetools/jfs/t1/131683/25/9474/351/5f58ac4fE48c6db20/6230d2853be308e9.png'
                     />
                     <Text className='model-body-title-txt'>{item.title}</Text>
                 </View>
@@ -100,11 +100,11 @@ export default class Goods extends Component<any, any> {
             <ScrollView className='tag-model'>
                 <View className='tag-model-close'>
                     <View className='tag-close-icon-con' onClick={this.onClose}>
-                        <Image className='tag-close-icon' src="https://img11.360buyimg.com/imagetools/jfs/t1/140989/12/8055/459/5f58ac4fE8aa0f2c7/8121a8647fb70c46.png" />
+                        <Image className='tag-close-icon' src='https://img11.360buyimg.com/imagetools/jfs/t1/140989/12/8055/459/5f58ac4fE8aa0f2c7/8121a8647fb70c46.png' />
                     </View>
                 </View>
                 <View className='model-head'>
-                    <Image className='model-head-icon' src="https://img11.360buyimg.com/imagetools/jfs/t1/126146/3/12024/85189/5f58ac4eE785272fa/18e598c61a2cff20.png" />
+                    <Image className='model-head-icon' src='https://img11.360buyimg.com/imagetools/jfs/t1/126146/3/12024/85189/5f58ac4eE785272fa/18e598c61a2cff20.png' />
                     <Text className='model-head-title'>标签说明</Text>
                 </View>
                 <View className='model-body'>
@@ -199,7 +199,7 @@ export default class Goods extends Component<any, any> {
                             >
                                 <Image
                                     className='head-right-btn'
-                                    src="https://img13.360buyimg.com/imagetools/jfs/t1/132600/8/9621/3231/5f58ac4fEe8dd77a3/2900a31cea1a2d1f.png"
+                                    src='https://img13.360buyimg.com/imagetools/jfs/t1/132600/8/9621/3231/5f58ac4fEe8dd77a3/2900a31cea1a2d1f.png'
                                 />
                             </View>
                         </View>
@@ -219,6 +219,7 @@ export default class Goods extends Component<any, any> {
                     onCancel={this.onClose}
                     onConfirm={this.onConfirm}
                     bodyStyle={{ height: 410 }}
+                    // eslint-disable-next-line taro/render-props
                     renderContent={this.renderContent()}
                     customFooter
                     customHeader
