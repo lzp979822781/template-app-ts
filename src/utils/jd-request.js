@@ -1,4 +1,4 @@
-
+import Taro from "@tarojs/taro";
 import {
   JDNetwork,
   // JDJumping
@@ -7,15 +7,20 @@ import {
 let timer = null;
 export default class JDRequest {
   static timer = null;
-  static timeoutFetch = (originalFetch, timeout = 10000) => {
-
+  static timeoutFetch = (originalFetch, timeout = 15000) => {
+    
     const timeoutPromise = new Promise((resolve, reject) => {
-      if (timer) {
+      if(timer){
         clearTimeout(timer);
       };
-
+      
       timer = setTimeout(() => {
-        resolve({ timeout: 1, errorMsg: "请求超时" });
+        // Taro.showToast({
+        //   title: "请求超时",
+        //   icon: 'none',
+        //   duration: 1000
+        // });
+        resolve({timeout:1, errorMsg: "请求超时"});
       }, timeout);
     });
 
