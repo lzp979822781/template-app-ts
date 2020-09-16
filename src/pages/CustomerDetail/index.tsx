@@ -124,7 +124,7 @@ class CustomerDetail extends Component<any, any> {
 
     //判断客户是否可以绑定
     getCanBind = async (pin) => {
-        const res = await JDRequest.get("/assist/partner/customer/canBind", {
+        const res = await JDRequest.get("mjying_assist_partner_customer_canBind", {
             customerPin: pin
         });
 
@@ -398,8 +398,11 @@ class CustomerDetail extends Component<any, any> {
     //获取绑定信息，做绑定前确认
     getBindData = async () => {
         const { inputValue } = this.state;
+        const jyNativeData = getGlobalData('jyNativeData');
+        
+        const functionId = jyNativeData.userType === "CM" ? "mjying_assist_customer_merge_getCustomer" : "mjying_assist_partner_authinfo"
         //客户详情获取
-        const res = await JDRequest.get("mjying_assist_customer_merge_getCustomer", {
+        const res = await JDRequest.get(functionId, {
             pin: inputValue
         });
         if (res.success) {

@@ -32,6 +32,7 @@ export default class CardBase extends Component<baseProps, any> {
 
     render() {
         const { data, onPopupShow, canBind } = this.props;
+        const shouPhpne = data.contacts && data.contacts.length > 0;
         return (
             <View className='card-base'>
                 <View hoverStyle={hoverStyle} className={data.headImg ? 'card-base-head' : 'card-base-head-default'}  onClick={()=>this.jumpToAppWeb("webView")}>
@@ -56,14 +57,14 @@ export default class CardBase extends Component<baseProps, any> {
                             {data.address || "--"}
                         </Text>
                     </View>
-                    <View className='contact-address-divide'></View>
-                    <View className='con-contact' onClick={()=>onPopupShow("contact")} hoverStyle={hoverStyle}>
+                    {shouPhpne ? <View className='contact-address-divide'></View> : null}
+                    {shouPhpne ? <View className='con-contact' onClick={()=>onPopupShow("contact")} hoverStyle={hoverStyle}>
                         <View
                             className='contact-img-con'
                         >
                             <Image className='contact-img' src="https://img12.360buyimg.com/imagetools/jfs/t1/128651/9/12268/1100/5f58ac4eEa6562e75/38280dd6bf5b0fb4.png" />
                         </View>
-                    </View>
+                    </View> : null}
                 </View>
                 <BaseBtn data={data} onPopupShow={onPopupShow} canBind={canBind}></BaseBtn>  
             </View>
