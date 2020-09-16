@@ -1,6 +1,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, DataList } from "@/components/index";
+import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 
@@ -8,6 +9,7 @@ export default class PurchaseRelation extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
+            timeout: 0,
             currentPage: 1,
             pageSize: 20,
             refreshing: false,
@@ -58,14 +60,10 @@ export default class PurchaseRelation extends Component<any, any> {
         if (res.success) {
             this.setVisitListData(res);
         } else {
-            Taro.showToast({
-                title: "采购关系获取失败",
-                icon: 'none',
-                duration: 2000
-            })
             this.setState({
                 currentPage: currentPage > 1 ? currentPage - 1 : 1,
-                refreshing: false
+                refreshing: false,
+                timeout: 1
             });
         };
     };
@@ -107,7 +105,8 @@ export default class PurchaseRelation extends Component<any, any> {
         this.setState(
             {
                 refreshing: true,
-                currentPage: 1
+                currentPage: 1,
+                timeout: 0
             },
             () => {
                 this.loadList();
@@ -178,7 +177,16 @@ export default class PurchaseRelation extends Component<any, any> {
     }
 
     render() {
-        const { lastPage, data, pageSize } = this.state;
+        const { lastPage, data, pageSize, timeout } = this.state;
+        if (timeout === 1) {
+            return <View className='container'>
+                <StatusBar></StatusBar>
+                <Header
+                    title='建采关系'
+                />
+                <JDNetworkErrorView onRetry={this.onRefresh} />
+            </View>
+        };
         return (
             <View className='container'>
                 <StatusBar />
@@ -191,7 +199,7 @@ export default class PurchaseRelation extends Component<any, any> {
                 >
                     <Block>{this.renderItems()}</Block>
                     {lastPage && data.length >= pageSize ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
-                    <View style={{height: 50}}></View>
+                    <View style={{ height: 50 }}></View>
                 </DataList>
             </View>
         );

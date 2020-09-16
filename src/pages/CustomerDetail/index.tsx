@@ -10,7 +10,7 @@ import {
     NativeEventEmitter,
     DeviceEventEmitter
 } from "react-native";
-import { JDDevice, JDConfirmDialog } from '@jdreact/jdreact-core-lib';
+import { JDDevice, JDConfirmDialog, JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
@@ -33,6 +33,7 @@ class CustomerDetail extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
+            timeout: 0,
             visible: false,
             popupType: "contact", //联系人 contact, 分配 dist, 绑定 binding
             inputValue: "",
@@ -64,15 +65,17 @@ class CustomerDetail extends Component<any, any> {
     }
 
     componentWillUnmount() {
-        
+
+        if (this.timer) {
+            clearTimeout(this.timer);
+        };
 
         if (this.listener) {
-            clearTimeout(this.timer);
             this.listener.remove();
         }
     }
 
-    timer= null;
+    timer = null;
 
     listener = null;
 
@@ -185,6 +188,7 @@ class CustomerDetail extends Component<any, any> {
                 icon: 'none',
                 duration: 1000
             });
+            this.setState({ timeout: resDetail.timeout, refreshing: false });
         };
 
     }
@@ -201,7 +205,7 @@ class CustomerDetail extends Component<any, any> {
         });
         Taro.hideLoading();
         if (resDetail.success) {
-            
+
             this.setState({ detailData: resDetail.data, refreshing: false });
             if (resDetail.data.pin) {
                 this.getCustomerTags(resDetail.data.pin)
@@ -221,7 +225,7 @@ class CustomerDetail extends Component<any, any> {
                 icon: 'none',
                 duration: 1000
             });
-            this.setState({ refreshing: false });
+            this.setState({ timeout: resDetail.timeout, refreshing: false });
         };
     };
 
@@ -245,7 +249,7 @@ class CustomerDetail extends Component<any, any> {
         };
 
         const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", params);
-        
+
         Taro.hideLoading();
         if (resVisit.success) {
             this.setVisitListData(resVisit);
@@ -301,7 +305,8 @@ class CustomerDetail extends Component<any, any> {
         this.setState(
             {
                 refreshing: true,
-                currentPage: 1
+                currentPage: 1,
+                timeout: 0
             },
             () => {
                 this.getDetailData();
@@ -361,7 +366,7 @@ class CustomerDetail extends Component<any, any> {
         });
 
         if (res.success) {
-            this.setState({ visible: false }, ()=>{
+            this.setState({ visible: false }, () => {
                 Taro.showToast({
                     title: "绑定成功",
                     icon: 'success',
@@ -404,7 +409,7 @@ class CustomerDetail extends Component<any, any> {
     getBindData = async () => {
         const { inputValue } = this.state;
         const jyNativeData = getGlobalData('jyNativeData');
-        
+
         const functionId = jyNativeData.userType === "CM" ? "mjying_assist_customer_merge_getCustomer" : "mjying_assist_partner_authinfo"
         //客户详情获取
         const res = await JDRequest.get(functionId, {
@@ -437,9 +442,21 @@ class CustomerDetail extends Component<any, any> {
     render() {
         const jyNativeData = getGlobalData('jyNativeData');
         const statusBarHeight = getGlobalData('statusBarHeight');
-        const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType, canBind, pageSize } = this.state;
+        const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType, canBind, pageSize, timeout } = this.state;
         //地勤能分配，合伙人没有分配
-        const renderRight = jyNativeData.userType === "CM" ? <DistBtn onPopupShow={() => this.onPopupShow("dist")} /> : null
+        const renderRight = jyNativeData.userType === "CM" ? <DistBtn onPopupShow={() => this.onPopupShow("dist")} /> : null;
+
+        if (timeout === 1) {
+            return <View className='container'>
+                <StatusBar></StatusBar>
+                <Header
+                    title='客户详情'
+                    backApp
+                />
+                <JDNetworkErrorView onRetry={this.onRefresh} />
+            </View>
+        };
+
         return (
             <View className='container'>
                 <ImageBackground

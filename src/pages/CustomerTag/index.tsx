@@ -1,6 +1,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Modal, JDListItem } from "@/components/index";
+import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 
@@ -10,6 +11,7 @@ export default class Goods extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
+            timeout: 0,
             visible: false,
             tagsData: {
                 1: [],
@@ -20,7 +22,7 @@ export default class Goods extends Component<any, any> {
         };
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.getTags();
         this.getTagsExplanation();
     }
@@ -28,6 +30,15 @@ export default class Goods extends Component<any, any> {
     config: Config = {
         navigationBarTitleText: "",
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
+    };
+
+    updata=()=>{
+        this.setState({
+            timeout: 0
+        }, ()=>{
+            this.getTags();
+            this.getTagsExplanation();
+        });
     };
 
     getTags = async () => {
@@ -45,11 +56,7 @@ export default class Goods extends Component<any, any> {
         if (resTags.success) {
             this.setState({ tagsData: resTags.data })
         } else {
-            Taro.showToast({
-                title: resTags.errorMsg,
-                icon: 'none',
-                duration: 1000
-            })
+            this.setState({ timeout: 1 })
         };
     };
 
@@ -60,11 +67,7 @@ export default class Goods extends Component<any, any> {
         if (resTagsExplanation.success) {
             this.setState({ tagsExplanation: resTagsExplanation.data })
         } else {
-            Taro.showToast({
-                title: "绑定客户标签失败",
-                icon: 'none',
-                duration: 2000
-            })
+            this.setState({ timeout: 1 })
         }
     };
 
@@ -182,7 +185,18 @@ export default class Goods extends Component<any, any> {
     }
 
     render() {
-        const { visible } = this.state;
+        const { visible, timeout } = this.state;
+
+        if (timeout === 1) {
+            return <View className='container'>
+                <StatusBar></StatusBar>
+                <Header
+                    title='客户标签'
+                />
+                <JDNetworkErrorView onRetry={this.updata} />
+            </View>
+        };
+
         return (
             <View className='container'>
                 <StatusBar />
@@ -211,7 +225,7 @@ export default class Goods extends Component<any, any> {
                     {this.renderGroup1()}
                     {this.renderGroup2()}
                     {this.renderGroup3()}
-                    <View style={{height: 50}}></View>
+                    <View style={{ height: 50 }}></View>
                 </ScrollView>
                 <Modal
                     visible={visible}

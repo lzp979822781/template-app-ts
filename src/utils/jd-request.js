@@ -1,20 +1,21 @@
-import Taro from "@tarojs/taro";
+
 import {
   JDNetwork,
   // JDJumping
 } from "@jdreact/jdreact-core-lib";
 
+let timer = null;
 export default class JDRequest {
+  static timer = null;
+  static timeoutFetch = (originalFetch, timeout = 10000) => {
 
-  static timeoutFetch = (originalFetch, timeout = 15000) => {
     const timeoutPromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        Taro.showToast({
-          title: "请求超时",
-          icon: 'none',
-          duration: 1000
-        });
-        reject("请求超时")
+      if (timer) {
+        clearTimeout(timer);
+      };
+
+      timer = setTimeout(() => {
+        resolve({ timeout: 1, errorMsg: "请求超时" });
       }, timeout);
     });
 
