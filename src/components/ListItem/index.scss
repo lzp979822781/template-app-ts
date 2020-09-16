@@ -14,6 +14,7 @@
 .list-item-value {
     @include flex(row, flex-start, center);
     flex: 1;
+    padding-right: 30px;
 }
 
 .list-item-lable-txt {

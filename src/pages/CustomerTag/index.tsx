@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, Modal, JDListItem, Footer } from "@/components/index";
+import { StatusBar, Header, Modal, JDListItem } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 
