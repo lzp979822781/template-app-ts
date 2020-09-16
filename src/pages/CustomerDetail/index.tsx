@@ -64,12 +64,15 @@ class CustomerDetail extends Component<any, any> {
     }
 
     componentWillUnmount() {
-        clearTimeout(this.timer);
+        
 
         if (this.listener) {
+            clearTimeout(this.timer);
             this.listener.remove();
         }
     }
+
+    timer= null;
 
     listener = null;
 
@@ -196,9 +199,9 @@ class CustomerDetail extends Component<any, any> {
         const resDetail = await JDRequest.get("mjying_assist_customer_getDetail", {
             customerId: jyNativeData.customerId
         });
-
         Taro.hideLoading();
         if (resDetail.success) {
+            
             this.setState({ detailData: resDetail.data, refreshing: false });
             if (resDetail.data.pin) {
                 this.getCustomerTags(resDetail.data.pin)
@@ -218,6 +221,7 @@ class CustomerDetail extends Component<any, any> {
                 icon: 'none',
                 duration: 1000
             });
+            this.setState({ refreshing: false });
         };
     };
 
@@ -235,14 +239,13 @@ class CustomerDetail extends Component<any, any> {
         const params = {
             customerId: jyNativeData.customerId,
             status: 2, // 任务状态：1未完成，2已完成，3已超时
-            // queryType: 1, // 查询类型：1.我的任务 2.下属任务
             pageNum: currentPage,
             pageSize: pageSize,
             appName: jyNativeData.userType === "CM" ? "saint" : "partner" // 系统来源：saint-地勤,partner-合伙人
         };
-        // console.log(JSON.stringify(params));
 
         const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", params);
+        
         Taro.hideLoading();
         if (resVisit.success) {
             this.setVisitListData(resVisit);
@@ -253,7 +256,8 @@ class CustomerDetail extends Component<any, any> {
                 duration: 1000
             })
             this.setState({
-                currentPage: currentPage > 1 ? currentPage - 1 : 1
+                currentPage: currentPage > 1 ? currentPage - 1 : 1,
+                refreshing: false
             })
         };
     }

@@ -1,28 +1,26 @@
+import Taro from "@tarojs/taro";
 import {
   JDNetwork,
-  JDJumping
+  // JDJumping
 } from "@jdreact/jdreact-core-lib";
-
-import { Toast } from "./model";
 
 export default class JDRequest {
 
-  static timeoutFetch = (originalFetch, timeout = 30000) => {
-    let timeoutBlock = () => { };
+  static timeoutFetch = (originalFetch, timeout = 15000) => {
     const timeoutPromise = new Promise((resolve, reject) => {
-      timeoutBlock = () => {
-        // 请求超时处理
-        reject("请求超时");
-      };
+      setTimeout(() => {
+        Taro.showToast({
+          title: "请求超时",
+          icon: 'none',
+          duration: 1000
+        });
+        reject("请求超时")
+      }, timeout);
     });
 
     // Promise.race(iterable)方法返回一个promise
     // 这个promise在iterable中的任意一个promise被解决或拒绝后，立刻以相同的解决值被解决或以相同的拒绝原因被拒绝。
     const abortablePromise = Promise.race([originalFetch, timeoutPromise]);
-
-    setTimeout(() => {
-      timeoutBlock();
-    }, timeout);
 
     return abortablePromise;
   };
@@ -54,13 +52,13 @@ export default class JDRequest {
     return newParam;
   }
 
-  static logout = () => {
-    JDJumping.jumpToOpenapp(
-      `openApp.jyingApp://virtual?params={"category":"jump","des":"logoutJumpToLoginPage"}`
-    )
-      .then(() => { })
-      .catch(error => {
-        Toast.show(error.message);
-      });
-  };
+  // static logout = () => {
+  //   JDJumping.jumpToOpenapp(
+  //     `openApp.jyingApp://virtual?params={"category":"jump","des":"logoutJumpToLoginPage"}`
+  //   )
+  //     .then(() => { })
+  //     .catch(error => {
+  //       Toast.show(error.message);
+  //     });
+  // };
 }
