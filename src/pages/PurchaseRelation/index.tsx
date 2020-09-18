@@ -22,7 +22,8 @@ export default class PurchaseRelation extends Component<any, any> {
                 //     auditTime: "2020-05-22 16:40:49",
                 //     shopLogo: ""
                 // }
-            ]
+            ],
+            systemInfo: {}
         };
         this.onRefresh = this.onRefresh.bind(this);
         this.onEndReached = this.onEndReached.bind(this);
@@ -30,6 +31,13 @@ export default class PurchaseRelation extends Component<any, any> {
 
     componentWillMount() {
         this.loadList();
+        Taro.getSystemInfo({
+            success: res => {
+                this.setState({
+                    systemInfo: res
+                })
+            }
+        });
     }
 
     config: Config = {
@@ -135,16 +143,7 @@ export default class PurchaseRelation extends Component<any, any> {
     }
 
     renderItems() {
-        const { data = [], loaded } = this.state;
-        if (data.length === 0 && loaded) {
-            return <View className='item-image-none'>
-                <Image
-                    className='item-image-none-icon'
-                    src='https://img12.360buyimg.com/imagetools/jfs/t1/121246/7/12582/29481/5f5f49cdE3b123199/8cb12f08a4713104.png'
-                />
-                <Text className='item-image-none-txt' >暂无数据</Text>
-            </View>
-        };
+        const { data = [] } = this.state;
         return data.map((item, index) => {
             const className =
                 index === 0 ? "list-item-box top-gap" : "list-item-box";
@@ -177,7 +176,7 @@ export default class PurchaseRelation extends Component<any, any> {
     }
 
     render() {
-        const { lastPage, data, pageSize, timeout } = this.state;
+        const { lastPage, data, loaded, pageSize, timeout, systemInfo } = this.state;
         if (timeout === 1) {
             return <View className='container'>
                 <StatusBar></StatusBar>
@@ -187,20 +186,41 @@ export default class PurchaseRelation extends Component<any, any> {
                 <JDNetworkErrorView onRetry={this.onRefresh} />
             </View>
         };
+
+        const noneDataHeight = systemInfo.windowHeight ? systemInfo.windowHeight - systemInfo.statusBarHeight - 44 : "auto";
+
         return (
             <View className='container'>
                 <StatusBar />
                 <Header title='建采关系' />
-                <DataList
-                    minusHeight={0}
-                    refreshing={this.state.refreshing}
-                    onRefresh={this.onRefresh}
-                    onEndReached={this.onEndReached}
-                >
-                    <Block>{this.renderItems()}</Block>
-                    {lastPage && data.length >= pageSize ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
-                    <View style={{ height: 50 }}></View>
-                </DataList>
+                {
+                    data.length === 0 && loaded ?
+                        <DataList
+                            minusHeight={0}
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.onRefresh}
+                            onEndReached={this.onEndReached}
+                        >
+                            <View style={{ height:  noneDataHeight }} className='item-image-none'>
+                                <Image
+                                    className='item-image-none-icon'
+                                    src='https://img12.360buyimg.com/imagetools/jfs/t1/121246/7/12582/29481/5f5f49cdE3b123199/8cb12f08a4713104.png'
+                                />
+                                <Text className='item-image-none-txt' >暂无数据</Text>
+                            </View>
+                        </DataList> :
+                        <DataList
+                            minusHeight={0}
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.onRefresh}
+                            onEndReached={this.onEndReached}
+                        >
+                            <Block>{this.renderItems()}</Block>
+                            {lastPage && data.length >= pageSize ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
+                            <View style={{ height: 50 }}></View>
+                        </DataList>
+                }
+
             </View>
         );
     }
