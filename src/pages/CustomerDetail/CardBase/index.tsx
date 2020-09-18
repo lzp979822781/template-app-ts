@@ -29,7 +29,7 @@ export default class CardBase extends Component<baseProps, any> {
     jumpToAppWeb() {
         const jyNativeData = getGlobalData('jyNativeData');
         const isSaint =  jyNativeData.userType === "CM";
-        if(isSaint){
+        if(!isSaint){
             return ;
         };
 
