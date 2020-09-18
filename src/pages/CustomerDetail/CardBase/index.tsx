@@ -28,30 +28,28 @@ export default class CardBase extends Component<baseProps, any> {
 
     jumpToAppWeb() {
         const jyNativeData = getGlobalData('jyNativeData');
-        const isSaint =  jyNativeData.userType === "CM";
-        if(!isSaint){
-            return ;
+        const isSaint = jyNativeData.userType === "CM";
+        if (isSaint) {
+            JDJumping.jumpToOpenapp(
+                `openApp.jyingApp://virtual?params={"category":"jump","des":"webView", "params": ${JSON.stringify({ url: `/assist/customer/detail/info?customerId=${jyNativeData.customerId}` })}}`
+            )
         };
-
-        JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"webView", "params": ${JSON.stringify({ url: `/assist/customer/detail/info?customerId=${jyNativeData.customerId}`})}}`
-        )
     }
 
     render() {
         const jyNativeData = getGlobalData('jyNativeData');
-        const isSaint =  jyNativeData.userType === "CM";
+        const isSaint = jyNativeData.userType === "CM";
         const { data, onPopupShow, canBind } = this.props;
         const shouPhpne = data.contacts && data.contacts.length > 0;
         return (
             <View className='card-base'>
-                <View hoverStyle={isSaint ? hoverStyle : {}} className={data.headImg ? 'card-base-head' : 'card-base-head-default'}  onClick={()=>this.jumpToAppWeb("webView")}>
+                <View hoverStyle={isSaint ? hoverStyle : {}} className={data.headImg ? 'card-base-head' : 'card-base-head-default'} onClick={() => this.jumpToAppWeb("webView")}>
                     <Image
                         className={data.headImg ? 'card-base-head-img' : "card-base-head-img-default"}
                         src={data.headImg || "https://img11.360buyimg.com/imagetools/jfs/t1/140195/31/7995/18951/5f58ac4eE019f959a/dcd004d1aa98f66f.png"}
                     />
                 </View>
-                <View hoverStyle={isSaint ? hoverStyle : {}}  className='base-msg' onClick={()=>this.jumpToAppWeb("webView")}>
+                <View hoverStyle={isSaint ? hoverStyle : {}} className='base-msg' onClick={() => this.jumpToAppWeb("webView")}>
                     <Text className='company-title'>
                         {data.companyName || "--"}
                     </Text>
@@ -68,7 +66,7 @@ export default class CardBase extends Component<baseProps, any> {
                         </Text>
                     </View>
                     {shouPhpne ? <View className='contact-address-divide'></View> : null}
-                    {shouPhpne ? <View className='con-contact' onClick={()=>onPopupShow("contact")} hoverStyle={hoverStyle}>
+                    {shouPhpne ? <View className='con-contact' onClick={() => onPopupShow("contact")} hoverStyle={hoverStyle}>
                         <View
                             className='contact-img-con'
                         >
@@ -76,7 +74,7 @@ export default class CardBase extends Component<baseProps, any> {
                         </View>
                     </View> : null}
                 </View>
-                <BaseBtn data={data} onPopupShow={onPopupShow} canBind={canBind}></BaseBtn>  
+                <BaseBtn data={data} onPopupShow={onPopupShow} canBind={canBind}></BaseBtn>
             </View>
         );
     }
