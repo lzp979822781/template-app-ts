@@ -11,7 +11,7 @@ type PageState = {};
 
 const routers = {
     customDetail: "pages/CustomerDetail/index",
-    // planDetail: "pages/PlanDetail/index"
+    goodsSelection: "pages/GoodsSelection/index"
 }
 
 class Empty extends Component<any, any> {
@@ -29,10 +29,12 @@ class Empty extends Component<any, any> {
     }
 
     componentWillMount() {
-        const jyNativeData = getGlobalData('jyNativeData');
-        if (jyNativeData.pageName) {
-            this.redirectTo(routers[jyNativeData.pageName]);
-        };
+        // const jyNativeData = getGlobalData('jyNativeData');
+        // if (jyNativeData.pageName) {
+        //     this.redirectTo(routers[jyNativeData.pageName]);
+        // };
+
+        // this.redirectTo(routers["goodsSelection"]);
     }
 
     routerTo = url => {
@@ -59,6 +61,27 @@ class Empty extends Component<any, any> {
                     }}
                 >
                     客户详情
+                </Button>
+                <Button
+                    onClick={() => {
+                        this.routerTo("/pages/GoodsSelection/index");
+                    }}
+                >
+                    推品
+                </Button>
+                <Button
+                    onClick={() => {
+                        this.routerTo("/pages/OrderDetail/index");
+                    }}
+                >
+                    订单详情
+                </Button>
+                <Button
+                    onClick={() => {
+                        this.routerTo("/pages/Details/index");
+                    }}
+                >
+                    明细
                 </Button>
             </View>
         );

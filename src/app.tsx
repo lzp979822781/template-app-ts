@@ -39,7 +39,11 @@ class App extends Component<appProps, any> {
             "pages/Empty/index",
             "pages/CustomerDetail/index",
             "pages/CustomerTag/index",
-            "pages/PurchaseRelation/index"
+            "pages/PurchaseRelation/index",
+            "pages/GoodsSelection/index",
+            "pages/GoodsSelectionSearch/index",
+            "pages/OrderDetail/index",
+            "pages/Details/index",
         ],
         window: {
             backgroundTextStyle: "light",
