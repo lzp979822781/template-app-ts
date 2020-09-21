@@ -42,7 +42,7 @@ class App extends Component<appProps, any> {
             "pages/PurchaseRelation/index",
             "pages/GoodsSelection/index",
             "pages/GoodsSelectionSearch/index",
-            "pages/OrderDetail/index",
+            "pages/order/OrderDetail/index",
             "pages/Details/index",
         ],
         window: {

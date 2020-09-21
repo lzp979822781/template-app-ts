@@ -71,7 +71,7 @@ class Empty extends Component<any, any> {
                 </Button>
                 <Button
                     onClick={() => {
-                        this.routerTo("/pages/OrderDetail/index");
+                        this.routerTo("/pages/order/OrderDetail/index");
                     }}
                 >
                     订单详情
