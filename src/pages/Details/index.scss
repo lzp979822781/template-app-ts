@@ -1,6 +1,63 @@
 @import "@/global/common.scss";
-.container {
+.detail {
     display: flex;
     height: 100%;
     background-color: #F8F8F8;
+
+    &-top {
+        padding-left: 47px;
+        height: 241px;
+        background-color: #F23030;
+        &-title {
+            margin-top: 79px;
+            &-text {
+                @include font(26px, #FFFFFF, 'PingFangSC-Regular');
+            }
+        }
+
+        &-content {
+            margin-top: 15px;
+            &-text {
+                @include font(60px, #FFFFFF, 'JDLANGZHENGTI');
+            }
+        }
+    }
+
+    &-tab {
+        @include flex(row, flex-start, center);
+        height: 93px;
+        background-color: #fff;
+
+        &-time {
+            @include flex(row, flex-start, center);
+            flex: 1;
+            &-text {
+                margin-left: 113px;
+                @include font(28px, #444444, 'PingFangSC-Regular');
+                &-selected {
+                    @include font(28px, #F23030);
+                    margin-left: 39px;
+                }
+            }
+        }
+
+        &-user {
+            @include flex(row, center, center);
+            &-text {
+                @include font(28px, #444444, 'PingFangSC-Regular');
+                
+                &-selected {
+                    max-width: 280px;
+                    @include font(28px, #F23030);
+                }
+            }
+            flex: 1;
+        }
+
+        &-image {
+            width: 15px;
+            height: 8px;
+            margin-left: 16px;
+        }
+    }
 }
