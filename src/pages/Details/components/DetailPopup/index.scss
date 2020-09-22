@@ -1,4 +1,6 @@
 @import "@/global/common.scss";
+$btnHeight: 100px;
+$textTop: 13px;
 
 .detail-popup {
     padding-top: 26px;
@@ -14,6 +16,120 @@
                 margin-right: 38px;
             }
         }
-        
+    }
+
+    &-body {
+        @include flex(row, flex-start, center);
+        &-delimiter {
+            width: 3px;
+            height: 31px;
+            border: 1px solid rgba(227,232,238,1);
+        }
+    }
+
+    &-title {
+        @include flex(row, flex-start, center);
+    }
+
+    
+
+    &-text-container {
+
+        margin-left: 80px;
+        margin-right: 109px;
+
+        &-container {
+            @include flex(row, flex-start, center);
+        }
+
+        &-content {
+            @include flex(row, flex-start, center);
+            margin-top: $textTop;
+        }
+
+        &-icon {
+            @include flex(row, center, center);
+            width: 36px;
+            height: 36px;
+            background: rgba(68,68,68,1);
+            border-radius: 14px;
+
+            &-text {
+                @include font(30px, #444444, 'PingFangSC-Regular');
+                margin-left: 10px;
+                &-container {
+                    @include flex(row, center, center);
+                }
+            }
+
+            &-icon {
+                @include font(22px, #FFFFFF, 'PingFangSC-Regular');
+            }
+        }
+
+        &-text {
+            @include font(36px, #444444, 'PingFangSC-Regular');
+            background-color: greenyellow;
+        }
+    }
+
+    &-time-conatainer {
+        margin-left: 78px;
+        &-title {
+            &-up {
+                @include flex(row, flex-start, center);
+                &-left {
+                    @include flex(row, center, center);
+                    width: 36px;
+                    height: 36px;
+                    background: #F23030;
+                    border-radius: 14px;
+                    &-text {
+                        @include font(22px, #FFFFFF, 'PingFangSC-Regular');
+                    }
+                }
+
+                &-right-text {
+                    margin-left: 10px;
+                    @include font(30px, #F23030, 'PingFangSC-Regular');
+                }
+            }
+
+            &-down {
+                margin-top: $textTop;
+                @include flex(row, flex-start, center);
+                &-text {
+                    @include font(36px, #F23030, 'PingFangSC-Regular');
+                }
+            }
+        }
+    }
+
+    &-btn {
+        &-container {
+            @include flex(row, flex-start, center);
+        }
+
+        &-reset {
+            flex: 1;
+            @include flex(row, center, center);
+            height: $btnHeight - 1;
+            /* border: 1px solid rgba(0,0,0,0.04);
+            border-bottom-width: 0;
+            border-left-width: 0;
+            border-right-width: 0; */
+            &-text {
+                @include font(32px, #999999, 'PingFangSC-Regular');
+            }
+        }
+
+        &-ok {
+            flex: 1;
+            @include flex(row, center, center);
+            height: $btnHeight;
+            &-text {
+                @include font(32px, #FFFFFF, 'PingFangSC-Semibold');
+            }
+        }
     }
 }
