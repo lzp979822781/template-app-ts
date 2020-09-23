@@ -7,7 +7,7 @@ import {
 let timer = null;
 export default class JDRequest {
   static timer = null;
-  static timeoutFetch = (originalFetch, timeout = 15000) => {
+  static timeoutFetch = (originalFetch, timeout = 30000) => {
     
     const timeoutPromise = new Promise((resolve, reject) => {
       if(timer){
@@ -20,6 +20,7 @@ export default class JDRequest {
         //   icon: 'none',
         //   duration: 1000
         // });
+        Taro.hideLoading();
         resolve({timeout:1, errorMsg: "请求超时"});
       }, timeout);
     });
