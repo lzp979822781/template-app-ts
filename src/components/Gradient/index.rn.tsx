@@ -11,6 +11,13 @@ type PageOwnprops = {
 };
 
 class LinearBadge extends Component<PageOwnprops> {
+
+    static defaultProps = {
+        onClick: (): any => {
+
+        }
+    }
+
     constructor(props) {
         super(props);
         this.state = {};
