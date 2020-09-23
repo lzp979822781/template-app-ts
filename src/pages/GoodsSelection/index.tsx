@@ -1,14 +1,19 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, DataList } from "@/components/index";
+import { StatusBar, Header, DataList, Gradient, Drawer } from "@/components/index";
 import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
+import Accordion from "./Accordion/index";
+import Filter from "./Filter/index";
+// import FilterDrawer from "./FilterDrawer/index";
+import JDSectionList from "./JDSectionList/index";
 import "./index.scss";
 
 export default class GoodsSelection extends Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
+            show: false,
             timeout: 0,
             currentPage: 1,
             pageSize: 20,
@@ -16,12 +21,28 @@ export default class GoodsSelection extends Component<any, any> {
             lastPage: false,
             loaded: false,
             data: [
-                // {
-                //     relationId: 1,
-                //     shopName: "成都市沙溪镇悦心康大药房成都市沙溪镇悦心康",
-                //     auditTime: "2020-05-22 16:40:49",
-                //     shopLogo: ""
-                // }
+                {
+                    id: 1,
+                    skuName: "华北制阿莫西林克拉维酸钾干混悬剂药 10粒50g一疗…",
+                    factoryName: "华北制药医药股份有限公司",
+                    validTime: "2020-05-22",
+                    medicalSpec: "2盒10000",
+                    priceStr: "399",
+                    sale30: "月销248",
+                    shopName: "北京京东佳康旗舰店",
+                    shopLogo: ""
+                },
+                {
+                    id: 2,
+                    skuName: "华北制阿莫西林克拉维酸钾干混悬剂药 10粒50g一疗…",
+                    factoryName: "华北制药医药股份有限公司",
+                    validTime: "2020-05-22",
+                    medicalSpec: "2盒10000",
+                    priceStr: "399",
+                    sale30: "月销248",
+                    shopName: "北京京东佳康旗舰店",
+                    shopLogo: ""
+                }
             ],
             systemInfo: {}
         };
@@ -30,7 +51,7 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
     componentWillMount() {
-        this.loadList();
+        // this.loadList();
         Taro.getSystemInfo({
             success: res => {
                 this.setState({
@@ -144,39 +165,101 @@ export default class GoodsSelection extends Component<any, any> {
 
     renderItems() {
         const { data = [] } = this.state;
-        return data.map((item, index) => {
-            const className =
-                index === 0 ? "list-item-box top-gap" : "list-item-box";
+        return data.map((item) => {
+            const className = "list-item-box";
             return (
-                <View key={item.relationId} className={className}>
+                <View key={item.id} className={className}>
                     <View className='list-item'>
                         <View className='list-image-box'>
                             <Image
                                 className='item-image'
-                                mode='aspectFit'
-                                src={item.shopLogo ? "https:" + item.shopLogo : "https://img14.360buyimg.com/imagetools/jfs/t1/143550/5/8037/22510/5f58ac4fE3ea6f5d3/17d424f4c4437584.png"}
+                                mode='aspectFit' // 部分支持 scaleToFill, aspectFit, aspectFill, widthFix
+                                src={item.mainImg ? `https://img12.360buyimg.com/img/${item.mainImg}` : "https://img14.360buyimg.com/imagetools/jfs/t1/143550/5/8037/22510/5f58ac4fE3ea6f5d3/17d424f4c4437584.png"}
                             />
                         </View>
                         <View className='content-box'>
                             <Text numberOfLines={2} className='item-title'>
-                                {item.shopName}
+                                {item.skuName}
                             </Text>
+                            <View className='item-row'>
+                                <View className='factory-icon'>
+                                    <Text className='factory-icon-txt'>厂</Text>
+                                </View>
+                                <Text
+                                    numberOfLines={1}
+                                    className='factory-name'
+                                >
+                                    {item.factoryName || "--"}
+                                </Text>
+                            </View>
+                            <View className='item-row'>
+                                <Text className='factory-valid-time'> {`有效期至 ${item.validTime || "--"}`}</Text>
+                                <View className='item-row-vertical-line'></View>
+                                <Text
+                                    className='factory-medical-spec'
+                                >
+                                    {item.medicalSpec || "--"}
+                                </Text>
+                            </View>
+                            <View className='item-row'>
+                                <Text className='factory-price-unit'>¥</Text>
+                                <Text className='factory-price'>{item.priceStr || "--"}</Text>
+                                <Text
+                                    className='factory-sale30'
+                                >
+                                    {`月销 ${typeof item.sale30 === "number" ? item.sale30 : "--"}`}
+                                </Text>
+                            </View>
+                            <Text className='factory-shop-name'>
+                                {item.shopName || "--"}
+                            </Text>
+                            <View className='item-dec'>
+                                <View className='item-dec-btn-1'>
+                                    <Text className='item-dec-btn-txt-1'>复制PC链接</Text>
+                                </View>
+                                <View className='item-dec-btn-2'>
+                                    <Gradient
+                                        style={{
+                                            height: 22,
+                                            borderRadius: 11,
+                                            alignItems: "center",
+                                            justifyContent: "center"
+                                        }}
+                                        angle={0}
+                                        colors={["#F2140C", "#F2270C", "#F24D0C"]}
+                                    >
+                                        <Text className='item-dec-btn-txt-2'>复制标题</Text>
+                                    </Gradient>
+                                </View>
+                            </View>
                         </View>
+
                     </View>
                     <View className='item-division'></View>
-                    <View className='item-dec'>
-                        <Image className='item-dec-icon' src='https://img12.360buyimg.com/imagetools/jfs/t1/121527/2/12047/1394/5f58ac4dE84b296d4/47ce73fa447d387e.png' />
-                        <Text className='item-dec-txt'>
-                            建材时间：{item.auditTime}
-                        </Text>
-                    </View>
                 </View>
             );
         });
     }
 
+    onChange = activeSections => {
+        this.setState({ activeSections });
+    };
+
+    onOpenChange = (isOpen) => {
+        this.setState({
+            show: isOpen
+        });
+    };
+
+    openDrawer = () => {
+        this.setState({
+            show: true
+        });
+    };
+
+
     render() {
-        const { lastPage, data, loaded, pageSize, timeout, systemInfo } = this.state;
+        const { lastPage, data, loaded, pageSize, timeout, systemInfo, show } = this.state;
         if (timeout === 1) {
             return <View className='container'>
                 <StatusBar></StatusBar>
@@ -187,40 +270,46 @@ export default class GoodsSelection extends Component<any, any> {
             </View>
         };
 
-        const noneDataHeight = systemInfo.windowHeight ? systemInfo.windowHeight - systemInfo.statusBarHeight - 44 : "auto";
+        const noneDataHeight = systemInfo.windowHeight ? systemInfo.windowHeight - systemInfo.statusBarHeight - 94 : "auto";
 
         return (
             <View className='container'>
-                <StatusBar />
-                <Header title='推品' />
-                {
-                    data.length === 0 && loaded ?
-                        <DataList
-                            minusHeight={0}
-                            refreshing={this.state.refreshing}
-                            onRefresh={this.onRefresh}
-                            onEndReached={this.onEndReached}
-                        >
-                            <View style={{ height:  noneDataHeight }} className='item-image-none'>
-                                <Image
-                                    className='item-image-none-icon'
-                                    src='https://img12.360buyimg.com/imagetools/jfs/t1/121246/7/12582/29481/5f5f49cdE3b123199/8cb12f08a4713104.png'
-                                />
-                                <Text className='item-image-none-txt' >暂无数据</Text>
-                            </View>
-                        </DataList> :
-                        <DataList
-                            minusHeight={0}
-                            refreshing={this.state.refreshing}
-                            onRefresh={this.onRefresh}
-                            onEndReached={this.onEndReached}
-                        >
-                            <Block>{this.renderItems()}</Block>
-                            {lastPage && data.length >= pageSize ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
-                            <View style={{ height: 50 }}></View>
-                        </DataList>
-                }
-
+                <Drawer
+                    show={show}
+                    drawerBackgroundColor="rgba(0,0,0,0.5)"
+                    onOpenChange={this.onOpenChange}
+                    renderSidebar={<JDSectionList />}
+                >
+                    <StatusBar />
+                    <Header title='推品' />
+                    <View className='list-box'>
+                        <View className='list-box-menus'>
+                            <Accordion></Accordion>
+                        </View>
+                        <View className='list-box-content'>
+                            <Filter openDrawer={this.openDrawer} />
+                            <DataList
+                                minusHeight={0}
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.onRefresh}
+                                onEndReached={this.onEndReached}
+                            >
+                                {
+                                    data.length === 0 && loaded ?
+                                        <View style={{ height: noneDataHeight }} className='item-image-none'>
+                                            <Image
+                                                className='item-image-none-icon'
+                                                src='https://img12.360buyimg.com/imagetools/jfs/t1/121246/7/12582/29481/5f5f49cdE3b123199/8cb12f08a4713104.png'
+                                            />
+                                            <Text className='item-image-none-txt' >暂无数据</Text>
+                                        </View> :
+                                        <Block>{this.renderItems()}</Block>
+                                }
+                                {lastPage && data.length >= pageSize ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
+                            </DataList>
+                        </View>
+                    </View>
+                </Drawer>
             </View>
         );
     }

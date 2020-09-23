@@ -1,21 +1,27 @@
 import Taro, { Component } from '@tarojs/taro';
 // import { View } from '@tarojs/components';
 import { Drawer } from "@ant-design/react-native";
-
+import { StatusBar, Footer } from "@/components/index";
 import './index.scss';
 
 type PageOwnProps = {
     show?: boolean|undefined,
+    drawerBackgroundColor?: string,
     mask?: boolean,
     right?: boolean|undefined,
     onClose?: (data?: any) => {},
+    onOpenChange?: (data?: any) => {},
     renderSidebar?: any
 }
 
 class TaroDrawer extends Component<PageOwnProps> {
 
     static defaultProps = {
-        right: true
+        right: true,
+        drawerBackgroundColor: 'rgba(51,56,64,0.70)',
+        onOpenChange: (isOpen)=>{
+            console.log('是否打开了 Drawer', isOpen.toString());
+        }
     }
 
     constructor(props) {
@@ -23,19 +29,18 @@ class TaroDrawer extends Component<PageOwnProps> {
         this.state = {  };
     }
     render() {
-        const { show, right } = this.props;
+        const { show, right, drawerBackgroundColor, onOpenChange } = this.props;
         return (
             <Drawer
                 sidebar={this.props.renderSidebar}
                 position={right ? 'right' : 'left'}
                 open={!!show}
-                    // onOpenChange={this.onOpenChange}
+                onOpenChange={onOpenChange}
                     // rgba(51,56,64,0.70)'
-                drawerBackgroundColor='rgba(51,56,64,0.70)'
+                drawerBackgroundColor={drawerBackgroundColor}
                 drawerWidth={305}
             >
                 { this.props.children}
-                
             </Drawer>
         );
     }

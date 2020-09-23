@@ -187,40 +187,32 @@ export default class PurchaseRelation extends Component<any, any> {
             </View>
         };
 
-        const noneDataHeight = systemInfo.windowHeight ? systemInfo.windowHeight - systemInfo.statusBarHeight - 44 : "auto";
+        const noneDataHeight = systemInfo.windowHeight ? systemInfo.windowHeight - systemInfo.statusBarHeight - 94 : "auto";
 
         return (
             <View className='container'>
                 <StatusBar />
                 <Header title='建采关系' />
-                {
-                    data.length === 0 && loaded ?
-                        <DataList
-                            minusHeight={0}
-                            refreshing={this.state.refreshing}
-                            onRefresh={this.onRefresh}
-                            onEndReached={this.onEndReached}
-                        >
-                            <View style={{ height:  noneDataHeight }} className='item-image-none'>
+                <DataList
+                    minusHeight={0}
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.onRefresh}
+                    onEndReached={this.onEndReached}
+                >
+
+                    {
+                        data.length === 0 && loaded ?
+                            <View style={{ height: noneDataHeight }} className='item-image-none'>
                                 <Image
                                     className='item-image-none-icon'
                                     src='https://img12.360buyimg.com/imagetools/jfs/t1/121246/7/12582/29481/5f5f49cdE3b123199/8cb12f08a4713104.png'
                                 />
                                 <Text className='item-image-none-txt' >暂无数据</Text>
-                            </View>
-                        </DataList> :
-                        <DataList
-                            minusHeight={0}
-                            refreshing={this.state.refreshing}
-                            onRefresh={this.onRefresh}
-                            onEndReached={this.onEndReached}
-                        >
+                            </View> :
                             <Block>{this.renderItems()}</Block>
-                            {lastPage && data.length >= pageSize ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
-                            <View style={{ height: 50 }}></View>
-                        </DataList>
-                }
-
+                    }
+                    {lastPage && data.length >= pageSize ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
+                </DataList>
             </View>
         );
     }

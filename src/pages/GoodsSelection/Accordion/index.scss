@@ -1,0 +1,48 @@
+@import "@/global/common.scss";
+
+.accordion {
+
+}
+
+.accordion-header {
+    @include flex(row, center, center);
+    width: 162px;
+    height: 84px;
+    background-color: #FFFFFF;
+}
+
+.accordion-header-txt {
+    @include font(26px, #444444);
+}
+
+.accordion-header-icon{
+    margin-left: 10px;
+    width: 6px;
+    height: 12px;
+}
+
+.accordion-body {
+   background-color: #F8F8F8;
+}
+
+.accordion-item {
+    @include flex(row, flex-start, center);
+    height: 84px;
+}
+
+.accordion-item-icon {
+    width: 4px;
+    height: 24px;
+}
+
+.accordion-item-icon-active {
+    width: 4px;
+    height: 24px;
+    background-color: #F23030;
+    border-radius: 2px;
+}
+
+.accordion-item-txt {
+    @include font(24px, #333840);
+    margin-left: 22px;
+}

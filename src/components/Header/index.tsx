@@ -7,6 +7,7 @@ import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 
 interface Option {
+    titleColor:  string;
     title?: string;
     backApp: boolean;
     noBack?: boolean;
@@ -17,6 +18,7 @@ interface Option {
 
 class Header extends Component<Option, any> {
     static defaultProps = {
+        titleColor: "#FFFFFF",
         title: "标题",
         noBgColor: false,
         backApp: false,
@@ -70,13 +72,13 @@ class Header extends Component<Option, any> {
     };
 
     render() {
-        const { noBgColor } = this.props;
+        const { noBgColor, titleColor } = this.props;
         const conClassName = noBgColor ? "header-con-noBgColor" : "header-con";
         return (
             <View className={conClassName}>
                 <View className='back-con'>{this.renderLeft()}</View>
                 <View className='title-con'>
-                    <Text className='title-txt'>{this.props.title}</Text>
+                    <Text className='title-txt' style={{color: titleColor}}>{this.props.title}</Text>
                 </View>
                 <View className='handle-con'>{this.renderRight()}</View>
             </View>

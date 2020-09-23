@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro';
 import {
+    View,
     ScrollView,
     RefreshControl
 } from "react-native";
@@ -45,6 +46,7 @@ class DataList extends Component<any, any> {
             }
         >
             {this.props.children}
+            <View style={{ height: 50 }}></View>
         </ScrollView>
     }
 }

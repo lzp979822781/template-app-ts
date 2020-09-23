@@ -1,16 +1,27 @@
 @import "@/global/common.scss";
+
 .container {
     display: flex;
     height: 100%;
     background-color: #F8F8F8;
 }
 
+.list-box {
+    @include flex(row, flex-start, flex-start);
+    flex: 1;
+}
+
+.list-box-menus {
+    width: 162px;
+    margin-right: 4px;
+}
+
+
+.list-box-content {
+    flex: 1;
+}
 
 .list-item-box {
-    margin-bottom: 15px;
-    margin-left: 23px;
-    margin-right: 35px;
-    border-radius: 4px;
     background-color: #FFFFFF;
 }
 
@@ -20,17 +31,16 @@
 
 .list-item {
     @include flex(row, center, flex-start);
-    padding: 45px 47px 21px 21px;
+    padding: 45px 28px 21px 21px;
 }
 
 .list-image-box {
     @include flex(row, center, center);
-    width: 200px;
-    height: 68px;
-    border-radius: 4px;
-    border-color: #f5f5f5;
-    border-width: 1px;
-    margin-right: 37px;
+    width: 160px;
+    height: 160px;
+    border-radius: 12px;
+    margin-right: 19px;
+    background-color: rgba(247, 248, 251, 1);
     overflow: hidden;
 }
 
@@ -45,45 +55,109 @@
     flex: 1
 }
 
-
 .item-title {
-    @include font(30px, #444444);
+    @include font(28px, #333840);
     font-weight: 700;
     line-height: 40px;
+    margin-bottom: 12px;
 }
 
-.item-dec-bottom {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.item-row {
+    @include flex(row, flex-start, flex-start);
+    margin-bottom: 14px;
+}
+
+.factory-icon {
+    width: 28px;
+    height: 28px;
+    background-color: #D9E6FA;
+    border-color: #4281E5;
+    border-width: 1px;
+    border-top-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-right: 10px;
+    @include flex(row, center, center);
+}
+
+.factory-icon-txt {
+    @include font(16px, #4381E5);
+}
+
+.factory-name {
+    @include font(22px, #5F5F6B);
+}
+
+.factory-valid-time {
+    @include font(20px, #989CA5);
+    text-align: left;
+}
+
+.item-row-vertical-line {
+    width: 1px;
+    height: 11px;
+    margin: 0 13px;
+    align-self: center;
+    background-color: #E3E8EE;
+}
+
+.factory-medical-spec {
+    @include font(20px, #989CA5);
+    text-align: left;
+}
+
+.factory-price-unit {
+    @include font(20px, #F2270C);
+}
+
+.factory-price {
+    @include font(20px, #F2270C);
+}
+
+.factory-sale30 {
+    @include font(20px, #333840);
+}
+
+.factory-shop-name {
+    @include font(20px, #989CA5);
+}
+
+.item-dec {
+    @include flex(row, space-between, center);
+    margin-top: 26px;
+}
+
+.item-dec-btn-1 {
+    @include flex(column, center, center);
+    width: 162px;
+    height: 44px;
+    border-width: 2px;
+    border-color: #8C8C8C;
+    border-radius: 22px;
+}
+
+.item-dec-btn-txt-1 {
+    @include font(20px, #262626);
+}
+
+.item-dec-btn-2 {
+    width: 162px;
+    height: 44px;
+}
+
+.item-dec-btn-txt-2 {
+    @include font(20px, #FFFFFF);
 }
 
 .item-division {
     border-bottom-width: 1px;
     border-bottom-color: #EEEEEE;
-    margin: 0 10px;
-}
-
-.item-dec {
-    @include flex(row, flex-start, center);
-    padding-left: 26px;
-    height: 65px;
-}
-.item-dec-icon {
-    width: 24px;
-    height: 24px;
-    margin:0 10px;
-}
-.item-dec-txt {
-    @include font(24px, #999999);
-    line-height: 34px;
+    margin-left: 29px;
 }
 
 .item-image-none {
-    padding-top: 100px;
-    display: flex;
     @include flex(column, center, center);
     height: 100%;
+    padding-top: 100px;
 }
 
 .item-image-none-icon {

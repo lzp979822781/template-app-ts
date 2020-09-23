@@ -53,9 +53,9 @@ export default class CardBase extends Component<baseProps, any> {
                     <Text className='company-title'>
                         {data.companyName || "--"}
                     </Text>
-                    <Text className='company-pin'>
+                    {isSaint? <Text className='company-pin'>
                         {data.pin ? `客户pin：${data.pin}` : ""}
-                    </Text>
+                    </Text> : null}
                     <Text className='company-manager'>客户经理：{data.userName || "--"}</Text>
                 </View>
                 <View className='divide-line-horizontal' />
