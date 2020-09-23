@@ -28,10 +28,10 @@ class Empty extends Component<any, any> {
     }
 
     componentWillMount() {
-        const jyNativeData = getGlobalData('jyNativeData');
-        if (jyNativeData.pageName) {
-            this.redirectTo(routers[jyNativeData.pageName]);
-        };
+        // const jyNativeData = getGlobalData('jyNativeData');
+        // if (jyNativeData.pageName) {
+        //     this.redirectTo(routers[jyNativeData.pageName]);
+        // };
     }
 
     routerTo = url => {

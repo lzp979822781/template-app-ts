@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { SafeAreaView, SectionList, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
@@ -7,19 +8,22 @@ import "./index.scss";
 import sampleData from './sampleData';
 
 type baseProps = {
+    closeDrawer: any;
     data?: any;
 }
 
 export default class Filter extends Component<baseProps, any> {
     static defaultProps = {
         data: {},
+        closeDrawer: () => {
+
+        }
     }
-    
+
 
     constructor(props) {
         super(props);
         this.state = {
-            actIndex: 0,
             actLetter: "a",
             selectedList: []
         }
@@ -29,13 +33,16 @@ export default class Filter extends Component<baseProps, any> {
 
     timer: NodeJS.Timeout;
 
+    tapToSection: boolean;
+
     renderLeft = () => {
         return <View className='back-btn'>
             <View
                 className='back-btn-con'
                 hoverStyle={hoverStyle}
+                onClick={this.props.closeDrawer}
             >
-                <Image className='back-img' src='https://img11.360buyimg.com/imagetools/jfs/t1/140989/12/8055/459/5f58ac4fE8aa0f2c7/8121a8647fb70c46.png' />
+                <Image className='back-img' src='https://img10.360buyimg.com/imagetools/jfs/t1/152491/18/629/2149/5f6b1ee5Eb04c738f/4cb9bbf205a4fca0.png' />
             </View>
         </View>
     }
@@ -103,12 +110,12 @@ export default class Filter extends Component<baseProps, any> {
         if (!this.sectionList) {
             return;
         };
-
-        this.setState({ actIndex: sectionIndex, actLetter: actLetter }, () => {
+        this.tapToSection = true;
+        this.setState({ actLetter: actLetter }, () => {
             this.sectionList.scrollToLocation({
                 sectionIndex,
                 itemIndex: 0,
-                viewOffset: 40
+                viewOffset: 49
             });
         });
     };
@@ -124,18 +131,31 @@ export default class Filter extends Component<baseProps, any> {
         const { actLetter } = this.state;
         // console.log(viewableItems);
         let key = "";
+
         if (viewableItems[0]["section"] && viewableItems[0]["section"]["title"]) {
             key = viewableItems[0]["section"]["title"];
-        }
+        };
 
-        if (key == actLetter) {
+        if (key == actLetter || this.tapToSection) {
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => {
+                this.tapToSection = false;
+            }, 50);
             return;
         } else {
-           clearTimeout(this.timer);
-           this.timer = setTimeout(() => {
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => {
                 this.setState({ actLetter: key })
-            }, 300);
+            }, 100);
         }
+    }
+
+    reset = () => {
+        this.setState({ selectedList: [] })
+    }
+
+    onOk = () => {
+
     }
 
     render() {
@@ -169,6 +189,14 @@ export default class Filter extends Component<baseProps, any> {
                         />
                     </View>
                 </SafeAreaView>
+                <View className="select-btn">
+                    <View className="select-btn-reset" hoverStyle={hoverStyle} onClick={this.reset}>
+                        <Text className="select-btn-reset-txt">重置</Text>
+                    </View>
+                    <View className="select-btn-confirm" hoverStyle={hoverStyle} onClick={this.onOk}>
+                        <Text className="select-btn-confirm-txt">确定</Text>
+                    </View>
+                </View>
             </View>
         );
     }
@@ -176,7 +204,8 @@ export default class Filter extends Component<baseProps, any> {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        // paddingRight: 30
     },
     item: {
         alignItems: "flex-start",
@@ -196,7 +225,6 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         justifyContent: "center",
         height: 50,
-        backgroundColor: "#f5f5f5",
         paddingLeft: 20
     },
     headerTxt: {
@@ -218,6 +246,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
+        backgroundColor: "#FFFFFF",
     },
     letterIndexItem: {
         width: 20,

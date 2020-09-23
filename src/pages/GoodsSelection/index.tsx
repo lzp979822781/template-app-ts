@@ -5,7 +5,6 @@ import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
 import Accordion from "./Accordion/index";
 import Filter from "./Filter/index";
-// import FilterDrawer from "./FilterDrawer/index";
 import JDSectionList from "./JDSectionList/index";
 import "./index.scss";
 
@@ -257,6 +256,11 @@ export default class GoodsSelection extends Component<any, any> {
         });
     };
 
+    closeDrawer= () => {
+        this.setState({
+            show: false
+        });
+    };
 
     render() {
         const { lastPage, data, loaded, pageSize, timeout, systemInfo, show } = this.state;
@@ -278,7 +282,7 @@ export default class GoodsSelection extends Component<any, any> {
                     show={show}
                     drawerBackgroundColor="rgba(0,0,0,0.5)"
                     onOpenChange={this.onOpenChange}
-                    renderSidebar={<JDSectionList />}
+                    renderSidebar={<JDSectionList closeDrawer={this.closeDrawer} />}
                 >
                     <StatusBar />
                     <Header title='推品' />

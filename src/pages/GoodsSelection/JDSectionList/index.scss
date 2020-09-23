@@ -16,7 +16,7 @@
     @include flex(row, flex-start, center);
     width: 120px;
     height: 88px;
-    padding-left: 20px;
+    padding-left: 40px;
     background-color: transparent;
 }
 
@@ -26,6 +26,35 @@
 }
 
 .back-img {
-    width: 34px;
-    height: 34px;
+    width: 14px;
+    height: 28px;
+}
+
+.select-btn {
+    @include flex(row, center, center);
+    height: 84px;
+}
+
+.select-btn-reset {
+    @include flex(row, center, center);
+    flex:1;
+    height: 84px;
+    background-color: #FFFFFF;
+}
+
+.select-btn-reset-txt {
+    @include font(30px, #F23030);
+    font-weight: 700;
+}
+
+.select-btn-confirm {
+    @include flex(row, center, center);
+    flex:1;
+    height: 84px;
+    background-color: #F23030;
+}
+
+.select-btn-confirm-txt{
+    @include font(30px, #FFFFFF);
+    font-weight: 700;
 }
