@@ -18,3 +18,13 @@
     padding-bottom: $bottom;
     padding-left: $left;
 }
+
+@mixin marginVertical($height:0) {
+    margin-top: $height;
+    margin-bottom: $height;
+}
+
+@mixin marginHorizontal($width) {
+    margin-left: $width;
+    margin-right: $width;
+}

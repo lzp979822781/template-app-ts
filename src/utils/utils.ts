@@ -179,3 +179,15 @@ function debounce(fn, wait) {
 }
 
 export { debounce };
+
+function fillDay(days) {
+    let index = 1;
+    const arr = []
+    while(index <= days) {
+        arr.push(index < 10 ? `0${index}`: `${index}`);
+        index++;
+    }
+    return arr;
+}
+
+export { fillDay };
