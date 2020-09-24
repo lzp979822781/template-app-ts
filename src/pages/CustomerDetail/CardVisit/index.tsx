@@ -108,7 +108,7 @@ export default class CardVisit extends Component<baseProps, any> {
 
     render() {
         const jyNativeData = getGlobalData('jyNativeData');
-        const { lastPage, data, visitList, pageSize } = this.props;
+        const { lastPage, data, visitList } = this.props;
         return (
             <View className='card-visit'>
                 <View className='visit-head'>
@@ -121,7 +121,7 @@ export default class CardVisit extends Component<baseProps, any> {
                 </View>
                 <View className='visit-body'>
                     <View className='data-list'>{this.renderItems()}</View>
-                    {lastPage && visitList.length >= pageSize ? <Text className='visit-list-none' >没有更多数据了</Text> : null}
+                    {lastPage && visitList.length > 0 ? <Text className='visit-list-none' >没有更多数据了</Text> : null}
                 </View>
             </View>
         );

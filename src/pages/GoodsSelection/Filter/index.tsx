@@ -1,6 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Triangle } from "@/components/index";
 import "./index.scss";
 
 type dataObject = {
@@ -12,55 +13,58 @@ type baseProps = {
     data?: dataObject;
 }
 
+const sortStatusList = ["none", "top", "bottom"]
+
 export default class Filter extends Component<baseProps, any> {
     static defaultProps = {
         data: {},
-        openDrawer: ()=>{
+        openDrawer: () => {
             console.log("open")
         }
     }
     constructor(props) {
         super(props);
         this.state = {
-            active: 0,
-            direction: 0
+            isDefault: false,
+            sortStatus: 0, //"none", "top", "bottom"
         }
     }
 
-    setDirection(index) {
+    setDefault = () => {
         this.setState({
-            direction: index
-        })
+            isDefault: !this.state.isDefault
+        });
     }
 
-    setActive(index) {
+    setSortStatus() {
+        const { sortStatus } = this.state;
+        const len = sortStatusList.length-1;
         this.setState({
-            active: index
-        })
+            sortStatus: sortStatus == len ? 0: sortStatus+1
+        });
     }
 
     render() {
-        const { direction, active } = this.state;
-        const {openDrawer} = this.props;
+        const { isDefault, sortStatus } = this.state;
+        const { openDrawer } = this.props;
         return (
             <View className='filter'>
-                <TouchableOpacity style={styles.filterItem} onPress={() => {
-                    this.setActive(0);
-                }}
-                >
-                    <Text className='filter-item-txt-active' >默认</Text>
+                <TouchableOpacity style={styles.filterItem} onPress={this.setDefault}>
+                    <Text className={isDefault ? 'filter-item-txt-active' : 'filter-item-txt'} >默认</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.filterItem} onPress={() => {
-                    this.setActive(0);
+                    this.setSortStatus();
                 }}
                 >
                     <Text className='filter-item-txt' >佣金</Text>
+                    <Triangle type={sortStatusList[sortStatus]} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.filterItem}  onPress={() => {
+                <TouchableOpacity style={styles.filterItem} onPress={() => {
                     openDrawer()
                 }}
                 >
                     <Text className='filter-item-txt' >筛选</Text>
+                    <Image className='select-icon' src='https://img14.360buyimg.com/imagetools/jfs/t1/121941/9/12230/1491/5f6b1eddEa741b3ad/d99f87eba3540be7.png' />
                 </TouchableOpacity>
             </View>
         );
@@ -85,6 +89,7 @@ const styles = StyleSheet.create({
         color: "#5F5F6B",
     },
     filterItem: {
+        flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
         width: 81,

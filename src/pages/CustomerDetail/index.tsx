@@ -152,8 +152,6 @@ class CustomerDetail extends Component<any, any> {
         const resCustomerTags = await JDRequest.get("mjying_assist_customer_getTags", {
             pin: pin
         });
-
-
         if (resCustomerTags.success) {
             this.setState({ customerTags: resCustomerTags.data, refreshing: false });
         } else {

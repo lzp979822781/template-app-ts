@@ -18,3 +18,9 @@
 .filter-item-txt-active {
     @include font(26px, #F23030);
 }
+
+.select-icon {
+    width: 15px;
+    height: 19px;
+    margin-left: 10px;
+}

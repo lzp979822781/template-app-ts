@@ -12,7 +12,7 @@
     height: 100%;
 }
 
-.back-btn-con {
+.drawer-back-btn-con {
     @include flex(row, flex-start, center);
     width: 120px;
     height: 88px;
@@ -20,12 +20,12 @@
     background-color: transparent;
 }
 
-.back-btn {
+.drawer-back-btn {
     @include flex(row, flex-start, center);
     flex: 1;
 }
 
-.back-img {
+.drawer-back-img {
     width: 14px;
     height: 28px;
 }

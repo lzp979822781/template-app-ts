@@ -51,7 +51,7 @@ export default class CardTag extends Component<baseProps, any> {
             return <View className='tag-none-con'><Text className='tag-list-none' >--</Text></View>
         };
 
-        return newArrayTags.slice(0, 5).map((item) => {
+        return newArrayTags.slice(0, 3).map((item) => {
             return <View className='tag-item' key={item.key} onClick={this.checkAllTxt.bind(this, item.value)}>
                 <Text numberOfLines={1} className='tag-item-txt'>{item.title}：{item.value}</Text>
             </View>
@@ -67,14 +67,7 @@ export default class CardTag extends Component<baseProps, any> {
     }
 
     render() {
-        const { data, tagsData } = this.props;
-
-        let arrayTags = tagsData["1"];
-        arrayTags = arrayTags.concat(tagsData["2"]);
-        arrayTags = arrayTags.concat(tagsData["3"]);
-        const newArrayTags = arrayTags.filter((item) => {
-            return !!item.value;
-        });
+        const { data } = this.props;
 
         return (
             <View className='card-tag'>
@@ -86,7 +79,7 @@ export default class CardTag extends Component<baseProps, any> {
                         />
                         <Text className='head-left-title'>客户标签</Text>
                     </View>
-                    {data.pin && newArrayTags.length > 0 ? <View
+                    {data.pin ? <View
                         className='head-right'
                         hoverStyle={hoverStyle}
                         onClick={

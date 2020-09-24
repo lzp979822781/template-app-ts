@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import { SafeAreaView, SectionList, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { StatusBar, Header } from "@/components/index";
+import { SafeAreaView, SectionList, FlatList, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { StatusBar, Header, Footer } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 import sampleData from './sampleData';
@@ -36,13 +36,13 @@ export default class Filter extends Component<baseProps, any> {
     tapToSection: boolean;
 
     renderLeft = () => {
-        return <View className='back-btn'>
+        return <View className='drawer-back-btn'>
             <View
-                className='back-btn-con'
+                className='drawer-back-btn-con'
                 hoverStyle={hoverStyle}
                 onClick={this.props.closeDrawer}
             >
-                <Image className='back-img' src='https://img10.360buyimg.com/imagetools/jfs/t1/152491/18/629/2149/5f6b1ee5Eb04c738f/4cb9bbf205a4fca0.png' />
+                <Image className='drawer-back-img' src='https://img10.360buyimg.com/imagetools/jfs/t1/152491/18/629/2149/5f6b1ee5Eb04c738f/4cb9bbf205a4fca0.png' />
             </View>
         </View>
     }
@@ -115,7 +115,7 @@ export default class Filter extends Component<baseProps, any> {
             this.sectionList.scrollToLocation({
                 sectionIndex,
                 itemIndex: 0,
-                viewOffset: 49
+                viewOffset: Platform.OS === 'ios' ? 0 : 49
             });
         });
     };
@@ -140,13 +140,13 @@ export default class Filter extends Component<baseProps, any> {
             clearTimeout(this.timer);
             this.timer = setTimeout(() => {
                 this.tapToSection = false;
-            }, 50);
+            }, 300);
             return;
         } else {
             clearTimeout(this.timer);
             this.timer = setTimeout(() => {
                 this.setState({ actLetter: key })
-            }, 100);
+            }, 300);
         }
     }
 
@@ -197,6 +197,7 @@ export default class Filter extends Component<baseProps, any> {
                         <Text className="select-btn-confirm-txt">确定</Text>
                     </View>
                 </View>
+                <Footer></Footer>
             </View>
         );
     }

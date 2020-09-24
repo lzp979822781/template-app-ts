@@ -32,10 +32,10 @@ export default class Goods extends Component<any, any> {
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
 
-    updata=()=>{
+    updata = () => {
         this.setState({
             timeout: 0
-        }, ()=>{
+        }, () => {
             this.getTags();
             this.getTagsExplanation();
         });
@@ -51,7 +51,6 @@ export default class Goods extends Component<any, any> {
         const resTags = await JDRequest.get("mjying_assist_customer_getTags", {
             pin: params.pin
         });
-
         Taro.hideLoading();
         if (resTags.success) {
             this.setState({ tagsData: resTags.data })
@@ -143,14 +142,14 @@ export default class Goods extends Component<any, any> {
 
     renderGroup2 = () => {
         const { tagsData } = this.state;
-        const listData = tagsData["2"].filter((item) => {
-            return !!item.value;
-        })
-        const nodeList = listData.map((item) => {
+        // const listData = tagsData["2"].filter((item) => {
+        //     return !!item.value;
+        // })
+        const nodeList = tagsData["2"].map((item) => {
             return <JDListItem
                 key={item.key}
                 label={item.title}
-                value={item.value || "--"}
+                value={item.value || "暂无"}
             />
         })
 
@@ -161,22 +160,22 @@ export default class Goods extends Component<any, any> {
 
     renderGroup3 = () => {
         const { tagsData } = this.state;
-        const listData = tagsData["3"].filter((item) => {
-            return !!item.value;
-        });
+        // const listData = tagsData["3"].filter((item) => {
+        //     return !!item.value;
+        // });
 
-        const nodeList = listData.map((item) => {
+        const nodeList = tagsData["3"].map((item) => {
             if (item.key === "avg_repurchase") {
                 return <JDListItem
                     key={item.key}
                     label={item.title}
-                    renderValue={<View className='list-item-value-con'><Text className='list-item-value-txt'>{item.value}</Text><Text className='list-item-value-desc'>（平均值）</Text></View>}
+                    renderValue={<View className='list-item-value-con'><Text className='list-item-value-txt'>{item.value || "暂无"}</Text><Text className='list-item-value-desc'>（平均值）</Text></View>}
                 />
             }
             return <JDListItem
                 key={item.key}
                 label={item.title}
-                value={item.value}
+                value={item.value || "暂无"}
             />
         })
         return <View className='card-operation'>
