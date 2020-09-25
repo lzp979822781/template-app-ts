@@ -59,7 +59,7 @@ class DateItem extends Component<PageOwnProps> {
         }
 
         const { [field]: text } = data;
-        return text;
+        return text ? text.toString().padStart(2, '0') : text;
 
     }
 

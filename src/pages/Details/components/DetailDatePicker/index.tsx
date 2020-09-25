@@ -27,6 +27,8 @@ type PageOwnState = {
     currentScrollType: string,
 
     yearData: Array<any>,
+    monthData: Array<any>,
+    dayData: Array<any>,
 
     // 当前选中的日期
     selectedDate: string
@@ -81,7 +83,7 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
     }
 
     initData = () => {
-        const [year, month ] = currentDate;
+        const [year, month, ] = currentDate;
         const yearData = seriesNumberArray(year + 1, initYear);
         const monthData = seriesNumberArray(12, 1);
         const dayData = seriesNumberArray(this.getDays(year, month), 1);
@@ -125,6 +127,8 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
     
 
     yearRef = null;
+    monthRef = null;
+    dayRef = null;
 
     onScroll = type => e => {
 
@@ -163,12 +167,11 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
 
     scrollToIndex = type => {
         const currentList = this[typeRef[type]];
-        const { [typeRef[type]]: index } = this.state;
+        const { [typeObj[type]]: index } = this.state;
         if(currentList) {
-            console.log("ref", this.yearRef);
             currentList.scrollToIndex({
                 index: index - 1,
-                animated: false
+                animated: true
             })
         }
     }
@@ -185,7 +188,7 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
 
     updateDayData = type => {
         const { selectedYearIndex, selectedMonthIndex, selectedDayIndex} = this.state;
-        if(type === 'day' || (type === 'year' && parseInt(selectedDayIndex, 10) !== 2)) return;
+        if(type === 'day' || (type === 'year' && selectedDayIndex !== 2)) return;
         
         const year = initYear + selectedYearIndex - 1;
         const days = this.getDays(year, selectedMonthIndex);
@@ -205,10 +208,17 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
 
     onItemClick = (index, type) => () => {
         // 点击时滚动到指定的位置
+
+    }
+
+    formatItem = (param, type) => {
+        if(!param || type === 'year') return param;
+        return param.toString().padStart(2, '0');
     }
 
     renderItem = (item, index, type)  => {
         const { [typeObj[type]]: selectedIndex} = this.state;
+        
         return (
             <DateItem 
                 data={item}
@@ -219,13 +229,22 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
     }
 
     getItemLayout = (data, index) => ({
-        length: normalItemHeight, offset: normalItemHeight * index, index
+        length: normalItemHeight, 
+        offset: normalItemHeight * index, 
+        index
     })
 
     setYearRef = el => {
         this.yearRef = el
     }
 
+    setMonthRef = el => {
+        this.monthRef = el
+    }
+
+    setDayRef = el => {
+        this.dayRef = el;
+    }
 
     renderYearList = () => {
         const { yearData } = this.state;
@@ -249,6 +268,50 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
         );
     }
 
+    renderMonthList = () => {
+        const { monthData } = this.state;
+        return (
+            <View className={`${prefix}-list`}>
+                <FlatList 
+                    ref={this.setMonthRef}
+                    data={monthData}
+                    renderItem={({ item, index }) => this.renderItem( item, index, 'month')}
+                    initialNumToRender={50}
+                    contentInsetAdjustmentBehavior='never'
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    onScroll={this.onScroll('month')}
+                    onScrollEndDrag={this.onScrollEndDrag('month')}
+                    onMomentumScrollEnd={this.onScrollEndDrag('month')}
+                    getItemLayout={this.getItemLayout}
+                    maxToRenderPerBatch={5}
+                />
+            </View>
+        );
+    }
+
+    renderDayList = () => {
+        const { dayData } = this.state;
+        return (
+            <View className={`${prefix}-list`}>
+                <FlatList 
+                    ref={this.setDayRef}
+                    data={dayData}
+                    renderItem={({ item, index }) => this.renderItem( item, index, 'day')}
+                    initialNumToRender={50}
+                    contentInsetAdjustmentBehavior='never'
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    onScroll={this.onScroll('day')}
+                    onScrollEndDrag={this.onScrollEndDrag('day')}
+                    onMomentumScrollEnd={this.onScrollEndDrag('day')}
+                    getItemLayout={this.getItemLayout}
+                    maxToRenderPerBatch={5}
+                />
+            </View>
+        );
+    }
+
     renderSelLine = () => {
         return LineArr.map(item => {
             const cls = classnames(`${prefix}-line-com`, `${prefix}-line-${item}`);
@@ -258,14 +321,6 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
                 </View>
             );
         })
-    }
-
-    renderMonthList = () => {
-
-    }
-
-    renderDayList = () => {
-
     }
 
     onInitScroll = () => {
@@ -278,6 +333,8 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
             <View>
                 <View className={prefix}>
                     { this.renderYearList()}
+                    { this.renderMonthList()}
+                    { this.renderDayList()}
                     { this.renderSelLine()}
                 </View>
                 <Text>{this.state.selectedYearIndex}</Text>
