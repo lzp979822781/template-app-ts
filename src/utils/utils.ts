@@ -193,12 +193,20 @@ function fillId(arr, field = 'text') {
     return [{ id: UUID(), [field]: '' }].concat(finalArr, [{ id: UUID(), [field]: '' }]);
 }
 
-function getCurrentDateArr() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
+function formatSplitArray(param = new Date()) {
+    const year = param.getFullYear();
+    const month = param.getMonth() + 1;
+    const day = param.getDate();
     return [year, month, day];
 }
 
-export { seriesNumberArray, fillId, getCurrentDateArr };
+/**
+ * 将2020.09.25这样的日期转换为可以用于new Date初始化的时间
+ * @param {*} date
+ */
+function formatNormal(date) {
+    if(!date) return new Date();
+    return new Date(Date.parse(date.replace(/\.|\-/gi, "/")));
+}
+
+export { seriesNumberArray, fillId, formatSplitArray, formatNormal };

@@ -1,24 +1,25 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Text } from "@tarojs/components";
+import { View, Text, Button } from "@tarojs/components";
 import classnames from 'classnames';
 import { FlatList } from 'react-native';
 import {
     JDDevice,
 } from '@jdreact/jdreact-core-lib';
+import { seriesNumberArray, fillId, formatSplitArray, formatNormal } from '@/utils/utils';
 import DateItem from '../DateItem';
-
-import { seriesNumberArray, fillId, getCurrentDateArr } from '@/utils/utils';
 
 import './index.scss';
 
 
 
 type PageOwnProps = {
-    data: string
+    initDate: string
 };
 
 type PageOwnState = {
     value: any,
+
+    // 选中的索引
     selectedYearIndex: number,
     selectedMonthIndex: number,
     selectedDayIndex: number,
@@ -26,6 +27,9 @@ type PageOwnState = {
     currentScrollType: string,
 
     yearData: Array<any>,
+
+    // 当前选中的日期
+    selectedDate: string
 }
 
 const prefix = 'detail-date';
@@ -43,7 +47,7 @@ const typeRef = {
 }
 
 const LineArr = [ 'year', 'month', 'day'];
-const currentDate = getCurrentDateArr();
+const currentDate = formatSplitArray(new Date());
 const normalItemHeight = JDDevice.getRpx(100);
 // 是否滚动已结束
 let scrollHasEnded = false;
@@ -66,16 +70,18 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
             yearData: [],
             monthData: [],
             dayData: [],
+
+            selectedDate: null,
         }
     }
 
     componentDidMount() {
         this.initData();
-        this.initVal();
+        this.initPos();
     }
 
     initData = () => {
-        const [year, month, day ] = currentDate;
+        const [year, month ] = currentDate;
         const yearData = seriesNumberArray(year + 1, initYear);
         const monthData = seriesNumberArray(12, 1);
         const dayData = seriesNumberArray(this.getDays(year, month), 1);
@@ -86,20 +92,35 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
         })
     }
 
-    initVal = () => {
-        
+    /**
+     * 打开活动页的时候初始化选中日期并跳转到指定位置
+     * @selectedDate 标准Date类型数据
+     */
+    initPos = () => {
+        const { initDate } = this.props;
+        const selectedDate = formatNormal(initDate);
+        this.initVal(selectedDate);
+    } 
+
+    initVal = (selectedDate) => {
+        const [year, month, day] = formatSplitArray(selectedDate);
+        this.setState({
+            selectedDate,
+            selectedYearIndex: (year - initYear + 1) > 1 ? (year - initYear + 1) : 1,
+            selectedMonthIndex: month > 1 ? month : 1,
+            selectedDayIndex: day > 1 ? day : 1,
+        }, () => {
+            this.onScrollEndDrag('day')();
+        })
     }
 
     /**
      * 根据已选中的值做初始化
      * @example 2020.09.01
      */
-    scrollToFixPos = () => {
-        const { data } = this.props;
-        if(!data) return;
-        const [year, month, day] = data.split('.');
+    /* scrollToFixPos = () => {
         
-    }
+    } */
 
     
 
@@ -129,21 +150,27 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
                     skipThisScrollListen = false;
                 }, 350);
             }
-            this.scrollToIndex(type);
+            this.scrollFixPos();
+            this.updateDayData(type);
         }, e ? 350: 0);
+    }
+
+    scrollFixPos = () => {
+        LineArr.forEach( type => {
+            this.scrollToIndex(type);
+        })
     }
 
     scrollToIndex = type => {
         const currentList = this[typeRef[type]];
         const { [typeRef[type]]: index } = this.state;
         if(currentList) {
+            console.log("ref", this.yearRef);
             currentList.scrollToIndex({
                 index: index - 1,
                 animated: false
             })
         }
-
-        this.updateDayData(type);
     }
 
     /**
@@ -157,8 +184,9 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
     }
 
     updateDayData = type => {
-        if(type !== 'month') return;
         const { selectedYearIndex, selectedMonthIndex, selectedDayIndex} = this.state;
+        if(type === 'day' || (type === 'year' && parseInt(selectedDayIndex, 10) !== 2)) return;
+        
         const year = initYear + selectedYearIndex - 1;
         const days = this.getDays(year, selectedMonthIndex);
         // const finalDays = fillDay(days).map(item => ({ id: UUID(), text: item}));
@@ -240,6 +268,10 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
 
     }
 
+    onInitScroll = () => {
+        this.initVal(new Date());
+    }
+
     render() {
 
         return (
@@ -249,6 +281,7 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
                     { this.renderSelLine()}
                 </View>
                 <Text>{this.state.selectedYearIndex}</Text>
+                <Button type='primary' onClick={this.onInitScroll}>跳转测试</Button>
             </View>
         );
     }
