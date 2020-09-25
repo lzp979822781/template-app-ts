@@ -3,7 +3,7 @@ import { View, Image } from "@tarojs/components";
 import classnames from 'classnames';
 import { StatusBar, Header } from "@/components/index";
 import { Text } from 'react-native';
-import { DetailPopup } from './components';
+import { DetailPopup, DetailDatePicker } from './components';
 // import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 // import JDRequest from "@/utils/jd-request";
 import "./index.scss";
@@ -141,6 +141,7 @@ export default class Details extends Component<any, any> {
                     visible={!!timeVisible}
                     onClose={this.onPopupClose}
                 />
+                <DetailDatePicker />
             </View>
         );
     }

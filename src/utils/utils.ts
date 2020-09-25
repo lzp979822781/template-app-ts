@@ -180,14 +180,25 @@ function debounce(fn, wait) {
 
 export { debounce };
 
-function fillDay(days) {
-    let index = 1;
-    const arr = []
-    while(index <= days) {
-        arr.push(index < 10 ? `0${index}`: `${index}`);
-        index++;
-    }
-    return arr;
+// 时间填充
+function seriesNumberArray(days, start) {
+    return Array.from(Array(days + 1).keys()).slice(start);
 }
 
-export { fillDay };
+function fillId(arr, field = 'text') {
+    const finalArr = arr.map(item => ({
+        id: UUID(),
+        [field]: item
+    }))
+    return [{ id: UUID(), [field]: '' }].concat(finalArr, [{ id: UUID(), [field]: '' }]);
+}
+
+function getCurrentDateArr() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return [year, month, day];
+}
+
+export { seriesNumberArray, fillId, getCurrentDateArr };

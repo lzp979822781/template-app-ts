@@ -1,0 +1,37 @@
+@import "@/global/common.scss";
+$itemWidth: 128px;
+$unSelItemHeight: 100px;
+$selItemHeight: 100px;
+
+.date-item {
+    width: $itemWidth;
+    height: $unSelItemHeight;
+    background-color: #fff;
+    // @include flex(row, center, center);
+    opacity: 0.5;
+    &-selected {
+        height: $selItemHeight;
+        opacity: 1;
+    }
+
+    &-container {
+        &-selected {
+            width: $itemWidth;
+            height: $unSelItemHeight;
+            @include flex(row, center, center);
+        }
+
+        &-unselect {
+            @include flex(row, center, center);
+            height: $unSelItemHeight;
+        }
+    }
+
+    &-text {
+        @include font(28px, #444444, 'PingFangSC-Regular');
+
+        &-selected {
+            @include font(28px, #444444, 'PingFangSC-Semibold');
+        }
+    }
+}
