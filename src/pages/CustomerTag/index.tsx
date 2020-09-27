@@ -1,6 +1,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Modal, JDListItem } from "@/components/index";
+import { Platform } from 'react-native';
 import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
@@ -82,7 +83,6 @@ export default class Goods extends Component<any, any> {
         this.onClose();
     };
 
-
     renderContent = () => {
         const { tagsExplanation } = this.state;
         const tagsExplanationList = tagsExplanation.map((item) => {
@@ -99,7 +99,7 @@ export default class Goods extends Component<any, any> {
         });
 
         return (
-            <ScrollView className='tag-model'>
+            <View className='tag-model'>
                 <View className='tag-model-close'>
                     <View className='tag-close-icon-con' onClick={this.onClose}>
                         <Image className='tag-close-icon' src='https://img11.360buyimg.com/imagetools/jfs/t1/140989/12/8055/459/5f58ac4fE8aa0f2c7/8121a8647fb70c46.png' />
@@ -109,10 +109,10 @@ export default class Goods extends Component<any, any> {
                     <Image className='model-head-icon' src='https://img11.360buyimg.com/imagetools/jfs/t1/126146/3/12024/85189/5f58ac4eE785272fa/18e598c61a2cff20.png' />
                     <Text className='model-head-title'>标签说明</Text>
                 </View>
-                <View className='model-body'>
+                <ScrollView className='model-body'>
                     {tagsExplanationList}
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
         );
     };
 
@@ -231,7 +231,7 @@ export default class Goods extends Component<any, any> {
                     className='test-modal'
                     onCancel={this.onClose}
                     onConfirm={this.onConfirm}
-                    bodyStyle={{ height: 410 }}
+                    bodyStyle={{ minHeight: Platform.OS === 'ios' ? 470 : 420 }}
                     // eslint-disable-next-line taro/render-props
                     renderContent={this.renderContent()}
                     customFooter

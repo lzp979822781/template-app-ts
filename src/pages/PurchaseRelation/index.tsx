@@ -167,7 +167,7 @@ export default class PurchaseRelation extends Component<any, any> {
                     <View className='item-dec'>
                         <Image className='item-dec-icon' src='https://img12.360buyimg.com/imagetools/jfs/t1/121527/2/12047/1394/5f58ac4dE84b296d4/47ce73fa447d387e.png' />
                         <Text className='item-dec-txt'>
-                            建材时间：{item.auditTime}
+                            建采时间：{item.auditTime}
                         </Text>
                     </View>
                 </View>
