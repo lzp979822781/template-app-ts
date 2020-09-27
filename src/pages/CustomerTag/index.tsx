@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, Modal, JDListItem } from "@/components/index";
+import { StatusBar, Header, Modal, JDModal, JDListItem } from "@/components/index";
 import { Platform } from 'react-native';
 import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { hoverStyle } from "@/utils/utils";
@@ -109,9 +109,9 @@ export default class Goods extends Component<any, any> {
                     <Image className='model-head-icon' src='https://img11.360buyimg.com/imagetools/jfs/t1/126146/3/12024/85189/5f58ac4eE785272fa/18e598c61a2cff20.png' />
                     <Text className='model-head-title'>标签说明</Text>
                 </View>
-                <ScrollView className='model-body'>
+                <View className='model-body'>
                     {tagsExplanationList}
-                </ScrollView>
+                </View>
             </View>
         );
     };
@@ -226,12 +226,11 @@ export default class Goods extends Component<any, any> {
                     {this.renderGroup3()}
                     <View style={{ height: 50 }}></View>
                 </ScrollView>
-                <Modal
+                <JDModal
                     visible={visible}
                     className='test-modal'
                     onCancel={this.onClose}
                     onConfirm={this.onConfirm}
-                    bodyStyle={{ minHeight: Platform.OS === 'ios' ? 470 : 420 }}
                     // eslint-disable-next-line taro/render-props
                     renderContent={this.renderContent()}
                     customFooter

@@ -1,0 +1,45 @@
+$BORDER_COLOR: #E5E5E5;
+
+.modal-footer {
+    flex: 1;
+}
+
+.modal-footer view {
+    flex: 1;
+}
+
+.modal-container {
+    display: flex;
+    flex: 1;
+}
+
+/*  #ifndef  rn  */
+.footer-container {
+    border-top: .5px solid $BORDER_COLOR;
+}
+
+.modal-content {
+    min-height: 210px;
+}
+
+/*  #endif  */
+
+.modal-default-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 28px 10px;
+    border-bottom-width: .5px;
+    border-bottom-color: $BORDER_COLOR;
+
+    /*  #ifndef  rn  */
+
+    border-bottom: .5px solid $BORDER_COLOR;
+    /*  #endif  */
+
+    &-text {
+        font-size: 32px;
+    } 
+}
+
+

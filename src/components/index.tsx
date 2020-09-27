@@ -1,4 +1,6 @@
 import Modal from './Modal';
+import JDModal from './JDModal';
+
 import PopUp from './PopUp';
 import Gradient from './Gradient';
 import Header from './Header';
@@ -10,4 +12,4 @@ import JDListItem from './ListItem';
 import Drawer from './Drawer';
 import Triangle from './Triangle';
 
-export { Modal, PopUp, Gradient, Header, Footer, StatusBar, DataList, JDListItem, Drawer, Triangle };
+export { Modal, JDModal, PopUp, Gradient, Header, Footer, StatusBar, DataList, JDListItem, Drawer, Triangle };
