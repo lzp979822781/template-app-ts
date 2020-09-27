@@ -442,7 +442,7 @@ class CustomerDetail extends Component<any, any> {
         const statusBarHeight = getGlobalData('statusBarHeight');
         const { detailData, customerTags, visitListData, lastPage, loaded, visible, popupType, canBind, pageSize, timeout } = this.state;
         //地勤能分配，合伙人没有分配
-        const renderRight = jyNativeData.userType === "CM" ? <DistBtn onPopupShow={() => this.onPopupShow("dist")} /> : null;
+        const renderRight = jyNativeData.userType === "CM" && jyNativeData.isManager ? <DistBtn onPopupShow={() => this.onPopupShow("dist")} /> : null;
 
         if (timeout === 1) {
             return <View className='container'>
