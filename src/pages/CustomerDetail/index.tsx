@@ -133,11 +133,14 @@ class CustomerDetail extends Component<any, any> {
         const res = await JDRequest.get("mjying_assist_partner_customer_canBind", {
             customerPin: pin
         });
-
         //success为true， code为1都是可以绑定的客户
-        if (res.success) {
+        if (res.code == 1) {
             this.setState({
                 canBind: true
+            });
+        }else{
+            this.setState({
+                canBind: false
             });
         };
     }
