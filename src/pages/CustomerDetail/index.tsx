@@ -134,17 +134,12 @@ class CustomerDetail extends Component<any, any> {
             customerPin: pin
         });
 
+        //success为true， code为1都是可以绑定的客户
         if (res.success) {
             this.setState({
-                canBind: res.code === 1
+                canBind: true
             });
-        } else {
-            Taro.showToast({
-                title: "获取客户绑定权限失败",
-                icon: 'none',
-                duration: 1000
-            })
-        }
+        };
     }
 
     //客户标签
