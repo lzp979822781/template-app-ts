@@ -134,7 +134,7 @@ class CustomerDetail extends Component<any, any> {
             customerPin: pin
         });
         //success为true， code为1都是可以绑定的客户
-        if (res.code == 1) {
+        if (res.success) {
             this.setState({
                 canBind: true
             });
