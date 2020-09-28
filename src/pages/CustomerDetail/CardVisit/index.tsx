@@ -21,7 +21,7 @@ type baseProps = {
 
 export default class CardVisit extends Component<baseProps, any> {
     static defaultProps = {
-        lastPage:false,
+        lastPage: false,
         loaded: false,
         data: {},
         visitList: [{ id: 1 }]
@@ -33,7 +33,7 @@ export default class CardVisit extends Component<baseProps, any> {
         };
     }
 
-    jumpToApp(des, params={}) {
+    jumpToApp(des, params = {}) {
         // console.log(`openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify(params)}}`)
         JDJumping.jumpToOpenapp(
             `openApp.jyingApp://virtual?params={"category":"jump","des":"${des}", "params": ${JSON.stringify(params)}}`
@@ -54,11 +54,11 @@ export default class CardVisit extends Component<baseProps, any> {
 
         if (visitList.length === 0 && loaded) {
             return <Text className='visit-list-none' >暂无数据</Text>
-        }else if(visitList.length === 0 && !loaded){
+        } else if (visitList.length === 0 && !loaded) {
             return <Text className='visit-list-none' >--</Text>
         };
 
-        return visitList.map((item: {[key: string]: any;}) => {
+        return visitList.map((item: { [key: string]: any; }) => {
             const visitorListFirst = item.visitorList && item.visitorList[0] ? item.visitorList[0] : {}
 
             return (
@@ -75,11 +75,11 @@ export default class CardVisit extends Component<baseProps, any> {
                             src='https://img10.360buyimg.com/imagetools/jfs/t1/124605/18/11985/1524/5f58ac4eEcadb87aa/e8016790250e8b64.png'
                         />
                         <Text className='list-item-title-txt'>
-                            拜访日期：{item.finishDate || "--"}
+                            拜访日期：{item.expirationDateStr || "--"}
                         </Text>
                     </View>
                     <View className='list-item-des'>
-                        <Text className='list-item-des-txt'>拜访人：{visitorListFirst.contactName || "--"}</Text>
+                        <View className='list-item-des-name'><Text numberOfLines={1} className='list-item-des-txt'>被拜访人：{visitorListFirst.contactName || "--"}</Text></View>
                         <View className='divide-line-vertical'></View>
                         <Text className='list-item-des-txt'>{visitorListFirst.mobile || "--"}</Text>
                         <View className='divide-line-vertical'></View>

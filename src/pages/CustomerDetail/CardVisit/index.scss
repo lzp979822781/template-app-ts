@@ -42,10 +42,13 @@
 }
 
 .list-item-des {
-    @include flex(row, flex-start, center);
+    @include flex(row, flex-start, flex-start);
     padding: 0 36px;
-
     margin-top: 16px;
+}
+
+.list-item-des-name {
+  width:260px;
 }
 
 .list-item-des-txt {
