@@ -374,10 +374,12 @@ class CustomerDetail extends Component<any, any> {
                 }, 1500);
             });
         } else {
-            Taro.showToast({
-                title: res.errorMsg,
-                icon: 'none',
-                duration: 1500
+            this.setState({ visible: false }, () => {
+                Taro.showToast({
+                    title: res.errorMsg,
+                    icon: 'none',
+                    duration: 1500
+                });
             });
         }
     }
