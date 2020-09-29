@@ -138,7 +138,7 @@ class CustomerDetail extends Component<any, any> {
             this.setState({
                 canBind: true
             });
-        }else{
+        } else {
             this.setState({
                 canBind: false
             });
@@ -362,28 +362,23 @@ class CustomerDetail extends Component<any, any> {
         });
 
         if (res.success) {
+            NativeModules.JYNativeModule.updateCustomerList();
             this.setState({ visible: false }, () => {
-                NativeModules.JYNativeModule.updateCustomerList();
                 Taro.showToast({
                     title: "绑定成功",
                     icon: 'success',
-                    duration: 2000
+                    duration: 1500
                 });
                 this.timer = setTimeout(() => {
                     JDJumping.jumpToBack();
-                    // this.reloadDetail();
-                }, 2000);
+                }, 1500);
             });
         } else {
             Taro.showToast({
-                title: "绑定失败",
+                title: res.errorMsg,
                 icon: 'none',
-                duration: 2000
+                duration: 1500
             });
-
-            this.timer = setTimeout(() => {
-                this.setState({ visible: true });
-            }, 2000);
         }
     }
 
@@ -414,7 +409,7 @@ class CustomerDetail extends Component<any, any> {
             pin: inputValue
         });
         if (res.success) {
-       
+
             this.setState({ bindData: res.data, popupType: "binding" });
         } else {
             this.setState({ visible: false }, () => {
