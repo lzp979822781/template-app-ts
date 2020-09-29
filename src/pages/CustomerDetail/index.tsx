@@ -10,7 +10,7 @@ import {
     NativeEventEmitter,
     DeviceEventEmitter
 } from "react-native";
-import { JDDevice, JDConfirmDialog, JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
+import { JDJumping, JDDevice, JDConfirmDialog, JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
@@ -363,13 +363,15 @@ class CustomerDetail extends Component<any, any> {
 
         if (res.success) {
             this.setState({ visible: false }, () => {
+                NativeModules.JYNativeModule.updateCustomerList();
                 Taro.showToast({
                     title: "绑定成功",
                     icon: 'success',
                     duration: 2000
                 });
                 this.timer = setTimeout(() => {
-                    this.reloadDetail();
+                    JDJumping.jumpToBack();
+                    // this.reloadDetail();
                 }, 2000);
             });
         } else {
@@ -412,6 +414,7 @@ class CustomerDetail extends Component<any, any> {
             pin: inputValue
         });
         if (res.success) {
+       
             this.setState({ bindData: res.data, popupType: "binding" });
         } else {
             this.setState({ visible: false }, () => {
