@@ -2,11 +2,12 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Block, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, DataList, Gradient, Drawer } from "@/components/index";
 import { Clipboard } from 'react-native';
-import { JDNetworkErrorView, JDNativeToast } from '@jdreact/jdreact-core-lib';
+import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
 import { hoverStyle } from "@/utils/utils";
 import Accordion from "./Accordion/index";
 import Filter from "./Filter/index";
+import ListEmptyComponent from "./ListEmptyComponent/index";
 import JDSectionList from "./JDSectionList/index";
 import "./index.scss";
 
@@ -68,7 +69,7 @@ export default class GoodsSelection extends Component<any, any> {
     };
 
     loadList = async () => {
-        const params = this.$router.params;
+        // const params = this.$router.params;
 
         if (!this.state.refreshing) {
             Taro.showLoading({
@@ -76,14 +77,12 @@ export default class GoodsSelection extends Component<any, any> {
             });
         };
 
-
         const { currentPage, pageSize } = this.state;
         const res = await JDRequest.post(
-            "mjying_assist_buyer_relation_queryPage",
+            "/assist/partner/sku/list",
             {
-                pin: params.pin,
                 pageNum: currentPage,
-                pageSize: pageSize
+                pageSize: pageSize,
             }
         );
         Taro.hideLoading();
@@ -165,7 +164,12 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
     async copy(key, data) {
-        JDNativeToast.show("复制成功", JDNativeToast.SHORT, JDNativeToast.MESSAGE);
+
+        Taro.showToast({
+            title: "复制成功",
+            icon: 'none',
+            duration: 1500
+        });
 
         if (key === "name") {
             Clipboard.setString(data.skuName);
@@ -238,13 +242,13 @@ export default class GoodsSelection extends Component<any, any> {
                                 {item.shopName || "--"}
                             </Text>
                             <View className='item-dec'>
-                                <View className='item-dec-btn-1' onClick={() => {
+                                <View className='item-dec-btn-1' hoverStyle={hoverStyle} onClick={() => {
                                     this.copy("href", item);
                                 }}
                                 >
                                     <Text className='item-dec-btn-txt-1'>复制PC链接</Text>
                                 </View>
-                                <View className='item-dec-btn-2' onClick={() => {
+                                <View className='item-dec-btn-2' hoverStyle={hoverStyle} onClick={() => {
                                     this.copy("name", item);
                                 }}
                                 >
@@ -336,7 +340,7 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
     render() {
-        const { lastPage, data, loaded, pageSize, timeout, systemInfo, show } = this.state;
+        const { lastPage, data, loaded, pageSize, timeout, systemInfo, show, statusCode, refreshing } = this.state;
         if (timeout === 1) {
             return <View className='container'>
                 <StatusBar></StatusBar>
@@ -347,7 +351,7 @@ export default class GoodsSelection extends Component<any, any> {
             </View>
         };
 
-        const noneDataHeight = systemInfo.windowHeight ? systemInfo.windowHeight - systemInfo.statusBarHeight - 94 : "auto";
+        const noneDataHeight = systemInfo.windowHeight ? systemInfo.windowHeight - systemInfo.statusBarHeight - 144 : "auto";
 
         return (
             <View className='container'>
@@ -378,11 +382,7 @@ export default class GoodsSelection extends Component<any, any> {
                                 {
                                     data.length === 0 && loaded ?
                                         <View style={{ height: noneDataHeight }} className='item-image-none'>
-                                            <Image
-                                                className='item-image-none-icon'
-                                                src='https://img12.360buyimg.com/imagetools/jfs/t1/121246/7/12582/29481/5f5f49cdE3b123199/8cb12f08a4713104.png'
-                                            />
-                                            <Text className='item-image-none-txt' >暂无数据</Text>
+                                            <ListEmptyComponent statusCode={statusCode} loaded={loaded} refreshing={refreshing} onRefresh={this.onRefresh} />
                                         </View> :
                                         <Block>{this.renderItems()}</Block>
                                 }
