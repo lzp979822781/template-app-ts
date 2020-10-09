@@ -2,6 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import classnames from 'classnames';
 import { View, Image, Text } from "@tarojs/components";
 import { PopUp, Gradient } from "@/components";
+import { compareDate } from '@/utils/utils';
 
 import DetailDatePicker from '../DetailDatePicker';
 
@@ -50,7 +51,7 @@ const closeSrc = 'https://img10.360buyimg.com/imagetools/jfs/t1/112244/30/18443/
 const timeFieldObj = {
     start: 'cacheStart',
     end: 'cacheEnd'
-}
+};
 
 class DetailPopup extends Component<pageOwnProps, pageOwnState> {
     constructor(props) {
@@ -65,8 +66,21 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
     }
 
     onReset = () => {
-        this.setState({ cacheTime: ''});
-        
+        this.setState({ 
+            cacheTime: '',
+            cacheStart: '',
+            cacheEnd: '',
+            selectField: 'start',
+        });
+        [this.startRef, this.endRef].forEach( item => {
+            this.callChildMethod(item, 'reset');
+        })
+    }
+
+    callChildMethod = (ref, method) => {
+        if(ref && method) {
+            ref[method]();
+        }
     }
 
     scrollSet = date => {
@@ -80,7 +94,12 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
     }
 
     onPopSave = () => {
-        Taro.showToast({ title: '保存事件'})
+        const { cacheStart, cacheEnd } = this.state;
+        if(!compareDate(cacheStart, cacheEnd)) {
+            return;
+        }
+
+
     }
 
     /**
@@ -105,6 +124,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
     setEndRef = ele => {
         this.endRef = ele;
     }
+
 
     renderStart = () => {
         const { selectField } = this.state;

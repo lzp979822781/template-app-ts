@@ -224,4 +224,40 @@ function formatDate(param = new Date(), defaultValue = '') {
     return defaultValue;
 }
 
-export { seriesNumberArray, fillId, formatSplitArray, formatNormal, formatDate };
+const TIPS = {
+    start: '请选择开始日期',
+    end: '请选择结束日期',
+    between: '结束时间不可早于开始时间',
+};
+
+function compareDate(startDate, endDate) {
+    /* Taro.showToast({
+        title: `${(start === end).toString()}`
+    }) */
+
+    if(!startDate) {
+        Taro.showToast({
+            title: TIPS.start
+        });
+        return false;
+    }
+
+    if(!endDate) {
+        Taro.showToast({
+            title: TIPS.end 
+        });
+        return false;
+    }
+
+
+    if(startDate > endDate) {
+        Taro.showToast({
+            title: TIPS.between
+        })
+        return true;
+    }
+
+    return false;
+}
+
+export { seriesNumberArray, fillId, formatSplitArray, formatNormal, formatDate, compareDate };

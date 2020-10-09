@@ -5,7 +5,13 @@ import { FlatList } from 'react-native';
 import {
     JDDevice,
 } from '@jdreact/jdreact-core-lib';
-import { seriesNumberArray, fillId, formatSplitArray, formatNormal, formatDate } from '@/utils/utils';
+import { 
+    seriesNumberArray, 
+    fillId, 
+    formatSplitArray, 
+    formatNormal, 
+    formatDate,
+} from '@/utils/utils';
 import DateItem from '../DateItem';
 
 import './index.scss';
@@ -163,6 +169,9 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
         })
     }
 
+    /**
+     * 将当前的时间索引值转换为时间字符串
+     */
     joinSelectedDate = () => {
         const { scrollSet } = this.props;
         const { selectedYearIndex, selectedMonthIndex, selectedDayIndex } = this.state;
