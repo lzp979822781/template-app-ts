@@ -1,6 +1,7 @@
 @import "@/global/common.scss";
 $btnHeight: 100px;
 $textTop: 13px;
+$textMinHeight: 40px;
 
 .detail-popup {
     padding-top: 26px;
@@ -9,7 +10,7 @@ $textTop: 13px;
         &-container {
             @include flex(row, center, center);
             width: 40px;
-            height: 40px;
+            height: 40px;             
             &-img {
                 width: 20px;
                 height: 20px;
@@ -40,11 +41,16 @@ $textTop: 13px;
 
         &-container {
             @include flex(row, flex-start, center);
+            min-height: $textMinHeight;
         }
 
         &-content {
-            @include flex(row, flex-start, center);
+            @include flex(row, center, center);
             margin-top: $textTop;
+
+            &-text {
+                @include font(36px, #444444, 'PingFangSC-Regular');
+            }
         }
 
         &-icon {
@@ -96,7 +102,8 @@ $textTop: 13px;
 
             &-down {
                 margin-top: $textTop;
-                @include flex(row, flex-start, center);
+                @include flex(row, center, center);
+                min-height: $textMinHeight;
                 &-text {
                     @include font(36px, #F23030, 'PingFangSC-Regular');
                 }
@@ -130,5 +137,9 @@ $textTop: 13px;
                 @include font(32px, #FFFFFF, 'PingFangSC-Semibold');
             }
         }
+    }
+
+    &-text-placeholder {
+        @include font(20px, rgba(197, 197, 197, .95), 'PingFangSC-Regular');
     }
 }

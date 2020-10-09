@@ -67,8 +67,6 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
             selectedMonthIndex: 1,
             selectedDayIndex: 1,
 
-            currentScrollType: '',
-
             yearData: [],
             monthData: [],
             dayData: [],
@@ -145,7 +143,6 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
     onScrollEndDrag = type => (e?: any) => {
         // 停止拖动时设置选中值
         if (skipThisScrollListen) return;
-        this.setState({ currentScrollType: '' })
         scrollHasEnded = true;
         setTimeout(() => {
             if(scrollHasEnded) {

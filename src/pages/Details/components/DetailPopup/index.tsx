@@ -1,4 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
+import classnames from 'classnames';
 import { View, Image, Text } from "@tarojs/components";
 import { PopUp, Gradient } from "@/components";
 
@@ -57,7 +58,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
     }
 
     onReset = () => {
-
+        this.setState({ cacheTime: ''})
     }
 
     onPopSave = () => {
@@ -103,6 +104,14 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
 
     render() {
         const {visible = false, onClose } = this.props;
+        const startText = this.getSelfTime('start');
+        const endText = this.getSelfTime("end");
+        const startCls = classnames(`${prefix}-text-container-content-text`, {
+            [`${prefix}-text-placeholder`]: !startText
+        });
+        const endCls = classnames(`${prefix}-time-conatainer-title-down-text`, {
+            [`${prefix}-text-placeholder`]: !endText
+        })
         return (
             <PopUp
                 visible={visible}
@@ -129,7 +138,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
                                 </View>
 
                                 <View className={`${prefix}-text-container-content`}>
-                                    <Text className={`${prefix}-text-container-text`}>{this.getSelfTime('start')}</Text>
+                                    <Text className={startCls}>{ startText || '请选择起始日期'}</Text>
                                 </View>
                             </View>
                             
@@ -145,7 +154,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
                                     <Text className={`${prefix}-time-conatainer-title-up-right-text`}>结束日期</Text>
                                 </View>
                                 <View className={`${prefix}-time-conatainer-title-down`}>
-                                    <Text className={`${prefix}-time-conatainer-title-down-text`}>{this.getSelfTime('end')}</Text>
+                                    <Text className={endCls}>{endText || '请选择结束日期'}</Text>
                                 </View>
                             </View>
                         </View>
