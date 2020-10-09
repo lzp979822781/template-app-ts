@@ -48,8 +48,8 @@ const prefix = 'detail-popup';
 const closeSrc = 'https://img10.360buyimg.com/imagetools/jfs/t1/112244/30/18443/459/5f69b004E2b211fa2/ee92aeec83c81fa9.png';
 
 const timeFieldObj = {
-    start: cacheStart,
-    end: cacheEnd
+    start: 'cacheStart',
+    end: 'cacheEnd'
 }
 
 class DetailPopup extends Component<pageOwnProps, pageOwnState> {
