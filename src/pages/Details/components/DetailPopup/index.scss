@@ -19,7 +19,7 @@ $textTop: 13px;
     }
 
     &-body {
-        @include flex(row, flex-start, center);
+        // @include flex(row, flex-start, center);
         &-delimiter {
             width: 3px;
             height: 31px;
@@ -69,7 +69,6 @@ $textTop: 13px;
 
         &-text {
             @include font(36px, #444444, 'PingFangSC-Regular');
-            background-color: greenyellow;
         }
     }
 

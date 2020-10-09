@@ -337,8 +337,6 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
                     { this.renderDayList()}
                     { this.renderSelLine()}
                 </View>
-                <Text>{this.state.selectedYearIndex}</Text>
-                <Button type='primary' onClick={this.onInitScroll}>跳转测试</Button>
             </View>
         );
     }

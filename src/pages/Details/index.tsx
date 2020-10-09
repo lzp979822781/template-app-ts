@@ -21,7 +21,8 @@ export default class Details extends Component<any, any> {
         super(props);
         this.state = {
             timeVisible: false,
-            selectTime: '',
+            selectStart: '2020.10.15',
+            selectEnd: '2020.10.16',
 
             userVisible: false,
             selectUser: {},
@@ -81,6 +82,11 @@ export default class Details extends Component<any, any> {
         return imagUrl[hasVal ? 'downSelectedImg': 'downUnselectedImg'];
     }
 
+    getSelectTime = () => {
+        const { selectStart, selectEnd } = this.state;
+        return (!selectStart || !selectEnd) ? '' : `${selectStart}-${selectEnd}`;
+    }
+
     /**
      * 显示时间和全部客户下拉选择
      * @returns
@@ -95,7 +101,8 @@ export default class Details extends Component<any, any> {
     }
 
     renderTime = () => {
-        const { selectTime, timeVisible} = this.state;
+        const {  timeVisible} = this.state;
+        const selectTime= this.getSelectTime();
         const timeImgSrc = this.getImgSrc(timeVisible, selectTime);
 
         const textCls = classnames(`${TABPRREFIX}-time-text`, {
@@ -140,8 +147,9 @@ export default class Details extends Component<any, any> {
                 <DetailPopup 
                     visible={!!timeVisible}
                     onClose={this.onPopupClose}
+                    showValue={this.getSelectTime()}
                 />
-                <DetailDatePicker />
+                {/* <DetailDatePicker /> */}
             </View>
         );
     }
