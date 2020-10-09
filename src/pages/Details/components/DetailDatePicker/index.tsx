@@ -163,12 +163,12 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
         })
     }
 
-    /* joinSelectedDate = () => {
+    joinSelectedDate = () => {
         const { scrollSet } = this.props;
         const { selectedYearIndex, selectedMonthIndex, selectedDayIndex } = this.state;
-        const date = new Date(initYear + selectedYearIndex, selectedMonthIndex - 1, selectedDayIndex)
-        scrollSet(date);
-    } */
+        const date = new Date(initYear + selectedYearIndex - 1, selectedMonthIndex - 1, selectedDayIndex)
+        scrollSet(formatDate(date));
+    }
 
     /**
      * 重置功能时值滚动到初始位置
@@ -177,6 +177,7 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
      */
     handleScrollReset = isReset => {
         if(isReset) return;
+        this.joinSelectedDate();
     }
 
     scrollToIndex = type => {
