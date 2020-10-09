@@ -214,7 +214,7 @@ function fillStr(param) {
     return str.padStart(2, '0');
 }
 
-function formatDate(param, defaultValue = '') {
+function formatDate(param = new Date(), defaultValue = '') {
 
     if(Object.prototype.toString.call(param) === '[object Date]') {
         const [year, month, day] = formatSplitArray(param);

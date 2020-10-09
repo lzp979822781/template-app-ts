@@ -55,11 +55,12 @@ const timeFieldObj = {
 class DetailPopup extends Component<pageOwnProps, pageOwnState> {
     constructor(props) {
         super(props);
+        const [startDate, endDate] = props.showValue.split('-');
         this.state = {  
             selectField: 'start',
             cacheTime: props.showValue,
-            cacheStart: '',
-            cacheEnd: ''
+            cacheStart: startDate,
+            cacheEnd: endDate
         };
     }
 
@@ -70,7 +71,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
 
     scrollSet = date => {
         const { cacheStart, cacheEnd, selectField } = this.state;
-        const cacheTime = selectField === 'start' ? `${date}-${cacheEnd}` : `${cacheStart}-date`;
+        const cacheTime = selectField === 'start' ? `${date}-${cacheEnd}` : `${cacheStart}-${date}`;
         this.setState({
             cacheTime,
             [timeFieldObj[selectField]]: date
@@ -152,6 +153,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
         const btnCls = classnames(`${prefix}-btn-container`, {
             [`${prefix}-gap`]: !startText && !endText
         })
+
         return (
             <PopUp
                 visible={visible}
