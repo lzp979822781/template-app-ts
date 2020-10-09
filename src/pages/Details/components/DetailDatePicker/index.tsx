@@ -5,7 +5,7 @@ import { FlatList } from 'react-native';
 import {
     JDDevice,
 } from '@jdreact/jdreact-core-lib';
-import { seriesNumberArray, fillId, formatSplitArray, formatNormal } from '@/utils/utils';
+import { seriesNumberArray, fillId, formatSplitArray, formatNormal, formatDate } from '@/utils/utils';
 import DateItem from '../DateItem';
 
 import './index.scss';
@@ -13,7 +13,8 @@ import './index.scss';
 
 
 type PageOwnProps = {
-    initDate: string
+    initDate: string,
+    scrollSet: (param) => any
 };
 
 type PageOwnState = {
@@ -102,15 +103,14 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
         this.initVal(selectedDate);
     } 
 
-    initVal = (selectedDate) => {
+    initVal = (selectedDate, isReset = false) => {
         const [year, month, day] = formatSplitArray(selectedDate);
         this.setState({
-            selectedDate,
             selectedYearIndex: (year - initYear + 1) > 1 ? (year - initYear + 1) : 1,
             selectedMonthIndex: month > 1 ? month : 1,
             selectedDayIndex: day > 1 ? day : 1,
         }, () => {
-            this.onScrollEndDrag('day')();
+            this.onScrollEndDrag('day', isReset)();
         })
     }
 
@@ -140,7 +140,7 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
         scrollHasEnded = false;
     }
 
-    onScrollEndDrag = type => (e?: any) => {
+    onScrollEndDrag = (type, isReset = false) => (e?: any) => {
         // 停止拖动时设置选中值
         if (skipThisScrollListen) return;
         scrollHasEnded = true;
@@ -153,6 +153,7 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
             }
             this.scrollFixPos();
             this.updateDayData(type);
+            this.handleScrollReset(isReset);
         }, e ? 350: 0);
     }
 
@@ -160,6 +161,22 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
         LineArr.forEach( type => {
             this.scrollToIndex(type);
         })
+    }
+
+    /* joinSelectedDate = () => {
+        const { scrollSet } = this.props;
+        const { selectedYearIndex, selectedMonthIndex, selectedDayIndex } = this.state;
+        const date = new Date(initYear + selectedYearIndex, selectedMonthIndex - 1, selectedDayIndex)
+        scrollSet(date);
+    } */
+
+    /**
+     * 重置功能时值滚动到初始位置
+     * @param {*} isReset
+     * @returns
+     */
+    handleScrollReset = isReset => {
+        if(isReset) return;
     }
 
     scrollToIndex = type => {
@@ -322,6 +339,10 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
 
     onInitScroll = () => {
         this.initVal(new Date());
+    }
+
+    reset = () => {
+        this.initVal(new Date(), true);
     }
 
     render() {

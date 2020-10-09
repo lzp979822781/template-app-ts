@@ -209,4 +209,19 @@ function formatNormal(date) {
     return new Date(Date.parse(date.replace(/\.|\-/gi, "/")));
 }
 
-export { seriesNumberArray, fillId, formatSplitArray, formatNormal };
+function fillStr(param) {
+    const str = `${param}`;
+    return str.padStart(2, '0');
+}
+
+function formatDate(param, defaultValue = '') {
+
+    if(Object.prototype.toString.call(param) === '[object Date]') {
+        const [year, month, day] = formatSplitArray(param);
+        return `${year}.${fillStr(month)}.${fillStr(day)}`;
+    }
+
+    return defaultValue;
+}
+
+export { seriesNumberArray, fillId, formatSplitArray, formatNormal, formatDate };

@@ -15,7 +15,9 @@ type pageOwnProps  = {
 
 type pageOwnState = {
     selectField: string,
-    cacheTime: string
+    cacheTime: string,
+    cacheStart: string,
+    cacheEnd: string,
 }
 
 const rnStyle = {
@@ -45,20 +47,35 @@ const resetShadow = {
 const prefix = 'detail-popup';
 const closeSrc = 'https://img10.360buyimg.com/imagetools/jfs/t1/112244/30/18443/459/5f69b004E2b211fa2/ee92aeec83c81fa9.png';
 
+const timeFieldObj = {
+    start: cacheStart,
+    end: cacheEnd
+}
+
 class DetailPopup extends Component<pageOwnProps, pageOwnState> {
     constructor(props) {
         super(props);
         this.state = {  
             selectField: 'start',
-            cacheTime: props.showValue
+            cacheTime: props.showValue,
+            cacheStart: '',
+            cacheEnd: ''
         };
     }
 
-    getInitValue = () => {
+    onReset = () => {
+        this.setState({ cacheTime: ''});
+        
     }
 
-    onReset = () => {
-        this.setState({ cacheTime: ''})
+    scrollSet = date => {
+        const { cacheStart, cacheEnd, selectField } = this.state;
+        const cacheTime = selectField === 'start' ? `${date}-${cacheEnd}` : `${cacheStart}-date`;
+        this.setState({
+            cacheTime,
+            [timeFieldObj[selectField]]: date
+        })
+
     }
 
     onPopSave = () => {
@@ -77,11 +94,26 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
         return field === 'start' ? startTime : endTime;
     }
 
+    startRef = null
+    endRef = null
+
+    setStartRef = ele => {
+        this.startRef = ele;
+    }
+
+    setEndRef = ele => {
+        this.endRef = ele;
+    }
+
     renderStart = () => {
         const { selectField } = this.state;
         if(selectField !== 'start') return null;
         return (
-            <DetailDatePicker initDate={this.getSelfTime('start')} />
+            <DetailDatePicker 
+                initDate={this.getSelfTime('start')} 
+                ref={this.setStartRef}
+                scrollSet={this.scrollSet}
+            />
         );
     }
 
@@ -89,7 +121,11 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
         const { selectField } = this.state;
         if(selectField == 'start') return null;
         return (
-            <DetailDatePicker initDate={this.getSelfTime('end')} />
+            <DetailDatePicker 
+                initDate={this.getSelfTime('end')} 
+                ref={this.setEndRef}
+                scrollSet={this.scrollSet}
+            />
         );
     }
 
@@ -109,8 +145,12 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
         const startCls = classnames(`${prefix}-text-container-content-text`, {
             [`${prefix}-text-placeholder`]: !startText
         });
-        const endCls = classnames(`${prefix}-time-conatainer-title-down-text`, {
+        const endCls = classnames(`${prefix}-time-container-title-down-text`, {
             [`${prefix}-text-placeholder`]: !endText
+        })
+
+        const btnCls = classnames(`${prefix}-btn-container`, {
+            [`${prefix}-gap`]: !startText && !endText
         })
         return (
             <PopUp
@@ -146,14 +186,14 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
 
                             </View>
 
-                            <View className={`${prefix}-time-conatainer`} onClick={this.onChangeTimeTab('end')}>
-                                <View className={`${prefix}-time-conatainer-title-up`}>
-                                    <View className={`${prefix}-time-conatainer-title-up-left`}>
-                                        <Text className={`${prefix}-time-conatainer-title-up-left-text`}>末</Text>
+                            <View className={`${prefix}-time-container`} onClick={this.onChangeTimeTab('end')}>
+                                <View className={`${prefix}-time-container-title-up`}>
+                                    <View className={`${prefix}-time-container-title-up-left`}>
+                                        <Text className={`${prefix}-time-container-title-up-left-text`}>末</Text>
                                     </View>
-                                    <Text className={`${prefix}-time-conatainer-title-up-right-text`}>结束日期</Text>
+                                    <Text className={`${prefix}-time-container-title-up-right-text`}>结束日期</Text>
                                 </View>
-                                <View className={`${prefix}-time-conatainer-title-down`}>
+                                <View className={`${prefix}-time-container-title-down`}>
                                     <Text className={endCls}>{endText || '请选择结束日期'}</Text>
                                 </View>
                             </View>
@@ -165,7 +205,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
                             { this.renderEnd()}
                         </View>
                     </View>
-                    <View className={`${prefix}-btn-container`}>
+                    <View className={btnCls}>
                         <View className={`${prefix}-btn-reset`} style={resetShadow} onClick={this.onReset}>
                             <Text className={`${prefix}-btn-reset-text`}>重置</Text>
                         </View>

@@ -8,7 +8,7 @@ $textMinHeight: 40px;
     &-header {
         @include flex(row, flex-end, center);
         &-container {
-            @include flex(row, center, center);
+            @include flex(row, flex-start, center);
             width: 40px;
             height: 40px;             
             &-img {
@@ -35,9 +35,9 @@ $textMinHeight: 40px;
     
 
     &-text-container {
-
         margin-left: 80px;
-        margin-right: 109px;
+        // margin-right: 109px;
+        flex: 1;
 
         &-container {
             @include flex(row, flex-start, center);
@@ -45,7 +45,7 @@ $textMinHeight: 40px;
         }
 
         &-content {
-            @include flex(row, center, center);
+            @include flex(row, flex-start, center);
             margin-top: $textTop;
 
             &-text {
@@ -78,8 +78,9 @@ $textMinHeight: 40px;
         }
     }
 
-    &-time-conatainer {
+    &-time-container {
         margin-left: 78px;
+        flex: 1;
         &-title {
             &-up {
                 @include flex(row, flex-start, center);
@@ -102,7 +103,7 @@ $textMinHeight: 40px;
 
             &-down {
                 margin-top: $textTop;
-                @include flex(row, center, center);
+                @include flex(row, flex-start, center);
                 min-height: $textMinHeight;
                 &-text {
                     @include font(36px, #F23030, 'PingFangSC-Regular');
@@ -141,5 +142,9 @@ $textMinHeight: 40px;
 
     &-text-placeholder {
         @include font(20px, rgba(197, 197, 197, .95), 'PingFangSC-Regular');
+    }
+
+    &-gap {
+        margin-top: 10px;
     }
 }
