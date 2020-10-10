@@ -230,34 +230,35 @@ const TIPS = {
     between: '结束时间不可早于开始时间',
 };
 
+function showToast(text = '') {
+    Taro.showToast({
+        title: text,
+        icon: 'none'
+    })
+}
+
 function compareDate(startDate, endDate) {
     /* Taro.showToast({
         title: `${(start === end).toString()}`
     }) */
 
     if(!startDate) {
-        Taro.showToast({
-            title: TIPS.start
-        });
+        showToast(TIPS.start);
         return false;
     }
 
     if(!endDate) {
-        Taro.showToast({
-            title: TIPS.end 
-        });
+        showToast(TIPS.end);
         return false;
     }
 
 
     if(startDate > endDate) {
-        Taro.showToast({
-            title: TIPS.between
-        })
-        return true;
+        showToast(TIPS.between);
+        return false;
     }
 
-    return false;
+    return true;
 }
 
 export { seriesNumberArray, fillId, formatSplitArray, formatNormal, formatDate, compareDate };

@@ -11,7 +11,8 @@ import './index.scss';
 type pageOwnProps  = {
     showValue: string,
     visible: boolean,
-    onClose?: () => any
+    onClose?: () => any,
+    onTimeSave: (param) => any
 }
 
 type pageOwnState = {
@@ -94,12 +95,22 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
     }
 
     onPopSave = () => {
-        const { cacheStart, cacheEnd } = this.state;
+        
+        const { cacheStart, cacheEnd, cacheTime} = this.state;
         if(!compareDate(cacheStart, cacheEnd)) {
             return;
         }
+        // 设置选中值
+        this.saveTime(cacheTime);
+        this.onChangeTimeTab('start')();
+    }
 
-
+    saveTime = timeValue => {
+        const { onTimeSave } = this.props;
+        
+        if(onTimeSave) {
+            onTimeSave(timeValue);
+        }
     }
 
     /**
@@ -154,13 +165,26 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
 
     }
 
+    onPopClose = () => {
+        const { showValue } = this.props;
+        this.setState({ cacheTime: showValue });
+        this.handlePropsMethod("onClose");
+    }
+
     onChangeTimeTab = selectField => () => {
         this.setState({ selectField })
+    }
+
+    handlePropsMethod = (methodName: string, paramArr = []) => {
+        const { [methodName]: method } = this.props;
+        if(method) {
+            method(...paramArr);
+        }
     }
     
 
     render() {
-        const {visible = false, onClose } = this.props;
+        const {visible = false } = this.props;
         const startText = this.getSelfTime('start');
         const endText = this.getSelfTime("end");
         const startCls = classnames(`${prefix}-text-container-content-text`, {
@@ -183,7 +207,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
             >
                 <View className={prefix}>
                     <View className={`${prefix}-header`} >
-                        <View className={`${prefix}-header-container`} onClick={onClose}>
+                        <View className={`${prefix}-header-container`} onClick={this.onPopClose}>
                             <Image className={`${prefix}-header-container-img`} src={closeSrc} />
                         </View>
                     </View>
