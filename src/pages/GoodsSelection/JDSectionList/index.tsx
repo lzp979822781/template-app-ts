@@ -62,13 +62,21 @@ export default class Filter extends Component<baseProps, any> {
     renderListItem = ({ item }) => {
         const { selectedList } = this.state;
         let itemTxt = [styles.itemTxt];
-        if (selectedList.includes(item)) {
+        const boolSelected = selectedList.includes(item);
+        if (boolSelected) {
             itemTxt = [styles.itemTxt, styles.itemTxtAct];
         };
 
-        return <TouchableOpacity onPress={() => { this.selectItem(item) }}><View style={styles.item}>
-            <Text style={itemTxt}>{item}</Text>
-        </View></TouchableOpacity>
+        return <TouchableOpacity onPress={() => { this.selectItem(item) }}>
+            <View style={styles.item}>
+                <Text style={itemTxt}>{item}</Text>
+                {boolSelected ? <Image
+                    className='list-item-selected'
+                    mode='aspectFit'
+                    src='https://img10.360buyimg.com/imagetools/jfs/t1/136799/28/11775/633/5f811591Ed2430b7b/8ce3394b7bde2f47.png'
+                /> : null}
+            </View>
+        </TouchableOpacity>
     }
 
     renderSectionHeader = ({ section: { title } }) => {

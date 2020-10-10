@@ -20,6 +20,10 @@
     background-color: transparent;
 }
 
+.list-item-selected {
+    width: 18px;
+    height: 15px;
+}
 .drawer-back-btn {
     @include flex(row, flex-start, center);
     flex: 1;
