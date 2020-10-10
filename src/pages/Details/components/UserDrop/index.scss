@@ -3,6 +3,7 @@
 .user-drop {
     max-height: 556px;
     @include padding(0, 30px, 0, 30px);
+    background-color: #fff;
     &-search-container {
         @include flex(row, flex-start, center);
         margin-top: 16px;
@@ -41,7 +42,6 @@
     }
     &-list {
         margin-top: 16px;
-        background-color: #fff;
         &-item {
             @include flex(row, flex-start, center);
             height: 92px;
@@ -65,6 +65,14 @@
                     width: 20px;
                     height: 11px;
                 }
+            }
+        }
+
+        &-footer {
+            height: 100px;
+            @include flex(row, center, center);
+            &-text {
+                @include font(20px, #999999, 'PingFangSC-Regular');
             }
         }
     }

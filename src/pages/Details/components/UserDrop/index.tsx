@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { View, Image, Input, Text } from "@tarojs/components";
 import { FlatList } from 'react-native';
 import debounce from 'lodash/debounce';
+import JDRequest from "@/utils/jd-request";
 
 import './index.scss';
 
@@ -20,7 +21,9 @@ interface User {
 type pageOwnState = {
     searchValue: string,
     selectedUser: User,
-    listData: Array<object>
+    listData: Array<object>,
+    loading: boolean,
+    pageNumber: number,
 }
 
 
@@ -30,7 +33,7 @@ type pageOwnProps = {
     onSave: (param ) => any
 }
 
-const data = [
+const testData = [
     {
         id: 'all',
         customerName: '全部客户'
@@ -51,6 +54,22 @@ const data = [
         id: 4,
         customerName: '同仁堂保健医院北京分公司',
     },
+    {
+        id: 5,
+        customerName: '同仁堂保健医院上海分公司',
+    },
+    {
+        id: 6,
+        customerName: '同仁堂保健医院河北分公司',
+    },
+    {
+        id: 7,
+        customerName: '同仁堂保健医院河南分公司',
+    },
+    {
+        id: 8,
+        customerName: '同仁堂保健医院安徽分公司',
+    },
 ]
 
 class UserDrop extends Component<pageOwnProps, pageOwnState> {
@@ -59,14 +78,58 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
         const { customerName } = props.currentVal;
         this.state = {  
             searchValue: customerName || '',
-            listData: data,
-            selectedUser: props.currentVal
+            listData: testData,
+            selectedUser: props.currentVal,
+            loading: true,
+            pageNumber: 1
         };
         this.getUserData = debounce(this.getUserData, 300);
     }
 
-    getUserData = (searchValue) => {
+    componentDidMount() {
+        // this.getUserData()
+    }
+
+    totalPage = 100
+
+    getUserData = async () => {
         // 执行搜索
+        const { listData, pageNumber, searchValue } = this.state;
+        const param = {
+            pageSize: 10,
+            customerName: searchValue,
+            curPage: pageNumber
+        };
+
+        const { success, data: { totalCount, pageSize, data }, } = await JDRequest.post(`mjying_assist_partner_corder_queryBCP`, param);
+        if(success) {
+            const resData = pageNumber === 1 ? [{
+                id: 'all',
+                customerName: '全部客户'
+            }, ...data]: listData.concat(data)
+            this.setState({
+                listData: resData,
+                pageNumber: pageNumber + 1
+            })
+        }
+
+        if(totalCount && pageSize) {
+            this.totalPage = Math.floor(totalCount / pageSize);
+        }
+    }
+
+    onLoadingData = () => {
+        if(this.isLoadComplete()) {
+            this.setState({ loading: false });
+            return;
+        }
+
+        this.getUserData();
+    }
+
+    isLoadComplete = () => {
+        const { pageNumber } = this.state;
+        return pageNumber > this.totalPage;
     }
 
     handlePropsMethod = (methodName: string, paramArr = []) => {
@@ -154,7 +217,22 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
                     renderItem={({ item }) => this.renderItem(item)}
                     keyExtractor={item => item.id}
                     extraData={selectedUser}
+                    onEndReachedThreshold={0.5}
+                    style={{ maxHeight: 230}}
+                    ListFooterComponent={this.renderFooter}
+                    onEndReached={this.onLoadingData}
                 />
+            </View>
+        );
+    }
+
+    renderFooter = () => {
+        const { listData, loading } = this.state;
+        if(!Array.isArray(listData) || (Array.isArray(listData) && !listData.length)) return null;
+        
+        return (
+            <View className={`${PREFIX}-list-footer`}>
+                <Text>{ loading ? '加载中' : '没有更多了～'}</Text>
             </View>
         );
     }
