@@ -3,12 +3,13 @@ import { View, Image } from "@tarojs/components";
 import classnames from 'classnames';
 import { StatusBar, Header } from "@/components/index";
 import { Text } from 'react-native';
-import { DetailPopup, DetailDatePicker } from './components';
+import { DetailPopup, DetailDatePicker, UserDrop } from './components';
 // import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 // import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 
 const TABPRREFIX = 'detail-tab';
+const DROP_PREFIX = 'detail-drop';
 
 const imagUrl = {
     downUnselectedImg: 'https://img14.360buyimg.com/imagetools/jfs/t1/150332/1/9010/355/5f696548Edcad7077/4f76b8c1aa722712.png',
@@ -44,8 +45,22 @@ export default class Details extends Component<any, any> {
     }
 
     onCustomSelect = () => {
-        const { timeVisible } = this.state;
-        this.setState({ timeVisible: !timeVisible })
+        const { userVisible } = this.state;
+        this.setState({ userVisible: !userVisible })
+    }
+
+    /**
+     * 点击黑色背景是关闭当前搜索视图
+     */
+    onCloseUserSearch = () => {
+        this.setState({ userVisible: false })
+    }
+
+    onSaveUser = selectUser => {
+        this.setState({
+            selectUser,
+            userVisible: false
+        })
     }
 
     /**
@@ -70,7 +85,7 @@ export default class Details extends Component<any, any> {
         const prefix = 'detail-top';
         return (
             <View className={prefix}>
-                <View className={`${prefix}-title`} onClick={this.onTimeSelect}>
+                <View className={`${prefix}-title`}>
                     <Text className={`${prefix}-title-text`}>预估总佣金 (元)</Text>
                 </View>
                 <View className={`${prefix}-content`}>
@@ -108,6 +123,7 @@ export default class Details extends Component<any, any> {
             <View className={TABPRREFIX}>
                 { this.renderTime()}
                 { this.renderUser()}
+                { this.renderUserSelect()}
             </View>
         );
     }
@@ -130,16 +146,31 @@ export default class Details extends Component<any, any> {
     }
 
     renderUser = () => {
-        const { userVisible, selectUser:{ name } } = this.state;
+        const { userVisible, selectUser:{ customerName } } = this.state;
         // const userImgSrc = imagUrl[ userVisible ? 'upUnselectedImg': 'downUnselectedImg' ];
-        const userImgSrc = this.getImgSrc(userVisible, name);
+        const userImgSrc = this.getImgSrc(userVisible, customerName);
         const textCls  = classnames('${TABPRREFIX}-user-text', {
-            [`${TABPRREFIX}-user-text-selected`]: name
+            [`${TABPRREFIX}-user-text-selected`]: customerName
         })
         return (
-            <View className={`${TABPRREFIX}-user`}>
-                <Text className={textCls} numberOfLines={1}>{name || '全部客户'}</Text>
+            <View className={`${TABPRREFIX}-user`} onClick={this.onCustomSelect}>
+                <Text className={textCls} numberOfLines={1}>{customerName || '全部客户'}</Text>
                 <Image className={`${TABPRREFIX}-image`} src={userImgSrc} />
+            </View>
+        );
+    }
+
+    renderUserSelect = () => {
+        const { userVisible, selectUser } = this.state;
+        if(!userVisible) return null;
+        return (
+            <View className={`${DROP_PREFIX}`}>
+                <UserDrop 
+                    currentVal={selectUser}
+                    onSave={this.onSaveUser}
+                />
+                <View className={`${DROP_PREFIX}-bg`} onClick={this.onCloseUserSearch}>
+                </View>
             </View>
         );
     }

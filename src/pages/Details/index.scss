@@ -1,4 +1,7 @@
 @import "@/global/common.scss";
+
+$tabHeight: 93px;
+
 .detail {
     display: flex;
     height: 100%;
@@ -25,8 +28,9 @@
 
     &-tab {
         @include flex(row, flex-start, center);
-        height: 93px;
+        height: $tabHeight;
         background-color: #fff;
+        position: relative;
 
         &-time {
             @include flex(row, flex-start, center);
@@ -58,6 +62,21 @@
             width: 15px;
             height: 8px;
             margin-left: 16px;
+        }
+    }
+
+    &-drop {
+        position: absolute;
+        top: $tabHeight;
+        width: 100%;
+
+        display: flex;
+        flex: 1;
+        background-color: #fff;
+
+        &-bg {
+            background-color: rgba(0, 0, 0, .4);
+            height: 9999px;
         }
     }
 }
