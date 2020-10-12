@@ -141,9 +141,13 @@ class DetailList extends Component<pageOwnProps> {
         );
     }
 
+    onItemClick = (item) => () => {
+        // 跳转到详情页面
+    }
+
     renderItem = (item) => {
         return (
-            <View className={ITEM_PREFIX}>
+            <View className={ITEM_PREFIX} onClick={this.onItemClick(item)}>
                 { this.renderTitle(item)}
                 { this.renderBaseline()}
                 { this.renderContent(item)}
