@@ -217,11 +217,12 @@ const styles = StyleSheet.create({
         // paddingRight: 30
     },
     item: {
-        alignItems: "flex-start",
-        justifyContent: "center",
+        alignItems: "center",
+        justifyContent: "flex-start",
         backgroundColor: "#FFFFFF",
         height: 50,
-        paddingLeft: 20
+        paddingLeft: 20,
+        flexDirection:"row"
     },
     itemTxt: {
         fontSize: 15,
