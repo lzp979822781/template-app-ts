@@ -3,13 +3,15 @@ import { View, Image } from "@tarojs/components";
 import classnames from 'classnames';
 import { StatusBar, Header } from "@/components/index";
 import { Text } from 'react-native';
-import { DetailPopup, DetailDatePicker, UserDrop } from './components';
+import { DetailPopup, UserDrop, DetailList } from './components';
 // import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 // import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 
 const TABPRREFIX = 'detail-tab';
 const DROP_PREFIX = 'detail-drop';
+const TABLE_PREFIX = 'detail-list';
+const imgSrc = "https://img14.360buyimg.com/imagetools/jfs/t1/150235/13/5346/468881/5f34ef8fE104f2b45/f46728fd2c561d64.png";
 
 const imagUrl = {
     downUnselectedImg: 'https://img14.360buyimg.com/imagetools/jfs/t1/150332/1/9010/355/5f696548Edcad7077/4f76b8c1aa722712.png',
@@ -17,6 +19,84 @@ const imagUrl = {
     downSelectedImg: 'https://img10.360buyimg.com/imagetools/jfs/t1/149413/1/9000/456/5f6970f5Efd0d9453/6798fb52c84a79a7.png',
     upSelectedImg: 'https://img11.360buyimg.com/imagetools/jfs/t1/123011/27/13237/854/5f699a27E514cb10d/0490e45d8a47c75f.png'
 }
+
+const testData = [
+    {
+        id: 1,
+        shopName: '京东自营医药旗舰店',
+        statusDesc: '待发货',
+        dealId: 268588238,
+        occurTime: '2020-03-12 16:32:13',
+        orderSkuNum: 4, //分佣商品数量
+        commission: 280,
+        clientName: '北京协和医院', // 客户名称
+        partnerCentCommissionOrderSkuVoList: [
+            {
+                id: '1-0',
+                num: 5,
+                img: imgSrc
+            },
+            {
+                id: '1-1',
+                num: 5,
+                img: imgSrc
+            },
+            {
+                id: '1-2',
+                num: 5,
+                img: imgSrc
+            },
+            {
+                id: '1-3',
+                num: 5,
+                img: imgSrc
+            },
+            {
+                id: '1-4',
+                num: 5,
+                img: imgSrc
+            },
+        ]
+    },
+    {
+        id: 2,
+        shopName: '京东自营医药旗舰店',
+        statusDesc: '待发货',
+        dealId: 268588238,
+        occurTime: '2020-03-12 16:32:13',
+        orderSkuNum: 4, //分佣商品数量
+        commission: 280,
+        clientName: '北京协和医院', // 客户名称
+        partnerCentCommissionOrderSkuVoList: [
+            {
+                id: '2-0',
+                num: 5,
+                img: imgSrc
+            },
+            {
+                id: '2-1',
+                num: 5,
+                img: imgSrc
+            },
+            {
+                id: '2-2',
+                num: 5,
+                img: imgSrc
+            },
+            {
+                id: '2-3',
+                num: 5,
+                img: imgSrc
+            },
+            {
+                id: '2-4',
+                num: 5,
+                img: imgSrc
+            },
+        ]
+    },
+]
+
 export default class Details extends Component<any, any> {
     constructor(props) {
         super(props);
@@ -28,7 +108,8 @@ export default class Details extends Component<any, any> {
             userVisible: false,
             selectUser: {},
             
-        };
+            shopList: testData
+        };  
     }
 
     componentWillMount() {
@@ -179,6 +260,15 @@ export default class Details extends Component<any, any> {
         this.setState({ timeVisible: false })
     }
 
+    renderList = () => {
+        const { shopList } = this.state;
+        return (
+            <View className={`${TABLE_PREFIX}`}>
+                <DetailList data={shopList} />
+            </View>
+        )
+    }
+
     render() {
         const { timeVisible } = this.state;
         return (
@@ -187,6 +277,7 @@ export default class Details extends Component<any, any> {
                 <Header title='明细' noBack />
                 { this.renderTop()}
                 { this.renderTab()}
+                { this.renderList()}
                 <DetailPopup 
                     visible={!!timeVisible}
                     onClose={this.onPopupClose}

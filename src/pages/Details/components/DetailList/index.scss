@@ -1,0 +1,144 @@
+@import "@/global/common.scss";
+
+.detail-table {
+    flex: 1;
+
+    &-empty {
+        flex: 1;
+        background-color: #F3F3F4;
+        @include flex(column, center, center);
+
+        &-img {
+            @include flex(row, center, center);
+            &-icon {
+                width: 240px;
+                height: 172px;
+            }                          
+        }
+
+        &-content {
+            @include flex(row, center, center);
+            margin-top: 40px;
+            &-text {
+                @include font(26px, #999999, 'PingFangSC-Light');
+            }
+
+        }
+    }
+
+
+    &-container {
+        flex: 1;
+        &-item {
+            height: 460px; 
+            background-color: #fff;
+            margin-top: 20px;
+            border-radius: 8px;
+            &-title {
+                @include padding(0, 30px, 0, 30px);
+                @include flex(row, flex-start, center);
+                height: 88px;
+                &-icon {
+                    width: 32px;
+                    height: 25px;
+                }
+
+                &-shop {
+                    flex: 1;
+                    @include flex(row, flex-start, center);
+                    margin-left: 11px;
+                    &-name {
+                        @include font(30px, #444444, 'PingFangSC-Medium');
+                    }
+
+                    &-icon {
+                        width: 6px;
+                        height: 16px;
+                        margin-left: 14px;
+                    }
+    
+                }
+
+                &-status {
+                    @include font(26px, #999999, 'PingFangSC-Regular' );
+                }
+            }
+
+            &-baseline {
+                height: 2px;
+                border: 1px solid #EEEEEE;
+            }
+
+            &-content {
+                flex: 1;
+                @include padding(0, 30px, 0, 30px);
+                &-order {
+                    margin-top: 20px;
+                    @include flex(row, flex-start, center);
+                    &-text {
+                        @include font(26px, #999999, 'PingFangSC-Regular');
+                    }
+
+                    &-left {
+                        margin-left: 29px;
+                    }
+                }
+
+                &-client {
+                    margin-top: 12px;
+                    @include flex(row, flex-start, center);
+                    &-label {
+                        @include font(22px, #878888, 'PingFangSC-Regular');
+                    }
+
+                    &-text {
+                        @include font(22px, #444444, 'PingFangSC-Regular');
+                        margin-left: 18px;
+                    }
+                }
+
+                &-pics {
+                    @include flex(row, space-between, center);
+                    margin-top: 46px;
+                    &-ellipse {
+                        @include flex(row, center, center);
+                        width: 62px;
+                        height: 130px;
+                        &-img {
+                            width: 32px;
+                            height: 6px;
+                        }
+                    }
+
+                    &-container {
+                        width: 130px;
+                        height: 130px;
+                        @include flex(row, center, center);
+                        
+                        &-img {
+                            width: 114px;    
+                            height: 114px;    
+                        }
+                    }
+                }
+
+                &-footer {
+                    @include flex(row, flex-end, center);
+                    margin-top: 32px;
+
+                    &-common {
+                        @include font(24px, #999999, 'PingFangSC-Regular');
+                    }
+                    &-amount {
+                        margin-right: 40px;
+                    }
+
+                    &-money {
+                        @include font(28px, #EE595D, 'JDZhengHei-01-Regular');
+                    }
+
+                }
+            }
+        }
+    }
+}
