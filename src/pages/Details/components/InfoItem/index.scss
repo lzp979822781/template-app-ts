@@ -1,0 +1,14 @@
+@import "@/global/common.scss";
+
+.info-item {
+    @include flex(row, flex-start, center);
+    margin-top: 24px;
+    &-label {
+        @include font(23px, #878888, 'PingFangSC-Regular');
+    }
+
+    &-value {
+        margin-left: 22px;
+        @include font(23px, #1D1E1E, 'PingFangSC-Semibold');
+    }
+}
