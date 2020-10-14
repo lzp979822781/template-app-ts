@@ -1,8 +1,8 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Modal, JDModal, JDListItem } from "@/components/index";
-import { Platform } from 'react-native';
-import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
+// import { Platform } from 'react-native';
+import { JDNetworkErrorView, JDJumping } from '@jdreact/jdreact-core-lib';
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
 
@@ -14,6 +14,7 @@ export default class Goods extends Component<any, any> {
         this.state = {
             timeout: 0,
             visible: false,
+            loaded: false,
             tagsData: {
                 1: [],
                 2: [],
@@ -26,6 +27,13 @@ export default class Goods extends Component<any, any> {
     componentWillMount() {
         this.getTags();
         this.getTagsExplanation();
+    }
+
+    componentDidShow() {
+        const { loaded } = this.state;
+        if(loaded){
+            this.getTags();
+        };
     }
 
     config: Config = {
@@ -49,17 +57,17 @@ export default class Goods extends Component<any, any> {
         });
 
         const params = this.$router.params;
-        const resTags = await JDRequest.get("mjying_assist_customer_getTags", {
+        // 新接口：mjying_assist_tag_customertag  老接口：mjying_assist_customer_getTags
+        const resTags = await JDRequest.get("mjying_assist_tag_customertag", {
             pin: params.pin
         });
         Taro.hideLoading();
         if (resTags.success) {
-            this.setState({ tagsData: resTags.data })
+            this.setState({ tagsData: resTags.data, loaded: true })
         } else {
-            this.setState({ timeout: 1 })
+            this.setState({ timeout: 1, loaded: true })
         };
     };
-
 
     getTagsExplanation = async () => {
         //客户标签注释
@@ -82,6 +90,13 @@ export default class Goods extends Component<any, any> {
     onConfirm = () => {
         this.onClose();
     };
+
+    jumpToAppWeb(key) {
+        const params = this.$router.params;
+        JDJumping.jumpToOpenapp(
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"webView", "params": ${JSON.stringify({ url: `/assist/customer/detail/info?pin=${params.pin}#${key}` })}}`
+        )
+    }
 
     renderContent = () => {
         const { tagsExplanation } = this.state;
@@ -169,12 +184,14 @@ export default class Goods extends Component<any, any> {
                 return <JDListItem
                     key={item.key}
                     label={item.title}
+                    onClick={() => { this.jumpToAppWeb(item.key) }}
                     renderValue={<View className='list-item-value-con'><Text className='list-item-value-txt'>{item.value || "暂无"}</Text><Text className='list-item-value-desc'>（平均值）</Text></View>}
                 />
             }
             return <JDListItem
                 key={item.key}
                 label={item.title}
+                onClick={() => { this.jumpToAppWeb(item.key) }}
                 value={item.value || "暂无"}
             />
         })

@@ -148,6 +148,7 @@
 
 .list-item-value-con {
     @include flex(row, flex-start, center);
+    flex:1;
 }
 
 .list-item-value-txt {

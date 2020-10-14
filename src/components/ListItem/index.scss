@@ -12,7 +12,7 @@
 }
 
 .list-item-value {
-    @include flex(row, flex-start, center);
+    @include flex(row, space-between, center);
     flex: 1;
     padding-right: 30px;
 }
@@ -21,6 +21,24 @@
     @include font(28px, #999999);
 }
 
+.list-item-value-con {
+    @include flex(row, flex-start, center);
+    flex:1;
+    background-color: #FFFFFF;
+}
+
 .list-item-value-txt {
     @include font(28px, #444444);
+}
+
+.list-item-icon-con {
+    @include flex(row, flex-end, center);
+    width: 40px;
+    height: 12px;
+}
+
+
+.list-item-icon {
+    width: 12px;
+    height: 20px;
 }
