@@ -1,0 +1,112 @@
+@import "@/global/common.scss";
+
+.order-detail {
+    background-color: #F3F3F4;
+    &-total {
+        height: 271px;
+        background-color: #F23030;
+        
+        &-desc {
+            margin-top: 28px;
+            @include flex(row, center, center);
+            &-text {
+                @include font(26px, #FFFFFF, 'PingFangSC-Regular');
+            }
+        }
+
+        &-amount {
+            @include flex(row, center, center);
+            margin-top: 14px;
+            &-text {
+                @include font(60px, #FFFFFF, 'Helvetica-Bold');
+            }
+        }
+
+        &-order {
+            @include flex(row, center, center);
+            margin-top: 23px;
+            &-img {
+                width: 28px;
+                height: 28px;
+            }
+            
+            &-text {
+                @include font(26px, #FFFFFF, 'PingFangSC-Regular');
+                margin-left: 8px;
+            }
+        }
+    }
+
+    &-shop {
+        border-radius: 12px 12px 0 0;
+        height: 1024px;
+        margin-top: -20px;
+        z-index: 1;
+        background-color: #fff;
+
+        &-head {
+            margin-top: 40px;
+            @include flex(row, flex-start, center);
+            @include padding(0, 30px, 0, 30px);
+            &-icon {
+                width: 31px;
+                height: 29px;
+            }
+
+            &-name {
+                flex: 1;
+                margin-left: 11px;
+                width: 516px;
+                @include font(30px, #444444, 'PingFangSC-Semibold');
+            }
+
+            &-num {
+                @include font(26px, #999999, 'PingFangSC-Regular');
+            }
+        }
+
+        &-content {
+            margin-top: 9px;
+        }
+    }
+
+    &-end {
+        @include flex(row, center, center);
+        height: 100px;
+        &-text {
+            @include font(20px, #999999, 'PingFangSC-Regular');
+        }
+    }
+
+    &-info {
+        height: 220px;
+        background-color: #fff;
+        border-radius: 8px;
+        margin-top: 20px;
+        @include padding(13px, 0, 48px, 33px);
+    }
+
+    &-amount-info {
+        margin-top: 20px;
+        margin-bottom: 32px;
+        height: 276px;
+        border-radius: 8px;
+        background-color: #fff;
+        @include padding(26px, 44px, 38px, 32px);
+
+        &-real {
+            margin-top: 23px;
+            @include flex(row, flex-end, center);
+
+            &-desc {
+                @include font(27px, #1D1E1E, 'PingFangSC-Regular');
+                margin-right: 17px;
+            }
+    
+            &-value {
+                @include font(32px, #F0250F, 'PingFangTC-Medium');
+            }
+        }
+
+    }
+}

@@ -44,6 +44,7 @@ class App extends Component<appProps, any> {
             "pages/GoodsSelection/Search/index",
             "pages/order/OrderDetail/index",
             "pages/Details/index",
+            "pages/Details/components/OrderDetail/index"
         ],
         window: {
             backgroundTextStyle: "light",

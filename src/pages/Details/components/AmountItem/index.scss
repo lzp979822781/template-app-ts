@@ -1,0 +1,25 @@
+@import "@/global/common.scss";
+
+.amount-item {
+    @include flex(row, flex-start, center);
+    height: 45px; 
+
+    &-label {
+        @include font(23px, #878888, 'PingFangSC-Regular');
+    }
+
+    &-value {
+        text-align: right;
+        @include font(23px, #1D1E1E, 'PingFangSC-Medium');
+    }
+
+    &-sign {
+        margin-right: 10px;
+        @include font(23px, #1D1E1E, 'PingFangSC-Medium');
+    }
+
+    &-right {
+        flex: 1;
+        @include flex(row, flex-end, center);
+    }
+}

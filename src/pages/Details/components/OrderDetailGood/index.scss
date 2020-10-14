@@ -1,0 +1,67 @@
+@import "@/global/common.scss";
+
+.order-detail-good {
+    height: 210px;
+    @include padding(0, 30px, 0, 30px);
+    @include flex(row, flex-start, center);
+
+    &-img {
+
+        @include flex(row, center, center);
+
+        &-icon {
+            width: 144px;
+            height: 144px;
+        }
+    }
+
+    &-content {
+        margin-left: 30px;
+        height: 100%;
+        border: 2px solid #EEEEEE;
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        &-name {
+            width: 516px;
+            @include font(28px, #444444, 'PingFangSC-Regular');
+            /* rn中的text上下有间隙不能准确对齐，需要进行调节 */
+            margin-top: 32px;
+        }
+
+        &-spec {
+            margin-top: 12px;
+            @include font(24px, #999999, 'PingFangSC-Regular');
+        }
+
+        &-footer {
+            margin-top: 32px;
+            @include flex(row, flex-start, center);
+
+            &-price {
+                @include font(28px, #ED5458, 'Helvetica-Bold');
+            }
+
+            &-num {
+                flex: 1;
+                margin-left: 12px;
+                @include font(24px, #999999, 'Helvetica');
+            }
+
+            &-commission {
+                margin-right: 45px;
+                @include flex(row, flex-end, center);
+
+                &-desc {
+                    @include font(24px, #999999, 'PingFangSC-Regular');
+                }
+
+                &-text {
+                    margin-left: 10px;
+                    @include font(28px, #444444, 'Helvetica-Bold');
+                }
+            }
+        }
+    }
+
+}
