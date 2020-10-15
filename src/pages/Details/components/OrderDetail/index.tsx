@@ -78,6 +78,24 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
         }
     }
 
+    componentDidMount(){
+        // 通过this.$router.params获取值
+        this.showLoading('加载中');
+    }
+
+    timeout
+
+    showLoading = (text, interval = 4000) => {
+        clearTimeout(this.timeout);
+        Taro.showLoading({ title: text })
+        this.timeout = setTimeout(() => {
+            this.hideLoading();
+        }, interval);
+    }
+
+    hideLoading = () => {
+        Taro.hideLoading();
+    }
 
     renderTotal = () => {
         const { data: { commission, statusDesc } } = this.state;
@@ -121,7 +139,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
                 {
                     goodsData.map((item) => {
                         return (
-                            <OrderDetailGood  data={item} key={item.id}/>
+                            <OrderDetailGood  data={item} key={item.id} />
                         );
                     })
                 }
@@ -159,7 +177,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
             <View className={`${PREFIX}-info`}>
                 {
                     data.map((item) => {
-                        return <InfoItem data={item} key={item.label}/>
+                        return <InfoItem data={item} key={item.label} />
                     })
                 }
                 
@@ -177,7 +195,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
         return (
             <View className={`${PREFIX}-amount-info`}>
                 {
-                    data.map((item) => ( <AmountItem data={item}/>))
+                    data.map((item) => ( <AmountItem data={item} />))
                 }
                 <View className={`${PREFIX}-amount-info-real`}>
                     <Text className={`${PREFIX}-amount-info-real-desc`}>实付款</Text>

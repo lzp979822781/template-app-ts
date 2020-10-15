@@ -149,6 +149,11 @@ export { hoverStyle };
     * @returns {string}
     */
 function parseParam(data) {
+
+    if(!Object.keys(data).length) {
+        return '';
+    }
+
     let url = '';
     for (const k in data) {
         const value = data[k] !== undefined ? data[k] : '';
@@ -163,7 +168,7 @@ function parseParam(data) {
  * @param {Json} data json对象
  * @returns {string}
  */
-function parseUrl(url, data) {
+function parseUrl(url, data = {}) {
     //看原始url地址中开头是否带?，然后拼接处理好的参数
     return url += (url.indexOf('?') < 0 ? '?' : '') + parseParam(data)
 }

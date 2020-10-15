@@ -2,6 +2,8 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import { FlatList } from 'react-native';
 
+import { parseUrl } from '@/utils/utils';
+
 import './index.scss';
 
 const PREFIX = 'detail-table';
@@ -142,7 +144,12 @@ class DetailList extends Component<pageOwnProps> {
     }
 
     onItemClick = (item) => () => {
+        const url = '/pages/Details/components/OrderDetail/index';
         // 跳转到详情页面
+        Taro.navigateTo({ 
+            url: parseUrl(url, { prePage: JSON.stringify(item) }),
+
+        })
     }
 
     renderItem = (item) => {
