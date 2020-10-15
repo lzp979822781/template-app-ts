@@ -45,7 +45,7 @@ export default class Goods extends Component<any, any> {
         this.setState({
             timeout: 0
         }, () => {
-            this.getTags(1);
+            this.getTags(0);
             this.getTagsExplanation();
         });
     };
