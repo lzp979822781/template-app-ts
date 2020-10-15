@@ -139,9 +139,13 @@ const hoverStyle = {
     opacity: 0.8
 };
 
+const hoverStyle9 = {
+    opacity: 0.9
+};
+
 // const hoverStyle = "opacity: 0.8";
 
-export { hoverStyle };
+export { hoverStyle, hoverStyle9 };
 
 /**
     * 传入对象返回url参数

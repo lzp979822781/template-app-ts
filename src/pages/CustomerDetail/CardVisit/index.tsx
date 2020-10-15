@@ -3,6 +3,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { View, Text, Image } from "@tarojs/components";
 import { get as getGlobalData } from '@/utils/global_data';
+import { hoverStyle9 } from "@/utils/utils";
 import "./index.scss";
 
 
@@ -62,7 +63,7 @@ export default class CardVisit extends Component<baseProps, any> {
             const visitorListFirst = item.visitorList && item.visitorList[0] ? item.visitorList[0] : {}
 
             return (
-                <View className='list-item' key={item.id} style={Shadow} onClick={() => {
+                <View className='list-item' key={item.id} hoverStyle={hoverStyle9} style={Shadow} onClick={() => {
                     this.jumpToApp("visitPlanDetailPage", {
                         customerId: item.customerId,
                         taskId: item.id
