@@ -195,7 +195,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
         return (
             <View className={`${PREFIX}-amount-info`}>
                 {
-                    data.map((item) => ( <AmountItem data={item} />))
+                    data.map((item) => ( <AmountItem data={item} key={item.label} />))
                 }
                 <View className={`${PREFIX}-amount-info-real`}>
                     <Text className={`${PREFIX}-amount-info-real-desc`}>实付款</Text>
