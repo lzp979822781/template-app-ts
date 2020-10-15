@@ -31,7 +31,7 @@ export default class CardBase extends Component<baseProps, any> {
         const isSaint = jyNativeData.userType === "CM";
         if (isSaint) {
             JDJumping.jumpToOpenapp(
-                `openApp.jyingApp://virtual?params={"category":"jump","des":"webView", "params": ${JSON.stringify({ url: `/assist/customer/detail/info?customerId=${jyNativeData.customerId}` })}}`
+                `openApp.jyingApp://virtual?params={"category":"jump","des":"webView", "params": ${JSON.stringify({ url: encodeURIComponent(`http://m-jying.jd.com/assist/customer/detail/info?customerId=${jyNativeData.customerId}`) })}}`
             )
         };
     }

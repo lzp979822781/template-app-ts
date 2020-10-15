@@ -147,7 +147,8 @@ class CustomerDetail extends Component<any, any> {
 
     //客户标签
     getCustomerTags = async (pin) => {
-        const resCustomerTags = await JDRequest.get("mjying_assist_customer_getTags", {
+                // 新接口：mjying_assist_tag_customertag  老接口：mjying_assist_customer_getTags
+        const resCustomerTags = await JDRequest.get("mjying_assist_tag_customertag", {
             pin: pin
         });
         if (resCustomerTags.success) {

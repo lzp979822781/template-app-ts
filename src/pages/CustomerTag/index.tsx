@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, Modal, JDModal, JDListItem } from "@/components/index";
+import { StatusBar, Header, JDModal, JDListItem } from "@/components/index";
 // import { Platform } from 'react-native';
 import { JDNetworkErrorView, JDJumping } from '@jdreact/jdreact-core-lib';
 import { hoverStyle } from "@/utils/utils";
@@ -25,14 +25,14 @@ export default class Goods extends Component<any, any> {
     }
 
     componentWillMount() {
-        this.getTags();
+        this.getTags(0);
         this.getTagsExplanation();
     }
 
     componentDidShow() {
         const { loaded } = this.state;
-        if(loaded){
-            this.getTags();
+        if (loaded) {
+            this.getTags(1);
         };
     }
 
@@ -45,22 +45,25 @@ export default class Goods extends Component<any, any> {
         this.setState({
             timeout: 0
         }, () => {
-            this.getTags();
+            this.getTags(1);
             this.getTagsExplanation();
         });
     };
 
-    getTags = async () => {
+    getTags = async (isUpdate) => {
         //客户标签
-        Taro.showLoading({
-            title: "加载中"
-        });
+        if(!isUpdate){
+            Taro.showLoading({
+                title: "加载中"
+            });
+        }
 
         const params = this.$router.params;
         // 新接口：mjying_assist_tag_customertag  老接口：mjying_assist_customer_getTags
         const resTags = await JDRequest.get("mjying_assist_tag_customertag", {
             pin: params.pin
         });
+
         Taro.hideLoading();
         if (resTags.success) {
             this.setState({ tagsData: resTags.data, loaded: true })
@@ -93,9 +96,7 @@ export default class Goods extends Component<any, any> {
 
     jumpToAppWeb(key) {
         const params = this.$router.params;
-        JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"webView", "params": ${JSON.stringify({ url: `/assist/customer/detail/info?pin=${params.pin}#${key}` })}}`
-        )
+        JDJumping.jumpToOpenapp(`openApp.jyingApp://virtual?params={"category":"jump","des":"webView", "params": ${JSON.stringify({ url: encodeURIComponent(`http://yao.m.jd.com/jy/#/tags/configure?pin=${encodeURIComponent(params.pin)}&target=${key}`) })}}`)
     }
 
     renderContent = () => {
@@ -161,6 +162,13 @@ export default class Goods extends Component<any, any> {
         //     return !!item.value;
         // })
         const nodeList = tagsData["2"].map((item) => {
+            // if (item.key === "avg_repurchase") {
+            //     return <JDListItem
+            //         key={item.key}
+            //         label={item.title}
+            //         renderValue={<View className='list-item-value-con'><Text className='list-item-value-txt'>{item.value || "暂无"}</Text><Text className='list-item-value-desc'>（平均值）</Text></View>}
+            //     />
+            // }
             return <JDListItem
                 key={item.key}
                 label={item.title}
@@ -180,14 +188,14 @@ export default class Goods extends Component<any, any> {
         // });
 
         const nodeList = tagsData["3"].map((item) => {
-            if (item.key === "avg_repurchase") {
-                return <JDListItem
-                    key={item.key}
-                    label={item.title}
-                    onClick={() => { this.jumpToAppWeb(item.key) }}
-                    renderValue={<View className='list-item-value-con'><Text className='list-item-value-txt'>{item.value || "暂无"}</Text><Text className='list-item-value-desc'>（平均值）</Text></View>}
-                />
-            }
+            // if (item.key === "avg_repurchase") {
+            //     return <JDListItem
+            //         key={item.key}
+            //         label={item.title}
+            //         onClick={() => { this.jumpToAppWeb(item.key) }}
+            //         renderValue={<View className='list-item-value-con'><Text className='list-item-value-txt'>{item.value || "暂无"}</Text><Text className='list-item-value-desc'>（平均值）</Text></View>}
+            //     />
+            // }
             return <JDListItem
                 key={item.key}
                 label={item.title}

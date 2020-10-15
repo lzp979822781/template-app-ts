@@ -37,7 +37,7 @@ export default class CardTag extends Component<baseProps, any> {
     };
 
     renderItems = () => {
-        const sortArray = ["life_cycle", "rfm", "avg_repurchase", "promotion_sensitive", "lbs"];
+        const sortArray = ["lifeCircleTags", "rfmTags", "repurchaseCycle", "promotionSensitivity", "lbsTags"];
 
         const { loaded, tagsData } = this.props;
         let arrayTags = tagsData["1"];
@@ -63,19 +63,13 @@ export default class CardTag extends Component<baseProps, any> {
         if (arrayTags.length == 0) {
             return null;
         };
-        
+
         if (newArrayTags.length === 0 && loaded) {
             return <View className='tag-none-con'><Text className='tag-list-none' >暂无数据</Text></View>
         } else if (newArrayTags.length === 0 && !loaded) {
             return <View className='tag-none-con'><Text className='tag-list-none' >--</Text></View>
         };
-
-        // return newArrayTags.slice(0, 3).map((item) => {
-        //     return <View className='tag-item' key={item.key} onClick={this.checkAllTxt.bind(this, item.value)}>
-        //         <Text numberOfLines={1} className='tag-item-txt'>{item.title}：{item.value || "暂无"}</Text>
-        //     </View>
-        // })
-
+        
         return newArrayTags.map((item) => {
             const value = item.value || "暂无";
             const title = item.title || "--";
