@@ -1,5 +1,8 @@
-import Taro from '@tarojs/taro';
+import Taro, { requirePlugin } from '@tarojs/taro';
 import pick from 'lodash/pick';
+
+const isWeapp = Taro.getEnv().toLowerCase() === 'weapp';
+const wxPlugin = isWeapp && requirePlugin("loginPlugin");
 
 function UUID() {
     const s: Array<any> = [];
@@ -134,3 +137,12 @@ export { upload };
 const isRn = Taro.getEnv().toLowerCase() === 'rn';
 
 export { isRn };
+
+// 微信路由相关
+function toH5({ page, wxroute }) {
+    if(!wxPlugin || !page) return;
+    const url = wxPlugin.formH5Url({ page: decodeURIComponent(page), wxroute });
+    Taro.navigateTo({ url})
+}
+
+export { toH5 };

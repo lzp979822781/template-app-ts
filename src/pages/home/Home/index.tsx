@@ -2,7 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Swiper, Image, SwiperItem, ScrollView, Button, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux';
 
-import { UUID } from '@/utils/utils';
+import { UUID, toH5 } from '@/utils/utils';
 import Request from '@/utils/Request';
 import { get } from "@/utils/multi-request";
 
@@ -272,6 +272,10 @@ class Home extends Component<IProps, PageState> {
         this.setState({ show: true })
     }
 
+    toH5 = () => {
+        toH5({ page: 'https://yao.jd.com'})
+    }
+
     onPhone = () => {
         Taro.makePhoneCall({
             phoneNumber: '17319266172' //仅为示例，并非真实的电话号码
@@ -309,6 +313,7 @@ class Home extends Component<IProps, PageState> {
                         <Button type='primary' onClick={this.sendReq}>发送请求</Button>
                         <Button type='primary' onClick={this.sendRnReq}>rn请求</Button>
                         <Button type='primary' onClick={this.openModal}>弹框测试</Button>
+                        <Button type='primary' onClick={this.toH5}>微信跳转h5</Button>
                 
                         <Swiper
                             className='swipper-container'
