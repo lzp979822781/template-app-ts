@@ -2,9 +2,10 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Swiper, Image, SwiperItem, ScrollView, Button, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux';
 
-import { UUID, toH5 } from '@/utils/utils';
+import { UUID } from '@/utils/utils';
 import Request from '@/utils/Request';
 import { get } from "@/utils/multi-request";
+import { navigateToH5 } from "@/utils/wx-route";
 
 import { Title, HomeSearch } from '../components';
 
@@ -273,7 +274,7 @@ class Home extends Component<IProps, PageState> {
     }
 
     toH5 = () => {
-        toH5({ page: 'https://yao.jd.com'})
+        navigateToH5({ page: 'https://yao.jd.com'})
     }
 
     onPhone = () => {
