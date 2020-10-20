@@ -65,11 +65,11 @@ class DetailList extends Component<pageOwnProps> {
     }
 
     renderContentClient = (item) => {
-        const { clientName } = item;
+        const { companyName } = item;
         return (
             <View className={`${ITEM_PREFIX}-content-client`}>
                 <Text className={`${ITEM_PREFIX}-content-client-label`}>客户名称</Text>
-                <Text className={`${ITEM_PREFIX}-content-client-text`}>{clientName}</Text>
+                <Text className={`${ITEM_PREFIX}-content-client-text`}>{companyName}</Text>
             </View>
         );
     }

@@ -1,11 +1,15 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import classnames from 'classnames';
+import { JDNetworkErrorView  } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
 import { Text } from 'react-native';
+import JDRequest from "@/utils/jd-request";
 import { DetailPopup, UserDrop, DetailList } from './components';
+
 // import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
-// import JDRequest from "@/utils/jd-request";
+import { hanldeAmout, replaceDot, showLoading, hideLoading } from './util';
+import REQUEST_URL from './services';
 import "./index.scss";
 
 const TABPRREFIX = 'detail-tab';
@@ -29,7 +33,7 @@ const testData = [
         occurTime: '2020-03-12 16:32:13',
         orderSkuNum: 4, //分佣商品数量
         commission: 280,
-        clientName: '北京协和医院', // 客户名称
+        companyName: '北京协和医院', // 客户名称
         partnerCentCommissionOrderSkuVoList: [
             {
                 id: '1-0',
@@ -66,7 +70,7 @@ const testData = [
         occurTime: '2020-03-12 16:32:13',
         orderSkuNum: 4, //分佣商品数量
         commission: 280,
-        clientName: '北京协和医院', // 客户名称
+        companyName: '北京协和医院', // 客户名称
         partnerCentCommissionOrderSkuVoList: [
             {
                 id: '2-0',
@@ -108,16 +112,87 @@ export default class Details extends Component<any, any> {
             userVisible: false,
             selectUser: {},
             
-            shopList: testData
+            shopList: testData,
+
+            commission: 0, // 预估总金额
+
+            isTimeout: false
         };  
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        // this.getData();
     }
+
+    pageNum = 1
+    pageSize = 10
 
     config: Config = {
         navigationBarTitleText: "",
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
+    };
+
+    getData = () => {
+        this.getTotal();
+        this.getListData({
+            pageNum: this.pageNum,
+        });
+    }
+
+    getTotal = async () => {
+        // 获取预估总佣金
+        const res = await JDRequest.post(REQUEST_URL.totalCommission, this.getCommonParam());
+        hideLoading();
+        this.totalSuccessCallback(res);
+        this.handleError(res);
+    }
+
+    totalSuccessCallback = ({ success, data }) => {
+        this.setState({ 
+            commission: success ? data: 0,
+        })
+    }
+
+
+    getListData = async (param = {}) => {
+        const res = await JDRequest.post(REQUEST_URL.orderList, {...this.getCommonParam(), 
+            ...param,
+            pageSize: 10
+        });
+        hideLoading();
+        this.listSuccessCallback(res);
+        this.handleError(res);
+    }
+
+    listSuccessCallback = ({ success, data}) => {
+        if(!success) return;
+        this.setState({
+            shopList: data || [],
+            isTimeout: false
+        })
+        this.pageNum++;
+    }
+
+    handleError = ({ success }) => {
+        if(success) return;
+        this.setState({ isTimeout: true })
+    }
+
+    getCommonParam = () => {
+        const { selectStart, selectEnd, selectUser: { customerPin }} = this.state;
+        return {
+            occurStartTime: replaceDot(selectStart),
+            occurEndTime: replaceDot(selectEnd),
+            buyerPin: customerPin
+        }
+    }
+
+    updata = () => {
+        this.setState({
+            isTimeout: true
+        }, () => {
+            this.getData();
+        });
     };
 
     onTimeSelect = () => {
@@ -156,13 +231,12 @@ export default class Details extends Component<any, any> {
         })
     }
 
-    
     /**
      * 明细顶部显示，显示当前总佣金
      * @returns
      */
     renderTop = () => {
-        const { amount = 2389.98 } = this.props;
+        const { commission = 2389.98 } = this.state;
         const prefix = 'detail-top';
         return (
             <View className={prefix}>
@@ -170,7 +244,7 @@ export default class Details extends Component<any, any> {
                     <Text className={`${prefix}-title-text`}>预估总佣金 (元)</Text>
                 </View>
                 <View className={`${prefix}-content`}>
-                    <Text className={`${prefix}-content-text`}>{amount}</Text>
+                    <Text className={`${prefix}-content-text`}>{hanldeAmout(commission)}</Text>
                 </View>
             </View>
         );
@@ -270,7 +344,18 @@ export default class Details extends Component<any, any> {
     }
 
     render() {
-        const { timeVisible } = this.state;
+        const { timeVisible, isTimeout } = this.state;
+
+        if(isTimeout) {
+            return (
+                <View className='detail'>
+                    <StatusBar />
+                    <Header title='明细' noBack />
+                    <JDNetworkErrorView onRetry={this.updata} />
+                </View>
+            );
+        }
+
         return (
             <View className='detail'>
                 <StatusBar />

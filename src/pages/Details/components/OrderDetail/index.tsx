@@ -36,7 +36,7 @@ interface OrderData {
     orderSkuNum: number,
     orderType: number, // 订单类型
     orderId: number, //订单编号
-    buyerName: string, // 客户名称
+    companyName: string, // 客户名称
     occurTime: string, //下单时间
     partnerCentCommissionOrderSkuVoList: Array<GoodItem>
 }
@@ -57,7 +57,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
                 orderSkuNum: 20,
                 orderId: 89702987463,
                 orderType: 1001,
-                buyerName: '北京协和医院',
+                companyName: '北京协和医院',
                 occurTime: '2019-01-01 17:03:29',
                 /* consultAmount: 429.8,
                 reduction: 0,
@@ -81,6 +81,15 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
     componentDidMount(){
         // 通过this.$router.params获取值
         this.showLoading('加载中');
+        this.getData();
+    }
+
+    getData = () => {
+        const param = this.getParam();
+    }
+
+    getParam = () => {
+        
     }
 
     timeout
@@ -166,9 +175,9 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
     }
 
     renderOrderInfo = () => {
-        const { data: { occurTime, orderId, buyerName } } = this.state;
+        const { data: { occurTime, orderId, companyName } } = this.state;
         const data = [
-            { label: '客户名称', value: buyerName },
+            { label: '客户名称', value: companyName },
             { label: '订单编号', value: orderId },
             { label: '下单时间', value: occurTime },
         ]
