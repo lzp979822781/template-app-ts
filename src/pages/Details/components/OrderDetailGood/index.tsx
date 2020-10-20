@@ -1,6 +1,8 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 
+import { handleAmout } from '../../util';
+
 import './index.scss';
 
 const PREFIX = `order-detail-good`;
@@ -40,11 +42,11 @@ class OrderDetailGood extends Component<pageOwnProps> {
         const { data: { price, num, commission }} = this.props;
         return (
             <View className={`${PREFIX_CONTENT}-footer`}> 
-                <Text className={`${PREFIX_CONTENT}-footer-price`}>{`¥${price}`}</Text>
+                <Text className={`${PREFIX_CONTENT}-footer-price`}>{`¥${handleAmout(price)}`}</Text>
                 <Text className={`${PREFIX_CONTENT}-footer-num`}>{`x${num}`}</Text>
                 <View className={`${PREFIX_CONTENT}-footer-commission`}>
                     <Text className={`${PREFIX_CONTENT}-footer-commission-desc`}>预估佣金 </Text>
-                    <Text className={`${PREFIX_CONTENT}-footer-commission-text`}>{`¥${commission}`}</Text>
+                    <Text className={`${PREFIX_CONTENT}-footer-commission-text`}>{`¥${handleAmout(commission)}`}</Text>
                 </View>
             </View>
         );

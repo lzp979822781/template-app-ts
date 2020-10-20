@@ -228,7 +228,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
                 }
                 <View className={`${PREFIX}-amount-info-real`}>
                     <Text className={`${PREFIX}-amount-info-real-desc`}>实付款</Text>
-                    <Text className={`${PREFIX}-amount-info-real-value`}>{`￥${59.90}`}</Text>
+                    <Text className={`${PREFIX}-amount-info-real-value`}>{`￥${handleAmout(59.90)}`}</Text>
                 </View>
             </View>
         );
@@ -257,7 +257,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
                 {this.renderTotal()}
                 {this.renderShop()}
                 { this.renderOrderInfo()}
-                { this.renderAmountInfo()}
+                {/* { this.renderAmountInfo()} */}
             </View>
         );
     }
