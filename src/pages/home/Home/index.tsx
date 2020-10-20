@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Swiper, Image, SwiperItem, ScrollView, Button, Text } from '@tarojs/components'
+import { View, Swiper, Image, SwiperItem, ScrollView, Button, Text, WebView } from '@tarojs/components'
 import { connect } from '@tarojs/redux';
 
 import { UUID } from '@/utils/utils';
@@ -274,7 +274,8 @@ class Home extends Component<IProps, PageState> {
     }
 
     toH5 = () => {
-        navigateToH5({ page: 'https://yao.jd.com'})
+        const url = "https://yao.jd.com/m/activity/purchase/detail/683/";
+        navigateToH5({ page: encodeURIComponent(url)})
     }
 
     onPhone = () => {
@@ -315,7 +316,6 @@ class Home extends Component<IProps, PageState> {
                         <Button type='primary' onClick={this.sendRnReq}>rn请求</Button>
                         <Button type='primary' onClick={this.openModal}>弹框测试</Button>
                         <Button type='primary' onClick={this.toH5}>微信跳转h5</Button>
-                
                         <Swiper
                             className='swipper-container'
                             indicatorColor='#999'
