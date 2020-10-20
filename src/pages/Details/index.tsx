@@ -8,7 +8,7 @@ import JDRequest from "@/utils/jd-request";
 import { DetailPopup, UserDrop, DetailList } from './components';
 
 // import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
-import { hanldeAmout, replaceDot, showLoading, hideLoading } from './util';
+import { handleAmout, replaceDot, showLoading, hideLoading } from './util';
 import REQUEST_URL from './services';
 import "./index.scss";
 
@@ -216,6 +216,8 @@ export default class Details extends Component<any, any> {
         this.setState({
             selectUser,
             userVisible: false
+        }, () => {
+            this.getData();
         })
     }
 
@@ -228,6 +230,8 @@ export default class Details extends Component<any, any> {
             selectStart,
             selectEnd,
             timeVisible: false
+        }, () => {
+            this.getData();
         })
     }
 
@@ -244,7 +248,7 @@ export default class Details extends Component<any, any> {
                     <Text className={`${prefix}-title-text`}>预估总佣金 (元)</Text>
                 </View>
                 <View className={`${prefix}-content`}>
-                    <Text className={`${prefix}-content-text`}>{hanldeAmout(commission)}</Text>
+                    <Text className={`${prefix}-content-text`}>{handleAmout(commission)}</Text>
                 </View>
             </View>
         );

@@ -1,10 +1,15 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
+import { JDNetworkErrorView  } from '@jdreact/jdreact-core-lib';
+import JDRequest from "@/utils/jd-request";
 import { StatusBar, Header } from "@/components";
 import InfoItem from '../InfoItem';
 
 import OrderDetailGood from '../OrderDetailGood';
 import AmountItem from '../AmountItem';
+
+import REQUEST_URL from '../../services';
+import { handleAmout, showLoading, hideLoading } from '../../util';
 
 import './index.scss';
 
@@ -42,7 +47,8 @@ interface OrderData {
 }
 
 type pageOwnState = {
-    data: OrderData
+    data: OrderData,
+    isTimeout: boolean, // 是否超时
 }
 
 class OrderDetail extends Component<pageOwnProps, pageOwnState> {
@@ -74,36 +80,50 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
                         num: 999
                     }
                 ]
-            }
+            },
+
+            isTimeout: false
         }
     }
 
     componentDidMount(){
         // 通过this.$router.params获取值
-        this.showLoading('加载中');
-        this.getData();
+        // this.getData();
     }
 
-    getData = () => {
+    getData = async () => {
+        showLoading();
         const param = this.getParam();
+        const res = await JDRequest.get(REQUEST_URL.orderDetail, param);
+        hideLoading();
+        this.handleSuccess(res);
+        this.handleError(res);
+    }
+
+    handleSuccess = ({ success, data }) => {
+        if(!success) return;
+        this.setState({ 
+            isTimeout: false,
+            data
+        })
+    }
+
+    handleError = ({ success }) => {
+        if(success) return;
+        this.setState({ isTimeout: true })
     }
 
     getParam = () => {
-        
+        const { prePage: { dealId } = { }} = this.$router.params;
+        return { id: dealId };
     }
 
-    timeout
-
-    showLoading = (text, interval = 4000) => {
-        clearTimeout(this.timeout);
-        Taro.showLoading({ title: text })
-        this.timeout = setTimeout(() => {
-            this.hideLoading();
-        }, interval);
-    }
-
-    hideLoading = () => {
-        Taro.hideLoading();
+    updata = () => {
+        this.setState({
+            isTimeout: false
+        }, () => {
+            this.getData();
+        })
     }
 
     renderTotal = () => {
@@ -115,7 +135,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
                     <Text className={`${PREFIX}-total-desc-text`}>预估总佣金(元)</Text>
                 </View>
                 <View className={`${PREFIX}-total-amount`}>
-                    <Text className={`${PREFIX}-total-amount-text`}>{commission}</Text>
+                    <Text className={`${PREFIX}-total-amount-text`}>{handleAmout(commission)}</Text>
                 </View>
 
                 <View className={`${PREFIX}-total-order`}>
@@ -215,6 +235,21 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
     }
 
     render() {
+
+        const { isTimeout } = this.state;
+
+        if(isTimeout) {
+            return (
+                <View className={`${PREFIX}-net-error`}>
+                    <StatusBar />
+                    <Header title='订单详情' />
+                    <View className={`${PREFIX}-net-error-container`}>
+                        <JDNetworkErrorView onRetry={this.updata} />
+                    </View>
+                </View>
+            );
+        }
+
         return (
             <View className={PREFIX}>
                 <StatusBar />

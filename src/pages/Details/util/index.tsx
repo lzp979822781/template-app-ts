@@ -5,7 +5,7 @@ import Taro from '@tarojs/taro';
  * @param {*} amount
  * @returns
  */
-function hanldeAmout(amount) {
+function handleAmout(amount) {
     const [start, end = '0'] = `${amount}`.split('.');
     const endStr = end.length > 2 ? end.substr(0, 2) : end.padEnd(2, '0');
     return `${start}.${endStr}`;
@@ -33,6 +33,6 @@ function hideLoading() {
 
 // eslint-disable-next-line import/prefer-default-export
 export { 
-    hanldeAmout, replaceDot,
+    handleAmout, replaceDot,
     showLoading, hideLoading
 };

@@ -4,6 +4,7 @@ import { View, Image, Input, Text } from "@tarojs/components";
 import { FlatList } from 'react-native';
 import debounce from 'lodash/debounce';
 import JDRequest from "@/utils/jd-request";
+import REQUEST_URL from '../../services';
 
 import './index.scss';
 
@@ -101,7 +102,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
             curPage: pageNumber
         };
 
-        const { success, data: { totalCount, pageSize, data }, } = await JDRequest.post(`mjying_assist_partner_corder_queryBCP`, param);
+        const { success, data: { totalCount, pageSize, data }, } = await JDRequest.post(REQUEST_URL.customerList, param);
         if(success) {
             const resData = pageNumber === 1 ? [{
                 id: 'all',
