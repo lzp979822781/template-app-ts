@@ -38,7 +38,7 @@ class DetailList extends Component<pageOwnProps> {
             <View className={`${ITEM_PREFIX}-title`}>
                 <Image className={`${ITEM_PREFIX}-title-icon`} src={jdSrc} />
                 <View className={`${ITEM_PREFIX}-title-shop`}>
-                    <Text className={`${ITEM_PREFIX}-title-shop-name`}>{shopName}</Text>
+                    <Text className={`${ITEM_PREFIX}-title-shop-name`} numberOfLines={1}>{shopName}</Text>
                     <Image className={`${ITEM_PREFIX}-title-shop-icon`} src={arrowRight} />
                 </View>
                 <Text className={`${ITEM_PREFIX}-title-status`}>{statusDesc}</Text>
@@ -113,7 +113,7 @@ class DetailList extends Component<pageOwnProps> {
                         );
                     })
                 }
-                { this.renderEllipse(goodsData)}
+                { resData.length > 3 && this.renderEllipse(goodsData)}
             </View>
         );
     }

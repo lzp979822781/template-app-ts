@@ -5,6 +5,7 @@ import { JDNetworkErrorView  } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
 import { Text } from 'react-native';
 import JDRequest from "@/utils/jd-request";
+import { get as getGlobalData } from '@/utils/global_data';
 import { DetailPopup, UserDrop, DetailList } from './components';
 
 // import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
@@ -106,7 +107,7 @@ export default class Details extends Component<any, any> {
         super(props);
         this.state = {
             timeVisible: false,
-            selectStart: '2020.10.15',
+            selectStart: '2020.09.01',
             selectEnd: '2020.10.16',
 
             userVisible: false,
@@ -121,7 +122,7 @@ export default class Details extends Component<any, any> {
     }
 
     componentDidMount() {
-        // this.getData();
+        this.getData();
     }
 
     pageNum = 1
@@ -133,9 +134,11 @@ export default class Details extends Component<any, any> {
     };
 
     getData = () => {
+        const { selectUser: { customerPin } } = this.state;
         this.getTotal();
         this.getListData({
             pageNum: this.pageNum,
+            buyerPin: customerPin,
         });
     }
 
@@ -164,7 +167,8 @@ export default class Details extends Component<any, any> {
         this.handleError(res);
     }
 
-    listSuccessCallback = ({ success, data}) => {
+    listSuccessCallback = (res) => {
+        const { success, data: { commissionOrderVoPage: { data } = { data: []} } = {}} = res;
         if(!success) return;
         this.setState({
             shopList: data || [],
@@ -352,10 +356,12 @@ export default class Details extends Component<any, any> {
 
         if(isTimeout) {
             return (
-                <View className='detail'>
+                <View className='detail-error'>
                     <StatusBar />
                     <Header title='明细' noBack />
-                    <JDNetworkErrorView onRetry={this.updata} />
+                    <View className='detail-error-container'>
+                        <JDNetworkErrorView onRetry={this.updata} />
+                    </View>
                 </View>
             );
         }

@@ -88,4 +88,13 @@ $tabHeight: 93px;
         @include padding(0, 30px, 0, 30px);
 
     }
+
+    &-error {
+        flex: 1;
+        &-container {
+            flex: 1;
+            @include flex(row, center, center);
+            margin-top: -300px;
+        }
+    }
 }

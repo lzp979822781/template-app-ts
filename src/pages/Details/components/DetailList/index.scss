@@ -49,6 +49,7 @@
                     margin-left: 11px;
                     &-name {
                         @include font(30px, #444444, 'PingFangSC-Medium');
+                        max-width: 350px;
                     }
 
                     &-icon {
