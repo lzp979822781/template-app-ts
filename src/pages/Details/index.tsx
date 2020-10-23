@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Image } from "@tarojs/components";
+import { View, Image, Block } from "@tarojs/components";
 import classnames from 'classnames';
 import { JDNetworkErrorView  } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
@@ -351,6 +351,13 @@ export default class Details extends Component<any, any> {
         )
     }
 
+    renderPlaceTabbar = () => {
+        return (
+            <View className='detail-tabbar'>
+            </View>
+        );
+    }
+
     render() {
         const { timeVisible, isTimeout } = this.state;
 
@@ -379,7 +386,7 @@ export default class Details extends Component<any, any> {
                     showValue={this.getSelectTime()}
                     onTimeSave={this.onTimeSave}
                 />
-                {/* <DetailDatePicker /> */}
+                { this.renderPlaceTabbar()}
             </View>
         );
     }

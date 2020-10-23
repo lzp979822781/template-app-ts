@@ -3,8 +3,7 @@
 $tabHeight: 93px;
 
 .detail {
-    display: flex;
-    height: 100%;
+    flex: 1;
     background-color: #F8F8F8;
 
     &-top {
@@ -86,7 +85,6 @@ $tabHeight: 93px;
         flex: 1;
         background-color: #F8F8F8;
         @include padding(0, 30px, 0, 30px);
-
     }
 
     &-error {
@@ -96,5 +94,9 @@ $tabHeight: 93px;
             @include flex(row, center, center);
             margin-top: -300px;
         }
+    }
+
+    &-tabbar {
+        height: 170px;
     }
 }

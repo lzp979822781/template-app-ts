@@ -27,7 +27,7 @@ const rnStyle = {
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0,
-    height: 344
+    height: 429
 };
 
 const rnContainerStyle = {
@@ -181,7 +181,6 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
             method(...paramArr);
         }
     }
-    
 
     render() {
         const {visible = false } = this.props;

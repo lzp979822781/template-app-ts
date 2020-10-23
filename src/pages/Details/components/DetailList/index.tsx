@@ -3,6 +3,7 @@ import { View, Image, Text } from "@tarojs/components";
 import { FlatList } from 'react-native';
 
 import { parseUrl } from '@/utils/utils';
+import { handleAmout } from '../../util';
 
 import './index.scss';
 
@@ -108,7 +109,7 @@ class DetailList extends Component<pageOwnProps> {
                         const { id, img } = goodsItem;
                         return (
                             <View className={`${ITEM_PREFIX}-content-pics-container`} key={id}>
-                                <Image className={`${ITEM_PREFIX}-content-pics-container-img`} src={img} />
+                                <Image className={`${ITEM_PREFIX}-content-pics-container-img`} src={`https://img11.360buyimg.com/img/${img}`} />
                             </View>
                         );
                     })
@@ -125,7 +126,7 @@ class DetailList extends Component<pageOwnProps> {
             <View className={`${ITEM_PREFIX}-content-footer`}>
                 <Text className={`${ITEM_PREFIX}-content-footer-amount ${ITEM_PREFIX}-content-footer-common`}>{`共${goodsData.length}种分佣商品`}</Text>
                 <Text className={`${ITEM_PREFIX}-content-footer-common`}>预估佣金：</Text>
-                <Text className={`${ITEM_PREFIX}-content-footer-money`}>{`¥${commission}`}</Text>
+                <Text className={`${ITEM_PREFIX}-content-footer-money`}>{`¥${handleAmout(commission)}`}</Text>
             </View>
         );
 

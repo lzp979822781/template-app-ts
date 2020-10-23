@@ -6,6 +6,7 @@ import Taro from '@tarojs/taro';
  * @returns
  */
 function handleAmout(amount) {
+    if(typeof amount !== "number" && !amount) return '0.00';
     const [start, end = '0'] = `${amount}`.split('.');
     const endStr = end.length > 2 ? end.substr(0, 2) : end.padEnd(2, '0');
     return `${start}.${endStr}`;
