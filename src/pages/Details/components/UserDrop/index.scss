@@ -7,6 +7,7 @@
     &-search-container {
         @include flex(row, flex-start, center);
         margin-top: 16px;
+        margin-bottom: 16px;
         height: 64px;
         background: rgba(242,242,242,1);
         border-radius: 36px;
@@ -41,7 +42,7 @@
 
     }
     &-list {
-        margin-top: 16px;
+        background-color: lightgreen;
         &-item {
             @include flex(row, flex-start, center);
             height: 92px;

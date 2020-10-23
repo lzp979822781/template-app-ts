@@ -24,7 +24,7 @@ type pageOwnState = {
     selectedUser: User,
     listData: Array<object>,
     loading: boolean,
-    pageNumber: number,
+    pageNum: number,
 }
 
 
@@ -79,38 +79,38 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
         const { customerName } = props.currentVal;
         this.state = {  
             searchValue: customerName || '',
-            listData: testData,
+            listData: [],
             selectedUser: props.currentVal,
             loading: true,
-            pageNumber: 1
+            pageNum: 1
         };
-        this.getUserData = debounce(this.getUserData, 300);
+        this.getUserData = debounce(this.getUserData, 100);
     }
 
     componentDidMount() {
-        // this.getUserData()
+        this.getUserData();
     }
 
     totalPage = 100
 
     getUserData = async () => {
         // 执行搜索
-        const { listData, pageNumber, searchValue } = this.state;
+        const { listData, pageNum, searchValue } = this.state;
         const param = {
             pageSize: 10,
-            customerName: searchValue,
-            curPage: pageNumber
+            customerName: searchValue === '全部客户' ? '' : searchValue,
+            pageNum
         };
 
         const { success, data: { totalCount, pageSize, data }, } = await JDRequest.post(REQUEST_URL.customerList, param);
         if(success) {
-            const resData = pageNumber === 1 ? [{
+            const resData = pageNum === 1 ? [{
                 id: 'all',
                 customerName: '全部客户'
             }, ...data]: listData.concat(data)
             this.setState({
                 listData: resData,
-                pageNumber: pageNumber + 1
+                pageNum: pageNum + 1
             })
         }
 
@@ -129,8 +129,8 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
     }
 
     isLoadComplete = () => {
-        const { pageNumber } = this.state;
-        return pageNumber > this.totalPage;
+        const { pageNum } = this.state;
+        return pageNum > this.totalPage;
     }
 
     handlePropsMethod = (methodName: string, paramArr = []) => {
@@ -146,12 +146,17 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
     onClear = () => {
         const { searchValue } = this.state;
         if(!searchValue) return;
-        this.setState({ searchValue: ''});
+        this.setState({ searchValue: ''}, () => {
+            this.getUserData()
+        });
         // 执行空值搜索
     }
 
     onInput = ({ target: { value }}) => {
-        this.setState({ searchValue: value })
+        this.setState({ 
+            searchValue: value,
+            pageNum: 1
+        })
     }
 
     renderSearch = () => {

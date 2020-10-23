@@ -217,6 +217,7 @@ export default class Details extends Component<any, any> {
     }
 
     onSaveUser = selectUser => {
+        this.pageNum = 1;
         this.setState({
             selectUser,
             userVisible: false
@@ -229,6 +230,7 @@ export default class Details extends Component<any, any> {
      * 选择新的时间后执行关闭弹框并且执行列表搜索
      */
     onTimeSave = newTime => {
+        this.pageNum = 1;
         const [ selectStart, selectEnd ] = newTime.split('-');
         this.setState({
             selectStart,
