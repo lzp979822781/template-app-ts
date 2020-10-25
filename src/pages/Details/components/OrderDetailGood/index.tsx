@@ -1,7 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 
-import { handleAmout } from '../../util';
+import { handleAmout, DEFAULT_BG } from '../../util';
 
 import './index.scss';
 
@@ -30,10 +30,11 @@ class OrderDetailGood extends Component<pageOwnProps> {
 
     renderGoodImg = () => {
         const { data: { img } } = this.props;
-
+        // 需要添加兜底图
+        const imgSrc = img ? `https://img11.360buyimg.com/img/${img}` : DEFAULT_BG;
         return (
             <View className={`${PREFIX}-img`}>
-                <Image className={`${PREFIX}-img-icon`} src={img} />
+                <Image className={`${PREFIX}-img-icon`} src={imgSrc} />
             </View>
         );
     }

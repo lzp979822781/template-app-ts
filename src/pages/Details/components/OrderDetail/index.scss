@@ -53,10 +53,14 @@
                 height: 29px;
             }
 
-            &-name {
+            &-container {
                 flex: 1;
+                @include flex(row, flex-start, center);
+            }
+
+            &-name {
                 margin-left: 11px;
-                width: 516px;
+                max-width: 420px;
                 @include font(30px, #444444, 'PingFangSC-Semibold');
             }
 

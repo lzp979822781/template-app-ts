@@ -88,7 +88,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
 
     componentDidMount(){
         // 通过this.$router.params获取值
-        // this.getData();
+        this.getData();
     }
 
     getData = async () => {
@@ -114,7 +114,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
     }
 
     getParam = () => {
-        const { prePage: { dealId } = { }} = this.$router.params;
+        const { prePage: { dealId = 120299792086 } = { }} = this.$router.params;
         return { id: dealId };
     }
 
@@ -155,7 +155,9 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
         return (
             <View className={`${PREFIX}-shop-head`}>
                 <Image className={`${PREFIX}-shop-head-icon`} src={imgSrc.shopHomeSrc} />
-                <Text className={`${PREFIX}-shop-head-name`}>{shopName}</Text>
+                <View className={`${PREFIX}-shop-head-container`}>
+                    <Text className={`${PREFIX}-shop-head-name`} numberOfLines={1}>{shopName}</Text>
+                </View>
                 <Text className={`${PREFIX}-shop-head-num`}>{`共${orderSkuNum}件分佣商品`}</Text>
             </View>
         );

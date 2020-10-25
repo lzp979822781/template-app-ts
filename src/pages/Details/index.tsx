@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Image, Block } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import classnames from 'classnames';
 import { JDNetworkErrorView  } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";

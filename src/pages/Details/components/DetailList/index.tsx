@@ -3,7 +3,7 @@ import { View, Image, Text } from "@tarojs/components";
 import { FlatList } from 'react-native';
 
 import { parseUrl } from '@/utils/utils';
-import { handleAmout } from '../../util';
+import { handleAmout, DEFAULT_BG } from '../../util';
 
 import './index.scss';
 
@@ -107,9 +107,10 @@ class DetailList extends Component<pageOwnProps> {
                 {
                     resData.map(goodsItem => {
                         const { id, img } = goodsItem;
+                        const imgSrc = img ? `https://img11.360buyimg.com/img/${img}`: DEFAULT_BG;
                         return (
                             <View className={`${ITEM_PREFIX}-content-pics-container`} key={id}>
-                                <Image className={`${ITEM_PREFIX}-content-pics-container-img`} src={`https://img11.360buyimg.com/img/${img}`} />
+                                <Image className={`${ITEM_PREFIX}-content-pics-container-img`} src={imgSrc} />
                             </View>
                         );
                     })

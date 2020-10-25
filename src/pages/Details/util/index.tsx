@@ -31,9 +31,12 @@ function hideLoading() {
     Taro.hideLoading();
 }
 
+const DEFAULT_BG = 'https://img13.360buyimg.com/imagetools/jfs/t1/152803/38/3518/226152/5f9511faE038ad77b/14766f54f6d4610a.png';
+
 
 // eslint-disable-next-line import/prefer-default-export
 export { 
     handleAmout, replaceDot,
-    showLoading, hideLoading
+    showLoading, hideLoading,
+    DEFAULT_BG
 };
