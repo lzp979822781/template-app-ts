@@ -49,17 +49,23 @@ export default class Filter extends Component<baseProps, any> {
             cat3Id: null
         });
 
-        debugger
-
         if (res.success) {
+            const resData = res.data.map((item) => {
+                return {
+                    title: item.firstChar,
+                    data: item.shops
+                }
+            });
+
             this.setState({
-                sections: res.data
+                sections: resData
             });
         } else {
-            // Taro.showModal({
-            //     title: res.errorMsg,
-            //     content: '',
-            // });
+            Taro.showToast({
+                title: res.errorMsg,
+                icon: 'none',
+                duration: 1500
+            });
         };
     }
 
@@ -201,7 +207,7 @@ export default class Filter extends Component<baseProps, any> {
     }
 
     render() {
-
+        const { sections }=this.state;
         return (
             <View className='filter-drawer'>
                 <StatusBar noBgColor />
@@ -215,7 +221,7 @@ export default class Filter extends Component<baseProps, any> {
                     <SectionList
                         stickySectionHeadersEnabled={false}
                         ref={this.onSetSectionListRef}
-                        sections={sampleData}
+                        sections={sections}
                         keyExtractor={(item, index) => item + index}
                         onViewableItemsChanged={this.onViewableItemsChanged}
                         renderItem={this.renderListItem}
@@ -225,7 +231,7 @@ export default class Filter extends Component<baseProps, any> {
                         <FlatList
                             extraData={this.state.actLetter}
                             contentContainerStyle={styles.letterIndexList}
-                            data={sampleData}
+                            data={sections}
                             renderItem={this.renderLetterItem}
                             keyExtractor={(i) => i.title}
                         />

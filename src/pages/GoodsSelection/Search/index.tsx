@@ -24,28 +24,28 @@ export default class GoodsSelection extends Component<any, any> {
             statusCode: "1",
             keywords: "",
             data: [
-                {
-                    id: 1,
-                    skuName: "华北制阿莫西林克拉维酸钾干混悬剂药 10粒50g一疗…",
-                    factoryName: "华北制药医药股份有限公司",
-                    validTime: "2020-05-22",
-                    medicalSpec: "2盒10000",
-                    priceStr: "399",
-                    sale30: "月销248",
-                    shopName: "北京京东佳康旗舰店",
-                    shopLogo: ""
-                },
-                {
-                    id: 2,
-                    skuName: "华北制阿莫西林克拉维酸钾干混悬剂药 10粒50g一疗…",
-                    factoryName: "华北制药医药股份有限公司",
-                    validTime: "2020-05-22",
-                    medicalSpec: "2盒10000",
-                    priceStr: "399",
-                    sale30: "月销248",
-                    shopName: "北京京东佳康旗舰店",
-                    shopLogo: ""
-                }
+                // {
+                //     id: 1,
+                //     skuName: "华北制阿莫西林克拉维酸钾干混悬剂药 10粒50g一疗…",
+                //     factoryName: "华北制药医药股份有限公司",
+                //     validTime: "2020-05-22",
+                //     medicalSpec: "2盒10000",
+                //     priceStr: "399",
+                //     sale30: "月销248",
+                //     shopName: "北京京东佳康旗舰店",
+                //     shopLogo: ""
+                // },
+                // {
+                //     id: 2,
+                //     skuName: "华北制阿莫西林克拉维酸钾干混悬剂药 10粒50g一疗…",
+                //     factoryName: "华北制药医药股份有限公司",
+                //     validTime: "2020-05-22",
+                //     medicalSpec: "2盒10000",
+                //     priceStr: "399",
+                //     sale30: "月销248",
+                //     shopName: "北京京东佳康旗舰店",
+                //     shopLogo: ""
+                // }
             ],
             systemInfo: {}
         };
@@ -54,7 +54,7 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
     componentWillMount() {
-        // this.loadList();
+        this.loadList();
         Taro.getSystemInfo({
             success: res => {
                 this.setState({
@@ -70,7 +70,6 @@ export default class GoodsSelection extends Component<any, any> {
     };
 
     loadList = async () => {
-        const params = this.$router.params;
 
         if (!this.state.refreshing) {
             Taro.showLoading({
@@ -81,14 +80,21 @@ export default class GoodsSelection extends Component<any, any> {
 
         const { currentPage, pageSize, keywords } = this.state;
         const res = await JDRequest.post(
-            "mjying_assist_buyer_relation_queryPage",
+            "mjying_assist_partner_sku_list",
             {
-                pin: params.pin,
-                pageNum: currentPage,
+                pageNum: 1,
                 pageSize: pageSize,
-                keywords
+                skuId: null,
+                skuName: "",
+                shopName: "",
+                venderName: "",
+                sortIndex: 0,
+                cat1Id: null,
+                cat2Id: null,
+                cat3Id: null
             }
         );
+
         Taro.hideLoading();
         if (res.success) {
             this.setVisitListData(res);
