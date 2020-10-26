@@ -4,6 +4,7 @@ import { View, Text, Image } from "@tarojs/components";
 import { SafeAreaView, SectionList, FlatList, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { StatusBar, Header, Footer } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
+import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 import sampleData from './sampleData';
 
@@ -16,7 +17,6 @@ export default class Filter extends Component<baseProps, any> {
     static defaultProps = {
         data: {},
         closeDrawer: () => {
-
         }
     }
 
@@ -24,9 +24,43 @@ export default class Filter extends Component<baseProps, any> {
     constructor(props) {
         super(props);
         this.state = {
+            sections: [],
             actLetter: "a",
-            selectedList: []
+            selected: ""
         }
+    }
+
+    componentWillMount() {
+        this.getData();
+    }
+
+    //获取店铺数据
+    getData = async () => {
+        const res = await JDRequest.post("mjying_assist_partner_sku_shop", {
+            pageNum: 1,
+            pageSize: 20,
+            skuId: null,
+            skuName: "",
+            shopName: "",
+            venderName: "",
+            sortIndex: 0,
+            cat1Id: null,
+            cat2Id: null,
+            cat3Id: null
+        });
+
+        debugger
+
+        if (res.success) {
+            this.setState({
+                sections: res.data
+            });
+        } else {
+            // Taro.showModal({
+            //     title: res.errorMsg,
+            //     content: '',
+            // });
+        };
     }
 
     sectionList: any;
@@ -48,21 +82,21 @@ export default class Filter extends Component<baseProps, any> {
     }
 
     selectItem = (item) => {
-        const { selectedList } = this.state;
-        if (selectedList.includes(item)) {
-            const index = selectedList.indexOf(item);
-            selectedList.splice(index, 1)
+        const { selected } = this.state;
+        if (selected.includes(item)) {
+            const index = selected.indexOf(item);
+            selected.splice(index, 1)
         } else {
-            selectedList.push(item)
+            selected.push(item)
         };
 
-        this.setState({ selectedList })
+        this.setState({ selected })
     }
 
     renderListItem = ({ item }) => {
-        const { selectedList } = this.state;
+        const { selected } = this.state;
         let itemTxt = [styles.itemTxt];
-        const boolSelected = selectedList.includes(item);
+        const boolSelected = selected.includes(item);
         if (boolSelected) {
             itemTxt = [styles.itemTxt, styles.itemTxtAct];
         };
@@ -159,7 +193,7 @@ export default class Filter extends Component<baseProps, any> {
     }
 
     reset = () => {
-        this.setState({ selectedList: [] })
+        this.setState({ selected: [] })
     }
 
     onOk = () => {
@@ -222,7 +256,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFFFFF",
         height: 50,
         paddingLeft: 20,
-        flexDirection:"row"
+        flexDirection: "row"
     },
     itemTxt: {
         fontSize: 15,

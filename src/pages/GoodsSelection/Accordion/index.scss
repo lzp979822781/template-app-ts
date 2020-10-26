@@ -1,33 +1,29 @@
 @import "@/global/common.scss";
 
-.accordion {
-
-}
+.accordion {}
 
 .accordion-header {
     @include flex(row, center, center);
     width: 162px;
-    height: 84px;
+    height: 104px;
     background-color: #FFFFFF;
 }
 
 .accordion-header-txt {
-    @include font(26px, #444444);
+    @include font(26px, #444444, 'PingFangSC-Medium');
+    font-weight: 700;
 }
 
-.accordion-header-icon{
+.accordion-header-icon {
     margin-left: 10px;
-    width: 6px;
-    height: 12px;
-}
-
-.accordion-body {
-   background-color: #F8F8F8;
+    width: 15px;
+    height: 9px;
 }
 
 .accordion-item {
     @include flex(row, flex-start, center);
     height: 84px;
+    background-color: #F8F8F8;
 }
 
 .accordion-item-icon {

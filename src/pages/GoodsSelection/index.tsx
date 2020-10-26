@@ -79,13 +79,22 @@ export default class GoodsSelection extends Component<any, any> {
 
         const { currentPage, pageSize } = this.state;
         const res = await JDRequest.post(
-            "/assist/partner/sku/list",
+            "mjying_assist_partner_sku_list",
             {
-                pageNum: currentPage,
-                pageSize: pageSize,
+                pageNum: 1,
+                pageSize: 20,
+                skuId: null,
+                skuName: "",
+                shopName: "",
+                venderName: "",
+                sortIndex: 0,
+                cat1Id: null,
+                cat2Id: null,
+                cat3Id: null
             }
         );
         Taro.hideLoading();
+        debugger
         if (res.success) {
             this.setVisitListData(res);
         } else {

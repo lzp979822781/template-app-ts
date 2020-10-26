@@ -40,9 +40,14 @@ export default class CardTag extends Component<baseProps, any> {
         const sortArray = ["lifeCircleTags", "rfmTags", "repurchaseCycle", "promotionSensitivity", "lbsTags"];
 
         const { loaded, tagsData } = this.props;
-        let arrayTags = tagsData["1"];
-        arrayTags = arrayTags.concat(tagsData["2"]);
-        arrayTags = arrayTags.concat(tagsData["3"]);
+        let arrayTags = tagsData["1"] || [];
+        if(tagsData["2"] && tagsData["2"].length > 0){
+            arrayTags = arrayTags.concat(tagsData["2"]);
+        };
+        if(tagsData["3"] && tagsData["3"].length > 0){
+            arrayTags = arrayTags.concat(tagsData["3"]);
+        };
+        
         // const newArrayTags = arrayTags.filter((item) => {
         //     return !!item.value;
         // });

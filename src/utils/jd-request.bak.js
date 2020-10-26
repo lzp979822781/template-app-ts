@@ -5,11 +5,39 @@ import {
 } from "@jdreact/jdreact-core-lib";
 
 let timer = null;
-global.loadingCount = 0;
+
+const Observer = (function () {
+  const handle = [];
+
+  return {
+    on(functionId, disable) {
+      const index = handle.indexOf(functionId);
+      if (index < 0) {
+        handle.push(functionId);
+      }else{
+        return true;
+      };
+      if (handle.length == 1 && !disable) {
+        Taro.showLoading({
+          title: "加载中"
+        });
+      };
+    },
+
+    off(functionId, disable) {
+      const index = handle.indexOf(functionId);
+      if (index > -1) {
+        handle.splice(index, 1)
+      };
+      if (handle.length == 0 && !disable) {
+        Taro.hideLoading();
+      };
+    }
+  }
+})();
 
 export default class JDRequest {
-  static timer = null;
-  static timeoutFetch = (originalFetch, timeout = 30000) => {
+  static timeoutFetch = (originalFetch, functionId, disable, timeout = 30000) => {
 
     const timeoutPromise = new Promise((resolve, reject) => {
       if (timer) {
@@ -17,7 +45,6 @@ export default class JDRequest {
       };
 
       timer = setTimeout(() => {
-        Taro.hideLoading();
         resolve({ timeout: 1, errorMsg: "请求超时" });
       }, timeout);
     });
@@ -27,28 +54,30 @@ export default class JDRequest {
     const abortablePromise = Promise.race([originalFetch, timeoutPromise])
 
     abortablePromise.then(function (params) {
-      if (params.success) {
-        global.loadingCount--
-        if (!global.loadingCount) {
-          Taro.hideLoading();
-        }
-      }
+      Observer.off(functionId, disable);
     });
 
     return abortablePromise;
   };
 
-  stat
-  static get(functionId, param = null) {
-    global.loadingCount++
+  static get(functionId, param = null, disable) {
+    const hasFunctionId = Observer.on(functionId);
+    //防止重复请求
+    if(hasFunctionId){
+      return;
+    };
     const newParam = this.formatParam(param);
-    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "get"));
+    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "get"), functionId, disable);
   }
 
-  static post(functionId, param = null) {
-    global.loadingCount++
+  static post(functionId, param = null, disable) {
+    const hasFunctionId = Observer.on(functionId);
+    //防止重复请求
+    if(hasFunctionId){
+      return;
+    };
     const newParam = this.formatParam(param);
-    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "post"));
+    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "post"), functionId, disable);
   }
 
   static formatParam(param) {
@@ -66,15 +95,5 @@ export default class JDRequest {
     }
 
     return newParam;
-  }
-
-  // static logout = () => {
-  //   JDJumping.jumpToOpenapp(
-  //     `openApp.jyingApp://virtual?params={"category":"jump","des":"logoutJumpToLoginPage"}`
-  //   )
-  //     .then(() => { })
-  //     .catch(error => {
-  //       Toast.show(error.message);
-  //     });
-  // };
+  };
 }

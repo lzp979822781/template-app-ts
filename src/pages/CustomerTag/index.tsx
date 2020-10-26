@@ -16,9 +16,9 @@ export default class Goods extends Component<any, any> {
             visible: false,
             loaded: false,
             tagsData: {
-                1: [],
-                2: [],
-                3: []
+                "1": [],
+                "2": [],
+                "3": []
             },
             tagsExplanation: []
         };
@@ -142,7 +142,9 @@ export default class Goods extends Component<any, any> {
             elevation: 2
         };
 
-        const nodeList = tagsData["1"].map((item, index) => {
+        const dataList = tagsData["1"] || [];
+
+        const nodeList = dataList.map((item, index) => {
             return <Block key={item.key}><View className='card-base-item'>
                 <Text className='card-base-item-label'>{item.title}</Text>
                 <Text className={item.value ? 'card-base-item-value' : "card-base-item-value1"}>{item.value || "暂无"}</Text>
@@ -161,7 +163,8 @@ export default class Goods extends Component<any, any> {
         // const listData = tagsData["2"].filter((item) => {
         //     return !!item.value;
         // })
-        const nodeList = tagsData["2"].map((item) => {
+        const dataList = tagsData["2"] || [];
+        const nodeList = dataList.map((item) => {
             // if (item.key === "avg_repurchase") {
             //     return <JDListItem
             //         key={item.key}
@@ -187,7 +190,8 @@ export default class Goods extends Component<any, any> {
         //     return !!item.value;
         // });
 
-        const nodeList = tagsData["3"].map((item) => {
+        const dataList = tagsData["3"] || [];
+        const nodeList = dataList.map((item) => {
             // if (item.key === "avg_repurchase") {
             //     return <JDListItem
             //         key={item.key}

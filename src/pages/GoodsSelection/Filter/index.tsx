@@ -1,7 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Triangle } from "@/components/index";
+// import { Triangle } from "@/components/index";
 import "./index.scss";
 
 type dataObject = {
@@ -13,7 +13,7 @@ type baseProps = {
     data?: dataObject;
 }
 
-const sortStatusList = ["none", "top", "bottom"]
+// const sortStatusList = ["none", "top", "bottom"]
 
 export default class Filter extends Component<baseProps, any> {
     static defaultProps = {
@@ -25,31 +25,31 @@ export default class Filter extends Component<baseProps, any> {
     constructor(props) {
         super(props);
         this.state = {
-            isDefault: false,
-            sortStatus: 0, //"none", "top", "bottom"
+            // isDefault: false,
+            // sortStatus: 0, //"none", "top", "bottom"
         }
     }
 
-    setDefault = () => {
-        this.setState({
-            isDefault: !this.state.isDefault
-        });
-    }
+    // setDefault = () => {
+    //     this.setState({
+    //         isDefault: !this.state.isDefault
+    //     });
+    // }
 
-    setSortStatus() {
-        const { sortStatus } = this.state;
-        const len = sortStatusList.length-1;
-        this.setState({
-            sortStatus: sortStatus == len ? 0: sortStatus+1
-        });
-    }
+    // setSortStatus() {
+    //     const { sortStatus } = this.state;
+    //     const len = sortStatusList.length-1;
+    //     this.setState({
+    //         sortStatus: sortStatus == len ? 0: sortStatus+1
+    //     });
+    // }
 
     render() {
-        const { isDefault, sortStatus } = this.state;
+        // const { isDefault, sortStatus } = this.state;
         const { openDrawer } = this.props;
         return (
             <View className='filter'>
-                <TouchableOpacity style={styles.filterItem} onPress={this.setDefault}>
+                {/* <TouchableOpacity style={styles.filterItem} onPress={this.setDefault}>
                     <Text className={isDefault ? 'filter-item-txt-active' : 'filter-item-txt'} >默认</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.filterItem} onPress={() => {
@@ -58,7 +58,7 @@ export default class Filter extends Component<baseProps, any> {
                 >
                     <Text className='filter-item-txt' >佣金</Text>
                     <Triangle type={sortStatusList[sortStatus]} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity style={styles.filterItem} onPress={() => {
                     openDrawer()
                 }}
