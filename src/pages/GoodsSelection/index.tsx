@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, Gradient, Drawer, CommonList } from "@/components/index";
+import { StatusBar, Header, Gradient, Drawer } from "@/components/index";
 import { Clipboard, NativeModules } from 'react-native';
 import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
@@ -9,6 +9,8 @@ import { hoverStyle } from "@/utils/utils";
 import Accordion from "./Accordion/index";
 import Filter from "./Filter/index";
 import JDSectionList from "./JDSectionList/index";
+import CommonList from "./CommonList/index";
+
 
 import "./index.scss";
 

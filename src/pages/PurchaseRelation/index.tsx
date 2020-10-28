@@ -68,6 +68,11 @@ export default class PurchaseRelation extends Component<any, any> {
         if (res.success) {
             this.setVisitListData(res);
         } else {
+            Taro.showToast({
+                title: res.errorMsg,
+                icon: 'none',
+                duration: 1500
+            });
             this.setState({
                 currentPage: currentPage > 1 ? currentPage - 1 : 1,
                 refreshing: false,

@@ -43,9 +43,10 @@ export default class Accordion extends Component<baseProps, any> {
                 data: res.data
             });
         } else {
-            Taro.showModal({
+            Taro.showToast({
                 title: res.errorMsg,
-                content: '',
+                icon: 'none',
+                duration: 1500
             });
         };
     }

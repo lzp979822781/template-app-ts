@@ -2,6 +2,7 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { ScrollView, Block, View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, JDModal, JDListItem } from "@/components/index";
 // import { Platform } from 'react-native';
+import { get as getGlobalData } from '@/utils/global_data';
 import { JDNetworkErrorView, JDJumping } from '@jdreact/jdreact-core-lib';
 import { hoverStyle } from "@/utils/utils";
 import JDRequest from "@/utils/jd-request";
@@ -52,7 +53,7 @@ export default class Goods extends Component<any, any> {
 
     getTags = async (isUpdate) => {
         //客户标签
-        if(!isUpdate){
+        if (!isUpdate) {
             Taro.showLoading({
                 title: "加载中"
             });
@@ -68,6 +69,11 @@ export default class Goods extends Component<any, any> {
         if (resTags.success) {
             this.setState({ tagsData: resTags.data, loaded: true })
         } else {
+            Taro.showToast({
+                title: resTags.errorMsg,
+                icon: 'none',
+                duration: 1500
+            });
             this.setState({ timeout: 1, loaded: true })
         };
     };
@@ -142,7 +148,7 @@ export default class Goods extends Component<any, any> {
             elevation: 2
         };
 
-        const dataList = tagsData["1"] || [];
+        const dataList = tagsData && tagsData["1"] ? tagsData["1"] : [];
 
         const nodeList = dataList.map((item, index) => {
             return <Block key={item.key}><View className='card-base-item'>
@@ -160,18 +166,16 @@ export default class Goods extends Component<any, any> {
 
     renderGroup2 = () => {
         const { tagsData } = this.state;
-        // const listData = tagsData["2"].filter((item) => {
-        //     return !!item.value;
-        // })
-        const dataList = tagsData["2"] || [];
+
+        const dataList = tagsData && tagsData["2"] ? tagsData["2"] :  [];
         const nodeList = dataList.map((item) => {
-            // if (item.key === "avg_repurchase") {
-            //     return <JDListItem
-            //         key={item.key}
-            //         label={item.title}
-            //         renderValue={<View className='list-item-value-con'><Text className='list-item-value-txt'>{item.value || "暂无"}</Text><Text className='list-item-value-desc'>（平均值）</Text></View>}
-            //     />
-            // }
+            if (item.key === "repurchaseCycle") {
+                return <JDListItem
+                    key={item.key}
+                    label={item.title}
+                    renderValue={<View className='list-item-value-con'><Text className='list-item-value-txt'>{item.value || "暂无"}</Text><Text className='list-item-value-desc'>（平均值）</Text></View>}
+                />
+            }
             return <JDListItem
                 key={item.key}
                 label={item.title}
@@ -185,12 +189,16 @@ export default class Goods extends Component<any, any> {
     }
 
     renderGroup3 = () => {
+
+        const jyNativeData = getGlobalData('jyNativeData');
+        const isSaint = jyNativeData.userType === "CM";
+
         const { tagsData } = this.state;
         // const listData = tagsData["3"].filter((item) => {
         //     return !!item.value;
         // });
 
-        const dataList = tagsData["3"] || [];
+        const dataList = tagsData && tagsData["3"] ? tagsData["3"] : [];
         const nodeList = dataList.map((item) => {
             // if (item.key === "avg_repurchase") {
             //     return <JDListItem
@@ -200,12 +208,21 @@ export default class Goods extends Component<any, any> {
             //         renderValue={<View className='list-item-value-con'><Text className='list-item-value-txt'>{item.value || "暂无"}</Text><Text className='list-item-value-desc'>（平均值）</Text></View>}
             //     />
             // }
-            return <JDListItem
-                key={item.key}
-                label={item.title}
-                onClick={() => { this.jumpToAppWeb(item.key) }}
-                value={item.value || "暂无"}
-            />
+            if (isSaint) {
+                return <JDListItem
+                    key={item.key}
+                    label={item.title}
+                    onClick={() => { this.jumpToAppWeb(item.key) }}
+                    value={item.value || "暂无"}
+                />
+            } else {
+                return <JDListItem
+                    key={item.key}
+                    label={item.title}
+                    value={item.value || "暂无"}
+                />
+            }
+
         })
         return <View className='card-operation'>
             {nodeList}

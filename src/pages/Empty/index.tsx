@@ -31,9 +31,9 @@ class Empty extends Component<any, any> {
 
     componentWillMount() {
         const jyNativeData = getGlobalData('jyNativeData');
-        // if (jyNativeData.pageName) {
-        //     this.redirectTo(routers[jyNativeData.pageName]);
-        // };
+        if (jyNativeData.pageName) {
+            this.redirectTo(routers[jyNativeData.pageName]);
+        };
     }
 
     
@@ -55,7 +55,7 @@ class Empty extends Component<any, any> {
             <View className='index'>
                 <StatusBar />
                 <Header title='中间页' backApp />
-                <Button
+                {/* <Button
                     onClick={() => {
                         this.routerTo("/pages/CustomerDetail/index");
                     }}
@@ -82,7 +82,7 @@ class Empty extends Component<any, any> {
                     }}
                 >
                     明细
-                </Button>
+                </Button> */}
             </View>
         );
     }

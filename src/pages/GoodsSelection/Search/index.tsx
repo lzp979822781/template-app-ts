@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, Gradient, Drawer, CommonList } from "@/components/index";
+import { StatusBar, Header, Gradient, Drawer } from "@/components/index";
 import { StyleSheet, TouchableOpacity, Clipboard, NativeModules } from 'react-native';
 import { JDNetworkErrorView, JDSearchInput } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
@@ -8,6 +8,7 @@ import { Toast } from "@/utils/model";
 import { hoverStyle } from "@/utils/utils";
 import Filter from "../Filter/index";
 import JDSectionList from "../JDSectionList/index";
+import CommonList from "../CommonList/index";
 import "./index.scss";
 
 export default class GoodsSelection extends Component<any, any> {
