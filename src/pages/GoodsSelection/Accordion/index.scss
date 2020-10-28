@@ -42,3 +42,8 @@
     @include font(24px, #333840);
     margin-left: 22px;
 }
+
+.accordion-item-txt-active {
+    @include font(24px, #F23030);
+    margin-left: 22px;
+}

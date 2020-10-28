@@ -1,12 +1,12 @@
 import Taro, { Component, Config } from "@tarojs/taro";
-import { View, Block, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, DataList, Gradient, Drawer } from "@/components/index";
-import { StyleSheet, TouchableOpacity, Clipboard } from 'react-native';
+import { View, Text, Image } from "@tarojs/components";
+import { StatusBar, Header, Gradient, Drawer, CommonList } from "@/components/index";
+import { StyleSheet, TouchableOpacity, Clipboard, NativeModules } from 'react-native';
 import { JDNetworkErrorView, JDSearchInput } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
+import { Toast } from "@/utils/model";
 import { hoverStyle } from "@/utils/utils";
 import Filter from "../Filter/index";
-import ListEmptyComponent from "../ListEmptyComponent/index";
 import JDSectionList from "../JDSectionList/index";
 import "./index.scss";
 
@@ -21,7 +21,12 @@ export default class GoodsSelection extends Component<any, any> {
             refreshing: false,
             lastPage: false,
             loaded: false,
-            statusCode: "1",
+            shopName: "",
+            category: {
+                cat1Id: null,
+                cat2Id: null,
+                cat3Id: null
+            },
             keywords: "",
             data: [
                 // {
@@ -34,19 +39,10 @@ export default class GoodsSelection extends Component<any, any> {
                 //     sale30: "月销248",
                 //     shopName: "北京京东佳康旗舰店",
                 //     shopLogo: ""
-                // },
-                // {
-                //     id: 2,
-                //     skuName: "华北制阿莫西林克拉维酸钾干混悬剂药 10粒50g一疗…",
-                //     factoryName: "华北制药医药股份有限公司",
-                //     validTime: "2020-05-22",
-                //     medicalSpec: "2盒10000",
-                //     priceStr: "399",
-                //     sale30: "月销248",
-                //     shopName: "北京京东佳康旗舰店",
-                //     shopLogo: ""
                 // }
             ],
+            sections: [],
+            statusCode: "1",
             systemInfo: {}
         };
         this.onRefresh = this.onRefresh.bind(this);
@@ -54,7 +50,7 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
     componentWillMount() {
-        this.loadList();
+        this.getShopData();
         Taro.getSystemInfo({
             success: res => {
                 this.setState({
@@ -62,6 +58,11 @@ export default class GoodsSelection extends Component<any, any> {
                 })
             }
         });
+        NativeModules.JYNativeModule.hideTabbar(true);
+    }
+
+    componentWillUnmount() {
+        NativeModules.JYNativeModule.hideTabbar(false);
     }
 
     config: Config = {
@@ -78,20 +79,18 @@ export default class GoodsSelection extends Component<any, any> {
         };
 
 
-        const { currentPage, pageSize, keywords } = this.state;
+        const { currentPage, pageSize, category, shopName, keywords } = this.state;
         const res = await JDRequest.post(
             "mjying_assist_partner_sku_list",
             {
                 pageNum: 1,
                 pageSize: pageSize,
                 skuId: null,
-                skuName: "",
-                shopName: "",
-                venderName: "",
+                skuName: keywords,
+                shopName: shopName,
+                venderName: null,
                 sortIndex: 0,
-                cat1Id: null,
-                cat2Id: null,
-                cat3Id: null
+                ...category
             }
         );
 
@@ -106,6 +105,40 @@ export default class GoodsSelection extends Component<any, any> {
             });
         };
     };
+
+    //获取店铺数据
+    getShopData = async () => {
+        const { currentPage, pageSize, category, shopName, keywords } = this.state;
+        const res = await JDRequest.post("mjying_assist_partner_sku_shop", {
+            pageNum: currentPage,
+            pageSize: pageSize,
+            skuId: null,
+            skuName: null,
+            shopName: null,
+            venderName: null,
+            sortIndex: 0,
+            ...category
+        });
+
+        if (res.success) {
+            const resData = res.data.map((item) => {
+                return {
+                    title: item.firstChar,
+                    data: item.shops
+                }
+            });
+
+            this.setState({
+                sections: resData
+            });
+        } else {
+            Taro.showToast({
+                title: res.errorMsg,
+                icon: 'none',
+                duration: 1500
+            });
+        };
+    }
 
     setVisitListData = (res) => {
         let listData = this.state.data;
@@ -129,7 +162,7 @@ export default class GoodsSelection extends Component<any, any> {
                 lastPage
             },
             () => {
-                if (data.length < this.state.pageSize) {
+                if (lastPage) {
                     this.canAction = false;
                 } else {
                     setTimeout(() => {
@@ -175,11 +208,7 @@ export default class GoodsSelection extends Component<any, any> {
 
     async copy(key, data) {
 
-        Taro.showToast({
-            title: "复制成功",
-            icon: 'none',
-            duration: 1500
-        });
+        Toast.show("复制成功");
 
         if (key === "name") {
             Clipboard.setString(data.skuName);
@@ -242,11 +271,14 @@ export default class GoodsSelection extends Component<any, any> {
                             <View className='item-row'>
                                 <Text className='factory-valid-time'>{`有效期至 ${item.validTime || "--"}`}</Text>
                                 <View className='item-row-vertical-line'></View>
-                                <Text
-                                    className='factory-medical-spec'
-                                >
-                                    {item.medicalSpec || "--"}
-                                </Text>
+                                <View className='factory-medical-spec-con'>
+                                    <Text
+                                        className='factory-medical-spec'
+                                        numberOfLines={1}
+                                    >
+                                        {item.medicalSpec || "--"}
+                                    </Text>
+                                </View>
                             </View>
                             <View className='item-row'>
                                 <Text className='factory-price-unit'>¥</Text>
@@ -317,6 +349,114 @@ export default class GoodsSelection extends Component<any, any> {
         });
     }
 
+    renderItem = ({ item, index }) => {
+        const className =
+            index === 0 ? "list-item-box top-gap" : "list-item-box";
+        return (
+            <View className={className} key={item.id}>
+                <View className='list-item'>
+                    <View className='list-image-box'>
+                        <Image
+                            className='item-image'
+                            mode='aspectFit' // 部分支持 scaleToFill, aspectFit, aspectFill, widthFix
+                            src={item.mainImg ? `https://img12.360buyimg.com/img/${item.mainImg}` : "https://img14.360buyimg.com/imagetools/jfs/t1/143550/5/8037/22510/5f58ac4fE3ea6f5d3/17d424f4c4437584.png"}
+                        />
+                    </View>
+                    <View className='content-box'>
+                        <Text numberOfLines={2} className='item-title'>
+                            {item.skuName}
+                        </Text>
+                        <View className='item-row'>
+                            <View className='factory-icon'>
+                                <Text className='factory-icon-txt'>厂</Text>
+                            </View>
+                            <Text
+                                numberOfLines={1}
+                                className='factory-name'
+                            >
+                                {item.factoryName || "--"}
+                            </Text>
+                        </View>
+                        <View className='item-row'>
+                            <Text className='factory-valid-time'>{`有效期至 ${item.validTime || "--"}`}</Text>
+                            <View className='item-row-vertical-line'></View>
+                            <View className='factory-medical-spec-con'>
+                                <Text
+                                    className='factory-medical-spec'
+                                    numberOfLines={1}
+                                >
+                                    {item.medicalSpec || "--"}
+                                </Text>
+                            </View>
+                        </View>
+                        <View className='item-row'>
+                            <Text className='factory-price-unit'>¥</Text>
+                            <Text className='factory-price'>{item.priceStr || "--"}</Text>
+                            <Text
+                                className='factory-sale30'
+                            >
+                                {`月销 ${typeof item.sale30 === "number" ? item.sale30 : "--"}`}
+                            </Text>
+                        </View>
+                        <Text className='factory-shop-name'>
+                            {item.shopName || "--"}
+                        </Text>
+                        <View className='item-division'></View>
+                        <View className='item-dec'>
+                            <View
+                                style={{ flex: 1, flexDirection: "row", alignItems: "flex-end" }}
+                            >
+                                <Text style={{ fontSize: 11, color: "#333840" }}>佣金</Text>
+                                <Text style={{ fontSize: 9, color: "#F2270C", marginLeft: 5 }}>¥</Text>
+                                <Text
+                                    style={{
+                                        fontSize: 15,
+                                        color: "#F2270C",
+                                        marginLeft: 2,
+                                        marginBottom: -1,
+                                    }}
+                                >
+                                    {this.getBonusStr(item)}
+                                </Text>
+                            </View>
+                            <View
+                                style={{
+                                    flex: 1,
+                                    flexDirection: "row",
+                                    justifyContent: "flex-end",
+                                }}
+                            >
+                                <View className='item-dec-btn-1' hoverStyle={hoverStyle} onClick={() => {
+                                    this.copy("href", item);
+                                }}
+                                >
+                                    <Text className='item-dec-btn-txt-1'>复制PC链接</Text>
+                                </View>
+                                <View className='item-dec-btn-2' hoverStyle={hoverStyle} onClick={() => {
+                                    this.copy("name", item);
+                                }}
+                                >
+                                    <Gradient
+                                        style={{
+                                            height: 22,
+                                            borderRadius: 11,
+                                            alignItems: "center",
+                                            justifyContent: "center"
+                                        }}
+                                        angle={0}
+                                        colors={["#F2140C", "#F2270C", "#F24D0C"]}
+                                    >
+                                        <Text className='item-dec-btn-txt-2'>复制标题</Text>
+                                    </Gradient>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
     onChange = activeSections => {
         this.setState({ activeSections });
     };
@@ -339,8 +479,24 @@ export default class GoodsSelection extends Component<any, any> {
         });
     };
 
+    setShop = (shopName) => {
+        this.setState(
+            {
+                shopName,
+                show: false,
+                refreshing: true,
+                currentPage: 1,
+                timeout: 0
+            },
+            () => {
+                this.loadList();
+                this.getShopData();
+            }
+        );
+    }
+
     render() {
-        const { lastPage, data, loaded, pageSize, timeout, systemInfo, show, statusCode, refreshing } = this.state;
+        const { lastPage, data, loaded, pageSize, timeout, systemInfo, show, statusCode, refreshing, sections } = this.state;
         if (timeout === 1) {
             return <View className='container'>
                 <StatusBar></StatusBar>
@@ -350,8 +506,6 @@ export default class GoodsSelection extends Component<any, any> {
                 <JDNetworkErrorView onRetry={this.onRefresh} />
             </View>
         };
-
-        const noneDataHeight = systemInfo.windowHeight ? systemInfo.windowHeight - systemInfo.statusBarHeight - 184 : "auto";
 
         let BtnEle = null;
         const shouBtn = this.state.shouBtn;
@@ -366,6 +520,7 @@ export default class GoodsSelection extends Component<any, any> {
                             },
                             () => {
                                 this.loadList();
+                                this.getShopData();
                             }
                         );
                     }}
@@ -392,7 +547,7 @@ export default class GoodsSelection extends Component<any, any> {
                     show={show}
                     drawerBackgroundColor="rgba(0,0,0,0.5)"
                     onOpenChange={this.onOpenChange}
-                    renderSidebar={<JDSectionList closeDrawer={this.closeDrawer} />}
+                    renderSidebar={<JDSectionList data={sections} onOk={this.setShop} closeDrawer={this.closeDrawer} />}
                 >
                     <StatusBar />
                     <Header title='商品搜索' />
@@ -411,7 +566,7 @@ export default class GoodsSelection extends Component<any, any> {
                             }}
                             style={[styles.searchInput, { marginRight: shouBtn ? 0 : 15 }]}
                             inputStyle={{ backgroundColor: "#fff" }}
-                            placeholder='请输入商品名称/商家名称'
+                            placeholder='请输入商品名称'
                             onChangeText={(value) => {
                                 this.setState({
                                     keyword: value,
@@ -420,11 +575,12 @@ export default class GoodsSelection extends Component<any, any> {
                             onSubmitEditing={(ele) => {
                                 this.setState(
                                     {
-                                        data: [],
+                                        currentPage: 1,
                                         keywords: ele.nativeEvent.text,
                                     },
                                     () => {
                                         this.loadList();
+                                        this.getShopData();
                                     }
                                 );
                             }}
@@ -434,21 +590,16 @@ export default class GoodsSelection extends Component<any, any> {
                     <View className='list-box'>
                         <View className='list-box-content'>
                             <Filter openDrawer={this.openDrawer} />
-                            <DataList
-                                minusHeight={0}
-                                refreshing={this.state.refreshing}
-                                onRefresh={this.onRefresh}
+                            <CommonList
+                                loaded={loaded}
+                                data={data}
+                                refreshing={refreshing}
+                                noMoreShow={lastPage && data.length > 0}
+                                renderItem={this.renderItem}
                                 onEndReached={this.onEndReached}
-                            >
-                                {
-                                    data.length === 0 && loaded ?
-                                        <View style={{ height: noneDataHeight }} className='item-image-none'>
-                                            <ListEmptyComponent statusCode={statusCode} loaded={loaded} refreshing={refreshing} onRefresh={this.onRefresh} />
-                                        </View> :
-                                        <Block>{this.renderItems()}</Block>
-                                }
-                                {lastPage && data.length >= pageSize ? <Text className='purchaseRelation-list-none' >没有更多数据了</Text> : null}
-                            </DataList>
+                                statusCode={statusCode}
+                                onRefresh={this.onRefresh}
+                            />
                         </View>
                     </View>
                 </Drawer>

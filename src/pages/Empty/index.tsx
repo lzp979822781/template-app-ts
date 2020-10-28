@@ -11,6 +11,8 @@ type PageState = {};
 
 const routers = {
     customDetail: "pages/CustomerDetail/index",
+    goodsSelection: "/pages/GoodsSelection/index",
+    details: "/pages/Details/index"
 }
 
 class Empty extends Component<any, any> {
@@ -28,7 +30,7 @@ class Empty extends Component<any, any> {
     }
 
     componentWillMount() {
-        // const jyNativeData = getGlobalData('jyNativeData');
+        const jyNativeData = getGlobalData('jyNativeData');
         // if (jyNativeData.pageName) {
         //     this.redirectTo(routers[jyNativeData.pageName]);
         // };

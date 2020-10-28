@@ -8,14 +8,21 @@ import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 import sampleData from './sampleData';
 
+interface ReadonlyStringArray {
+    readonly [index: number]: string;
+}
+
 type baseProps = {
+    data: ReadonlyStringArray;
+    onOk: any;
     closeDrawer: any;
-    data?: any;
 }
 
 export default class Filter extends Component<baseProps, any> {
     static defaultProps = {
-        data: {},
+        data: [],
+        onOk: () => {
+        },
         closeDrawer: () => {
         }
     }
@@ -24,49 +31,9 @@ export default class Filter extends Component<baseProps, any> {
     constructor(props) {
         super(props);
         this.state = {
-            sections: [],
             actLetter: "a",
             selected: ""
         }
-    }
-
-    componentWillMount() {
-        this.getData();
-    }
-
-    //获取店铺数据
-    getData = async () => {
-        const res = await JDRequest.post("mjying_assist_partner_sku_shop", {
-            pageNum: 1,
-            pageSize: 20,
-            skuId: null,
-            skuName: "",
-            shopName: "",
-            venderName: "",
-            sortIndex: 0,
-            cat1Id: null,
-            cat2Id: null,
-            cat3Id: null
-        });
-
-        if (res.success) {
-            const resData = res.data.map((item) => {
-                return {
-                    title: item.firstChar,
-                    data: item.shops
-                }
-            });
-
-            this.setState({
-                sections: resData
-            });
-        } else {
-            Taro.showToast({
-                title: res.errorMsg,
-                icon: 'none',
-                duration: 1500
-            });
-        };
     }
 
     sectionList: any;
@@ -88,15 +55,15 @@ export default class Filter extends Component<baseProps, any> {
     }
 
     selectItem = (item) => {
-        const { selected } = this.state;
-        if (selected.includes(item)) {
-            const index = selected.indexOf(item);
-            selected.splice(index, 1)
-        } else {
-            selected.push(item)
-        };
+        // const { selected } = this.state;
+        // if (selected.includes(item)) {
+        //     const index = selected.indexOf(item);
+        //     selected.splice(index, 1)
+        // } else {
+        //     selected.push(item)
+        // };
 
-        this.setState({ selected })
+        this.setState({ selected: item })
     }
 
     renderListItem = ({ item }) => {
@@ -199,15 +166,19 @@ export default class Filter extends Component<baseProps, any> {
     }
 
     reset = () => {
-        this.setState({ selected: [] })
+        const { onOk } = this.props;
+        onOk("");
+        this.setState({ selected: "" })
     }
 
     onOk = () => {
-
+        const { selected } = this.state;
+        const { onOk } = this.props;
+        onOk(selected);
     }
 
     render() {
-        const { sections }=this.state;
+        const { data } = this.props;
         return (
             <View className='filter-drawer'>
                 <StatusBar noBgColor />
@@ -221,7 +192,7 @@ export default class Filter extends Component<baseProps, any> {
                     <SectionList
                         stickySectionHeadersEnabled={false}
                         ref={this.onSetSectionListRef}
-                        sections={sections}
+                        sections={data}
                         keyExtractor={(item, index) => item + index}
                         onViewableItemsChanged={this.onViewableItemsChanged}
                         renderItem={this.renderListItem}
@@ -231,7 +202,7 @@ export default class Filter extends Component<baseProps, any> {
                         <FlatList
                             extraData={this.state.actLetter}
                             contentContainerStyle={styles.letterIndexList}
-                            data={sections}
+                            data={data}
                             renderItem={this.renderLetterItem}
                             keyExtractor={(i) => i.title}
                         />

@@ -173,7 +173,6 @@ class DetailList extends Component<pageOwnProps> {
                     renderItem={({ item }) => this.renderItem(item)}
                     keyExtractor={item => item.id}
                     onEndReachedThreshold={0.5}
-
                 />
             </View>
         );

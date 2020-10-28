@@ -1,34 +1,38 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import { TouchableOpacity } from 'react-native';
-import { JDJumping } from '@jdreact/jdreact-core-lib';
-import Gradient from "@/components/Gradient";
+import { JDJumping } from "@jdreact/jdreact-core-lib";
+import { FlatList, TouchableOpacity, RefreshControl } from 'react-native';
+import { Gradient } from "@/components/index";
+import { Loading, Toast } from "@/utils/model";
 import JDRequest from "@/utils/jd-request";
-// import "./index.scss";
+import "./index.scss";
 
-type dataObject = {
-    [key: string]: any;
-};
-
-type baseProps = {
-    loaded: boolean;
-    refreshing: boolean;
-    onRefresh: any;
-    statusCode: string;
-    data?: dataObject;
+interface ReadonlyStringArray {
+    readonly [index: number]: string;
 }
 
+type baseProps = {
+    data: ReadonlyStringArray;
+}
 
-export default class Filter extends Component<baseProps, any> {
+export default class CommonList extends Component<baseProps, any> {
     static defaultProps = {
         loaded: false,
-        statusCode: "1",
+        data: [],
         refreshing: false,
-        onRefresh: function () {
-            console.log("ok")
+        noMoreShow: true,
+        statusCode: "1",
+        renderItem: ({ item }) => {
+            return (
+                <View>
+                    <Text>1</Text>
+                </View>
+            );
         },
-        data: {},
-    }
+        onEndReached: () => { },
+        onRefresh: () => { },
+    };
 
     constructor(props) {
         super(props);
@@ -36,7 +40,18 @@ export default class Filter extends Component<baseProps, any> {
         }
     }
 
-    isPress: boolean;
+    ListFooterComponent = () => {
+        if (this.props.noMoreShow) {
+            return (
+                <View
+                    style={{ height: 40, justifyContent: "center", alignItems: "center" }}
+                >
+                    <Text style={{ color: "#C8C8C8", fontSize: 12 }}>～没有更多商品啦～</Text>
+                </View>
+            );
+        }
+        return <View style={{ height: 15 }}></View>;
+    };
 
     submitOrder = async () => {
         Taro.showLoading({
@@ -49,7 +64,7 @@ export default class Filter extends Component<baseProps, any> {
 
         Taro.hideLoading();
         if (res.success) {
-            const data = encodeURIComponent(response.data);
+            const data = encodeURIComponent(res.data);
 
             JDJumping.jumpToOpenapp(
                 `openApp.jyingApp://virtual?params={"category":"jump","des":"paymentPage","payUrl": "${data}"}`
@@ -86,7 +101,7 @@ export default class Filter extends Component<baseProps, any> {
         };
     };
 
-    render() {
+    ListEmptyComponent = () => {
         if (!this.props.loaded) {
             return null;
         };
@@ -185,4 +200,30 @@ export default class Filter extends Component<baseProps, any> {
 
         return null;
     };
-}
+
+    render() {
+        return (
+            <FlatList
+                data={this.props.data}
+                renderItem={this.props.renderItem}
+                ListFooterComponent={this.ListFooterComponent}
+                ListEmptyComponent={this.ListEmptyComponent}
+                refreshing={this.props.refreshing}
+                onEndReached={this.props.onEndReached}
+                onEndReachedThreshold={0.01}
+                refreshControl={
+                    <RefreshControl
+                        tintColor="#F23030"
+                        title="刷新..."
+                        titleColor="#666666"
+                        colors={["#ff0000", "#00ff00", "#0000ff"]}
+                        progressBackgroundColor="#F23030"
+                        refreshing={this.props.refreshing}
+                        onRefresh={this.props.onRefresh}
+                    />
+                }
+            />
+        );
+    };
+
+};

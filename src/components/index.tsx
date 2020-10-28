@@ -8,8 +8,9 @@ import Footer from './Footer';
 
 import StatusBar from './StatusBar';
 import DataList from './DataList';
+import CommonList from './CommonList';
 import JDListItem from './ListItem';
 import Drawer from './Drawer';
 import Triangle from './Triangle';
 
-export { Modal, JDModal, PopUp, Gradient, Header, Footer, StatusBar, DataList, JDListItem, Drawer, Triangle };
+export { Modal, JDModal, PopUp, Gradient, Header, Footer, StatusBar, DataList, CommonList, JDListItem, Drawer, Triangle };

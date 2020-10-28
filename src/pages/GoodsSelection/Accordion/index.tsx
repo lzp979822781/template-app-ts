@@ -10,16 +10,21 @@ type dataObject = {
 
 type baseProps = {
     data?: dataObject;
+    onChange?: any;
 }
 
 export default class Accordion extends Component<baseProps, any> {
     static defaultProps = {
-        data: {}
+        data: {},
+        onChange: () => {
+
+        }
     }
     constructor(props) {
         super(props);
         this.state = {
             data: [],
+            show: true,
             cat1Id: 0,
             cat2Id: 0,
             cat3Id: 0
@@ -46,20 +51,28 @@ export default class Accordion extends Component<baseProps, any> {
     }
 
     setCatId = (item) => {
+        const { cat2Id, show } = this.state;
         if (item.level == 2) {
             this.setState({
-                cat2Id: item.id
-            })
+                cat2Id: item.id,
+                show:  item.id == cat2Id ? !show : true
+            });
         } else {
             this.setState({
                 cat3Id: item.id
-            })
+            }, () => {
+                this.props.onChange({
+                    cat1Id: this.state.data[0].id,
+                    cat2Id: this.state.cat2Id,
+                    cat3Id: this.state.cat3Id
+                });
+            });
         }
 
     }
 
     renderHeader = (data) => {
-        const { cat2Id } = this.state;
+        const { cat2Id, show } = this.state;
         return data.map((item) => {
             return <View key={item.id} hoverStyle={hoverStyle} onClick={() => {
                 this.setCatId(item)
@@ -72,7 +85,7 @@ export default class Accordion extends Component<baseProps, any> {
                         src='https://img10.360buyimg.com/imagetools/jfs/t1/152076/25/3339/514/5f92a721E264a2e62/3ef761bccb32ec36.png'
                     /> : null}
                 </View>
-                {cat2Id == item.id ? <View className='accordion-body'>
+                {cat2Id == item.id && show ? <View className='accordion-body'>
                     {this.renderItems(item.child)}
                 </View> : null}
             </View>
@@ -81,15 +94,17 @@ export default class Accordion extends Component<baseProps, any> {
 
     renderItems = (data) => {
         const { cat3Id } = this.state;
+
         return data.map((item) => {
-            return <View key={item.id} hoverStyle={hoverStyle}  className='accordion-item' onClick={() => {
+            const hasSelected = item.level == 3 && cat3Id == item.id;
+            return <View key={item.id} hoverStyle={hoverStyle} className='accordion-item' onClick={() => {
                 this.setCatId(item)
             }}
             >
                 <View
-                    className={item.level == 3 && cat3Id == item.id ? 'accordion-item-icon-active': 'accordion-item-icon'}
+                    className={hasSelected ? 'accordion-item-icon-active' : 'accordion-item-icon'}
                 />
-                <Text className='accordion-item-txt'>{item.name}</Text>
+                <Text className={hasSelected ? "accordion-item-txt-active" : 'accordion-item-txt'}>{item.name}</Text>
             </View>
         })
     }
