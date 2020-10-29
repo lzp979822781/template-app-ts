@@ -1,1 +1,19 @@
 @import "@/global/common.scss";
+
+.item-image-none {
+    padding-top: 100px;
+    display: flex;
+    @include flex(column, center, center);
+    height: 100%;
+}
+
+.item-image-none-icon {
+    width: 240px;
+    height: 171px;
+}
+
+.item-image-none-txt {
+    @include font(29px, #999999);
+    text-align: center;
+    margin-top: 30px;
+}

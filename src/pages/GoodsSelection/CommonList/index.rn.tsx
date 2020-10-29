@@ -216,8 +216,8 @@ export default class CommonList extends Component<baseProps, any> {
                         tintColor="#F23030"
                         title="刷新..."
                         titleColor="#666666"
-                        colors={["#ff0000", "#00ff00", "#0000ff"]}
-                        progressBackgroundColor="#F23030"
+                        // colors={["#ff0000", "#00ff00", "#0000ff"]}
+                        // progressBackgroundColor="#F23030"
                         refreshing={this.props.refreshing}
                         onRefresh={this.props.onRefresh}
                     />
