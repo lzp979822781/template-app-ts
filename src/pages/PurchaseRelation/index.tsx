@@ -2,7 +2,7 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, CommonList } from "@/components/index";
 import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
-import JDRequest from "@/utils/jd-request";
+import JDRequest from "@/utils/jd-request.bak";
 import "./index.scss";
 
 export default class PurchaseRelation extends Component<any, any> {
@@ -40,11 +40,11 @@ export default class PurchaseRelation extends Component<any, any> {
     loadList = async () => {
         const params = this.$router.params;
 
-        if (!this.state.refreshing) {
-            Taro.showLoading({
-                title: "加载中"
-            });
-        };
+        // if (!this.state.refreshing) {
+        //     Taro.showLoading({
+        //         title: "加载中"
+        //     });
+        // };
 
 
         const { currentPage, pageSize } = this.state;
@@ -56,7 +56,7 @@ export default class PurchaseRelation extends Component<any, any> {
                 pageSize: pageSize
             }
         );
-        Taro.hideLoading();
+        // Taro.hideLoading();
         if (res.success) {
             this.setVisitListData(res);
         } else {
@@ -122,9 +122,9 @@ export default class PurchaseRelation extends Component<any, any> {
     canAction = false;
     onEndReached() {
         if (this.canAction) {
-            Taro.showLoading({
-                title: "加载中"
-            });
+            // Taro.showLoading({
+            //     title: "加载中"
+            // });
             this.canAction = false;
             const currentPage = this.state.currentPage + 1;
 

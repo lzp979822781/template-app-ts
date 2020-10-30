@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { JDJumping, JDDevice, JDConfirmDialog, JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
 import CardTag from "./CardTag/index";
@@ -21,6 +21,7 @@ import CardVisit from "./CardVisit/index";
 import PopUpCon from "./PopUpCon/index";
 import PopUpDist from "./PopUpDist/index";
 import DistBtn from "./DistBtn/index";
+// import BaseBtn from "./BaseBtn/index";
 
 import "./index.scss";
 
@@ -43,6 +44,7 @@ class CustomerDetail extends Component<any, any> {
             loaded: false,
             lastPage: false,
             canBind: false,  //是否能绑定客户
+            // showBottomBtn: false,
             detailData: {},
             customerTags: {
                 "1": [],
@@ -117,6 +119,11 @@ class CustomerDetail extends Component<any, any> {
         if (offsetY + oriageScrollHeight + 10 >= contentSizeHeight) {
             this.onEndReached();
         };
+        // if (offsetY >= 400) {
+        //     this.setState({ showBottomBtn: true })
+        // } else {
+        //     this.setState({ showBottomBtn: false })
+        // }
     };
 
     canAction = false;
@@ -193,6 +200,7 @@ class CustomerDetail extends Component<any, any> {
         const resDetail = await JDRequest.get("mjying_assist_customer_getDetail", {
             customerId: jyNativeData.customerId
         });
+        Taro.hideLoading();
         if (resDetail.success) {
 
             this.setState({ detailData: resDetail.data, refreshing: false });
@@ -220,7 +228,13 @@ class CustomerDetail extends Component<any, any> {
 
     getVisitDate = async () => {
         const jyNativeData = getGlobalData('jyNativeData');
-        const { currentPage, pageSize } = this.state;
+        const { currentPage, pageSize, refreshing } = this.state;
+
+        if (!refreshing) {
+            Taro.showLoading({
+                title: "加载中"
+            });
+        };
 
         //拜访记录列表获取
         const params = {
@@ -233,7 +247,7 @@ class CustomerDetail extends Component<any, any> {
 
         const resVisit = await JDRequest.post("mjying_assist_visit_task_searchList", params);
 
-        // Taro.hideLoading();
+        Taro.hideLoading();
         if (resVisit.success) {
             this.setVisitListData(resVisit);
         } else {
@@ -299,6 +313,9 @@ class CustomerDetail extends Component<any, any> {
 
     onEndReached() {
         if (this.canAction) {
+            Taro.showLoading({
+                title: "加载中"
+            });
             this.canAction = false;
             const currentPage = this.state.currentPage + 1;
 

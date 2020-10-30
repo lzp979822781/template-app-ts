@@ -12,11 +12,15 @@ const Observer = (function () {
   return {
     on(functionId, disable) {
       const index = handle.indexOf(functionId);
+
+      //防止触发重复未完成的请求
       if (index < 0) {
         handle.push(functionId);
       }else{
         return true;
       };
+
+      //第一个且能用loading的触发加载弹框
       if (handle.length == 1 && !disable) {
         Taro.showLoading({
           title: "加载中"
@@ -29,6 +33,8 @@ const Observer = (function () {
       if (index > -1) {
         handle.splice(index, 1)
       };
+
+      //最后一个请求完成后关闭
       if (handle.length == 0 && !disable) {
         Taro.hideLoading();
       };
@@ -53,7 +59,9 @@ export default class JDRequest {
     // 这个promise在iterable中的任意一个promise被解决或拒绝后，立刻以相同的解决值被解决或以相同的拒绝原因被拒绝。
     const abortablePromise = Promise.race([originalFetch, timeoutPromise])
 
-    abortablePromise.then(function (params) {
+    abortablePromise.then(function (res) {
+      Observer.off(functionId, disable);
+    }, function (err) {
       Observer.off(functionId, disable);
     });
 

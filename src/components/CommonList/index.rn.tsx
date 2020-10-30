@@ -4,6 +4,7 @@ import { View, Text, Image } from "@tarojs/components";
 import { FlatList, RefreshControl } from 'react-native';
 import "./index.scss";
 
+
 interface ReadonlyStringArray {
     readonly [index: number]: string;
 }
@@ -13,9 +14,9 @@ type baseProps = {
     loaded?: boolean;
     noMoreShow?: boolean;
     refreshing?: boolean;
-    ListFooterComponent?: any;
-    ListEmptyComponent?: any;
-    renderItem?: any;
+    ListFooterComponent?: Function | JSX.Element;
+    ListEmptyComponent?: Function | JSX.Element;
+    renderItem?: Function;
 }
 
 export default class CommonList extends Component<baseProps, any> {

@@ -5,7 +5,7 @@ import { StatusBar, Header, JDModal, JDListItem } from "@/components/index";
 import { get as getGlobalData } from '@/utils/global_data';
 import { JDNetworkErrorView, JDJumping } from '@jdreact/jdreact-core-lib';
 import { hoverStyle } from "@/utils/utils";
-import JDRequest from "@/utils/jd-request";
+import JDRequest from "@/utils/jd-request.bak";
 
 import "./index.scss";
 
@@ -53,11 +53,11 @@ export default class Goods extends Component<any, any> {
 
     getTags = async (isUpdate) => {
         //客户标签
-        if (!isUpdate) {
-            Taro.showLoading({
-                title: "加载中"
-            });
-        }
+        // if (!isUpdate) {
+        //     Taro.showLoading({
+        //         title: "加载中"
+        //     });
+        // }
 
         const params = this.$router.params;
         // 新接口：mjying_assist_tag_customertag  老接口：mjying_assist_customer_getTags
@@ -65,7 +65,7 @@ export default class Goods extends Component<any, any> {
             pin: params.pin
         });
 
-        Taro.hideLoading();
+        // Taro.hideLoading();
         if (resTags.success) {
             this.setState({ tagsData: resTags.data, loaded: true })
         } else {
