@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 
 import { parseUrl } from '@/utils/utils';
 import { handleAmout, DEFAULT_BG } from '../../util';
@@ -8,7 +8,7 @@ import { handleAmout, DEFAULT_BG } from '../../util';
 import './index.scss';
 
 const PREFIX = 'detail-table';
-const EMPTY_PREFIX= `${PREFIX}-empty`;
+const EMPTY_PREFIX = `${PREFIX}-empty`;
 const ITEM_PREFIX = `${PREFIX}-container-item`;
 const emptySrc = 'https://img14.360buyimg.com/imagetools/jfs/t1/129925/9/12107/31518/5f83c943E94b00976/7f5435143d1b0c2a.png';
 const jdSrc = 'https://img14.360buyimg.com/imagetools/jfs/t1/140041/16/10530/940/5f83f26bE63a88b14/b0dc01d29733d9a3.png';
@@ -20,17 +20,30 @@ const imgSrc = {
 type pageOwnProps = {
     data?: Array<any>,
     goodsField?: string,
+    refreshing?: boolean;
+    onEndReached: Function;
+    onRefresh: Function;
 }
 
 class DetailList extends Component<pageOwnProps> {
 
     static defaultProps = {
-        goodsField: 'partnerCentCommissionOrderSkuVoList'
+        noMoreShow: false,
+        goodsField: 'partnerCentCommissionOrderSkuVoList',
+        ListFooterComponent: () => {
+            return (
+                <View
+                    style={{ marginTop:10, paddingBottom: 50, justifyContent: "center", alignItems: "center" }}
+                >
+                    <Text style={{ color: "#C8C8C8", fontSize: 12 }}>～没有更多数据了～</Text>
+                </View>
+            );
+        }
     }
 
     constructor(props) {
         super(props);
-        this.state = {  };
+        this.state = {};
     }
 
     renderTitle = (item) => {
@@ -54,7 +67,7 @@ class DetailList extends Component<pageOwnProps> {
             </View>
         );
     }
-    
+
     renderContentOrder = (item) => {
         const { dealId, occurTime } = item;
         return (
@@ -77,12 +90,12 @@ class DetailList extends Component<pageOwnProps> {
 
     filterGoods = (goodsData) => {
         const length = goodsData.length;
-        if(length < 4) return goodsData;
+        if (length < 4) return goodsData;
         return goodsData.slice(0, 4);
     }
 
     renderEllipse = goodsData => {
-        if(!Array.isArray(goodsData) || (Array.isArray(goodsData) && !goodsData.length)) {
+        if (!Array.isArray(goodsData) || (Array.isArray(goodsData) && !goodsData.length)) {
             return null;
         }
 
@@ -95,10 +108,10 @@ class DetailList extends Component<pageOwnProps> {
 
     getInitGoodData = (item) => {
         const { goodsField } = this.props;
-        const { [goodsField]: goodsData} = item;
+        const { [goodsField]: goodsData } = item;
         return goodsData;
     }
-    
+
     renderPics = (item) => {
         const goodsData = this.getInitGoodData(item);
         const resData = this.filterGoods(goodsData);
@@ -107,7 +120,7 @@ class DetailList extends Component<pageOwnProps> {
                 {
                     resData.map(goodsItem => {
                         const { id, img } = goodsItem;
-                        const imgSrc = img ? `https://img11.360buyimg.com/img/${img}`: DEFAULT_BG;
+                        const imgSrc = img ? `https://img11.360buyimg.com/img/${img}` : DEFAULT_BG;
                         return (
                             <View className={`${ITEM_PREFIX}-content-pics-container`} key={id}>
                                 <Image className={`${ITEM_PREFIX}-content-pics-container-img`} src={imgSrc} />
@@ -134,7 +147,7 @@ class DetailList extends Component<pageOwnProps> {
     }
 
     renderContent = (item) => {
-        
+
         return (
             <View className={`${ITEM_PREFIX}-content`}>
                 {this.renderContentOrder(item)}
@@ -148,7 +161,7 @@ class DetailList extends Component<pageOwnProps> {
     onItemClick = (item) => () => {
         const url = '/pages/Details/components/OrderDetail/index';
         // 跳转到详情页面
-        Taro.navigateTo({ 
+        Taro.navigateTo({
             url: parseUrl(url, { prePage: JSON.stringify(item) }),
 
         })
@@ -164,21 +177,8 @@ class DetailList extends Component<pageOwnProps> {
         );
     }
 
-    renderList = () => {
-        const { data } = this.props;
-        return (
-            <View className={`${PREFIX}-container`}>
-                <FlatList
-                    data={data}
-                    renderItem={({ item }) => this.renderItem(item)}
-                    keyExtractor={item => item.id}
-                    onEndReachedThreshold={0.5}
-                />
-            </View>
-        );
-    }
 
-    renderEmpty = () => {
+    ListEmptyComponent = () => {
         return (
             <View className={EMPTY_PREFIX}>
                 <View className={`${EMPTY_PREFIX}-img`}>
@@ -191,14 +191,40 @@ class DetailList extends Component<pageOwnProps> {
         );
     }
 
+    ListFooterComponent = () => {
+        const { data, noMoreShow, ListFooterComponent } = this.props;
+        if (data.length > 0 && noMoreShow && ListFooterComponent && typeof ListFooterComponent === "function") {
+            return ListFooterComponent();
+        };
+        return <View style={{ height: 15 }}></View>;
+    };
+
     render() {
-        const { data } = this.props;
-        const isEmpty = !Array.isArray(data) || (Array.isArray(data) && !data.length);
-        
+        const { refreshing, data, onEndReached, onRefresh } = this.props;
         return (
             <View className={PREFIX}>
-                { isEmpty && this.renderEmpty()}
-                { !isEmpty && this.renderList()}
+                <View className={`${PREFIX}-container`}>
+                    <FlatList
+                        data={data}
+                        renderItem={({ item }) => this.renderItem(item)}
+                        keyExtractor={item => item.id}
+                        onEndReachedThreshold={0.01}
+                        onEndReached={onEndReached}
+                        ListEmptyComponent={this.ListEmptyComponent}
+                        ListFooterComponent={this.ListFooterComponent}
+                        refreshControl={
+                            <RefreshControl
+                                tintColor='#F23030'
+                                title='刷新...'
+                                titleColor='#666666'
+                                // colors={["#ff0000", "#00ff00", "#0000ff"]}
+                                // progressBackgroundColor='#F23030'
+                                refreshing={refreshing}
+                                onRefresh={onRefresh}
+                            />
+                        }
+                    />
+                </View>
             </View>
         );
     }

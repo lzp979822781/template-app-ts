@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import JDRequest from "@/utils/jd-request";
+import JDRequest from "@/utils/jd-request.bak";
 import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 
@@ -41,12 +41,6 @@ export default class Accordion extends Component<baseProps, any> {
         if (res.success) {
             this.setState({
                 data: res.data
-            });
-        } else {
-            Taro.showToast({
-                title: res.errorMsg,
-                icon: 'none',
-                duration: 1500
             });
         };
     }

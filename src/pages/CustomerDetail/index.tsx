@@ -147,11 +147,11 @@ class CustomerDetail extends Component<any, any> {
         if (resCustomerTags.success) {
             this.setState({ customerTags: resCustomerTags.data, refreshing: false });
         } else {
-            Taro.showToast({
-                title: "标签获取失败",
-                icon: 'none',
-                duration: 1000
-            });
+            // Taro.showToast({
+            //     title: "标签获取失败",
+            //     icon: 'none',
+            //     duration: 1000
+            // });
         };
     }
 
@@ -173,11 +173,11 @@ class CustomerDetail extends Component<any, any> {
                 this.getCanBind(resDetail.data.pin);
             };
         } else {
-            Taro.showToast({
-                title: resDetail.errorMsg,
-                icon: 'none',
-                duration: 1000
-            });
+            // Taro.showToast({
+            //     title: resDetail.errorMsg,
+            //     icon: 'none',
+            //     duration: 1000
+            // });
             this.setState({ timeout: resDetail.timeout, refreshing: false });
         };
 
@@ -209,11 +209,11 @@ class CustomerDetail extends Component<any, any> {
                 this.getCanBind(resDetail.data.pin);
             };
         } else {
-            Taro.showToast({
-                title: resDetail.errorMsg,
-                icon: 'none',
-                duration: 1000
-            });
+            // Taro.showToast({
+            //     title: resDetail.errorMsg,
+            //     icon: 'none',
+            //     duration: 1000
+            // });
             this.setState({ timeout: resDetail.timeout, refreshing: false });
         };
     };
@@ -237,11 +237,11 @@ class CustomerDetail extends Component<any, any> {
         if (resVisit.success) {
             this.setVisitListData(resVisit);
         } else {
-            Taro.showToast({
-                title: "拜访列表获取失败",
-                icon: 'none',
-                duration: 1000
-            })
+            // Taro.showToast({
+            //     title: "拜访列表获取失败",
+            //     icon: 'none',
+            //     duration: 1000
+            // })
             this.setState({
                 currentPage: currentPage > 1 ? currentPage - 1 : 1,
                 refreshing: false
@@ -348,22 +348,22 @@ class CustomerDetail extends Component<any, any> {
         if (res.success) {
             NativeModules.JYNativeModule.updateCustomerList();
             this.setState({ visible: false }, () => {
-                Taro.showToast({
-                    title: "绑定成功",
-                    icon: 'success',
-                    duration: 1500
-                });
+                // Taro.showToast({
+                //     title: "绑定成功",
+                //     icon: 'success',
+                //     duration: 1500
+                // });
                 this.timer = setTimeout(() => {
                     JDJumping.jumpToBack();
                 }, 1500);
             });
         } else {
             this.setState({ visible: false }, () => {
-                Taro.showToast({
-                    title: res.errorMsg,
-                    icon: 'none',
-                    duration: 1500
-                });
+                // Taro.showToast({
+                //     title: res.errorMsg,
+                //     icon: 'none',
+                //     duration: 1500
+                // });
             });
         }
     }
@@ -399,11 +399,11 @@ class CustomerDetail extends Component<any, any> {
             this.setState({ bindData: res.data, popupType: "binding" });
         } else {
             this.setState({ visible: false }, () => {
-                Taro.showToast({
-                    title: res.errorMsg,
-                    icon: 'none',
-                    duration: 2000
-                });
+                // Taro.showToast({
+                //     title: res.errorMsg,
+                //     icon: 'none',
+                //     duration: 2000
+                // });
 
                 this.timer = setTimeout(() => {
                     this.setState({ visible: true });

@@ -1,9 +1,9 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Gradient, Drawer } from "@/components/index";
-import { Clipboard, NativeModules } from 'react-native';
+import { Clipboard } from 'react-native';
 import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
-import JDRequest from "@/utils/jd-request";
+import JDRequest from "@/utils/jd-request.bak";
 import { Toast } from "@/utils/model";
 import { hoverStyle } from "@/utils/utils";
 import Accordion from "./Accordion/index";
@@ -78,12 +78,6 @@ export default class GoodsSelection extends Component<any, any> {
     loadList = async () => {
         // const params = this.$router.params;
 
-        if (!this.state.refreshing) {
-            Taro.showLoading({
-                title: "加载中"
-            });
-        };
-
         const { currentPage, pageSize, category, shopName } = this.state;
         const res = await JDRequest.post(
             "mjying_assist_partner_sku_list",
@@ -98,7 +92,7 @@ export default class GoodsSelection extends Component<any, any> {
                 ...category
             }
         );
-        Taro.hideLoading();
+        
         if (res.success) {
             this.setVisitListData(res);
         } else {
@@ -135,12 +129,6 @@ export default class GoodsSelection extends Component<any, any> {
             this.setState({
                 statusCode: res.code,
                 sections: resData
-            });
-        } else {
-            Taro.showToast({
-                title: res.errorMsg,
-                icon: 'none',
-                duration: 1500
             });
         };
     }
@@ -411,7 +399,7 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
     render() {
-        const { lastPage, data, loaded, pageSize, timeout, systemInfo, show, statusCode, refreshing, sections } = this.state;
+        const { lastPage, data, loaded, timeout, show, statusCode, refreshing, sections } = this.state;
         if (timeout === 1) {
             return <View className='container'>
                 <StatusBar></StatusBar>

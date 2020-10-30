@@ -3,12 +3,17 @@ import {
   JDNetwork,
   // JDJumping
 } from "@jdreact/jdreact-core-lib";
+import { Loading, Toast } from "@/utils/model";
 
 let timer = null;
 
+// function delay(fn, wait) {                 
+//       setTimeout(fn, wait);
+// };
+
 const Observer = (function () {
   const handle = [];
-
+  let errorMsgList = [];
   return {
     on(functionId, disable) {
       const index = handle.indexOf(functionId);
@@ -16,27 +21,35 @@ const Observer = (function () {
       //防止触发重复未完成的请求
       if (index < 0) {
         handle.push(functionId);
-      }else{
+      } else {
         return true;
       };
 
       //第一个且能用loading的触发加载弹框
       if (handle.length == 1 && !disable) {
-        Taro.showLoading({
-          title: "加载中"
-        });
+        errorMsgList = [];
+        Loading.show()
       };
     },
 
-    off(functionId, disable) {
+    off(functionId, disable, res) {
       const index = handle.indexOf(functionId);
+      
+      if(res && !res.success){
+        errorMsgList.push(res.errorMsg);
+      };
+
       if (index > -1) {
-        handle.splice(index, 1)
+        handle.splice(index, 1);
       };
 
       //最后一个请求完成后关闭
       if (handle.length == 0 && !disable) {
-        Taro.hideLoading();
+        Loading.hide();
+        if(errorMsgList && errorMsgList.length>0){
+          debugger
+          Toast.show(errorMsgList.join())
+        };
       };
     }
   }
@@ -60,9 +73,9 @@ export default class JDRequest {
     const abortablePromise = Promise.race([originalFetch, timeoutPromise])
 
     abortablePromise.then(function (res) {
-      Observer.off(functionId, disable);
+      Observer.off(functionId, disable, res);
     }, function (err) {
-      Observer.off(functionId, disable);
+      Observer.off(functionId, disable, err);
     });
 
     return abortablePromise;
@@ -71,7 +84,7 @@ export default class JDRequest {
   static get(functionId, param = null, disable) {
     const hasFunctionId = Observer.on(functionId);
     //防止重复请求
-    if(hasFunctionId){
+    if (hasFunctionId) {
       return;
     };
     const newParam = this.formatParam(param);
@@ -81,7 +94,7 @@ export default class JDRequest {
   static post(functionId, param = null, disable) {
     const hasFunctionId = Observer.on(functionId);
     //防止重复请求
-    if(hasFunctionId){
+    if (hasFunctionId) {
       return;
     };
     const newParam = this.formatParam(param);

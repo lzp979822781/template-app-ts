@@ -69,11 +69,11 @@ export default class Goods extends Component<any, any> {
         if (resTags.success) {
             this.setState({ tagsData: resTags.data, loaded: true })
         } else {
-            Taro.showToast({
-                title: resTags.errorMsg,
-                icon: 'none',
-                duration: 1500
-            });
+            // Taro.showToast({
+            //     title: resTags.errorMsg,
+            //     icon: 'none',
+            //     duration: 1500
+            // });
             this.setState({ timeout: 1, loaded: true })
         };
     };

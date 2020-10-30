@@ -27,7 +27,7 @@ const rnStyle = {
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0,
-    height: 429
+    height: 329
 };
 
 const rnContainerStyle = {

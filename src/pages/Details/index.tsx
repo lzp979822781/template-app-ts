@@ -1,15 +1,15 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import classnames from 'classnames';
-import { JDNetworkErrorView  } from '@jdreact/jdreact-core-lib';
+import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
 import { Text } from 'react-native';
-import JDRequest from "@/utils/jd-request";
+import JDRequest from "@/utils/jd-request.bak";
 import { get as getGlobalData } from '@/utils/global_data';
 import { DetailPopup, UserDrop, DetailList } from './components';
 
 // import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
-import { handleAmout, replaceDot, showLoading, hideLoading } from './util';
+import { handleAmout, replaceDot } from './util';
 import REQUEST_URL from './services';
 import "./index.scss";
 
@@ -111,23 +111,22 @@ export default class Details extends Component<any, any> {
             selectEnd: '2020.10.16',
 
             userVisible: false,
+            refreshing: false,
+            lastPage: false,
+            loaded: false,
             selectUser: {},
-            
-            shopList: testData,
-
+            shopList: [],
             commission: 0, // 预估总金额
-
             isTimeout: false
-        };  
+        };
     }
 
     componentDidMount() {
         this.getData();
     }
 
-    pageNum = 1
-    pageSize = 10
-
+    pageNum = 1;
+    pageSize=10;
     config: Config = {
         navigationBarTitleText: "",
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
@@ -145,45 +144,68 @@ export default class Details extends Component<any, any> {
     getTotal = async () => {
         // 获取预估总佣金
         const res = await JDRequest.post(REQUEST_URL.totalCommission, this.getCommonParam());
-        hideLoading();
         this.totalSuccessCallback(res);
         this.handleError(res);
     }
 
     totalSuccessCallback = ({ success, data }) => {
-        this.setState({ 
-            commission: success ? data: 0,
+        this.setState({
+            commission: success ? data : 0,
         })
     }
 
 
     getListData = async (param = {}) => {
-        const res = await JDRequest.post(REQUEST_URL.orderList, {...this.getCommonParam(), 
+        const res = await JDRequest.post(REQUEST_URL.orderList, {
+            ...this.getCommonParam(),
             ...param,
-            pageSize: 10
+            pageSize: this.pageSize
         });
-        hideLoading();
-        this.listSuccessCallback(res);
-        this.handleError(res);
+        
+        if(res.success){
+            this.listSuccessCallback(res);
+        }else{
+            this.handleError(res);
+        };
     }
 
     listSuccessCallback = (res) => {
-        const { success, data: { commissionOrderVoPage: { data } = { data: []} } = {}} = res;
-        if(!success) return;
+        const { data: { commissionOrderVoPage: { data } = { data: [] } } = {} } = res;
+
+        let listData = this.state.shopList;
+        let shopList = [];
+        let lastPage = false;
+        
+        shopList = data || [];
+        lastPage = res.data.commissionOrderVoPage.lastPage;
+
+        if (this.pageNum == 1) {
+            listData = shopList;
+        } else {
+            listData = listData.concat(shopList);
+        }
+
         this.setState({
-            shopList: data || [],
-            isTimeout: false
+            shopList: listData || [],
+            refreshing: false,
+            lastPage,
+            isTimeout: false,
+            loaded: true
+        }, () => {
+            this.canAction = !lastPage;
         })
-        this.pageNum++;
     }
 
     handleError = ({ success }) => {
-        if(success) return;
-        this.setState({ isTimeout: true })
+        if (success) return;
+        if (this.pageNum > 1) {
+            this.pageNum = this.pageNum-1;
+        }
+        this.setState({ refreshing: false, isTimeout: true })
     }
 
     getCommonParam = () => {
-        const { selectStart, selectEnd, selectUser: { customerPin }} = this.state;
+        const { selectStart, selectEnd, selectUser: { customerPin } } = this.state;
         return {
             occurStartTime: replaceDot(selectStart),
             occurEndTime: replaceDot(selectEnd),
@@ -201,13 +223,13 @@ export default class Details extends Component<any, any> {
 
     onTimeSelect = () => {
         const { timeVisible } = this.state;
-        this.setState({ timeVisible: !timeVisible })
+        this.setState({ timeVisible: !timeVisible, userVisible: false })
     }
 
     onCustomSelect = () => {
         const { userVisible } = this.state;
-        this.setState({ userVisible: !userVisible })
-    }
+        this.setState({ userVisible: !userVisible, timeVisible: false })
+    } 
 
     /**
      * 点击黑色背景是关闭当前搜索视图
@@ -231,7 +253,7 @@ export default class Details extends Component<any, any> {
      */
     onTimeSave = newTime => {
         this.pageNum = 1;
-        const [ selectStart, selectEnd ] = newTime.split('-');
+        const [selectStart, selectEnd] = newTime.split('-');
         this.setState({
             selectStart,
             selectEnd,
@@ -267,11 +289,11 @@ export default class Details extends Component<any, any> {
      * @returns
      */
     getImgSrc = (isVisible, hasVal) => {
-        if(isVisible) {
-            return imagUrl[ hasVal ?  'upSelectedImg' : 'upUnselectedImg']
+        if (isVisible) {
+            return imagUrl[hasVal ? 'upSelectedImg' : 'upUnselectedImg']
         }
 
-        return imagUrl[hasVal ? 'downSelectedImg': 'downUnselectedImg'];
+        return imagUrl[hasVal ? 'downSelectedImg' : 'downUnselectedImg'];
     }
 
     getSelectTime = () => {
@@ -294,12 +316,12 @@ export default class Details extends Component<any, any> {
     }
 
     renderTime = () => {
-        const {  timeVisible} = this.state;
-        const selectTime= this.getSelectTime();
+        const { timeVisible } = this.state;
+        const selectTime = this.getSelectTime();
         const timeImgSrc = this.getImgSrc(timeVisible, selectTime);
 
         const textCls = classnames(`${TABPRREFIX}-time-text`, {
-            [`${TABPRREFIX}-time-text-selected`]:  selectTime
+            [`${TABPRREFIX}-time-text-selected`]: selectTime
         })
 
         return (
@@ -311,10 +333,10 @@ export default class Details extends Component<any, any> {
     }
 
     renderUser = () => {
-        const { userVisible, selectUser:{ customerName } } = this.state;
+        const { userVisible, selectUser: { customerName } } = this.state;
         // const userImgSrc = imagUrl[ userVisible ? 'upUnselectedImg': 'downUnselectedImg' ];
         const userImgSrc = this.getImgSrc(userVisible, customerName);
-        const textCls  = classnames('${TABPRREFIX}-user-text', {
+        const textCls = classnames('${TABPRREFIX}-user-text', {
             [`${TABPRREFIX}-user-text-selected`]: customerName
         })
         return (
@@ -327,10 +349,10 @@ export default class Details extends Component<any, any> {
 
     renderUserSelect = () => {
         const { userVisible, selectUser } = this.state;
-        if(!userVisible) return null;
+        if (!userVisible) return null;
         return (
             <View className={`${DROP_PREFIX}`}>
-                <UserDrop 
+                <UserDrop
                     currentVal={selectUser}
                     onSave={this.onSaveUser}
                 />
@@ -344,26 +366,55 @@ export default class Details extends Component<any, any> {
         this.setState({ timeVisible: false })
     }
 
+    onRefresh = () => {
+        this.pageNum = 1;
+        this.setState(
+            {
+                refreshing: true
+            },
+            () => {
+                this.getListData();
+            }
+        );
+    }
+
+    canAction = false;
+    onEndReached = () => {
+        if (this.canAction) {
+            this.canAction = false;
+            this.pageNum = this.pageNum+1;
+            this.getListData();
+        }
+    }
+
     renderList = () => {
-        const { shopList } = this.state;
+        const { refreshing, loaded, lastPage, shopList } = this.state;
         return (
             <View className={`${TABLE_PREFIX}`}>
-                <DetailList data={shopList} />
+                <DetailList
+                    refreshing={refreshing}
+                    noMoreShow={lastPage}
+                    loaded={loaded}
+                    data={shopList}
+                    onEndReached={this.onEndReached}
+                    onRefresh={this.onRefresh}
+                />
             </View>
         )
     }
 
     renderPlaceTabbar = () => {
-        return (
-            <View className='detail-tabbar'>
-            </View>
-        );
+        // return (
+        //     <View className='detail-tabbar'>
+        //     </View>
+        // );
+        return null;
     }
 
     render() {
         const { timeVisible, isTimeout } = this.state;
 
-        if(isTimeout) {
+        if (isTimeout) {
             return (
                 <View className='detail-error'>
                     <StatusBar />
@@ -382,7 +433,7 @@ export default class Details extends Component<any, any> {
                 { this.renderTop()}
                 { this.renderTab()}
                 { this.renderList()}
-                <DetailPopup 
+                <DetailPopup
                     visible={!!timeVisible}
                     onClose={this.onPopupClose}
                     showValue={this.getSelectTime()}

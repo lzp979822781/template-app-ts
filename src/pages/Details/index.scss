@@ -72,19 +72,19 @@ $tabHeight: 93px;
 
         display: flex;
         flex: 1;
-        background-color: transparent;
+        background-color: #FFFFFF;
 
         &-bg {
             background-color: #000;
-            height: 9999px;
             opacity: 0.5;
         }
+        z-index: 100;
     }
 
     &-list {
         flex: 1;
         background-color: #F8F8F8;
-        @include padding(0, 30px, 0, 30px);
+        // @include padding(0, 30px, 0, 30px);
     }
 
     &-error {
