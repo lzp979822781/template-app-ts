@@ -182,9 +182,6 @@ export default class GoodsSelection extends Component<any, any> {
     canAction = false;
     onEndReached() {
         if (this.canAction) {
-            Taro.showLoading({
-                title: "加载中"
-            });
             this.canAction = false;
             const currentPage = this.state.currentPage + 1;
 

@@ -21,22 +21,11 @@ function replaceDot(str) {
     return str ? str.replace(/\./g, '-') : str;
 }
 
-function showLoading(text = '加载中') {
-    Taro.showLoading({
-        title: text,
-    })
-}
-
-function hideLoading() {
-    Taro.hideLoading();
-}
-
 const DEFAULT_BG = 'https://img13.360buyimg.com/imagetools/jfs/t1/152803/38/3518/226152/5f9511faE038ad77b/14766f54f6d4610a.png';
 
 
 // eslint-disable-next-line import/prefer-default-export
 export { 
     handleAmout, replaceDot,
-    showLoading, hideLoading,
     DEFAULT_BG
 };

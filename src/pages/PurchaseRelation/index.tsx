@@ -40,12 +40,6 @@ export default class PurchaseRelation extends Component<any, any> {
     loadList = async () => {
         const params = this.$router.params;
 
-        // if (!this.state.refreshing) {
-        //     Taro.showLoading({
-        //         title: "加载中"
-        //     });
-        // };
-
 
         const { currentPage, pageSize } = this.state;
         const res = await JDRequest.post(
@@ -122,12 +116,8 @@ export default class PurchaseRelation extends Component<any, any> {
     canAction = false;
     onEndReached() {
         if (this.canAction) {
-            // Taro.showLoading({
-            //     title: "加载中"
-            // });
             this.canAction = false;
             const currentPage = this.state.currentPage + 1;
-
             this.setState(
                 {
                     currentPage

@@ -4,9 +4,8 @@ import { View, Text, Image } from "@tarojs/components";
 import { SafeAreaView, SectionList, FlatList, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { StatusBar, Header, Footer } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
-import JDRequest from "@/utils/jd-request";
 import "./index.scss";
-import sampleData from './sampleData';
+// import sampleData from './sampleData';
 
 interface ReadonlyStringArray {
     readonly [index: number]: string;

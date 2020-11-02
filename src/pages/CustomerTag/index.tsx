@@ -53,27 +53,15 @@ export default class Goods extends Component<any, any> {
 
     getTags = async (isUpdate) => {
         //客户标签
-        // if (!isUpdate) {
-        //     Taro.showLoading({
-        //         title: "加载中"
-        //     });
-        // }
-
         const params = this.$router.params;
         // 新接口：mjying_assist_tag_customertag  老接口：mjying_assist_customer_getTags
         const resTags = await JDRequest.get("mjying_assist_tag_customertag", {
             pin: params.pin
         });
 
-        // Taro.hideLoading();
         if (resTags.success) {
             this.setState({ tagsData: resTags.data, loaded: true })
         } else {
-            // Taro.showToast({
-            //     title: resTags.errorMsg,
-            //     icon: 'none',
-            //     duration: 1500
-            // });
             this.setState({ timeout: 1, loaded: true })
         };
     };

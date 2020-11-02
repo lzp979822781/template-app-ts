@@ -2,7 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import { JDNetworkErrorView  } from '@jdreact/jdreact-core-lib';
 import { NativeModules } from 'react-native';
-import JDRequest from "@/utils/jd-request";
+import JDRequest from "@/utils/jd-request.bak";
 import { StatusBar, Header } from "@/components";
 import InfoItem from '../InfoItem';
 
@@ -10,7 +10,7 @@ import OrderDetailGood from '../OrderDetailGood';
 import AmountItem from '../AmountItem';
 
 import REQUEST_URL from '../../services';
-import { handleAmout, showLoading, hideLoading } from '../../util';
+import { handleAmout } from '../../util';
 
 import './index.scss';
 
@@ -98,10 +98,8 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
     }
 
     getData = async () => {
-        showLoading();
         const param = this.getParam();
         const res = await JDRequest.get(REQUEST_URL.orderDetail, param);
-        hideLoading();
         this.handleSuccess(res);
         this.handleError(res);
     }

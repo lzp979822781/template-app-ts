@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { View, Image, Input, Text } from "@tarojs/components";
 import { FlatList } from 'react-native';
 import debounce from 'lodash/debounce';
-import JDRequest from "@/utils/jd-request";
+import JDRequest from "@/utils/jd-request.bak";
 import REQUEST_URL from '../../services';
 
 import './index.scss';
@@ -102,7 +102,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
             pageNum
         };
 
-        const { success, data: { totalCount, pageSize, data }, } = await JDRequest.post(REQUEST_URL.customerList, param);
+        const { success, data: { totalCount, pageSize, data }, } = await JDRequest.post(REQUEST_URL.customerList, param, true);
         if(success) {
             const resData = pageNum === 1 ? [{
                 id: 'all',

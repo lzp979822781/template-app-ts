@@ -4,8 +4,7 @@ import { View, Text, Image } from "@tarojs/components";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import { Gradient } from "@/components/index";
-import { Loading, Toast } from "@/utils/model";
-import JDRequest from "@/utils/jd-request";
+import JDRequest from "@/utils/jd-request.bak";
 import "./index.scss";
 
 interface ReadonlyStringArray {
@@ -54,15 +53,12 @@ export default class CommonList extends Component<baseProps, any> {
     };
 
     submitOrder = async () => {
-        Taro.showLoading({
-            title: "加载中"
-        });
+
 
         const res = await JDRequest.get(
             "/assist/partner/yearFee/submitOrder"
         );
 
-        Taro.hideLoading();
         if (res.success) {
             const data = encodeURIComponent(res.data);
 

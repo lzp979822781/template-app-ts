@@ -5,7 +5,7 @@ import { Modal, Dimensions } from "react-native";
 import ImageViewer from "react-native-image-zoom-viewer";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { hoverStyle } from "@/utils/utils";
-import JDRequest from "@/utils/jd-request";
+import JDRequest from "@/utils/jd-request.bak";
 import { get as getGlobalData } from '@/utils/global_data';
 import PopUpCon from "./PopUpCon/index";
 import PlanBtn from "./PlanBtn/index";
@@ -64,11 +64,6 @@ export default class PlanDetail extends Component<any, any> {
     }
 
     getData = async () => {
-        if (!this.back) {
-            Taro.showLoading({
-                title: "加载中"
-            });
-        };
 
         const jyNativeData = getGlobalData('jyNativeData');
 
@@ -76,20 +71,12 @@ export default class PlanDetail extends Component<any, any> {
         const res = await JDRequest.get("mjying_assist_visit_task_getInfo", {
             taskId: params.taskId || jyNativeData.taskId
         });
-        Taro.hideLoading();
         this.back = true;
         if (res.success) {
             this.setState({
                 tastDetail: res.data,
                 noneTxt: "无"
             });
-
-        } else {
-            Taro.showToast({
-                title: "计划详情获取失败",
-                icon: 'none',
-                duration: 2000
-            })
         };
     };
 

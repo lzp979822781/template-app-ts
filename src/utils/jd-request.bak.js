@@ -1,15 +1,10 @@
 import Taro from "@tarojs/taro";
 import {
   JDNetwork,
-  // JDJumping
 } from "@jdreact/jdreact-core-lib";
 import { Loading, Toast } from "@/utils/model";
 
 let timer = null;
-
-// function delay(fn, wait) {                 
-//       setTimeout(fn, wait);
-// };
 
 const Observer = (function () {
   const handle = [];
@@ -84,7 +79,7 @@ export default class JDRequest {
   };
 
   static get(functionId, param = null, disable) {
-    const hasFunctionId = Observer.on(functionId);
+    const hasFunctionId = Observer.on(functionId, disable);
     //防止重复请求
     if (hasFunctionId) {
       return;
@@ -94,7 +89,7 @@ export default class JDRequest {
   }
 
   static post(functionId, param = null, disable) {
-    const hasFunctionId = Observer.on(functionId);
+    const hasFunctionId = Observer.on(functionId, disable);
     //防止重复请求
     if (hasFunctionId) {
       return;
