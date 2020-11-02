@@ -252,11 +252,24 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
         )
     }
 
-    getItemLayout = (data, index) => ({
-        length: normalItemHeight, 
-        offset: normalItemHeight * index, 
-        index
-    })
+    getItemLayout = (data, index) => {
+        const pivot = Math.floor( data.length / 3);
+        let gap = 0;
+        if( index < pivot ) {
+            gap = ( pivot - index ) * -0.15;
+        }
+
+        if(index > pivot * 2) {
+            gap = (index - pivot) * (0.004);
+        }
+
+        const res = {
+            length: normalItemHeight, 
+            offset: (normalItemHeight + gap) * index, 
+            index
+        };
+        return res;
+    } 
 
     setYearRef = el => {
         this.yearRef = el
