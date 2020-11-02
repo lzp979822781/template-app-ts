@@ -47,7 +47,9 @@ const Observer = (function () {
       if (handle.length == 0 && !disable) {
         Loading.hide();
         if(errorMsgList && errorMsgList.length>0){
-          debugger
+          errorMsgList = errorMsgList.filter(function(item){
+              return !!item;
+          });
           Toast.show(errorMsgList.join())
         };
       };

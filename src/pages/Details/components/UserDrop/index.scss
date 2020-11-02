@@ -6,14 +6,11 @@
     background-color: #fff;
     &-search-container {
         @include flex(row, flex-start, center);
-        margin-top: 16px;
-        margin-bottom: 16px;
         height: 64px;
         background: rgba(242,242,242,1);
         border-radius: 36px;
 
         &-img {
-            
             @include flex(row, center, center);
             @include padding(0, 13px, 0, 30px );
             &-icon {
@@ -23,9 +20,9 @@
         }
 
         &-input {
-            height: 100%;
             flex: 1;
-            @include font(26px, #444444, 'PingFangSC-Regular');
+            padding: 18px;
+            @include font(26px, #444444);
         }
 
         &-clear {
@@ -42,11 +39,12 @@
 
     }
     &-list {
-        background-color: lightgreen;
+        
         &-item {
             @include flex(row, flex-start, center);
             height: 92px;
-
+            margin-bottom: 1px;
+            background-color: #FFFFFF;
             &-container {
                 flex: 1;
                 @include flex(row, flex-start, center);

@@ -310,7 +310,6 @@ export default class Details extends Component<any, any> {
             <View className={TABPRREFIX}>
                 { this.renderTime()}
                 { this.renderUser()}
-                { this.renderUserSelect()}
             </View>
         );
     }
@@ -439,6 +438,7 @@ export default class Details extends Component<any, any> {
                     showValue={this.getSelectTime()}
                     onTimeSave={this.onTimeSave}
                 />
+                { this.renderUserSelect()}
                 { this.renderPlaceTabbar()}
             </View>
         );

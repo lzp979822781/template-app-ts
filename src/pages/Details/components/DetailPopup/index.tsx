@@ -203,6 +203,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
                 rnStyle={rnStyle}
                 rnBodyStyle={rnBodyStyle}
                 rnContainerStyle={rnContainerStyle}
+                onClose={this.onPopClose}
             >
                 <View className={prefix}>
                     <View className={`${prefix}-header`} >

@@ -152,10 +152,18 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
         // 执行空值搜索
     }
 
+    timer;
+
     onInput = ({ target: { value }}) => {
         this.setState({ 
             searchValue: value,
             pageNum: 1
+        }, () => {
+            clearTimeout(this.timer);
+            
+            this.timer = setTimeout(()=>{
+                this.getUserData()
+            }, 200);
         })
     }
 
@@ -169,7 +177,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
                 <View className={`${SEARCH_PREFIX}-img`}>
                     <Image className={`${SEARCH_PREFIX}-img-icon`} src={searchSrc} />
                 </View>
-                <Input className={`${SEARCH_PREFIX}-input`} type='text' onInput={this.onInput} value={searchValue} />
+                <Input className={`${SEARCH_PREFIX}-input`} type='text' onInput={this.onInput} value={searchValue} textAlignVertical="center"/>
                 <View className={clearCls} onClick={this.onClear}>
                     { searchValue ? <Image className={`${SEARCH_PREFIX}-clear-img`} src={delSrc} /> : null}
                 </View>
@@ -197,7 +205,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
         return (
             <View className={`${PREFIX}-list-item`} onClick={this.onItemClick(item)}>
                 <View className={`${PREFIX}-list-item-container`}>
-                    <Text className={textCls}>{customerName}</Text>
+                    <Text className={textCls}>{customerName || "--"}</Text>
                 </View>
                 { isSelect ? (
                     <View className={`${PREFIX}-list-item-icon`}>

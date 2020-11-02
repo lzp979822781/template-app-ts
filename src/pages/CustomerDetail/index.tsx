@@ -440,7 +440,7 @@ class CustomerDetail extends Component<any, any> {
         return (
             <View className='container'>
                 <ImageBackground
-                    source={{ uri: "https://img10.360buyimg.com/imagetools/jfs/t1/148849/4/8068/212960/5f58ac4eE89463cb5/ffba549489bfd3e0.png" }}
+                    source={{ uri: "https://img10.360buyimg.com/imagetools/jfs/t1/146154/35/13041/28857/5f9f8106E314dc4c5/fe186229922df391.png" }}
                     style={{
                         resizeMode: "repeat",
                         height: 134 + statusBarHeight

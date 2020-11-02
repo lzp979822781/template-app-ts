@@ -1,6 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import { JDNetworkErrorView  } from '@jdreact/jdreact-core-lib';
+import { NativeModules } from 'react-native';
 import JDRequest from "@/utils/jd-request";
 import { StatusBar, Header } from "@/components";
 import InfoItem from '../InfoItem';
@@ -89,6 +90,11 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
     componentDidMount(){
         // 通过this.$router.params获取值
         this.getData();
+        NativeModules.JYNativeModule.hideTabbar(true);
+    }
+
+    componentWillUnmount() {
+        NativeModules.JYNativeModule.hideTabbar(false);
     }
 
     getData = async () => {

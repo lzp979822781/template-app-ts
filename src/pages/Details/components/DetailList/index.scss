@@ -5,9 +5,8 @@
 
     &-empty {
         flex: 1;
-        background-color: #F3F3F4;
         @include flex(column, center, center);
-
+        padding-top: 100px;
         &-img {
             @include flex(row, center, center);
             &-icon {

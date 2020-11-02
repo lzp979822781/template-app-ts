@@ -28,15 +28,12 @@ $tabHeight: 93px;
     &-tab {
         @include flex(row, flex-start, center);
         height: $tabHeight;
-        background-color: #fff;
-        position: relative;
-        z-index: 1;
-
         &-time {
-            @include flex(row, flex-start, center);
+            @include flex(row, center, center);
             flex: 1;
+            height: 100%;
+            background-color: #fff;
             &-text {
-                margin-left: 113px;
                 @include font(28px, #444444, 'PingFangSC-Regular');
                 &-selected {
                     @include font(28px, #F23030);
@@ -47,6 +44,9 @@ $tabHeight: 93px;
 
         &-user {
             @include flex(row, center, center);
+            flex: 1;
+            height: 100%;
+            background-color: #fff;
             &-text {
                 @include font(28px, #444444, 'PingFangSC-Regular');
                 
@@ -55,7 +55,6 @@ $tabHeight: 93px;
                     @include font(28px, #F23030);
                 }
             }
-            flex: 1;
         }
 
         &-image {
@@ -67,9 +66,9 @@ $tabHeight: 93px;
 
     &-drop {
         position: absolute;
-        top: $tabHeight;
+        top: 480px; //$tabHeight;
         width: 100%;
-
+        height: 100%;
         display: flex;
         flex: 1;
         background-color: #FFFFFF;
@@ -77,8 +76,8 @@ $tabHeight: 93px;
         &-bg {
             background-color: #000;
             opacity: 0.5;
+            flex: 1;
         }
-        z-index: 100;
     }
 
     &-list {
