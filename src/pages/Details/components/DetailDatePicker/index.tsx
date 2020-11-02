@@ -252,11 +252,40 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
         )
     }
 
-    getItemLayout = (data, index) => {
+    /* getItemLayout = (data, index) => {
         const pivot = Math.floor( data.length / 3);
         let gap = 0;
         if( index < pivot ) {
-            gap = ( pivot - index ) * -0.15;
+            gap = ( pivot - index ) * -0.2;
+        }
+
+        if(index > pivot * 2) {
+            gap = (index - pivot) * (0.01);
+        }
+
+        const res = {
+            length: normalItemHeight, 
+            offset: (normalItemHeight + gap) * index, 
+            index
+        };
+        return res;
+    } */
+
+    getItemLayout = (data, index) => {
+
+        const res = {
+            length: normalItemHeight, 
+            offset: normalItemHeight * index, 
+            index
+        };
+        return res;
+    }
+
+    getMonthItemLayout = (data, index) => {
+        const pivot = Math.floor( data.length / 3);
+        let gap = 0;
+        if( index < pivot ) {
+            gap = ( pivot - index ) * -1;
         }
 
         if(index > pivot * 2) {
@@ -269,7 +298,7 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
             index
         };
         return res;
-    } 
+    }
 
     setYearRef = el => {
         this.yearRef = el
@@ -320,7 +349,7 @@ class TaroDatePicker extends Component<PageOwnProps, PageOwnState> {
                     onScroll={this.onScroll('month')}
                     onScrollEndDrag={this.onScrollEndDrag('month')}
                     onMomentumScrollEnd={this.onScrollEndDrag('month')}
-                    getItemLayout={this.getItemLayout}
+                    getItemLayout={this.getMonthItemLayout}
                     maxToRenderPerBatch={5}
                 />
             </View>
