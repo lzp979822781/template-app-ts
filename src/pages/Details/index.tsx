@@ -3,7 +3,7 @@ import { View, Image } from "@tarojs/components";
 import classnames from 'classnames';
 import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
-import { Text } from 'react-native';
+import { Text, NativeModules } from 'react-native';
 import JDRequest from "@/utils/jd-request.bak";
 import { get as getGlobalData } from '@/utils/global_data';
 import { DetailPopup, UserDrop, DetailList } from './components';
@@ -12,6 +12,7 @@ import { DetailPopup, UserDrop, DetailList } from './components';
 import { handleAmout, replaceDot } from './util';
 import REQUEST_URL from './services';
 import "./index.scss";
+import { findLastKey } from "lodash";
 
 const TABPRREFIX = 'detail-tab';
 const DROP_PREFIX = 'detail-drop';
@@ -223,11 +224,13 @@ export default class Details extends Component<any, any> {
 
     onTimeSelect = () => {
         const { timeVisible } = this.state;
+        NativeModules.JYNativeModule.hideTabbar(true);
         this.setState({ timeVisible: !timeVisible, userVisible: false })
     }
 
     onCustomSelect = () => {
         const { userVisible } = this.state;
+        NativeModules.JYNativeModule.hideTabbar(false);
         this.setState({ userVisible: !userVisible, timeVisible: false })
     } 
 
@@ -254,6 +257,7 @@ export default class Details extends Component<any, any> {
     onTimeSave = newTime => {
         this.pageNum = 1;
         const [selectStart, selectEnd] = newTime.split('-');
+        NativeModules.JYNativeModule.hideTabbar(false);
         this.setState({
             selectStart,
             selectEnd,
@@ -363,6 +367,7 @@ export default class Details extends Component<any, any> {
 
     onPopupClose = () => {
         this.setState({ timeVisible: false })
+        NativeModules.JYNativeModule.hideTabbar(false);
     }
 
     onRefresh = () => {
@@ -403,11 +408,11 @@ export default class Details extends Component<any, any> {
     }
 
     renderPlaceTabbar = () => {
-        // return (
-        //     <View className='detail-tabbar'>
-        //     </View>
-        // );
-        return null;
+        return (
+            <View className='detail-tabbar'>
+            </View>
+        );
+        // return null;
     }
 
     render() {
@@ -439,7 +444,7 @@ export default class Details extends Component<any, any> {
                     onTimeSave={this.onTimeSave}
                 />
                 { this.renderUserSelect()}
-                { this.renderPlaceTabbar()}
+                {/* { this.renderPlaceTabbar()} */}
             </View>
         );
     }

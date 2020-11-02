@@ -85,7 +85,7 @@ class PopUp extends Component<IProps, PageState> {
                 maskClosable={maskClosable}
             >
                 { this.renderHeader()}
-                <View style={{ paddingTop: 10, paddingBottom: 10, ...rnBodyStyle }}>
+                <View style={{ paddingTop: 10, ...rnBodyStyle }}>
                     { this.props.children }
                 </View>
                 <Footer />
