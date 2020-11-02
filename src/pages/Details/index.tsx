@@ -172,7 +172,7 @@ export default class Details extends Component<any, any> {
 
     listSuccessCallback = (res) => {
         const { data: { commissionOrderVoPage: { data } = { data: [] } } = {} } = res;
-
+        
         let listData = this.state.shopList;
         let shopList = [];
         let lastPage = false;
