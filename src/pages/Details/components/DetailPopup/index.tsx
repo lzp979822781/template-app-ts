@@ -66,6 +66,19 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { visible: nextVisible, showValue } = nextProps;
+        const [startDate, endDate] = showValue.split('-');
+        const { visible: visible } = this.props;
+        if( nextVisible && !visible) {
+            this.setState({
+                cacheTime: showValue,
+                cacheStart: startDate,
+                cacheEnd: endDate
+            })
+        }
+    }
+
     onReset = () => {
         this.setState({ 
             cacheTime: '',
@@ -182,7 +195,13 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
         }
     }
 
+    isSelectStart = () => {
+        const { selectField } = this.state;
+        return selectField === 'start';
+    }
+
     render() {
+        
         const {visible = false } = this.props;
         const startText = this.getSelfTime('start');
         const endText = this.getSelfTime("end");
@@ -195,6 +214,13 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
 
         const btnCls = classnames(`${prefix}-btn-container`, {
             [`${prefix}-gap`]: !startText && !endText
+        })
+
+        const textContainer = classnames(`${prefix}-text-container`, {
+            [`${prefix}-text-selected`]: !this.isSelectStart()
+        })
+        const timeContainer = classnames(`${prefix}-time-container`, {
+            [`${prefix}-text-selected`]: this.isSelectStart()
         })
 
         return (
@@ -213,7 +239,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
                     </View>
                     <View className={`${prefix}-body`}>
                         <View className={`${prefix}-title`}>
-                            <View className={`${prefix}-text-container`} onClick={this.onChangeTimeTab('start')}>
+                            <View className={textContainer} onClick={this.onChangeTimeTab('start')}>
 
                                 <View className={`${prefix}-text-container-container`}>
 
@@ -232,7 +258,7 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
 
                             </View>
 
-                            <View className={`${prefix}-time-container`} onClick={this.onChangeTimeTab('end')}>
+                            <View className={timeContainer} onClick={this.onChangeTimeTab('end')}>
                                 <View className={`${prefix}-time-container-title-up`}>
                                     <View className={`${prefix}-time-container-title-up-left`}>
                                         <Text className={`${prefix}-time-container-title-up-left-text`}>末</Text>
