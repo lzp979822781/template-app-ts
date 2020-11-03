@@ -2,7 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import classnames from 'classnames';
 import { View, Image, Text } from "@tarojs/components";
 import { PopUp, Gradient } from "@/components";
-import { compareDate } from '@/utils/utils';
+import { compareDate, formatDate } from '@/utils/utils';
 
 import DetailDatePicker from '../DetailDatePicker';
 
@@ -56,24 +56,26 @@ const timeFieldObj = {
 class DetailPopup extends Component<pageOwnProps, pageOwnState> {
     constructor(props) {
         super(props);
-        const [startDate, endDate] = props.showValue.split('-');
+        const showValue = props.showValue || `${formatDate()}-${formatDate()}`;
+        const [startDate, endDate] = showValue.split('-');
         this.state = {  
             selectField: 'start',
-            cacheTime: props.showValue,
+            cacheTime: showValue,
             cacheStart: startDate,
             cacheEnd: endDate
         };
     }
 
     componentWillReceiveProps(nextProps) {
-        const { visible: nextVisible, showValue } = nextProps;
+        const { visible: nextVisible, showValue: nextShowValue } = nextProps;
+        const showValue = nextShowValue ? nextShowValue : `${formatDate()}-${formatDate()}`;
         const [startDate, endDate] = showValue.split('-');
         const { visible: visible } = this.props;
         if( nextVisible && !visible) {
             this.setState({
                 cacheTime: showValue,
-                cacheStart: startDate,
-                cacheEnd: endDate
+                cacheStart: startDate || formatDate(),
+                cacheEnd: endDate || formatDate()
             })
         }
     }
