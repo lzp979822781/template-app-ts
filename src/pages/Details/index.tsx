@@ -108,8 +108,8 @@ export default class Details extends Component<any, any> {
         super(props);
         this.state = {
             timeVisible: false,
-            selectStart: '2020.09.01',
-            selectEnd: '2020.10.16',
+            selectStart: '',
+            selectEnd: '',
 
             userVisible: false,
             refreshing: false,
@@ -172,7 +172,7 @@ export default class Details extends Component<any, any> {
 
     listSuccessCallback = (res) => {
         const { data: { commissionOrderVoPage: { data } = { data: [] } } = {} } = res;
-
+        
         let listData = this.state.shopList;
         let shopList = [];
         let lastPage = false;
