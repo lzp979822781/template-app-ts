@@ -89,7 +89,7 @@ export default class PurchaseRelation extends Component<any, any> {
                 lastPage
             },
             () => {
-                if (data.length < this.state.pageSize) {
+                if (lastPage) {
                     this.canAction = false;
                 } else {
                     setTimeout(() => {

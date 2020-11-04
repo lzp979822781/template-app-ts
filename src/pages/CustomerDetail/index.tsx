@@ -273,7 +273,7 @@ class CustomerDetail extends Component<any, any> {
                 lastPage
             },
             () => {
-                if (resData.length < this.state.pageSize) {
+                if (lastPage) {
                     this.canAction = false;
                 } else {
                     this.timer = setTimeout(() => {
@@ -348,11 +348,11 @@ class CustomerDetail extends Component<any, any> {
         if (res.success) {
             NativeModules.JYNativeModule.updateCustomerList();
             this.setState({ visible: false }, () => {
-                // Taro.showToast({
-                //     title: "绑定成功",
-                //     icon: 'success',
-                //     duration: 1500
-                // });
+                Taro.showToast({
+                    title: "绑定成功",
+                    icon: 'success',
+                    duration: 1500
+                });
                 this.timer = setTimeout(() => {
                     JDJumping.jumpToBack();
                 }, 1500);
