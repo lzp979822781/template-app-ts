@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 

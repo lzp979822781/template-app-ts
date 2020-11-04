@@ -2,7 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import { JDNetworkErrorView  } from '@jdreact/jdreact-core-lib';
 import { NativeModules } from 'react-native';
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 import { StatusBar, Header } from "@/components";
 import InfoItem from '../InfoItem';
 

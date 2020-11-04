@@ -2,7 +2,7 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, CommonList } from "@/components/index";
 import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 
 export default class PurchaseRelation extends Component<any, any> {

@@ -3,7 +3,7 @@ import { View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Gradient, Drawer } from "@/components/index";
 import { Clipboard } from 'react-native';
 import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 import { Toast } from "@/utils/model";
 import { hoverStyle } from "@/utils/utils";
 import Accordion from "./Accordion/index";

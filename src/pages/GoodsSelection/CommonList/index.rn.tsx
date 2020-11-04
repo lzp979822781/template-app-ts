@@ -4,7 +4,7 @@ import { View, Text, Image } from "@tarojs/components";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import { Gradient } from "@/components/index";
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 import "./index.scss";
 
 interface ReadonlyStringArray {

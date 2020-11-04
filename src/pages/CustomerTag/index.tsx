@@ -5,7 +5,7 @@ import { StatusBar, Header, JDModal, JDListItem } from "@/components/index";
 import { get as getGlobalData } from '@/utils/global_data';
 import { JDNetworkErrorView, JDJumping } from '@jdreact/jdreact-core-lib';
 import { hoverStyle } from "@/utils/utils";
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 
 import "./index.scss";
 

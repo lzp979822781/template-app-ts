@@ -5,7 +5,7 @@ import { Modal, Dimensions } from "react-native";
 import ImageViewer from "react-native-image-zoom-viewer";
 import { JDJumping } from "@jdreact/jdreact-core-lib";
 import { hoverStyle } from "@/utils/utils";
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import PopUpCon from "./PopUpCon/index";
 import PlanBtn from "./PlanBtn/index";

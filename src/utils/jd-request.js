@@ -29,8 +29,8 @@ const Observer = (function () {
 
     off(functionId, disable, res) {
       const index = handle.indexOf(functionId);
-      
-      if(res && !res.success){
+
+      if (res && !res.success) {
         errorMsgList.push(res.errorMsg);
       };
 
@@ -41,11 +41,13 @@ const Observer = (function () {
       //最后一个请求完成后关闭
       if (handle.length == 0 && !disable) {
         Loading.hide();
-        if(errorMsgList && errorMsgList.length>0){
-          errorMsgList = errorMsgList.filter(function(item){
-              return !!item;
+        if (errorMsgList && errorMsgList.length > 0) {
+          errorMsgList = errorMsgList.filter(function (item) {
+            return !!item;
           });
-          Toast.show(errorMsgList.join())
+          if (errorMsgList.length != '') {
+            Toast.show(errorMsgList.join())
+          };
         };
       };
     }

@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { JDJumping, JDDevice, JDConfirmDialog, JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import CardBase from "./CardBase/index";
 import CardTag from "./CardTag/index";
@@ -28,6 +28,8 @@ type PageOwnProps = {};
 type PageState = {};
 
 class CustomerDetail extends Component<any, any> {
+    
+    
 
     constructor(props) {
         super(props);
@@ -73,9 +75,9 @@ class CustomerDetail extends Component<any, any> {
         }
     }
 
-    timer = null;
+    timer: any;
 
-    listener = null;
+    listener: any;
 
     listenerFn = () => {
         if (Platform.OS === "android") {

@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { View, Image, Input, Text } from "@tarojs/components";
 import { FlatList } from 'react-native';
 import debounce from 'lodash/debounce';
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 import REQUEST_URL from '../../services';
 
 import './index.scss';

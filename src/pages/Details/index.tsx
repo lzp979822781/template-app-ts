@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { StatusBar, Header } from "@/components/index";
 import { Text, NativeModules } from 'react-native';
-import JDRequest from "@/utils/jd-request.bak";
+import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
 import { DetailPopup, UserDrop, DetailList } from './components';
 
