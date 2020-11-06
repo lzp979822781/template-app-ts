@@ -110,7 +110,7 @@ export default class GoodsSelection extends Component<any, any> {
             venderName: null,
             sortIndex: 0,
             ...category
-        });
+        }, true);
 
         if (res.success) {
             const resData = res.data.map((item) => {
@@ -467,13 +467,13 @@ export default class GoodsSelection extends Component<any, any> {
             {
                 shopName,
                 show: false,
-                refreshing: true,
+                // refreshing: true,
                 currentPage: 1,
                 timeout: 0
             },
             () => {
                 this.loadList();
-                this.getShopData();
+                // this.getShopData();
             }
         );
     }

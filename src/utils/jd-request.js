@@ -10,7 +10,7 @@ const Observer = (function () {
   const handle = [];
   let errorMsgList = [];
   return {
-    on(functionId, disable) {
+    on(functionId) {
       const index = handle.indexOf(functionId);
 
       //防止触发重复未完成的请求
@@ -21,13 +21,13 @@ const Observer = (function () {
       };
 
       //第一个且能用loading的触发加载弹框
-      if (handle.length == 1 && !disable) {
+      if (handle.length == 1) {
         errorMsgList = [];
         Loading.show()
       };
     },
 
-    off(functionId, disable, res) {
+    off(functionId, res) {
       const index = handle.indexOf(functionId);
 
       if (res && !res.success) {
@@ -39,7 +39,7 @@ const Observer = (function () {
       };
 
       //最后一个请求完成后关闭
-      if (handle.length == 0 && !disable) {
+      if (handle.length == 0) {
         Loading.hide();
         if (errorMsgList && errorMsgList.length > 0) {
           errorMsgList = errorMsgList.filter(function (item) {
@@ -55,7 +55,7 @@ const Observer = (function () {
 })();
 
 export default class JDRequest {
-  static timeoutFetch = (originalFetch, functionId, disable, timeout = 30000) => {
+  static timeoutFetch = (originalFetch, functionId, timeout = 30000) => {
 
     const timeoutPromise = new Promise((resolve, reject) => {
       if (timer) {
@@ -72,32 +72,39 @@ export default class JDRequest {
     const abortablePromise = Promise.race([originalFetch, timeoutPromise])
 
     abortablePromise.then(function (res) {
-      Observer.off(functionId, disable, res);
+      Observer.off(functionId, res);
     }, function (err) {
-      Observer.off(functionId, disable, err);
+      Observer.off(functionId, err);
     });
 
     return abortablePromise;
   };
 
   static get(functionId, param = null, disable) {
-    const hasFunctionId = Observer.on(functionId, disable);
+    let hasFunctionId;
+    if (!disable) {
+      hasFunctionId = Observer.on(functionId);
+    }
+
     //防止重复请求
     if (hasFunctionId) {
       return;
     };
     const newParam = this.formatParam(param);
-    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "get"), functionId, disable);
+    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "get"), functionId);
   }
 
   static post(functionId, param = null, disable) {
-    const hasFunctionId = Observer.on(functionId, disable);
+    let hasFunctionId;
+    if (!disable) {
+      hasFunctionId = Observer.on(functionId);
+    }
     //防止重复请求
     if (hasFunctionId) {
       return;
     };
     const newParam = this.formatParam(param);
-    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "post"), functionId, disable);
+    return this.timeoutFetch(JDNetwork.fetchWithoutHost(functionId, newParam, "post"), functionId);
   }
 
   static formatParam(param) {
