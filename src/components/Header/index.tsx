@@ -1,5 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
+import { NativeModules, Platform } from "react-native";
 import {
     JDJumping
 } from '@jdreact/jdreact-core-lib';
@@ -7,7 +8,7 @@ import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 
 interface Option {
-    titleColor:  string;
+    titleColor: string;
     title?: string;
     backApp: boolean;
     noBack?: boolean;
@@ -50,7 +51,11 @@ class Header extends Component<Option, any> {
                     hoverStyle={hoverStyle}
                     onClick={() => {
                         if (backApp) {
-                            JDJumping.jumpToBack();
+                            if (Platform.OS == "ios" && NativeModules.JYNativeModule && NativeModules.JYNativeModule.goBack) {
+                                NativeModules.JYNativeModule.goBack();
+                            } else {
+                                JDJumping.jumpToBack();
+                            }
                         } else {
                             Taro.navigateBack();
                         }
@@ -78,7 +83,7 @@ class Header extends Component<Option, any> {
             <View className={conClassName}>
                 <View className='back-con'>{this.renderLeft()}</View>
                 <View className='title-con'>
-                    <Text className='title-txt' style={{color: titleColor}}>{this.props.title}</Text>
+                    <Text className='title-txt' style={{ color: titleColor }}>{this.props.title}</Text>
                 </View>
                 <View className='handle-con'>{this.renderRight()}</View>
             </View>

@@ -418,6 +418,7 @@ export default class GoodsSelection extends Component<any, any> {
                     <StatusBar />
                     <Header
                         title='推品'
+                        noBack
                         // eslint-disable-next-line taro/render-props
                         renderRight={this.renderRight()}
                     />
