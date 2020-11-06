@@ -53,9 +53,8 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
     componentWillMount() {
-        this.loadList();
-        this.getShopData();
-
+        // this.loadList();
+        // this.getShopData();
         Taro.getSystemInfo({
             success: res => {
                 this.setState({
@@ -368,7 +367,7 @@ export default class GoodsSelection extends Component<any, any> {
         this.setState(
             {
                 category,
-                refreshing: true,
+                // refreshing: true,
                 currentPage: 1,
                 timeout: 0
             },

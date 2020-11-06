@@ -39,9 +39,22 @@ export default class Accordion extends Component<baseProps, any> {
     getData = async () => {
         const res = await JDRequest.get("mjying_assist_partner_sku_category");
         if (res.success) {
+            const cat1Id = res.data[0].id;
+            const cat2Id = res.data[0].child[0].id;
+            const cat3Id = res.data[0].child[0].child[0].id;
             this.setState({
-                data: res.data
+                data: res.data,
+                cat1Id,
+                cat2Id,
+                cat3Id
+            }, () => {
+                this.props.onChange({
+                    cat1Id,
+                    cat2Id,
+                    cat3Id
+                });
             });
+
         };
     }
 
@@ -50,7 +63,7 @@ export default class Accordion extends Component<baseProps, any> {
         if (item.level == 2) {
             this.setState({
                 cat2Id: item.id,
-                show:  item.id == cat2Id ? !show : true
+                show: item.id == cat2Id ? !show : true
             });
         } else {
             this.setState({
