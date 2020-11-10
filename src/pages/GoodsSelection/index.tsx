@@ -2,7 +2,7 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Gradient, Drawer } from "@/components/index";
 import { Clipboard } from 'react-native';
-import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
+import { JDJumping, JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
 import { Toast } from "@/utils/model";
 import { hoverStyle } from "@/utils/utils";
@@ -13,6 +13,7 @@ import CommonList from "./CommonList/index";
 
 
 import "./index.scss";
+
 
 export default class GoodsSelection extends Component<any, any> {
     constructor(props) {
@@ -53,8 +54,6 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
     componentWillMount() {
-        // this.loadList();
-        // this.getShopData();
         Taro.getSystemInfo({
             success: res => {
                 this.setState({
@@ -65,9 +64,9 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
 
-    // componentDidFocus() {
-    //     NativeModules.JYNativeModule.hideTabbar(false);
-    // }
+    componentDidFocus() {
+        NativeModules.JYNativeModule.hideTabbar(false);
+    }
 
     config: Config = {
         navigationBarTitleText: "",
@@ -91,7 +90,7 @@ export default class GoodsSelection extends Component<any, any> {
                 ...category
             }
         );
-        
+
         if (res.success) {
             this.setVisitListData(res);
         } else {
@@ -219,11 +218,14 @@ export default class GoodsSelection extends Component<any, any> {
         }
     };
 
-    renderItem=({ item, index }) => {
+    renderItem = ({ item, index }) => {
         const className = "list-item-box";
         return (
             <View key={item.id} className={className}>
-                <View className='list-item'>
+                <View className='list-item' hoverStyle={hoverStyle} onClick={() => {
+                    this.jumpToApp(item);
+                }}
+                >
                     <View className='list-image-box'>
                         <Image
                             className='item-image'
@@ -271,13 +273,13 @@ export default class GoodsSelection extends Component<any, any> {
                             {item.shopName || "--"}
                         </Text>
                         <View className='item-dec'>
-                            <View className='item-dec-btn-1' hoverStyle={hoverStyle} onClick={() => {
+                            <View hoverStopPropagation className='item-dec-btn-1' hoverStyle={hoverStyle} onClick={() => {
                                 this.copy("href", item);
                             }}
                             >
                                 <Text className='item-dec-btn-txt-1'>复制PC链接</Text>
                             </View>
-                            <View className='item-dec-btn-2' hoverStyle={hoverStyle} onClick={() => {
+                            <View hoverStopPropagation className='item-dec-btn-2' hoverStyle={hoverStyle} onClick={() => {
                                 this.copy("name", item);
                             }}
                             >
@@ -345,6 +347,12 @@ export default class GoodsSelection extends Component<any, any> {
             url: url
         });
     };
+
+    jumpToApp(data) {
+        JDJumping.jumpToOpenapp(
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"productDetailPage", "params": ${JSON.stringify({ skuId: data.skuId })}}`
+        );
+    }
 
     renderRight = () => {
         return <View

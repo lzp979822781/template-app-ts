@@ -2,7 +2,7 @@ import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Gradient, Drawer } from "@/components/index";
 import { StyleSheet, TouchableOpacity, Clipboard, NativeModules } from 'react-native';
-import { JDNetworkErrorView, JDSearchInput } from '@jdreact/jdreact-core-lib';
+import { JDJumping, JDNetworkErrorView, JDSearchInput } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
 import { Toast } from "@/utils/model";
 import { hoverStyle } from "@/utils/utils";
@@ -203,6 +203,12 @@ export default class GoodsSelection extends Component<any, any> {
         // console.log(str); //我是文本
     }
 
+    jumpToApp(data) {
+        JDJumping.jumpToOpenapp(
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"productDetailPage", "params": ${JSON.stringify({ skuId: data.skuId })}}`
+        );
+    }
+
     getBonusStr = (item) => {
         if (item.promBonusStr) {
             return item.promBonusStr;
@@ -213,131 +219,15 @@ export default class GoodsSelection extends Component<any, any> {
         }
     };
 
-    renderItems() {
-        const { data = [] } = this.state;
-        // const Shadow = {
-        //     shadowColor: "#000000",
-        //     shadowOffset: { w: 4, h: 4 },
-        //     shadowOpacity: 0.1,
-        //     shadowRadius: 4,
-        //     elevation: 2
-        // };
-
-        return data.map((item, index) => {
-            const className =
-                index === 0 ? "list-item-box top-gap" : "list-item-box";
-            return (
-                <View className={className} key={item.id}>
-                    <View className='list-item'>
-                        <View className='list-image-box'>
-                            <Image
-                                className='item-image'
-                                mode='aspectFit' // 部分支持 scaleToFill, aspectFit, aspectFill, widthFix
-                                src={item.mainImg ? `https://img12.360buyimg.com/img/${item.mainImg}` : "https://img14.360buyimg.com/imagetools/jfs/t1/143550/5/8037/22510/5f58ac4fE3ea6f5d3/17d424f4c4437584.png"}
-                            />
-                        </View>
-                        <View className='content-box'>
-                            <Text numberOfLines={2} className='item-title'>
-                                {item.skuName}
-                            </Text>
-                            <View className='item-row'>
-                                <View className='factory-icon'>
-                                    <Text className='factory-icon-txt'>厂</Text>
-                                </View>
-                                <Text
-                                    numberOfLines={1}
-                                    className='factory-name'
-                                >
-                                    {item.factoryName || "--"}
-                                </Text>
-                            </View>
-                            <View className='item-row'>
-                                <Text className='factory-valid-time'>{`有效期至 ${item.validTime || "--"}`}</Text>
-                                <View className='item-row-vertical-line'></View>
-                                <View className='factory-medical-spec-con'>
-                                    <Text
-                                        className='factory-medical-spec'
-                                        numberOfLines={1}
-                                    >
-                                        {item.medicalSpec || "--"}
-                                    </Text>
-                                </View>
-                            </View>
-                            <View className='item-row'>
-                                <Text className='factory-price-unit'>¥</Text>
-                                <Text className='factory-price'>{item.priceStr || "--"}</Text>
-                                <Text
-                                    className='factory-sale30'
-                                >
-                                    {`月销 ${typeof item.sale30 === "number" ? item.sale30 : "--"}`}
-                                </Text>
-                            </View>
-                            <Text className='factory-shop-name'>
-                                {item.shopName || "--"}
-                            </Text>
-                            <View className='item-division'></View>
-                            <View className='item-dec'>
-                                <View
-                                    style={{ flex: 1, flexDirection: "row", alignItems: "flex-end" }}
-                                >
-                                    <Text style={{ fontSize: 11, color: "#333840" }}>佣金</Text>
-                                    <Text style={{ fontSize: 9, color: "#F2270C", marginLeft: 5 }}>¥</Text>
-                                    <Text
-                                        style={{
-                                            fontSize: 15,
-                                            color: "#F2270C",
-                                            marginLeft: 2,
-                                            marginBottom: -1,
-                                        }}
-                                    >
-                                        {this.getBonusStr(item)}
-                                    </Text>
-                                </View>
-                                <View
-                                    style={{
-                                        flex: 1,
-                                        flexDirection: "row",
-                                        justifyContent: "flex-end",
-                                    }}
-                                >
-                                    <View className='item-dec-btn-1' hoverStyle={hoverStyle} onClick={() => {
-                                        this.copy("href", item);
-                                    }}
-                                    >
-                                        <Text className='item-dec-btn-txt-1'>复制PC链接</Text>
-                                    </View>
-                                    <View className='item-dec-btn-2' hoverStyle={hoverStyle} onClick={() => {
-                                        this.copy("name", item);
-                                    }}
-                                    >
-                                        <Gradient
-                                            style={{
-                                                height: 22,
-                                                borderRadius: 11,
-                                                alignItems: "center",
-                                                justifyContent: "center"
-                                            }}
-                                            angle={0}
-                                            colors={["#F2140C", "#F2270C", "#F24D0C"]}
-                                        >
-                                            <Text className='item-dec-btn-txt-2'>复制标题</Text>
-                                        </Gradient>
-                                    </View>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-            );
-        });
-    }
-
     renderItem = ({ item, index }) => {
         const className =
             index === 0 ? "list-item-box top-gap" : "list-item-box";
         return (
             <View className={className} key={item.id}>
-                <View className='list-item'>
+                <View className='list-item' hoverStyle={hoverStyle} onClick={() => {
+                    this.jumpToApp(item);
+                }}
+                >
                     <View className='list-image-box'>
                         <Image
                             className='item-image'
@@ -409,13 +299,13 @@ export default class GoodsSelection extends Component<any, any> {
                                     justifyContent: "flex-end",
                                 }}
                             >
-                                <View className='item-dec-btn-1' hoverStyle={hoverStyle} onClick={() => {
+                                <View hoverStopPropagation className='item-dec-btn-1' hoverStyle={hoverStyle} onClick={() => {
                                     this.copy("href", item);
                                 }}
                                 >
                                     <Text className='item-dec-btn-txt-1'>复制PC链接</Text>
                                 </View>
-                                <View className='item-dec-btn-2' hoverStyle={hoverStyle} onClick={() => {
+                                <View hoverStopPropagation className='item-dec-btn-2' hoverStyle={hoverStyle} onClick={() => {
                                     this.copy("name", item);
                                 }}
                                 >
