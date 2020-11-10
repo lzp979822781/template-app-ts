@@ -12,7 +12,6 @@ import { DetailPopup, UserDrop, DetailList } from './components';
 import { handleAmout, replaceDot } from './util';
 import REQUEST_URL from './services';
 import "./index.scss";
-import { findLastKey } from "lodash";
 
 const TABPRREFIX = 'detail-tab';
 const DROP_PREFIX = 'detail-drop';
