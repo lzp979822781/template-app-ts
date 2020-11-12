@@ -71,12 +71,17 @@ export default class GoodsSelection extends Component<any, any> {
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
 
+    commonList: any;
+
     loadList = async () => {
         const { currentPage, pageSize, category, shopName, keywords } = this.state;
+        if(currentPage===1){
+            this.commonList.goTop();
+        };
         const res = await JDRequest.post(
             "mjying_assist_partner_sku_list",
             {
-                pageNum: 1,
+                pageNum: currentPage,
                 pageSize: pageSize,
                 skuId: null,
                 skuName: keywords,
@@ -472,6 +477,7 @@ export default class GoodsSelection extends Component<any, any> {
                                 onEndReached={this.onEndReached}
                                 statusCode={statusCode}
                                 onRefresh={this.onRefresh}
+                                ref={(flatList) => this.commonList = flatList}
                             />
                         </View>
                     </View>

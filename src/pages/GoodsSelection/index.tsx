@@ -16,6 +16,7 @@ import "./index.scss";
 
 
 export default class GoodsSelection extends Component<any, any> {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -80,14 +81,19 @@ export default class GoodsSelection extends Component<any, any> {
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
 
+    commonList: any;
+
     loadList = async () => {
         // const params = this.$router.params;
 
         const { currentPage, pageSize, category, shopName } = this.state;
+        if(currentPage===1){
+            this.commonList.goTop();
+        };
         const res = await JDRequest.post(
             "mjying_assist_partner_sku_list",
             {
-                pageNum: 1,
+                pageNum: currentPage,
                 pageSize: pageSize,
                 skuId: null,
                 skuName: null,
@@ -409,6 +415,8 @@ export default class GoodsSelection extends Component<any, any> {
         );
     }
 
+
+
     render() {
         const { lastPage, data, loaded, timeout, show, statusCode, refreshing, sections, tabbarHeight } = this.state;
         if (timeout === 1) {
@@ -451,6 +459,7 @@ export default class GoodsSelection extends Component<any, any> {
                                 onEndReached={this.onEndReached}
                                 statusCode={statusCode}
                                 onRefresh={this.onRefresh}
+                                ref={(flatList) => this.commonList = flatList}
                             />
                         </View>
                     </View>

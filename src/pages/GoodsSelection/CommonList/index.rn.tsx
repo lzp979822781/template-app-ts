@@ -32,12 +32,15 @@ export default class CommonList extends Component<baseProps, any> {
         onEndReached: () => { },
         onRefresh: () => { },
     };
+   
 
     constructor(props) {
         super(props);
         this.state = {
         }
     }
+
+    _flatList: any;
 
     ListFooterComponent = () => {
         if (this.props.noMoreShow) {
@@ -197,9 +200,14 @@ export default class CommonList extends Component<baseProps, any> {
         return null;
     };
 
+    goTop=()=>{
+        this._flatList.scrollToOffset({animated: false, viewPosition: 0, index: 0}); //跳转到顶部
+    }
+
     render() {
         return (
             <FlatList
+                ref={(flatList) => this._flatList = flatList}
                 data={this.props.data}
                 renderItem={this.props.renderItem}
                 ListFooterComponent={this.ListFooterComponent}
