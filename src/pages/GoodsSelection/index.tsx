@@ -87,7 +87,7 @@ export default class GoodsSelection extends Component<any, any> {
         // const params = this.$router.params;
 
         const { currentPage, pageSize, category, shopName } = this.state;
-        if(currentPage===1){
+        if (currentPage === 1) {
             this.commonList.goTop();
         };
         const res = await JDRequest.post(
@@ -417,6 +417,32 @@ export default class GoodsSelection extends Component<any, any> {
 
 
 
+    renderGotoTop = () => {
+        const { showHideGoTop } = this.state;
+        if (showHideGoTop) {
+            return <View
+                className='goto-top'
+                onClick={() => {
+                    this.commonList.goTop();
+                }}
+                hoverStyle={hoverStyle}
+            >
+                <Image
+                    className='goto-top-icon'
+                    src='https://img12.360buyimg.com/imagetools/jfs/t1/128133/24/18259/8755/5faceaf1E8582a459/7b29f35f7ec23b0e.png'
+                />
+            </View>
+        }
+
+        return null;
+    };
+
+    showHideGoTop = (isShow) => {
+        this.setState({
+            showHideGoTop: isShow
+        })
+    }
+
     render() {
         const { lastPage, data, loaded, timeout, show, statusCode, refreshing, sections, tabbarHeight } = this.state;
         if (timeout === 1) {
@@ -459,12 +485,15 @@ export default class GoodsSelection extends Component<any, any> {
                                 onEndReached={this.onEndReached}
                                 statusCode={statusCode}
                                 onRefresh={this.onRefresh}
+                                showHideGoTop={this.showHideGoTop}
                                 ref={(flatList) => this.commonList = flatList}
                             />
                         </View>
                     </View>
                 </Drawer>
-                <View style={{ height: tabbarHeight, width: "100%" }}></View>
+                <View style={{ height: tabbarHeight, width: "100%", position: "relative" }}>
+                    {this.renderGotoTop()}
+                </View>
             </View>
         );
     }

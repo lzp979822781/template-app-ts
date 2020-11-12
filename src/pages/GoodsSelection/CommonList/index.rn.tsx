@@ -31,8 +31,9 @@ export default class CommonList extends Component<baseProps, any> {
         },
         onEndReached: () => { },
         onRefresh: () => { },
+        showHideGoTop: () => { },
     };
-   
+
 
     constructor(props) {
         super(props);
@@ -200,8 +201,20 @@ export default class CommonList extends Component<baseProps, any> {
         return null;
     };
 
-    goTop=()=>{
-        this._flatList.scrollToOffset({animated: false, viewPosition: 0, index: 0}); //跳转到顶部
+    goTop = () => {
+        this._flatList.scrollToOffset({ animated: false, viewPosition: 0, index: 0 }); //跳转到顶部
+    }
+
+    onScroll = (e) => {
+        const { showHideGoTop } = this.props;
+        const top = e.nativeEvent.contentOffset.y;
+        if (top > 200 && !this.showHide) {
+            this.showHide = true;
+            showHideGoTop(true);
+        } else if (top <= 200 && this.showHide) {
+            this.showHide = false;
+            showHideGoTop(false);
+        };
     }
 
     render() {
@@ -215,6 +228,7 @@ export default class CommonList extends Component<baseProps, any> {
                 refreshing={this.props.refreshing}
                 onEndReached={this.props.onEndReached}
                 onEndReachedThreshold={0.01}
+                onScroll={this.onScroll}
                 refreshControl={
                     <RefreshControl
                         tintColor="#F23030"

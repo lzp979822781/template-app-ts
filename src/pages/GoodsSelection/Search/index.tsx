@@ -373,6 +373,32 @@ export default class GoodsSelection extends Component<any, any> {
         );
     }
 
+    renderGotoTop = () => {
+        const { showHideGoTop } = this.state;
+        if (showHideGoTop) {
+            return <View
+                className='goto-top'
+                onClick={() => {
+                    this.commonList.goTop();
+                }}
+                hoverStyle={hoverStyle}
+            >
+                <Image
+                    className='goto-top-icon'
+                    src='https://img12.360buyimg.com/imagetools/jfs/t1/128133/24/18259/8755/5faceaf1E8582a459/7b29f35f7ec23b0e.png'
+                />
+            </View>
+        }
+
+        return null;
+    };
+
+    showHideGoTop = (isShow) => {
+        this.setState({
+            showHideGoTop: isShow
+        })
+    }
+
     render() {
         const { lastPage, data, loaded, pageSize, timeout, systemInfo, show, statusCode, refreshing, sections } = this.state;
         if (timeout === 1) {
@@ -477,11 +503,15 @@ export default class GoodsSelection extends Component<any, any> {
                                 onEndReached={this.onEndReached}
                                 statusCode={statusCode}
                                 onRefresh={this.onRefresh}
+                                showHideGoTop={this.showHideGoTop}
                                 ref={(flatList) => this.commonList = flatList}
                             />
                         </View>
                     </View>
                 </Drawer>
+                <View style={{ height: 0, width: "100%", position: "relative" }}>
+                    {this.renderGotoTop()}
+                </View>
                 <Footer></Footer>
             </View>
         );
