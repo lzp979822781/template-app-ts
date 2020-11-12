@@ -40,9 +40,12 @@
 
 .list-box-content {
     flex: 1;
+    background-color: #FFFFFF;
 }
 
 .list-item-box {
+    border-bottom-width:1px;
+    border-bottom-color: #F7F8FB;
     background-color: #FFFFFF;
 }
 

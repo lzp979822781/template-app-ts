@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, Gradient, Drawer } from "@/components/index";
+import { StatusBar, Header, Gradient, Drawer, Footer } from "@/components/index";
 import { StyleSheet, TouchableOpacity, Clipboard, NativeModules } from 'react-native';
 import { JDJumping, JDNetworkErrorView, JDSearchInput } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
@@ -205,7 +205,7 @@ export default class GoodsSelection extends Component<any, any> {
 
     jumpToApp(data) {
         JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"productDetailPage", "params": ${JSON.stringify({ skuId: data.skuId })}}`
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"productDetailPage", "params": ${JSON.stringify({ skuId: data.skuId+"" })}}`
         );
     }
 
@@ -476,6 +476,7 @@ export default class GoodsSelection extends Component<any, any> {
                         </View>
                     </View>
                 </Drawer>
+                <Footer></Footer>
             </View>
         );
     }

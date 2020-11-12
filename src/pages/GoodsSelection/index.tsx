@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { StatusBar, Header, Gradient, Drawer } from "@/components/index";
-import { Clipboard } from 'react-native';
+import { Clipboard, NativeModules } from 'react-native';
 import { JDJumping, JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
 import { Toast } from "@/utils/model";
@@ -47,7 +47,8 @@ export default class GoodsSelection extends Component<any, any> {
             ],
             sections: [],
             statusCode: "1",
-            systemInfo: {}
+            systemInfo: {},
+            tabbarHeight: 0
         };
         this.onRefresh = this.onRefresh.bind(this);
         this.onEndReached = this.onEndReached.bind(this);
@@ -60,6 +61,12 @@ export default class GoodsSelection extends Component<any, any> {
                     systemInfo: res
                 })
             }
+        });
+
+        NativeModules.JYNativeModule.getTabbarHeight((tabbarHeight) => {
+            this.setState({
+                tabbarHeight
+            });
         });
     }
 
@@ -350,7 +357,7 @@ export default class GoodsSelection extends Component<any, any> {
 
     jumpToApp(data) {
         JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"productDetailPage", "params": ${JSON.stringify({ skuId: data.skuId })}}`
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"productDetailPage", "params": ${JSON.stringify({ skuId: data.skuId + "" })}}`
         );
     }
 
@@ -403,7 +410,7 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
     render() {
-        const { lastPage, data, loaded, timeout, show, statusCode, refreshing, sections } = this.state;
+        const { lastPage, data, loaded, timeout, show, statusCode, refreshing, sections, tabbarHeight } = this.state;
         if (timeout === 1) {
             return <View className='container'>
                 <StatusBar></StatusBar>
@@ -448,6 +455,7 @@ export default class GoodsSelection extends Component<any, any> {
                         </View>
                     </View>
                 </Drawer>
+                <View style={{ height: tabbarHeight, width: "100%" }}></View>
             </View>
         );
     }
