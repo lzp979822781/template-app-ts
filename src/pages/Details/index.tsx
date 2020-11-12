@@ -16,7 +16,7 @@ import "./index.scss";
 const TABPRREFIX = 'detail-tab';
 const DROP_PREFIX = 'detail-drop';
 const TABLE_PREFIX = 'detail-list';
-const imgSrc = "https://img14.360buyimg.com/imagetools/jfs/t1/150235/13/5346/468881/5f34ef8fE104f2b45/f46728fd2c561d64.png";
+// const imgSrc = "https://img14.360buyimg.com/imagetools/jfs/t1/150235/13/5346/468881/5f34ef8fE104f2b45/f46728fd2c561d64.png";
 
 const imagUrl = {
     downUnselectedImg: 'https://img14.360buyimg.com/imagetools/jfs/t1/150332/1/9010/355/5f696548Edcad7077/4f76b8c1aa722712.png',
@@ -25,7 +25,7 @@ const imagUrl = {
     upSelectedImg: 'https://img11.360buyimg.com/imagetools/jfs/t1/123011/27/13237/854/5f699a27E514cb10d/0490e45d8a47c75f.png'
 }
 
-const testData = [
+/* const testData = [
     {
         id: 1,
         shopName: '京东自营医药旗舰店',
@@ -100,7 +100,7 @@ const testData = [
             },
         ]
     },
-]
+] */
 
 export default class Details extends Component<any, any> {
     constructor(props) {

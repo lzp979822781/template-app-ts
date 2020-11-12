@@ -21,7 +21,7 @@ function replaceDot(str) {
     return str ? str.replace(/\./g, '-') : str;
 }
 
-const DEFAULT_BG = 'https://img13.360buyimg.com/imagetools/jfs/t1/152803/38/3518/226152/5f9511faE038ad77b/14766f54f6d4610a.png';
+const DEFAULT_BG = 'https://img11.360buyimg.com/imagetools/jfs/t1/140195/31/7995/18951/5f58ac4eE019f959a/dcd004d1aa98f66f.png';
 
 
 // eslint-disable-next-line import/prefer-default-export
