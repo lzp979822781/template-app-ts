@@ -101,7 +101,7 @@ class Test extends Component<any, any> {
                 }
             ],
             checkedVal: [],
-            // fileList: [],
+            fileList: [],
             drawerShow: false, // 抽屉是否展示
         }
 
@@ -260,10 +260,11 @@ class Test extends Component<any, any> {
                         }
                         // const { success, data } = await this.uploadFile(file);
                         const uploadRes = await upload({ url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76', file})
-                        /* const { fileList } = this.state;
+                        const { data, success } = uploadRes;
+                        const { fileList } = this.state;
                         if(success) {
-                            this.setState({ fileList: fileList.concat})
-                        } */
+                            this.setState({ fileList: fileList.concat(data)})
+                        }
                         console.log("uploadRes", uploadRes);
                     })
                 }
@@ -319,9 +320,22 @@ class Test extends Component<any, any> {
     }
 
     renderUpload = () => {
+        const { fileList } = this.state;
+        
         return (
-            <View className='test-upload-container' onClick={this.onChooseImg}>
-                <Image src={uploadImg} className='test-upload-img' />
+            <View className='test-upload-container'>
+                {
+                    fileList.map(({ url }) => {
+                        return (
+                            <View key={UUID()}>
+                                <Image src={url} className='test-upload-img' />
+                            </View>
+                        )
+                    })
+                }
+                <View onClick={this.onChooseImg}>
+                    <Image src={uploadImg} className='test-upload-img' />
+                </View>
             </View>
         )
     }
