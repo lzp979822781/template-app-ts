@@ -35,6 +35,7 @@ export default class CommonList extends Component<baseProps, any> {
     };
 
 
+
     constructor(props) {
         super(props);
         this.state = {
@@ -42,7 +43,7 @@ export default class CommonList extends Component<baseProps, any> {
     }
 
     _flatList: any;
-
+    showHide: boolean;
     ListFooterComponent = () => {
         if (this.props.noMoreShow) {
             return (
