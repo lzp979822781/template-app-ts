@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Text, Image } from "@tarojs/components";
+import { ScrollView, View, Text, Image } from "@tarojs/components";
 import JDRequest from "@/utils/jd-request";
 import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
@@ -120,9 +120,9 @@ export default class Accordion extends Component<baseProps, any> {
     render() {
         const { data } = this.state;
         return (
-            <View className='accordion'>
+            <ScrollView className='accordion'>
                 {data[0] && data[0].child ? this.renderHeader(data[0].child) : null}
-            </View>
+            </ScrollView>
         )
     }
 }
