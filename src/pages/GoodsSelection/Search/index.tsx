@@ -493,7 +493,7 @@ export default class GoodsSelection extends Component<any, any> {
                     </View>
                     <View className='list-box'>
                         <View className='list-box-content'>
-                            <Filter openDrawer={this.openDrawer} />
+                            {loaded ? <Filter openDrawer={this.openDrawer} /> : null}
                             <CommonList
                                 loaded={loaded}
                                 data={data}
