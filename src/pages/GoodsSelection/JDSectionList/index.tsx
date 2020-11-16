@@ -68,7 +68,7 @@ export default class Filter extends Component<baseProps, any> {
     renderListItem = ({ item }) => {
         const { selected } = this.state;
         let itemTxt = [styles.itemTxt];
-        const boolSelected = selected.includes(item);
+        const boolSelected = selected===item;
         if (boolSelected) {
             itemTxt = [styles.itemTxt, styles.itemTxtAct];
         };
