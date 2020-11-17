@@ -256,7 +256,7 @@ export default class GoodsSelection extends Component<any, any> {
                             </Text>
                         </View>
                         <View className='item-row'>
-                            <Text className='factory-valid-time'>{`有效期至 ${item.validTime || "--"}`}</Text>
+                            <Text className='factory-valid-time'>{item.validTime ? `有效期至 ${item.validTime}` : "暂无有效期"}</Text>
                             <View className='item-row-vertical-line'></View>
                             <View className='factory-medical-spec-con'>
                                 <Text
