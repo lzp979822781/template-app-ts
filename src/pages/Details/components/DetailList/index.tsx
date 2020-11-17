@@ -169,7 +169,7 @@ class DetailList extends Component<pageOwnProps> {
 
     renderItem = (item) => {
         return (
-            <View className={ITEM_PREFIX} onClick={this.onItemClick(item)}>
+            <View key={item.id} className={ITEM_PREFIX} onClick={this.onItemClick(item)}>
                 { this.renderTitle(item)}
                 { this.renderBaseline()}
                 { this.renderContent(item)}
@@ -207,7 +207,6 @@ class DetailList extends Component<pageOwnProps> {
                     <FlatList
                         data={data}
                         renderItem={({ item }) => this.renderItem(item)}
-                        keyExtractor={item => item.id}
                         onEndReachedThreshold={0.01}
                         onEndReached={onEndReached}
                         ListEmptyComponent={this.ListEmptyComponent}
