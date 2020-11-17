@@ -111,8 +111,10 @@ class DetailPopup extends Component<pageOwnProps, pageOwnState> {
     onPopSave = () => {
         
         const { cacheStart, cacheEnd, cacheTime} = this.state;
-        if(!compareDate(cacheStart, cacheEnd)) {
-            return;
+        if(cacheStart || cacheEnd) {
+            if(!compareDate(cacheStart, cacheEnd)) {
+                return;
+            }
         }
         // 设置选中值
         this.saveTime(cacheTime);
