@@ -102,7 +102,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
             pageNum
         };
 
-        const { success, data: { totalCount, pageSize, data }, } = await JDRequest.post(REQUEST_URL.customerList, param, true);
+        const { success, data: { totalCount, pageSize, data=[] }, } = await JDRequest.post(REQUEST_URL.customerList, param, true);
         if(success) {
             const resData = pageNum === 1 ? [{
                 id: 'all',
