@@ -103,11 +103,12 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
         };
 
         const { success, data: { totalCount, pageSize, data=[] }, } = await JDRequest.post(REQUEST_URL.customerList, param, true);
+        const reqData = Array.isArray(data) ? data: [];
         if(success) {
             const resData = pageNum === 1 ? [{
                 id: 'all',
                 customerName: '全部客户'
-            }, ...data]: listData.concat(data)
+            }, ...reqData]: listData.concat(reqData)
             this.setState({
                 listData: resData,
                 pageNum: pageNum + 1
@@ -177,7 +178,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
                 <View className={`${SEARCH_PREFIX}-img`}>
                     <Image className={`${SEARCH_PREFIX}-img-icon`} src={searchSrc} />
                 </View>
-                <Input className={`${SEARCH_PREFIX}-input`} type='text' onInput={this.onInput} value={searchValue} textAlignVertical="center"/>
+                <Input className={`${SEARCH_PREFIX}-input`} type='text' onInput={this.onInput} value={searchValue} textAlignVertical='center' />
                 <View className={clearCls} onClick={this.onClear}>
                     { searchValue ? <Image className={`${SEARCH_PREFIX}-clear-img`} src={delSrc} /> : null}
                 </View>
@@ -203,7 +204,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
             [`${PREFIX}-list-item-text-active`]: isSelect
         })
         return (
-            <View className={`${PREFIX}-list-item`} onClick={this.onItemClick(item)}>
+            <View key={item.id} className={`${PREFIX}-list-item`} onClick={this.onItemClick(item)}>
                 <View className={`${PREFIX}-list-item-container`}>
                     <Text className={textCls}>{customerName || "--"}</Text>
                 </View>
@@ -229,7 +230,6 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
                 <FlatList 
                     data={listData}
                     renderItem={({ item }) => this.renderItem(item)}
-                    keyExtractor={item => item.id}
                     extraData={selectedUser}
                     onEndReachedThreshold={0.5}
                     style={{ maxHeight: 230}}
