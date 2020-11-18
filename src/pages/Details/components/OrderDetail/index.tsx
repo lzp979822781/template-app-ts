@@ -153,7 +153,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
 
                 <View className={`${PREFIX}-total-order`}>
                     <Image className={`${PREFIX}-total-order-img`} src={imgSrc.orderStateSrc} />
-                    <Text className={`${PREFIX}-total-order-text`}>{statusDesc}</Text>
+                    <Text className={`${PREFIX}-total-order-text`}>{statusDesc ? `订单-${statusDesc}` : ''}</Text>
                 </View>
             </View>
         );

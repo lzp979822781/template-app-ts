@@ -60,7 +60,7 @@ class OrderDetailGood extends Component<pageOwnProps> {
                 <View>
                     <Text className={`${PREFIX_CONTENT}-name`} numberOfLines={1} >{skuName}</Text>
                 </View>
-                <Text className={`${PREFIX_CONTENT}-spec`}>{`规格：${medicalSpec}`}</Text>
+                <Text className={`${PREFIX_CONTENT}-spec`}>{`规格：${medicalSpec || '--'}`}</Text>
                 { this.renderFooter()}
             </View>
         );
