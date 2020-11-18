@@ -25,13 +25,14 @@ type pageOwnState = {
     listData: Array<object>,
     loading: boolean,
     pageNum: number,
+    lastPage: boolean,
 }
 
 
 
 type pageOwnProps = {
     currentVal: User,
-    onSave: (param ) => any
+    onSave: (param) => any
 }
 
 const testData = [
@@ -77,12 +78,13 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
     constructor(props) {
         super(props);
         const { customerName } = props.currentVal;
-        this.state = {  
+        this.state = {
             searchValue: customerName || '',
             listData: [],
             selectedUser: props.currentVal,
             loading: true,
-            pageNum: 1
+            pageNum: 1,
+            lastPage: false
         };
         this.getUserData = debounce(this.getUserData, 100);
     }
@@ -102,26 +104,28 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
             pageNum
         };
 
-        const { success, data: { totalCount, pageSize, data=[] }, } = await JDRequest.post(REQUEST_URL.customerList, param, true);
-        const reqData = Array.isArray(data) ? data: [];
-        if(success) {
+        const { success, data: { totalCount, pageSize, lastPage, data = [] }, } = await JDRequest.post(REQUEST_URL.customerList, param, true);
+        const reqData = Array.isArray(data) ? data : [];
+        if (success) {
             const resData = pageNum === 1 ? [{
                 id: 'all',
                 customerName: '全部客户'
-            }, ...reqData]: listData.concat(reqData)
+            }, ...reqData] : listData.concat(reqData)
             this.setState({
                 listData: resData,
-                pageNum: pageNum + 1
+                pageNum: pageNum + 1,
+                lastPage
             })
         }
 
-        if(totalCount && pageSize) {
+        if (totalCount && pageSize) {
             this.totalPage = Math.floor(totalCount / pageSize);
         }
     }
 
     onLoadingData = () => {
-        if(this.isLoadComplete()) {
+        const { lastPage } = this.state;
+        if (lastPage) {
             this.setState({ loading: false });
             return;
         }
@@ -136,7 +140,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
 
     handlePropsMethod = (methodName: string, paramArr = []) => {
         const { [methodName]: method } = this.props;
-        if(method) {
+        if (method) {
             method(...paramArr);
         }
     }
@@ -146,8 +150,8 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
      */
     onClear = () => {
         const { searchValue } = this.state;
-        if(!searchValue) return;
-        this.setState({ searchValue: ''}, () => {
+        if (!searchValue) return;
+        this.setState({ searchValue: '' }, () => {
             this.getUserData()
         });
         // 执行空值搜索
@@ -155,14 +159,14 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
 
     timer;
 
-    onInput = ({ target: { value }}) => {
-        this.setState({ 
+    onInput = ({ target: { value } }) => {
+        this.setState({
             searchValue: value,
             pageNum: 1
         }, () => {
             clearTimeout(this.timer);
-            
-            this.timer = setTimeout(()=>{
+
+            this.timer = setTimeout(() => {
                 this.getUserData()
             }, 200);
         })
@@ -180,7 +184,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
                 </View>
                 <Input className={`${SEARCH_PREFIX}-input`} type='text' onInput={this.onInput} value={searchValue} textAlignVertical='center' />
                 <View className={clearCls} onClick={this.onClear}>
-                    { searchValue ? <Image className={`${SEARCH_PREFIX}-clear-img`} src={delSrc} /> : null}
+                    {searchValue ? <Image className={`${SEARCH_PREFIX}-clear-img`} src={delSrc} /> : null}
                 </View>
             </View>
         );
@@ -189,7 +193,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
     onItemClick = (item) => () => {
         const { customerName } = item;
         // item 点击事件
-        this.setState({ 
+        this.setState({
             selectedUser: item,
             searchValue: customerName
         });
@@ -212,7 +216,7 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
                     <View className={`${PREFIX}-list-item-icon`}>
                         <Image className={`${PREFIX}-list-item-icon-img`} src={selectedSrc} />
                     </View>
-                ): null }
+                ) : null}
             </View>
         );
     }
@@ -224,15 +228,15 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
      */
     renderList = () => {
         const { listData, selectedUser } = this.state;
-        if(!Array.isArray(listData) || (Array.isArray(listData) && !listData.length)) return null;
+        if (!Array.isArray(listData) || (Array.isArray(listData) && !listData.length)) return null;
         return (
             <View className={`${PREFIX}-list`}>
-                <FlatList 
+                <FlatList
                     data={listData}
                     renderItem={({ item }) => this.renderItem(item)}
                     extraData={selectedUser}
                     onEndReachedThreshold={0.5}
-                    style={{ maxHeight: 230}}
+                    style={{ maxHeight: 230 }}
                     ListFooterComponent={this.renderFooter}
                     onEndReached={this.onLoadingData}
                 />
@@ -242,11 +246,11 @@ class UserDrop extends Component<pageOwnProps, pageOwnState> {
 
     renderFooter = () => {
         const { listData, loading } = this.state;
-        if(!Array.isArray(listData) || (Array.isArray(listData) && !listData.length)) return null;
-        
+        if (!Array.isArray(listData) || (Array.isArray(listData) && !listData.length)) return null;
+
         return (
             <View className={`${PREFIX}-list-footer`}>
-                <Text>{ loading ? '加载中' : '没有更多了～'}</Text>
+                <Text>{loading ? '加载中' : '没有更多了～'}</Text>
             </View>
         );
     }

@@ -167,7 +167,6 @@ export default class Details extends Component<any, any> {
             ...param,
             pageSize: this.pageSize
         });
-        
         if(res.success){
             this.listSuccessCallback(res);
         }else{
@@ -382,7 +381,7 @@ export default class Details extends Component<any, any> {
                 refreshing: true
             },
             () => {
-                this.getListData();
+                this.getData();
             }
         );
     }
@@ -392,7 +391,7 @@ export default class Details extends Component<any, any> {
         if (this.canAction) {
             this.canAction = false;
             this.pageNum = this.pageNum+1;
-            this.getListData();
+            this.getData();
         }
     }
 
