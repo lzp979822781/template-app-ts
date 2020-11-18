@@ -2,6 +2,7 @@
 
 .order-detail {
     background-color: #F3F3F4;
+    flex: 1;
     &-total {
         height: 271px;
         background-color: #F23030;
@@ -39,13 +40,14 @@
 
     &-shop {
         border-radius: 12px 12px 0 0;
-        height: 1024px;
+        flex: 1;
         margin-top: -20px;
         z-index: 1;
         background-color: #fff;
 
         &-head {
             margin-top: 40px;
+            height: 88px;
             @include flex(row, flex-start, center);
             @include padding(0, 30px, 0, 30px);
             &-icon {
@@ -71,6 +73,7 @@
 
         &-content {
             margin-top: 9px;
+            flex: 1;
         }
     }
 

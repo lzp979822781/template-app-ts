@@ -1,6 +1,6 @@
-import Taro, { Component } from "@tarojs/taro";
-import { View, Image, Text } from "@tarojs/components";
-import { JDNetworkErrorView  } from '@jdreact/jdreact-core-lib';
+import Taro, { Component, Config } from "@tarojs/taro";
+import { ScrollView, View, Image, Text } from "@tarojs/components";
+import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
 import { NativeModules } from 'react-native';
 import JDRequest from "@/utils/jd-request";
 import { StatusBar, Header } from "@/components";
@@ -26,7 +26,7 @@ type pageOwnProps = {
 }
 
 interface GoodItem {
-    id: string|number,
+    id: string | number,
     img: string,
     skuName: string,
     medicalSpec: string,
@@ -54,7 +54,7 @@ type pageOwnState = {
 
 class OrderDetail extends Component<pageOwnProps, pageOwnState> {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             data: {
@@ -87,7 +87,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         // 通过this.$router.params获取值
         this.getData();
         NativeModules.JYNativeModule.hideTabbar(true);
@@ -97,6 +97,11 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
         NativeModules.JYNativeModule.hideTabbar(false);
     }
 
+    config: Config = {
+        navigationBarTitleText: "",
+        disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
+    };
+
     getData = async () => {
         const param = this.getParam();
         const res = await JDRequest.get(REQUEST_URL.orderDetail, param);
@@ -105,20 +110,20 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
     }
 
     handleSuccess = ({ success, data }) => {
-        if(!success) return;
-        this.setState({ 
+        if (!success) return;
+        this.setState({
             isTimeout: false,
             data
         })
     }
 
     handleError = ({ success }) => {
-        if(success) return;
+        if (success) return;
         this.setState({ isTimeout: true })
     }
 
     getParam = () => {
-        const { prePage: { dealId = 120299792086 } = { }} = this.$router.params;
+        const { prePage: { dealId = 120299792086 } = {} } = this.$router.params;
         return { id: dealId };
     }
 
@@ -155,7 +160,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
      * @returns
      */
     renderShopHead = () => {
-        const { data: { shopName, orderSkuNum }} = this.state;
+        const { data: { shopName, orderSkuNum } } = this.state;
         return (
             <View className={`${PREFIX}-shop-head`}>
                 <Image className={`${PREFIX}-shop-head-icon`} src={imgSrc.shopHomeSrc} />
@@ -168,17 +173,18 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
     }
 
     renderGoods = () => {
-        const { data: { partnerCentCommissionOrderSkuVoList: goodsData }} = this.state;
+        const { data: { partnerCentCommissionOrderSkuVoList: goodsData } } = this.state;
         return (
-            <View className={`${PREFIX}-shop-content`}>
+            <ScrollView className={`${PREFIX}-shop-content`}>
                 {
                     goodsData.map((item) => {
                         return (
-                            <OrderDetailGood  data={item} key={item.id} />
+                            <OrderDetailGood data={item} key={item.id} />
                         );
                     })
                 }
-            </View>
+                { this.renderEnd()}
+            </ScrollView>
         );
     }
 
@@ -187,7 +193,6 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
             <View className={`${PREFIX}-shop`}>
                 { this.renderShopHead()}
                 { this.renderGoods()}
-                { this.renderEnd()}
             </View>
         );
     }
@@ -215,22 +220,22 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
                         return <InfoItem data={item} key={item.label} />
                     })
                 }
-                
+
             </View>
         );
     }
 
     renderAmountInfo = () => {
-        const data =[
-            { label: '问诊金额', value: 429.8},
-            { label: '立减', value: 0, prefixSign: '-'},
-            { label: '商品优惠', value: 30, prefixSign: '+'},
+        const data = [
+            { label: '问诊金额', value: 429.8 },
+            { label: '立减', value: 0, prefixSign: '-' },
+            { label: '商品优惠', value: 30, prefixSign: '+' },
         ];
 
         return (
             <View className={`${PREFIX}-amount-info`}>
                 {
-                    data.map((item) => ( <AmountItem data={item} key={item.label} />))
+                    data.map((item) => (<AmountItem data={item} key={item.label} />))
                 }
                 <View className={`${PREFIX}-amount-info-real`}>
                     <Text className={`${PREFIX}-amount-info-real-desc`}>实付款</Text>
@@ -244,7 +249,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
 
         const { isTimeout } = this.state;
 
-        if(isTimeout) {
+        if (isTimeout) {
             return (
                 <View className={`${PREFIX}-net-error`}>
                     <StatusBar />
