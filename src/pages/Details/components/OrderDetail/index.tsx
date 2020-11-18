@@ -123,8 +123,12 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
     }
 
     getParam = () => {
-        const { prePage: { dealId = 120299792086 } = {} } = this.$router.params;
-        return { id: dealId };
+        const { prePage } = this.$router.params;
+        if(prePage) {
+            const { dealId } = JSON.parse(prePage);
+            return { id: dealId };
+        }
+        return { id: ''};
     }
 
     updata = () => {
