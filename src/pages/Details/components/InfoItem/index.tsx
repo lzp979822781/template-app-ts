@@ -23,8 +23,8 @@ class InfoItem extends Component<pageOwnProps> {
         const { data: {label, value}} = this.props;
         return (
             <View className={PREFIX}>
-                <Text className={`${PREFIX}-label`}>{label}</Text>
-                <Text className={`${PREFIX}-value`}>{value}</Text>
+                <Text className={`${PREFIX}-label`}>{label || '--'}</Text>
+                <Text className={`${PREFIX}-value`}>{value || '--'}</Text>
             </View>
         );
     }

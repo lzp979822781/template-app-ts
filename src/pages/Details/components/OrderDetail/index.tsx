@@ -153,7 +153,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
 
                 <View className={`${PREFIX}-total-order`}>
                     <Image className={`${PREFIX}-total-order-img`} src={imgSrc.orderStateSrc} />
-                    <Text className={`${PREFIX}-total-order-text`}>{statusDesc ? `订单-${statusDesc}` : ''}</Text>
+                    <Text className={`${PREFIX}-total-order-text`}>{statusDesc ? `订单-${statusDesc}` : '订单-状态异常'}</Text>
                 </View>
             </View>
         );
@@ -169,9 +169,9 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
             <View className={`${PREFIX}-shop-head`}>
                 <Image className={`${PREFIX}-shop-head-icon`} src={imgSrc.shopHomeSrc} />
                 <View className={`${PREFIX}-shop-head-container`}>
-                    <Text className={`${PREFIX}-shop-head-name`} numberOfLines={1}>{shopName}</Text>
+                    <Text className={`${PREFIX}-shop-head-name`} numberOfLines={1}>{shopName || '--'}</Text>
                 </View>
-                <Text className={`${PREFIX}-shop-head-num`}>{`共${orderSkuNum}件分佣商品`}</Text>
+                <Text className={`${PREFIX}-shop-head-num`}>{`共${orderSkuNum || '--'}件分佣商品`}</Text>
             </View>
         );
     }

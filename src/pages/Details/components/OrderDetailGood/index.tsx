@@ -44,7 +44,7 @@ class OrderDetailGood extends Component<pageOwnProps> {
         return (
             <View className={`${PREFIX_CONTENT}-footer`}> 
                 <Text className={`${PREFIX_CONTENT}-footer-price`}>{`¥${handleAmout(price)}`}</Text>
-                <Text className={`${PREFIX_CONTENT}-footer-num`}>{`x${num}`}</Text>
+                <Text className={`${PREFIX_CONTENT}-footer-num`}>{`x${(typeof num === 'number' || typeof num === 'string') ? num : '--'}`}</Text>
                 <View className={`${PREFIX_CONTENT}-footer-commission`}>
                     <Text className={`${PREFIX_CONTENT}-footer-commission-desc`}>预估佣金 </Text>
                     <Text className={`${PREFIX_CONTENT}-footer-commission-text`}>{`¥${handleAmout(commission)}`}</Text>
