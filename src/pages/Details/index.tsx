@@ -117,12 +117,18 @@ export default class Details extends Component<any, any> {
             selectUser: {},
             shopList: [],
             commission: 0, // 预估总金额
-            isTimeout: false
+            isTimeout: false,
+            tabbarHeight: 0
         };
     }
 
     componentDidMount() {
         this.getData();
+        NativeModules.JYNativeModule.getTabbarHeight((tabbarHeight) => {
+            this.setState({
+                tabbarHeight
+            });
+        });
     }
 
     pageNum = 1;
@@ -415,7 +421,7 @@ export default class Details extends Component<any, any> {
     }
 
     render() {
-        const { timeVisible, isTimeout } = this.state;
+        const { timeVisible, isTimeout, tabbarHeight } = this.state;
 
         if (isTimeout) {
             return (
@@ -436,6 +442,8 @@ export default class Details extends Component<any, any> {
                 { this.renderTop()}
                 { this.renderTab()}
                 { this.renderList()}
+                <View style={{ height: tabbarHeight, width: "100%"}}>
+                </View>
                 <DetailPopup
                     visible={!!timeVisible}
                     onClose={this.onPopupClose}
