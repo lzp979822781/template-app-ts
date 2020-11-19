@@ -63,7 +63,16 @@ export default class Accordion extends Component<baseProps, any> {
         if (item.level == 2) {
             this.setState({
                 cat2Id: item.id,
+                cat3Id: item.child[0].id,
                 show: item.id == cat2Id ? !show : true
+            }, () => {
+                if (this.state.show && item.id != cat2Id) {
+                    this.props.onChange({
+                        cat1Id: this.state.data[0].id,
+                        cat2Id: this.state.cat2Id,
+                        cat3Id: this.state.cat3Id
+                    });
+                }
             });
         } else {
             this.setState({

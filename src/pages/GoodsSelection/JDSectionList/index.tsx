@@ -2,7 +2,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { SafeAreaView, SectionList, FlatList, StyleSheet, TouchableOpacity, Platform } from 'react-native';
-import { StatusBar, Header } from "@/components/index";
+import { StatusBar, Header, Footer } from "@/components/index";
 import { hoverStyle } from "@/utils/utils";
 import "./index.scss";
 // import sampleData from './sampleData';
@@ -192,7 +192,7 @@ export default class Filter extends Component<baseProps, any> {
     }
 
     render() {
-        const { data } = this.props;
+        const { data, showFooter } = this.props;
         return (
             <View className='filter-drawer'>
                 <StatusBar noBgColor />
@@ -230,6 +230,7 @@ export default class Filter extends Component<baseProps, any> {
                         <Text className="select-btn-confirm-txt">确定</Text>
                     </View>
                 </View>
+               {showFooter ? <Footer></Footer> : null}
             </View>
         );
     }

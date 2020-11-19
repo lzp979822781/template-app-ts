@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import { StatusBar, Header, Gradient, Drawer, Footer } from "@/components/index";
+import { StatusBar, Header, Gradient, Drawer } from "@/components/index";
 import { StyleSheet, TouchableOpacity, Clipboard, NativeModules } from 'react-native';
 import { JDJumping, JDNetworkErrorView, JDSearchInput } from '@jdreact/jdreact-core-lib';
 import JDRequest from "@/utils/jd-request";
@@ -30,19 +30,7 @@ export default class GoodsSelection extends Component<any, any> {
                 cat3Id: null
             },
             keywords: "",
-            data: [
-                // {
-                //     id: 1,
-                //     skuName: "华北制阿莫西林克拉维酸钾干混悬剂药 10粒50g一疗…",
-                //     factoryName: "华北制药医药股份有限公司",
-                //     validTime: "2020-05-22",
-                //     medicalSpec: "2盒10000",
-                //     priceStr: "399",
-                //     sale30: "月销248",
-                //     shopName: "北京京东佳康旗舰店",
-                //     shopLogo: ""
-                // }
-            ],
+            data: [],
             sections: [],
             statusCode: "1",
             systemInfo: {}
@@ -51,7 +39,7 @@ export default class GoodsSelection extends Component<any, any> {
         this.onEndReached = this.onEndReached.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getShopData();
         Taro.getSystemInfo({
             success: res => {
@@ -148,6 +136,7 @@ export default class GoodsSelection extends Component<any, any> {
         }
         this.setState(
             {
+                statusCode: res.code,
                 data: listData,
                 refreshing: false,
                 loaded: true,
@@ -452,7 +441,7 @@ export default class GoodsSelection extends Component<any, any> {
                     show={show}
                     drawerBackgroundColor="rgba(0,0,0,0.5)"
                     onOpenChange={this.onOpenChange}
-                    renderSidebar={<JDSectionList data={sections} onOk={this.setShop} closeDrawer={this.closeDrawer} ref={(sectionList) => this.JDSectionList = sectionList} />}
+                    renderSidebar={<JDSectionList showFooter data={sections} onOk={this.setShop} closeDrawer={this.closeDrawer} ref={(sectionList) => this.JDSectionList = sectionList} />}
                 >
                     <StatusBar />
                     <Header title='商品搜索' />
@@ -515,7 +504,6 @@ export default class GoodsSelection extends Component<any, any> {
                 <View style={{ height: 0, width: "100%", position: "relative" }}>
                     {this.renderGotoTop()}
                 </View>
-                <Footer></Footer>
             </View>
         );
     }

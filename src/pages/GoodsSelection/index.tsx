@@ -11,13 +11,9 @@ import Filter from "./Filter/index";
 import JDSectionList from "./JDSectionList/index";
 import CommonList from "./CommonList/index";
 
-
 import "./index.scss";
 
-
 export default class GoodsSelection extends Component<any, any> {
-    
-
     constructor(props) {
         super(props);
         this.state = {
@@ -35,17 +31,6 @@ export default class GoodsSelection extends Component<any, any> {
                 cat3Id: null
             },
             data: [
-                // {
-                //     id: 1,
-                //     skuName: "华北制阿莫西林克拉维酸钾干混悬剂药 10粒50g一疗…",
-                //     factoryName: "华北制药医药股份有限公司",
-                //     validTime: "2020-05-22",
-                //     medicalSpec: "2盒10000",
-                //     priceStr: "399",
-                //     sale30: "月销248",
-                //     shopName: "北京京东佳康旗舰店",
-                //     shopLogo: ""
-                // }
             ],
             sections: [],
             statusCode: "1",
@@ -71,7 +56,6 @@ export default class GoodsSelection extends Component<any, any> {
             });
         });
     }
-
 
     componentDidFocus() {
         NativeModules.JYNativeModule.hideTabbar(false);
@@ -139,7 +123,6 @@ export default class GoodsSelection extends Component<any, any> {
             });
 
             this.setState({
-                statusCode: res.code,
                 sections: resData
             });
         };
@@ -161,6 +144,7 @@ export default class GoodsSelection extends Component<any, any> {
         }
         this.setState(
             {
+                statusCode: res.code,
                 data: listData,
                 refreshing: false,
                 loaded: true,
