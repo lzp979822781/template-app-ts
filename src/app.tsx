@@ -55,7 +55,7 @@ class App extends Component<appProps, any> {
     };
 
     componentWillMount() {
-        const jyNativeData = this.props.jyNativeData || {};
+        const jyNativeData = this.props.jyNativeData || "{}";
         setGlobalData("jyNativeData", JSON.parse(jyNativeData));
     }
 
