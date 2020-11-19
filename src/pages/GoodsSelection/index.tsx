@@ -16,6 +16,7 @@ import "./index.scss";
 
 
 export default class GoodsSelection extends Component<any, any> {
+    
 
     constructor(props) {
         super(props);
@@ -82,7 +83,7 @@ export default class GoodsSelection extends Component<any, any> {
     };
 
     commonList: any;
-
+    JDSectionList: any;
     loadList = async () => {
         // const params = this.$router.params;
 
@@ -394,6 +395,7 @@ export default class GoodsSelection extends Component<any, any> {
                 timeout: 0
             },
             () => {
+                this.JDSectionList.resetState();
                 this.loadList();
                 this.getShopData();
             }
@@ -462,7 +464,7 @@ export default class GoodsSelection extends Component<any, any> {
                     show={show}
                     drawerBackgroundColor="rgba(0,0,0,0.5)"
                     onOpenChange={this.onOpenChange}
-                    renderSidebar={<JDSectionList data={sections} onOk={this.setShop} closeDrawer={this.closeDrawer} />}
+                    renderSidebar={<JDSectionList data={sections} onOk={this.setShop} closeDrawer={this.closeDrawer} ref={(sectionList) => this.JDSectionList = sectionList} />}
                 >
                     <StatusBar />
                     <Header

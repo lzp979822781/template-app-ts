@@ -35,6 +35,7 @@ export default class Filter extends Component<baseProps, any> {
         }
     }
 
+
     sectionList: any;
 
     timer: NodeJS.Timeout;
@@ -53,8 +54,19 @@ export default class Filter extends Component<baseProps, any> {
         </View>
     }
 
+    resetState = () => {
+        this.setState({
+            selected: ""
+        })
+    };
+
     selectItem = (item) => {
-        // const { selected } = this.state;
+        const { selected } = this.state;
+        if(selected==item){
+            this.setState({ selected: "" });
+        }else{
+            this.setState({ selected: item });
+        };
         // if (selected.includes(item)) {
         //     const index = selected.indexOf(item);
         //     selected.splice(index, 1)
@@ -62,7 +74,8 @@ export default class Filter extends Component<baseProps, any> {
         //     selected.push(item)
         // };
 
-        this.setState({ selected: item })
+
+        
     }
 
     renderListItem = ({ item }) => {
@@ -235,7 +248,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     txtCon: {
-       maxWidth:200
+        maxWidth: 200
     },
     itemTxt: {
         fontSize: 15,

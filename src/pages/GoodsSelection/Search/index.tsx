@@ -12,6 +12,7 @@ import CommonList from "../CommonList/index";
 import "./index.scss";
 
 export default class GoodsSelection extends Component<any, any> {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +23,7 @@ export default class GoodsSelection extends Component<any, any> {
             refreshing: false,
             lastPage: false,
             loaded: false,
-            shopName: "",
+            shopName: null,
             category: {
                 cat1Id: null,
                 cat2Id: null,
@@ -72,7 +73,7 @@ export default class GoodsSelection extends Component<any, any> {
     };
 
     commonList: any;
-
+    JDSectionList: any;
     loadList = async () => {
         const { currentPage, pageSize, category, shopName, keywords } = this.state;
         if(currentPage===1){
@@ -110,8 +111,8 @@ export default class GoodsSelection extends Component<any, any> {
             pageNum: currentPage,
             pageSize: pageSize,
             skuId: null,
-            skuName: null,
-            shopName: null,
+            skuName: keywords,
+            shopName: shopName,
             venderName: null,
             sortIndex: 0,
             ...category
@@ -451,7 +452,7 @@ export default class GoodsSelection extends Component<any, any> {
                     show={show}
                     drawerBackgroundColor="rgba(0,0,0,0.5)"
                     onOpenChange={this.onOpenChange}
-                    renderSidebar={<JDSectionList data={sections} onOk={this.setShop} closeDrawer={this.closeDrawer} />}
+                    renderSidebar={<JDSectionList data={sections} onOk={this.setShop} closeDrawer={this.closeDrawer} ref={(sectionList) => this.JDSectionList = sectionList} />}
                 >
                     <StatusBar />
                     <Header title='商品搜索' />
@@ -479,10 +480,12 @@ export default class GoodsSelection extends Component<any, any> {
                             onSubmitEditing={(ele) => {
                                 this.setState(
                                     {
+                                        shopName: null,
                                         currentPage: 1,
                                         keywords: ele.nativeEvent.text,
                                     },
                                     () => {
+                                        this.JDSectionList.resetState();
                                         this.loadList();
                                         this.getShopData();
                                     }
