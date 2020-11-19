@@ -3,7 +3,7 @@ import { View, Image, Text } from "@tarojs/components";
 import { FlatList, RefreshControl } from 'react-native';
 
 import { parseUrl } from '@/utils/utils';
-import { handleAmout, DEFAULT_BG } from '../../util';
+import { DEFAULT_BG, handleDetailAmout } from '../../util';
 
 import './index.scss';
 
@@ -68,11 +68,17 @@ class DetailList extends Component<pageOwnProps> {
         );
     }
 
+    isNormalOrder = type => {
+        return type === 1001;
+    }
+
     renderContentOrder = (item) => {
-        const { dealId, occurTime } = item;
+        const { orderId, dealId,  occurTime, type } = item;
+        const labelText = this.isNormalOrder(type) ? '订单号' : '售后单号';
+        const value = this.isNormalOrder(type) ? orderId : dealId;
         return (
             <View className={`${ITEM_PREFIX}-content-order`}>
-                <Text className={`${ITEM_PREFIX}-content-order-text`}>{`订单号${dealId}`}</Text>
+                <Text className={`${ITEM_PREFIX}-content-order-text`}>{`${labelText}${value}`}</Text>
                 <Text className={`${ITEM_PREFIX}-content-order-text ${ITEM_PREFIX}-content-order-left`}>{occurTime}</Text>
             </View>
         );
@@ -140,7 +146,7 @@ class DetailList extends Component<pageOwnProps> {
             <View className={`${ITEM_PREFIX}-content-footer`}>
                 <Text className={`${ITEM_PREFIX}-content-footer-amount ${ITEM_PREFIX}-content-footer-common`}>{`共${goodsData.length}种分佣商品`}</Text>
                 <Text className={`${ITEM_PREFIX}-content-footer-common`}>预估佣金：</Text>
-                <Text className={`${ITEM_PREFIX}-content-footer-money`}>{`¥${handleAmout(commission)}`}</Text>
+                <Text className={`${ITEM_PREFIX}-content-footer-money`}>{`${handleDetailAmout(commission)}`}</Text>
             </View>
         );
 

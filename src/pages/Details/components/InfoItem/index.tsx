@@ -7,7 +7,7 @@ const PREFIX = `info-item`;
 
 interface Item {
     label: string,
-    value: string|number
+    value: string|number|undefined
 }
 
 type pageOwnProps = {
