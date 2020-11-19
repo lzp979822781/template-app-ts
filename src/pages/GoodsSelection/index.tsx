@@ -387,6 +387,7 @@ export default class GoodsSelection extends Component<any, any> {
     onChangeCategory = (category) => {
         this.setState(
             {
+                shopName: null,
                 category,
                 // refreshing: true,
                 currentPage: 1,

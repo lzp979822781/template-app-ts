@@ -68,14 +68,16 @@ export default class Filter extends Component<baseProps, any> {
     renderListItem = ({ item }) => {
         const { selected } = this.state;
         let itemTxt = [styles.itemTxt];
-        const boolSelected = selected===item;
+        const boolSelected = selected === item;
         if (boolSelected) {
             itemTxt = [styles.itemTxt, styles.itemTxtAct];
         };
 
         return <TouchableOpacity onPress={() => { this.selectItem(item) }}>
             <View style={styles.item}>
-                <Text style={itemTxt}>{item}</Text>
+                <View style={styles.txtCon}>
+                    <Text style={itemTxt} numberOfLines={1} >{item}</Text>
+                </View>
                 {boolSelected ? <Image
                     className='list-item-selected'
                     mode='aspectFit'
@@ -141,7 +143,7 @@ export default class Filter extends Component<baseProps, any> {
         this.sectionList = sectionList;
     };
 
-    onViewableItemsChanged = ({ viewableItems, changed }) => {
+    onViewableItemsChanged = ({ viewableItems }) => {
         const { actLetter } = this.state;
         // console.log(viewableItems);
         let key = "";
@@ -223,7 +225,6 @@ export default class Filter extends Component<baseProps, any> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // paddingRight: 30
     },
     item: {
         alignItems: "center",
@@ -232,6 +233,9 @@ const styles = StyleSheet.create({
         height: 50,
         paddingLeft: 20,
         flexDirection: "row"
+    },
+    txtCon: {
+       maxWidth:200
     },
     itemTxt: {
         fontSize: 15,
