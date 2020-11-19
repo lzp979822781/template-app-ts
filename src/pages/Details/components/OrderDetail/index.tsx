@@ -36,12 +36,14 @@ interface GoodItem {
 }
 
 interface OrderData {
-    commission: number,
+    commission: number|undefined,
     statusDesc: string,
     shopName: string,
     orderSkuNum: number,
-    orderType: number, // 订单类型
+    orderType: number, // 订单类型 旧
+    type: number, // 订单类型 新
     orderId: number, //订单编号
+    dealId: number | undefined, // 售后订单
     companyName: string, // 客户名称
     occurTime: string, //下单时间
     partnerCentCommissionOrderSkuVoList: Array<GoodItem>
@@ -58,14 +60,16 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
         super(props);
         this.state = {
             data: {
-                commission: 1999,
-                statusDesc: '订单-已完成',
-                shopName: '京东自营医药旗舰店',
+                commission: undefined,
+                statusDesc: '--',
+                shopName: '--',
                 orderSkuNum: 20,
                 orderId: 89702987463,
                 orderType: 1001,
-                companyName: '北京协和医院',
-                occurTime: '2019-01-01 17:03:29',
+                type: 1001,
+                companyName: '--',
+                occurTime: '--',
+                dealId: undefined,
                 /* consultAmount: 429.8,
                 reduction: 0,
                 discount: 30,
@@ -139,8 +143,14 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
         })
     }
 
+    isNormalOrder = () => {
+        const { data: { type }} = this.state;
+        return type === 1001;
+    }
+
     renderTotal = () => {
         const { data: { commission, statusDesc } } = this.state;
+        const text = this.isNormalOrder() ? '订单' : '售后';
 
         return (
             <View className={`${PREFIX}-total`}>
@@ -153,7 +163,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
 
                 <View className={`${PREFIX}-total-order`}>
                     <Image className={`${PREFIX}-total-order-img`} src={imgSrc.orderStateSrc} />
-                    <Text className={`${PREFIX}-total-order-text`}>{statusDesc ? `订单-${statusDesc}` : '订单-状态异常'}</Text>
+                    <Text className={`${PREFIX}-total-order-text`}>{statusDesc ? `${text}-${statusDesc}` : `${text}-状态异常`}</Text>
                 </View>
             </View>
         );
@@ -210,12 +220,19 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
     }
 
     renderOrderInfo = () => {
-        const { data: { occurTime, orderId, companyName } } = this.state;
-        const data = [
+        const { data: { occurTime, orderId, companyName, dealId  } } = this.state;
+        const normalData = [
             { label: '客户名称', value: companyName },
             { label: '订单编号', value: orderId },
             { label: '下单时间', value: occurTime },
         ]
+        const serviceData = [
+            { label: '客户名称', value: companyName },
+            { label: '售后单号', value: dealId },
+            { label: '申请时间', value: occurTime },
+        ]
+
+        const data = this.isNormalOrder() ? normalData : serviceData;
 
         return (
             <View className={`${PREFIX}-info`}>
@@ -257,7 +274,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
             return (
                 <View className={`${PREFIX}-net-error`}>
                     <StatusBar />
-                    <Header title='订单详情' />
+                    <Header title={this.isNormalOrder() ? '订单详情' : '服务单详情'} />
                     <View className={`${PREFIX}-net-error-container`}>
                         <JDNetworkErrorView onRetry={this.updata} />
                     </View>
@@ -268,7 +285,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
         return (
             <View className={PREFIX}>
                 <StatusBar />
-                <Header title='订单详情' />
+                <Header title={this.isNormalOrder() ? '订单详情' : '服务单详情'} />
                 {this.renderTotal()}
                 {this.renderShop()}
                 { this.renderOrderInfo()}
