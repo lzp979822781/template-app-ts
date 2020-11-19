@@ -1,7 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 
-import { handleAmout, DEFAULT_BG } from '../../util';
+import { handleAmout, DEFAULT_BG, handleDetailAmout } from '../../util';
 
 import './index.scss';
 
@@ -47,7 +47,7 @@ class OrderDetailGood extends Component<pageOwnProps> {
                 <Text className={`${PREFIX_CONTENT}-footer-num`}>{`x${(typeof num === 'number' || typeof num === 'string') ? num : '--'}`}</Text>
                 <View className={`${PREFIX_CONTENT}-footer-commission`}>
                     <Text className={`${PREFIX_CONTENT}-footer-commission-desc`}>预估佣金 </Text>
-                    <Text className={`${PREFIX_CONTENT}-footer-commission-text`}>{`¥${handleAmout(commission)}`}</Text>
+                    <Text className={`${PREFIX_CONTENT}-footer-commission-text`}>{`${handleDetailAmout(commission)}`}</Text>
                 </View>
             </View>
         );
