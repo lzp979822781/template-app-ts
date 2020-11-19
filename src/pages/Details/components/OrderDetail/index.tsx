@@ -10,7 +10,7 @@ import OrderDetailGood from '../OrderDetailGood';
 import AmountItem from '../AmountItem';
 
 import REQUEST_URL from '../../services';
-import { handleAmout } from '../../util';
+import { handleAmout, handleDetailAmout } from '../../util';
 
 import './index.scss';
 
@@ -148,7 +148,7 @@ class OrderDetail extends Component<pageOwnProps, pageOwnState> {
                     <Text className={`${PREFIX}-total-desc-text`}>预估总佣金(元)</Text>
                 </View>
                 <View className={`${PREFIX}-total-amount`}>
-                    <Text className={`${PREFIX}-total-amount-text`}>{handleAmout(commission)}</Text>
+                    <Text className={`${PREFIX}-total-amount-text`}>{handleDetailAmout(commission)}</Text>
                 </View>
 
                 <View className={`${PREFIX}-total-order`}>

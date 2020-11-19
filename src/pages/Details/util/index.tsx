@@ -12,6 +12,12 @@ function handleAmout(amount) {
     return `${start}.${endStr}`;
 }
 
+function handleDetailAmout(amount) {
+    if(typeof amount !== "number" ) return '--';
+    const absVal = Math.abs(amount);
+    return `${amount > 0 ? '+' : '-'}${handleAmout(absVal)}`
+}
+
 /**
  * 将日期格式 2020.10.20 替换为2020-10-20
  * @param {*} str
@@ -26,6 +32,6 @@ const DEFAULT_BG = 'https://img11.360buyimg.com/imagetools/jfs/t1/140195/31/7995
 
 // eslint-disable-next-line import/prefer-default-export
 export { 
-    handleAmout, replaceDot,
+    handleAmout, replaceDot, handleDetailAmout,
     DEFAULT_BG
 };
