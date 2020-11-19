@@ -29,12 +29,12 @@ const Observer = (function () {
 
     off(functionId, res) {
       const index = handle.indexOf(functionId);
-
-      if (res && !res.success) {
+      const hasFunctionId = index > -1;
+      if (res && !res.success && hasFunctionId) {
         errorMsgList.push(res.errorMsg);
       };
 
-      if (index > -1) {
+      if (hasFunctionId) {
         handle.splice(index, 1);
       };
 
