@@ -51,11 +51,16 @@ class Header extends Component<Option, any> {
                     hoverStyle={hoverStyle}
                     onClick={() => {
                         if (backApp) {
-                            if (Platform.OS == "ios" && NativeModules.JYNativeModule && NativeModules.JYNativeModule.goBack) {
+                            if (NativeModules.JYNativeModule && NativeModules.JYNativeModule.goBack) {
                                 NativeModules.JYNativeModule.goBack();
                             } else {
                                 JDJumping.jumpToBack();
                             }
+
+                            // if (NativeModules.JYNativeModule && NativeModules.JYNativeModule.goBack) {
+                            //     NativeModules.JYNativeModule.goBack();
+                            // }
+
                         } else {
                             Taro.navigateBack();
                         }

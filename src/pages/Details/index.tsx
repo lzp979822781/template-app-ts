@@ -6,6 +6,7 @@ import { StatusBar, Header } from "@/components/index";
 import { Text, NativeModules } from 'react-native';
 import JDRequest from "@/utils/jd-request";
 import { get as getGlobalData } from '@/utils/global_data';
+import { hideTabbar } from '@/utils/multi-utils';
 import { DetailPopup, UserDrop, DetailList } from './components';
 
 // import { JDNetworkErrorView } from '@jdreact/jdreact-core-lib';
@@ -105,6 +106,7 @@ const imagUrl = {
 export default class Details extends Component<any, any> {
     constructor(props) {
         super(props);
+        
         this.state = {
             timeVisible: false,
             selectStart: '',
@@ -123,13 +125,35 @@ export default class Details extends Component<any, any> {
     }
 
     componentDidMount() {
-        this.getData();
         NativeModules.JYNativeModule.getTabbarHeight((tabbarHeight) => {
             this.setState({
                 tabbarHeight
             });
         });
+        this.handleCustomerListToCurrentPage();
     }
+
+    handleCustomerListToCurrentPage = () => {
+        const { customerPin, companyName  }  = getGlobalData('jyNativeData');
+        debugger
+        if(customerPin) {
+            // 设置选中用户
+            this.setState({ selectUser: { 
+                customerPin,
+                customerName: companyName
+            }}, () => {
+                this.getData();
+            })
+        } else {
+            this.getData();
+        } 
+    }
+
+    hasSetCustomPin = () => {
+        const { customerPin  }  = getGlobalData('jyNativeData');
+        return !!customerPin;
+    }
+
 
     pageNum = 1;
     pageSize=10;
@@ -212,8 +236,8 @@ export default class Details extends Component<any, any> {
     getCommonParam = () => {
         const { selectStart, selectEnd, selectUser: { customerPin } } = this.state;
         return {
-            occurStartTime: replaceDot(selectStart),
-            occurEndTime: replaceDot(selectEnd),
+            occurStartTime: replaceDot(selectStart) ? replaceDot(selectStart) : null,
+            occurEndTime: replaceDot(selectEnd) ? replaceDot(selectEnd) : null,
             buyerPin: customerPin
         }
     }
@@ -421,12 +445,12 @@ export default class Details extends Component<any, any> {
 
     render() {
         const { timeVisible, isTimeout, tabbarHeight } = this.state;
-
+        const hasCustomPin = this.hasSetCustomPin();
         if (isTimeout) {
             return (
                 <View className='detail-error'>
                     <StatusBar />
-                    <Header title='明细' noBack />
+                    <Header title='明细' noBack={!hasCustomPin}  backApp />
                     <View className='detail-error-container'>
                         <JDNetworkErrorView onRetry={this.updata} />
                     </View>
@@ -437,7 +461,7 @@ export default class Details extends Component<any, any> {
         return (
             <View className='detail'>
                 <StatusBar />
-                <Header title='明细' noBack />
+                <Header title='明细' noBack={!hasCustomPin} backApp />
                 { this.renderTop()}
                 { this.renderTab()}
                 { this.renderList()}
