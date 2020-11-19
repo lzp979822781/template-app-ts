@@ -40,7 +40,7 @@ export default class GoodsSelection extends Component<any, any> {
     }
 
     componentDidMount() {
-        this.getShopData();
+        // this.getShopData();
         Taro.getSystemInfo({
             success: res => {
                 this.setState({
@@ -85,9 +85,11 @@ export default class GoodsSelection extends Component<any, any> {
             this.setVisitListData(res);
         } else {
             this.setState({
+                loaded: true,
+                statusCode: res.code,
                 currentPage: currentPage > 1 ? currentPage - 1 : 1,
                 refreshing: false,
-                timeout: 1
+                timeout: res.timeout
             });
         };
     };
@@ -136,7 +138,6 @@ export default class GoodsSelection extends Component<any, any> {
         }
         this.setState(
             {
-                statusCode: res.code,
                 data: listData,
                 refreshing: false,
                 loaded: true,

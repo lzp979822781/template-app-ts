@@ -10,15 +10,13 @@ type dataObject = {
 
 type baseProps = {
     data?: dataObject;
-    onChange?: any;
+    onChange: any;
+    onChangeStatusCode: any;
 }
 
 export default class Accordion extends Component<baseProps, any> {
     static defaultProps = {
-        data: {},
-        onChange: () => {
-
-        }
+        data: {}
     }
     constructor(props) {
         super(props);
@@ -55,6 +53,8 @@ export default class Accordion extends Component<baseProps, any> {
                 });
             });
 
+        }else{
+            this.props.onChangeStatusCode(res.code)
         };
     }
 

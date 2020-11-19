@@ -93,9 +93,10 @@ export default class GoodsSelection extends Component<any, any> {
             this.setVisitListData(res);
         } else {
             this.setState({
+                loaded: true,
                 currentPage: currentPage > 1 ? currentPage - 1 : 1,
                 refreshing: false,
-                timeout: 1
+                timeout: res.timeout
             });
         };
     };
@@ -144,7 +145,6 @@ export default class GoodsSelection extends Component<any, any> {
         }
         this.setState(
             {
-                statusCode: res.code,
                 data: listData,
                 refreshing: false,
                 loaded: true,
@@ -379,11 +379,18 @@ export default class GoodsSelection extends Component<any, any> {
                 timeout: 0
             },
             () => {
-                this.JDSectionList.resetState();
                 this.loadList();
                 this.getShopData();
+                this.JDSectionList.resetState();
             }
         );
+    }
+
+    onChangeStatusCode = (code) => {
+        this.setState({
+            loaded: true,
+            statusCode: code
+        });
     }
 
     setShop = (shopName) => {
@@ -459,7 +466,7 @@ export default class GoodsSelection extends Component<any, any> {
                     />
                     <View className='list-box'>
                         <View className='list-box-menus'>
-                            <Accordion onChange={this.onChangeCategory}></Accordion>
+                            <Accordion onChange={this.onChangeCategory} onChangeStatusCode={this.onChangeStatusCode}></Accordion>
                         </View>
                         <View className='list-box-content'>
                             <Filter openDrawer={this.openDrawer} />

@@ -46,6 +46,7 @@ const Observer = (function () {
             return !!item;
           });
           if (errorMsgList.length != '') {
+            errorMsgList = Array.from(new Set(errorMsgList));
             Toast.show(errorMsgList.join())
           };
         };

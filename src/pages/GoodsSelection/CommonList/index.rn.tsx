@@ -134,6 +134,7 @@ export default class CommonList extends Component<baseProps, any> {
             },
         ];
         const statusCode = this.props.statusCode; //this.props.statusCode; // "-10002" ; //
+
         let data = typeList[0];
         if (statusCode === "1") {
             data = typeList[0];
@@ -221,6 +222,7 @@ export default class CommonList extends Component<baseProps, any> {
     render() {
         return (
             <FlatList
+                extraData={this.props.statusCode}
                 ref={(flatList) => this._flatList = flatList}
                 data={this.props.data}
                 renderItem={this.props.renderItem}
