@@ -201,7 +201,7 @@ export default class GoodsSelection extends Component<any, any> {
 
     jumpToApp(data) {
         JDJumping.jumpToOpenapp(
-            `openApp.jyingApp://virtual?params={"category":"jump","des":"productDetailPage", "params": ${JSON.stringify({ skuId: data.skuId+"" })}}`
+            `openApp.jyingApp://virtual?params={"category":"jump","des":"productDetailPage", "params": ${JSON.stringify({ skuId: data.skuId+"", source: "search" })}}`
         );
     }
 

@@ -12,7 +12,8 @@ type PageState = {};
 const routers = {
     customDetail: "pages/CustomerDetail/index",
     goodsSelection: "/pages/GoodsSelection/index",
-    partnerData: "/pages/Details/index"
+    partnerData: "/pages/Details/index",
+    partnerDataDetail: "/pages/Details/index"
 }
 
 class Empty extends Component<any, any> {
