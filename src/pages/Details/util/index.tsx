@@ -14,6 +14,7 @@ function handleAmout(amount) {
 
 function handleDetailAmout(amount) {
     if(typeof amount !== "number" ) return '--';
+    if(typeof amount === 'number' && !amount) return '0.00';
     const absVal = Math.abs(amount);
     return `${amount > 0 ? '+' : '-'}${handleAmout(absVal)}`
 }
