@@ -82,6 +82,20 @@ class Empty extends Component<any, any> {
                     }}
                 >
                     明细
+                </Button>
+                <Button
+                    onClick={() => {
+                        this.routerTo("/pages/BusinessRank/index");
+                    }}
+                >
+                    商家排行榜
+                </Button>
+                <Button
+                    onClick={() => {
+                        this.routerTo("/pages/GoodsRank/index");
+                    }}
+                >
+                    商品排行榜
                 </Button> */}
             </View>
         );
