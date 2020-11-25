@@ -39,7 +39,7 @@ class BusRankList extends Component<PageOwnProps> {
                     <Image className={`${EMPTY_PREFIX}-img-icon`} src={imgObj.emptySrc} />
                 </View>
                 <View className={`${EMPTY_PREFIX}-content`}>
-                    <Text className={`${EMPTY_PREFIX}-content-text`}>暂无相关结果哦~</Text>
+                    <Text className={`${EMPTY_PREFIX}-content-text`}>您还没有商品排行榜哦~</Text>
                 </View>
             </View>
         );
@@ -53,7 +53,7 @@ class BusRankList extends Component<PageOwnProps> {
                 <FlatList 
                     data={data}
                     renderItem={(param) => this.renderItem(param)}
-                    ItemSeparatorComponent={this.renderGap}
+                    // ItemSeparatorComponent={this.renderGap}
                     ListEmptyComponent={this.ListEmptyComponent}
                 />
             </View>

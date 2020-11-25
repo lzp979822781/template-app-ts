@@ -11,7 +11,8 @@ type PageOwnProps = {
     right?: boolean|undefined,
     onClose?: (data?: any) => {},
     onOpenChange?: (data?: any) => {},
-    renderSidebar?: any
+    renderSidebar?: any,
+    drawerWidth?: number | undefined
 }
 
 class TaroDrawer extends Component<PageOwnProps> {
@@ -29,7 +30,7 @@ class TaroDrawer extends Component<PageOwnProps> {
         this.state = {  };
     }
     render() {
-        const { show, right, drawerBackgroundColor, onOpenChange } = this.props;
+        const { show, right, drawerBackgroundColor, onOpenChange, drawerWidth=305 } = this.props;
         return (
             <Drawer
                 sidebar={this.props.renderSidebar}
@@ -38,7 +39,7 @@ class TaroDrawer extends Component<PageOwnProps> {
                 onOpenChange={onOpenChange}
                     // rgba(51,56,64,0.70)'
                 drawerBackgroundColor={drawerBackgroundColor}
-                drawerWidth={305}
+                drawerWidth={drawerWidth}
             >
                 { this.props.children}
             </Drawer>
