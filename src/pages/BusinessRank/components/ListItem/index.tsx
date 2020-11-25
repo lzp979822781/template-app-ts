@@ -1,6 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import classnames from 'classnames';
 import { DEFAULT_BG } from '../../utils'
 import './index.scss';
 
@@ -117,10 +116,14 @@ class ListItem extends Component<PageOwnProps> {
         );
     }
 
+    onRecommond = () => {
+        
+    }
+
     renderBottomButton = () => {
         return (
             <View className={`${PREFIX}-bottom-container`}>
-                <View className={`${PREFIX}-bottom-btn`}>
+                <View className={`${PREFIX}-bottom-btn`} onClick={this.onRecommond}>
                     <Text className={`${PREFIX}-bottom-btn-text`}>推荐</Text>
                 </View>
             </View>
