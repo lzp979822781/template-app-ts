@@ -1,0 +1,159 @@
+@import '@/global/common.scss';
+$imgSize: 140px;
+
+.iconCls {
+    width:43px;
+    height: 39px;
+}
+
+.imgCls {
+    width: $imgSize;
+    height: $imgSize;
+}
+
+.buslist-item {
+    height: 403px;
+    border-radius: 8px;
+    background-color: #fff;
+    margin-top: 30px;
+    @include marginHorizontal(30px);
+    padding-left: 30px;
+
+    &-rank-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include flex(row, center, center);
+        @extend .iconCls;
+        
+        &-img {
+            @extend .iconCls;
+        }
+
+        &-text {
+            @include font(26px, #FFFFFF);
+            z-index: 1;
+        }
+    }
+
+    &-top {
+        margin-top: 30px;
+        @include flex(row, flex-start, flex-start);
+        &-left {
+            @include flex(row, center, center);
+            border: 1px solid #D8DCE5;
+            border-radius: 12px;
+            opacity: 0.5;
+            &-img {
+                @extend .imgCls;
+            }
+        }
+
+        &-right {
+            margin-left: 20px;
+            margin-top: 10px;
+            &-title {
+                @include flex(row, flex-start, flex-start);
+                &-text {
+                    max-width: 480px;
+                }
+            }
+    
+            &-desc {
+                margin-top: 16px;
+                @include flex(row, flex-start, center);
+                &-variety {
+                    &-text {
+                        @include font(24px, #444444, 'PingFangSC-Regular');
+                    }
+                }
+    
+                &-gap {
+                    width: 1px;
+                    height: 16px;
+                    border: 2px solid #E3E8EE;
+                    margin-left: 12px;
+                }
+    
+                &-amount {
+                    margin-left: 12px;
+                    &-text {
+                        @include font(24px, #444444, 'PingFangSC-Regular');
+                    }
+                }
+    
+            }
+
+            &-area {
+                margin-top: 16px;
+                @include flex(row, flex-start, center);
+                &-text {
+                    max-width: 480px;
+                    @include font(24px, #5F5F6B, 'PingFangSC-Regular');
+                }
+            }
+        }
+
+        
+    }
+
+    &-statistics {
+        margin-top: 30px;
+        margin-right: 30px;
+        @include flex(row, space-between, center);
+        &-card {
+            &-label {
+                margin-top: 8px;
+                @include flex(row, center, center);
+                &-text {
+                    @include font(22px, #989CA5, 'PingFangSC-Regular');
+                }
+            }
+
+            &-value {
+                @include flex(row, center, center);
+                &-text {
+                    // 这里需要使用JDZhengHei-01-Regular字体
+                    @include font(24px, #5F5F6B, 'PingFangSC-Regular');
+                }
+            }
+        }
+
+        &-delimeter {
+            width: 1px;
+            height: 46px;
+            border: 1px solid #F2F2F2;
+        }
+
+    }
+
+    &-bottom {
+        &-container {
+            margin-top: 30px;
+            margin-right: 30px;
+            @include flex(row, flex-end, center);
+        }
+        &-btn {
+            @include flex(row, center, center);
+            border: 1px solid #ED1D1B;
+            border-radius: 42px;
+            background-color: #FFEFEF;
+            width: 120px;
+            height: 48px;
+            &-text {
+                @include font(24px, #F2270C, 'PingFangSC-Medium');
+            }
+        }
+    }
+
+    &-mg {
+        @include marginHorizontal(30px);
+    }
+
+    &-delimeter {
+        width: 628px;
+        height: 1px;
+        border: 1px solid #F2F2F2;
+        margin-top: 20px;
+    }
+}

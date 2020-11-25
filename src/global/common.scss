@@ -28,3 +28,13 @@
     margin-left: $width;
     margin-right: $width;
 }
+
+@mixin paddingVertical($height:0) {
+    padding-top: $height;
+    padding-bottom: $height;
+}
+
+@mixin paddingHorizontal($width) {
+    padding-left: $width;
+    padding-right: $width;
+}
