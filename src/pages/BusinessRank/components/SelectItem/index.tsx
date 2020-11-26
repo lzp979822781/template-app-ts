@@ -7,7 +7,8 @@ const PREFIX = `select-item`;
 interface PageOwnProps {
     data: { label: string|number|undefined, value?: string|number|undefined, selected: boolean|undefined}
     style?: any,
-    onClick?: () => any
+    onClick?: () => any,
+    className: any
 }
 
 class SelectItem extends Component<PageOwnProps> {

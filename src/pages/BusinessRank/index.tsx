@@ -1,4 +1,4 @@
-import Taro, { Component } from "@tarojs/taro";
+import Taro, { Component, Config } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { StatusBar, Header, Drawer } from "@/components";
 import { BusRankList, SelectCondition, DrawerPage } from './components';
@@ -21,6 +21,11 @@ class BusinessRank extends Component<any, OwnState> {
         };
     }
 
+    config: Config = {
+        navigationBarTitleText: "",
+        disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
+    };
+
     renderList = () => {
         const { data } = this.state;
         return (
@@ -31,10 +36,13 @@ class BusinessRank extends Component<any, OwnState> {
     }
 
     onSelection = () => {
-        const { show } = this.state;
         this.setState({
-            show: !show
+            show: true
         })
+    }
+
+    onOpenChange = (isOpen) => {
+        this.setState({ show: isOpen })
     }
 
     renderSelection = () => {
@@ -51,11 +59,13 @@ class BusinessRank extends Component<any, OwnState> {
                 drawerBackgroundColor='#fff'
                 drawerWidth={365}
                 renderSidebar={<DrawerPage />}
+                onOpenChange={this.onOpenChange}
             >
                 <StatusBar />
                 <Header title='商家排行榜' backApp />
                 { this.renderSelection()}
                 { this.renderList()}
+                
             </Drawer>
         );
     }
