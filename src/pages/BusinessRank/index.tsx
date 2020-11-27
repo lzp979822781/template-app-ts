@@ -9,7 +9,8 @@ const PREFIX = 'bus-rank';
 
 interface OwnState {
     show: boolean,
-    data: Array<any>
+    data: Array<any>,
+    refreshing: boolean
 }
 
 class BusinessRank extends Component<any, OwnState> {
@@ -17,20 +18,35 @@ class BusinessRank extends Component<any, OwnState> {
         super(props);
         this.state = {  
             show: false,
-            data: []
+            data: [{ id: 1}, {id: 2}, { id: 3}, { id: 4}],
+            refreshing: false
         };
     }
+
+    pageNum = 1
+    pageSize = 10
 
     config: Config = {
         navigationBarTitleText: "",
         disableScroll: true //currentEnv === "RN"   //使用列表滚动事件，先把外壳默认滚动禁止，防止事件覆盖。
     };
 
+    onRefresh = () => {
+
+        this.setState({ refreshing: true }, () => {
+            // 获取数据
+        })
+    }
+
     renderList = () => {
-        const { data } = this.state;
+        const { data,  refreshing } = this.state;
         return (
             <View className={`${PREFIX}-list`}>
-                <BusRankList data={[{ id: 1}, {id: 2}, { id: 3}, { id: 4}]} />
+                <BusRankList 
+                    data={data}
+                    refreshing={refreshing}
+                    onRefresh={this.onRefresh}
+                />
             </View>
         );
     }

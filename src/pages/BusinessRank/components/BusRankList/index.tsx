@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import ListItem from '../ListItem';
 
 import './index.scss';
@@ -14,14 +14,15 @@ const imgObj = {
 }
 
 interface PageOwnProps {
-    data: Array<any>
+    data: Array<any>,
+    refreshing: boolean,
+    onRefresh: () => any
 }
 
 class BusRankList extends Component<PageOwnProps> {
     constructor(props) {
         super(props);
-        this.state = {  
-        };
+        this.state = {};
     }
 
     renderItem = ({ item, index }) => (<ListItem key={item.id} data={item} dataIndex={index} />)
@@ -46,7 +47,7 @@ class BusRankList extends Component<PageOwnProps> {
     }
 
     render() {
-        const { data } = this.props;
+        const { data, refreshing, onRefresh } = this.props;
 
         return (
             <View className={PREFIX}>
@@ -55,6 +56,17 @@ class BusRankList extends Component<PageOwnProps> {
                     renderItem={(param) => this.renderItem(param)}
                     // ItemSeparatorComponent={this.renderGap}
                     ListEmptyComponent={this.ListEmptyComponent}
+                    refreshControl={
+                        <RefreshControl
+                            tintColor='#F23030'
+                            title='刷新...'
+                            titleColor='#666666'
+                            // colors={["#ff0000", "#00ff00", "#0000ff"]}
+                            // progressBackgroundColor='#F23030'
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
                 />
             </View>
         );
