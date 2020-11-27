@@ -8,6 +8,15 @@
 
     &-left{
         flex: 1;
+        @include paddingHorizontal(24px);
+        @include flex(row, space-between, center);
+        overflow: scroll;
+
+        &-container {
+            width: 731px;
+            height: 80px;
+            @include flex(row, space-between, center);
+        }
     }
 
     &-right {

@@ -103,7 +103,7 @@ class TaroModal extends Component<any, any> {
     }
 
     render() {
-        const { visible, transparent = true, maskClosable = true, closable = false, bodyStyle} = this.props;
+        const { visible, transparent = true, maskClosable = true, closable = false, bodyStyle, style } = this.props;
         return (
             <Modal
                 transparent={transparent}
@@ -111,15 +111,11 @@ class TaroModal extends Component<any, any> {
                 visible={visible}
                 closable={closable}
                 footer={[]}
-                style={[{ marginVertical: 0, paddingVertical: 0, paddingTop: 0}]}
+                style={[{ marginVertical: 0, paddingVertical: 0, paddingTop: 0 }, ...(style || [])]}
                 bodyStyle={{ marginHorizontal: 0, marginVertical: 0, paddingHorizontal: 0, paddingVertical: 0, paddingBottom: 0, minHeight: 210, ...bodyStyle }}
                 onClose={this.onClickMask}
             >
-                { this.getHeader()}
-                <View style={{ flex: 1}}>
-                    {this.props.renderContent}
-                </View>
-                <View style={footerContainer}>{ this.props.renderFooter}</View>
+                {this.props.renderContent}
             </Modal>
         )
     }

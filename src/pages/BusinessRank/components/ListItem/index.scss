@@ -156,4 +156,54 @@ $imgSize: 140px;
         border: 1px solid #F2F2F2;
         margin-top: 20px;
     }
+
+    &-modal {
+        width: 628px;
+        height: 400px;
+        border-radius: 12px;
+        &-content {
+
+            &-container {
+                margin-top: 34px;
+                @include paddingHorizontal(37px);
+                &-text {
+                    @include font(28px, #666666, 'PingFangSC-Regular');
+                }
+            }
+        }
+
+        &-header {
+            margin-top: 50px;
+            @include flex(row, center, center);
+            &-text {
+                @include font(32px, #444444, 'PingFangSC-Medium');
+            }
+        }
+
+        &-btn {
+            height: 78px;
+            margin-top: 38px;
+            @include flex(row, center, center);
+            &-gradient {
+                @include flex(row, center, center);
+                width: 307px;
+                height: 76px;
+                border-radius: 39px;
+            }
+
+            &-text {
+                @include font(30px, #FFFFFF, 'PingFangSC-Semibold');
+            }
+        }
+
+        &-close {
+            position: absolute;
+            top: 32px;
+            right: 32px;
+            &-img {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
 }
