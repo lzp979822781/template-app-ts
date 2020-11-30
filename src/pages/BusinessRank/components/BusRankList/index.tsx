@@ -16,10 +16,27 @@ const imgObj = {
 interface PageOwnProps {
     data: Array<any>,
     refreshing: boolean,
-    onRefresh: () => any
+    onRefresh: () => any,
+    noMoreShow: boolean, // 是否最后一页
+    ListFooterComponent: Function,
+    onEndReached: Function;
 }
 
 class BusRankList extends Component<PageOwnProps> {
+
+    static defaultProps = {
+        noMoreShow: false,
+        ListFooterComponent: () => {
+            return (
+                <View
+                    style={{ marginTop:10, paddingBottom: 50, justifyContent: "center", alignItems: "center" }}
+                >
+                    <Text style={{ color: "#C8C8C8", fontSize: 12 }}>～没有更多数据了～</Text>
+                </View>
+            );
+        }
+    }
+
     constructor(props) {
         super(props);
         this.state = {};
@@ -46,8 +63,16 @@ class BusRankList extends Component<PageOwnProps> {
         );
     }
 
+    ListFooterComponent = () => {
+        const { data, noMoreShow, ListFooterComponent } = this.props;
+        if (data.length > 0 && noMoreShow && ListFooterComponent && typeof ListFooterComponent === "function") {
+            return ListFooterComponent();
+        };
+        return <View style={{ height: 15 }}></View>;
+    };
+
     render() {
-        const { data, refreshing, onRefresh } = this.props;
+        const { data, refreshing, onRefresh, onEndReached } = this.props;
 
         return (
             <View className={PREFIX}>
@@ -55,7 +80,10 @@ class BusRankList extends Component<PageOwnProps> {
                     data={data}
                     renderItem={(param) => this.renderItem(param)}
                     // ItemSeparatorComponent={this.renderGap}
+                    onEndReachedThreshold={0.01}
+                    onEndReached={onEndReached}
                     ListEmptyComponent={this.ListEmptyComponent}
+                    ListFooterComponent={this.ListFooterComponent}
                     refreshControl={
                         <RefreshControl
                             tintColor='#F23030'
