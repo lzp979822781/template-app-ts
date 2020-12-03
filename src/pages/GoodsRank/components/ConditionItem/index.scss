@@ -1,0 +1,34 @@
+@import '@/global/common.scss';
+
+.condition-item {
+    @include flex(row, flex-start, center);
+    &-title {
+        @include flex(row, center, center);
+        &-text {
+            @include font(26px, #444444, 'PingFangSC-Regular');
+
+            &-selected {
+                @include font(26px, #F23030, 'PingFangSC-Regular');
+            }
+        }
+        
+    }
+
+    &-icon {
+        margin-left: 10px;
+        height: 16px;
+
+        &-common {
+            width: 11px;
+            height: 6px;
+        }
+        &-up {
+            @include flex(row, center, flex-start);
+        }
+
+        &-down {
+            margin-top: 4px;
+            @include flex(row, center, flex-start);
+        }
+    }
+}

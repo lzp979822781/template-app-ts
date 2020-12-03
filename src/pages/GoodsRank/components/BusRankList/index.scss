@@ -1,0 +1,30 @@
+@import '@/global/common.scss';
+
+.bus-list {
+    background-color: #F8F8F8;
+    flex: 1;
+    &-gap {
+        height: 30px;
+    }
+    &-empty {
+        flex: 1;
+        @include flex(column, center, center);
+        padding-top: 300px;
+        &-img {
+            @include flex(row, center, center);
+            &-icon {
+                width: 240px;
+                height: 172px;
+            }                          
+        }
+
+        &-content {
+            @include flex(row, center, center);
+            margin-top: 40px;
+            &-text {
+                @include font(26px, #999999, 'PingFangSC-Light');
+            }
+
+        }
+    }
+}

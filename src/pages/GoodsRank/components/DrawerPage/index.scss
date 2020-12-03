@@ -1,0 +1,102 @@
+@import '@/global/common.scss';
+
+.drawer {
+    flex: 1;
+    &-container {
+        @include paddingHorizontal(30px);
+        flex: 1;
+    }
+
+    &-shop {
+        &-title {
+            margin-top: 78px;
+            // @include flex(row, flex-start, center);
+            &-right {
+                @include flex(row, flex-end, center);
+                &-text {
+                    @include font(24px, #999999, 'PingFangSC-Regular');
+                }
+            }
+        }
+
+        &-content {
+            @include flex(row, space-between, flex-start);
+            flex-wrap: wrap;
+
+            &-item {
+                margin-top: 20px;
+            }
+        }
+    }
+
+    &-item {
+        &-empty {
+            margin-top: 20px;
+            width: 190px;
+            height: 64px;
+        }
+    }
+
+    &-scope {
+        margin-top: 50px;
+        &-container {
+            @include flex(row, space-between, flex-start);
+            flex-wrap: wrap;
+            max-height: 252px;
+            overflow: hidden;
+
+            &-open {
+                max-height: 2000px;
+                overflow: visible;
+            }
+
+            &-item {
+                margin-top: 20px;
+            }
+        }
+
+        &-title-right {
+            @include flex(row, flex-end, center);
+            &-img {
+                width: 19px;
+                height: 10px;
+            }
+        }
+    }
+
+    &-date {
+        margin-top: 50px;
+        &-container {
+            @include flex(row, space-between, flex-start);
+            flex-wrap: wrap;
+            &-item {
+                margin-top: 20px;
+            }
+        }
+    }
+
+    &-btn {
+        @include flex(row, flex-start, center);
+        height: 100px;
+        &-left {
+            background-color: #fff;
+            height: 100px;
+            @include flex(row, center, center);
+            flex: 1;
+            &-text {
+                @include font(28px, #999999, 'PingFangSC-Regular');
+            }
+        }
+
+        &-right {
+            @include flex(row, center, center);
+            flex: 1;
+            height: 100px;
+
+            &-text {
+                @include font(28px, #FFFFFF, 'PingFangSC-Regular');
+            }
+        }
+    }
+
+}

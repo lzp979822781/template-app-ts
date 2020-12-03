@@ -1,0 +1,20 @@
+@import '@/global/common.scss';
+
+.select-item {
+    width: 190px;
+    height: 64px;
+    background-color: #F6F6F6;
+    border-radius: 32px;
+    @include flex(row, center, center);
+    &-selected {
+        background-color: #FFEFEF;
+        border: 1px solid #ED1D1B;
+        
+    }
+    &-text {
+        @include font(26px, #444444, 'PingFangSC-Regular');
+        &-selected {
+            color: #F21D0C;
+        }
+    }
+}

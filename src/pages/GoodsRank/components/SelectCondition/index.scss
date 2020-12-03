@@ -1,0 +1,36 @@
+@import '@/global/common.scss';
+
+.sel {
+    @include flex(row, flex-start, center);
+    background-color: #FFFFFF;
+    height: 80px;
+    width: 100%;
+    @include paddingHorizontal(30px);
+
+    &-left{
+        flex: 1;
+        @include flex(row, flex-start, center);
+
+        &-text {
+            @include font(24px, #999999, 'PingFangSC-Regular');
+        }
+    }
+
+    &-right {
+        @include flex(row, center, center);
+        &-text {
+            @include font(28px, #F23030, 'PingFangSC-Regular');
+        }
+
+        &-img {
+            width: 18px;
+            height: 20px;
+            margin-left: 12px;
+        }
+    }
+    
+    &-middle {
+        width: 13px;
+        height: 80px;
+    }
+}

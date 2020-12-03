@@ -1,0 +1,202 @@
+@import '@/global/common.scss';
+$imgSize: 140px;
+
+.iconCls {
+    width:43px;
+    height: 39px;
+}
+
+.imgCls {
+    width: $imgSize;
+    height: $imgSize;
+}
+
+.buslist-item {
+    height: 306px;
+    border-radius: 8px;
+    background-color: #fff;
+    margin-top: 30px;
+    @include marginHorizontal(30px);
+    padding-left: 30px;
+
+    &-rank-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include flex(row, center, center);
+        @extend .iconCls;
+        
+        &-img {
+            @extend .iconCls;
+        }
+
+        &-text {
+            @include font(26px, #FFFFFF);
+            z-index: 1;
+        }
+    }
+
+    &-top {
+        margin-top: 30px;
+        @include flex(row, flex-start, flex-start);
+        &-left {
+            @include flex(row, center, center);
+            border: 1px solid #D8DCE5;
+            border-radius: 12px;
+            &-img {
+                @extend .imgCls;
+            }
+        }
+
+        &-right {
+            margin-left: 20px;
+            &-title {
+                @include flex(row, flex-start, flex-start);
+                &-text {
+                    max-width: 470px;
+                    @include font(30px, #333840, 'PingFangSC-Semibold');
+                    line-height: 40px;
+                }
+            }
+
+            &-factory {
+                @include flex(row, flex-start, center);
+                margin-top: 7px;
+                &-img {
+                    width: 28px;
+                    height: 28px;
+                }
+
+                &-text {
+                    margin-left: 10px;
+                    max-width: 391px;
+                    @include font(26px, #5F5F6B, 'PingFangSC-Regular');
+                }
+            }
+
+            &-desc {
+                margin-top: 8px;
+                @include flex(row, flex-start, center);
+                &-text {
+                    @include font(22px, #989CA5, 'PingFangSC-Regular');
+                }
+
+                &-delimeter {
+                    margin-left: 10px;
+                    width: 1px;
+                    height: 13px;
+                    border: 2px solid #E3E8EE;
+                }
+
+                &-spec {
+                    margin-left: 10px;
+                }
+            }
+
+            &-amount {
+                //  font-family: JDZhengHT-EN-Regular;
+                @include flex(row, flex-start, center);
+                margin-top: 6px;
+
+                &-sign {
+                    padding-top: 10px;
+                    @include font(24px, #F2270C, 'PingFangSC-Regular');
+                }
+
+                &-intAmount {
+                    @include font(36px, #F2270C, 'PingFangSC-Regular');
+                }
+                
+                &-sale {
+                    margin-left: 10px;
+                    @include font(20px, #333840, 'PingFangSC-Regular');
+                    padding-top: 12px;
+                }
+            }
+
+            &-shop {
+                &-text {
+                    max-width: 350px;
+                    @include font(22px, #989CA5, 'PingFangSC-Regular');
+                }
+            }
+        }
+
+        
+    }
+
+
+    &-bottom {
+        &-container {
+            position: absolute;
+            @include flex(row, flex-end, center);
+            bottom: 30px;
+            right: 30px;
+        }
+        &-btn {
+            @include flex(row, center, center);
+            border: 1px solid #ED1D1B;
+            border-radius: 42px;
+            background-color: #FFEFEF;
+            width: 120px;
+            height: 48px;
+            &-text {
+                @include font(24px, #F2270C, 'PingFangSC-Medium');
+            }
+        }
+    }
+
+    &-mg {
+        @include marginHorizontal(30px);
+    }
+
+    &-modal {
+        width: 628px;
+        height: 400px;
+        border-radius: 12px;
+        &-content {
+
+            &-container {
+                margin-top: 34px;
+                @include paddingHorizontal(37px);
+                &-text {
+                    @include font(28px, #666666, 'PingFangSC-Regular');
+                }
+            }
+        }
+
+        &-header {
+            margin-top: 50px;
+            @include flex(row, center, center);
+            &-text {
+                @include font(32px, #444444, 'PingFangSC-Medium');
+            }
+        }
+
+        &-btn {
+            height: 78px;
+            margin-top: 38px;
+            @include flex(row, center, center);
+            &-gradient {
+                @include flex(row, center, center);
+                width: 307px;
+                height: 76px;
+                border-radius: 39px;
+            }
+
+            &-text {
+                @include font(30px, #FFFFFF, 'PingFangSC-Semibold');
+            }
+        }
+
+        &-close {
+            position: absolute;
+            top: 32px;
+            right: 32px;
+            &-img {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+}
