@@ -52,7 +52,7 @@ class Header extends Component<Option, any> {
                     onClick={() => {
                         if (backApp) {
                             if (NativeModules.JYNativeModule && NativeModules.JYNativeModule.goBack) {
-                                NativeModules.JYNativeModule.goBack();
+                                NativeModules.JYNativeModule.goBack(null);
                             } else {
                                 JDJumping.jumpToBack();
                             }
@@ -66,7 +66,7 @@ class Header extends Component<Option, any> {
                         }
                     }}
                 >
-                    <Image className='back-img' src="https://img10.360buyimg.com/imagetools/jfs/t1/131583/34/9685/2776/5f58ac4dEc286157f/56bb716cb76286f2.png" />
+                    <Image className='back-img' src='https://img10.360buyimg.com/imagetools/jfs/t1/131583/34/9685/2776/5f58ac4dEc286157f/56bb716cb76286f2.png' />
                 </View>
             </View>
         );
