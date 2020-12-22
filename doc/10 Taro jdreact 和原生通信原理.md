@@ -26,5 +26,16 @@
 
 ```
 jdreact启动后会生成jsbundle访问链接，原生通过加载这个链接实现加载jdreact代码
+ NSString *debugUrl = [NSString stringWithFormat:@"http://localhost:8081/jsbundles/%@.bundle?platform=ios&dev=true", moduleName];
+JDReactNativeBaseView *rnView = [[JDReactNativeBaseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) debugURL:debugUrl appName:moduleName properties:nil extraModulesDelegate:self];
 ```
+
+
+
+
+
+
+
+
+
 
