@@ -4,7 +4,7 @@
 
 
 
-![taro通信原理图](/Users/liuzhipeng26/Downloads/taro通信原理图.png)
+![taro通信原理图](https://img14.360buyimg.com/imagetools/jfs/t1/139817/22/19409/645153/5fe16040E0e21cf48/0441fa62cf99d7ee.png)
 
 ## 通信原理说明
 
